@@ -18,61 +18,54 @@ Note that once a `CNAME` file exists, GitHub Pages serves the site **only** at
 the custom domain — `mattkerr09.github.io/adplaybook-site/` will 404 or
 redirect. That is expected, not a broken build.
 
-## The one step left: point DNS at GitHub Pages
+## LIVE as of 2026-08-10
 
-In the Porkbun DNS editor for `adplaybook.app`, delete the parking records and
-add these four A records for the apex (host left blank or `@`):
+DNS moved. `adplaybook.app` resolves to the four GitHub Pages addresses, the
+certificate is issued and **HTTPS is enforced**. All 18 pages return 200 over
+https, the sitemap lists 18 URLs, and the download button serves real bytes —
+a range request against the release asset returns 206 with 1,048,576 bytes of
+a 22,870,769-byte DMG.
 
-```
-185.199.108.153
-185.199.109.153
-185.199.110.153
-185.199.111.153
-```
-
-Optionally the matching AAAA records for IPv6:
-
-```
-2606:50c0:8000::153
-2606:50c0:8001::153
-2606:50c0:8002::153
-2606:50c0:8003::153
-```
-
-And a CNAME for `www` pointing at `mattkerr09.github.io`.
-
-Then in the repo's **Settings → Pages**, tick **Enforce HTTPS** once GitHub has
-issued the certificate. It cannot issue one until DNS resolves, so this is a
-second visit rather than something to do now.
-
-## Verify after DNS propagates
-
-```sh
-dig +short adplaybook.app A
-curl -sI https://adplaybook.app/ | head -1
-curl -s https://adplaybook.app/sitemap.xml | grep -o '<loc>' | wc -l   # expect 18
-curl -sI https://adplaybook.app/specs/linkedin/ | head -1
-```
-
-## Then, and only then, submit to search
-
-Do not submit before the domain resolves — a sitemap fetched from a parking
-page teaches Google the wrong thing about the site.
-
-1. Google Search Console → add `adplaybook.app` as a domain property, verify by
-   DNS TXT, submit `https://adplaybook.app/sitemap.xml`.
-2. Bing Webmaster Tools → import from Search Console.
-3. Request indexing on `/specs/` and the two or three spec pages with the
-   strongest query volume before the long tail.
-
-## Rebuilding the site
+## Publishing a change
 
 ```sh
 python _build/render.py --app-repo "../ad maker app"
-python _build/check.py     # must pass before pushing
+python _build/check.py          # gate — must be clean
 git add -A && git commit && git push
+# wait for the Pages build to report the pushed commit, THEN:
+python _build/submit.py
 ```
 
-`check.py` is a gate, not a linter. It fails the build on a missing canonical,
-a page absent from the sitemap, or a sentence that asserts something about a
-named competitor. Push only on a clean run.
+The order matters. `submit.py` refuses to run if the live site is not serving
+the key file, because a rejected batch that looks like a success is worse than
+not running — but it cannot tell the difference between "not deployed yet" and
+"broken", so give the deploy time to finish first.
+
+## Search engines
+
+**Done automatically.** IndexNow covers Bing, Yandex, Seznam and Naver in one
+POST. Both endpoints accepted all 18 URLs (HTTP 202 on first submission, 200 on
+re-submission). Re-run `_build/submit.py` after every content change.
+
+**Needs your Google account.** Google dropped its sitemap ping endpoint in 2023
+and never joined IndexNow, so it is Search Console or nothing:
+
+1. https://search.google.com/search-console → add `adplaybook.app` as a
+   **domain** property (not a URL-prefix property — the domain property covers
+   http, https and every subdomain).
+2. Verify with the TXT record it gives you, at Porkbun, alongside the A records.
+3. Submit `https://adplaybook.app/sitemap.xml`.
+4. Use **URL Inspection → Request indexing** on `/specs/` and the two or three
+   spec pages you most want ranked. Do the hub and the best pages by hand; let
+   the rest come through the sitemap.
+
+Bing Webmaster Tools can import the whole property from Search Console once
+that exists, which is faster than verifying it separately.
+
+## What to watch
+
+The spec pages are the ones with a real shot, because the pages ranking above
+them are wrong and undated. Track impressions on queries of the shape
+"<platform> ad specs" and "<platform> ad character limits". If a page starts
+ranking, re-verify its figures against the platform's own documentation before
+it gets traffic — the whole claim of the site is that its numbers are current.
