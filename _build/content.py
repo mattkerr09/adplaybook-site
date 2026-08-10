@@ -20,6 +20,9 @@ import html
 from typing import Any, Callable, Dict, List
 
 BRAND = "AdPlaybook"
+REPO = "https://github.com/mattkerr09/adplaybook-site"
+DMG = f"{REPO}/releases/download/v0.1.0/AdPlaybook-0.1.0-arm64.dmg"
+RELEASES = f"{REPO}/releases"
 
 
 def esc(s: Any) -> str:
@@ -97,10 +100,14 @@ the platform's own documentation with the date it was read.
 
 <h2 id="get">Get it</h2>
 <div class="panel">
-<p><strong>Mac, signed and notarised.</strong> Runs locally. No account, no
-server, nothing about your product leaves the machine when you use a local
-model. Your API keys stay in your own config directory.</p>
-<p class="src">Download link goes here once the build is published.</p>
+<p><strong>Mac, Apple Silicon. Signed, notarised and stapled</strong> — it opens
+without a Gatekeeper warning because it went through Apple's notary service, not
+because you right-clicked past one.</p>
+<p><a class="cta" href="{DMG}">Download for Mac · 22 MB</a></p>
+<p>Runs locally. No account, no server — there isn't one. Nothing about your
+product leaves the machine when you point it at a local model, and your API keys
+stay in your own config directory with owner-only permissions.</p>
+<p class="src">v0.1.0 · <a href="{RELEASES}">All releases</a></p>
 </div>
 
 <h2>What it deliberately does not do</h2>
@@ -111,7 +118,7 @@ need, buy one of those, and feed it this.</p>
 run is a guess in the typography of a metric, and this tool does not publish
 numbers it did not measure. That looks like a missing feature in a demo. It is
 the reason to believe everything else it tells you.</p>
-"""
+""".replace("{DMG}", DMG).replace("{RELEASES}", RELEASES)
     page(path="/", title=f"{BRAND} — the ad maker that proves its own claims",
          description=("Turns a product page into a complete ad campaign — strategy, "
                       "audiences, exclusions, copy and measurement — then traces every "
