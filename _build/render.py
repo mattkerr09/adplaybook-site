@@ -367,15 +367,15 @@ def spec_page(spec: Dict[str, Any]) -> None:
     }.get(key, "Hard floors")
     floor_html = (f'<div class="box"><strong>{esc(floor_label)}</strong><ul>{"".join(floors)}</ul>'
                   "<p>These are the numbers that decide whether a campaign delivers "
-                  "at all, and none of them produce an error message when you cross "
-                  "them.</p></div>" if floors else "")
+                  "at all, and none of them produces an error message when you "
+                  "cross it.</p></div>" if floors else "")
 
     src = spec.get("source_url", "")
     check_head = ("Count these before you paste" if placements and any(
         p.get("headline_chars") or p.get("primary_text_chars") for p in placements)
         else "Check a campaign against this spec")
     title = f"{name} ad specs and character limits ({BUILT[:4]}) | {BRAND}"
-    desc = (f"{name} ad character limits, image sizes and hard floors — every "
+    desc = (f"{name} ad character limits, image sizes and hard floors. Every "
             f"figure quoted from {name}'s own documentation with the date it was read"
             + (f", {read_on}." if read_on else "."))
 
@@ -394,8 +394,8 @@ Source: <a class="src" href="{esc(src)}" rel="nofollow noopener">{esc(src)}</a><
 <table><thead><tr><th>Placement</th><th>Headline</th><th>Body text</th><th>Max file</th></tr></thead>
 <tbody>{''.join(rows)}</tbody></table>
 <p>Where two numbers are given, the first is what stays visible and the second
-is what the field accepts. They are different questions: copy over the cap is
-rejected at upload, copy over the visible limit runs and gets cut off. Most
+is what the field accepts. They're different questions. Copy over the cap gets
+rejected at upload. Copy over the visible limit runs, and gets cut off. Most
 guides publish only one of the two.</p>
 
 {floor_html}
