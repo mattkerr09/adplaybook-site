@@ -92,12 +92,29 @@ def main() -> int:
             warns.append(f"{n} pages share an identical H2 skeleton "
                          f"({len(skeleton)} headings)")
 
-    # 5. Files a crawler needs.
+    # 5. Class names used in HTML but never defined in the stylesheet.
+    #
+    # Renaming a CSS class silently unstyles every page that still uses the old
+    # name — the build succeeds, the check passed, and the pages render as
+    # unstyled text. That happened here when the stylesheet was rewritten:
+    # panel, grid and cta survived in the generators and matched nothing.
+    css_src = (SITE / "_build" / "render.py").read_text()
+    css = css_src[css_src.index('CSS = """'):
+                  css_src.index('"""', css_src.index('CSS = """') + 10)]
+    defined = set(re.findall(r"\.([a-z][a-z0-9-]*)", css))
+    used = set()
+    for p_ in pages:
+        for m in re.findall(r'class="([^"]+)"', p_.read_text()):
+            used.update(m.split())
+    for name in sorted(used - defined):
+        fails.append(f"class .{name} is used in HTML but defined nowhere in the CSS")
+
+    # 6. Files a crawler needs.
     for f in ("robots.txt", "sitemap.xml", "llms.txt", "CNAME"):
         if not (SITE / f).exists():
             fails.append(f"missing {f}")
 
-    # 6. Every built page must be in the sitemap, or it does not exist.
+    # 7. Every built page must be in the sitemap, or it does not exist.
     smap = (SITE / "sitemap.xml").read_text() if (SITE / "sitemap.xml").exists() else ""
     for p in pages:
         rel = "/" + str(p.relative_to(SITE)).replace("index.html", "")

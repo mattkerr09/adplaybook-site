@@ -49,66 +49,149 @@ TAGLINE = "The ad maker that knows which strategy fits — and proves every clai
 # ---------------------------------------------------------------------------
 
 CSS = """
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+/* Design tokens match the sibling products on purpose — same black, same
+   hairlines, same pill buttons — with this app's blue in place of Crisp's
+   cyan. A family of tools that look unrelated reads as three hobby projects. */
 :root{
-  --bg:#0d1017;--surface:#141822;--surface-2:#1b2130;--line:#242c3b;
-  --ink:#e8ecf4;--ink-mid:#a3adc0;--ink-dim:#6f7a8d;
-  --accent:#4c8dff;--accent-light:#7fb0ff;--accent-ink:#0d1420;
-  --ok:#4fae7a;--warn:#d9a72b;--bad:#d9554f;
-  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;
+  --black:#000;--panel:#08090d;--panel-2:#0d0f15;--card:#101319;
+  --hair:#1c2029;--hair-lit:#2a3040;
+  --white:#f5f7fa;--grey:#a1a9b8;--grey-dim:#6b7382;
+  --blue:#4c8dff;--ice:#a8c8ff;--violet:#9d8cff;--green:#4ade80;--amber:#d9a72b;
+  --r:18px;--r-sm:12px;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,system-ui,sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+  --w:1080px;--wr:820px;
 }
-@media (prefers-color-scheme:light){:root{
-  --bg:#f7f9fc;--surface:#fff;--surface-2:#eef2f8;--line:#dde4ee;
-  --ink:#131722;--ink-mid:#4d5768;--ink-dim:#7b8598;--accent:#1d5fd1;--accent-light:#164aa6;--accent-ink:#fff;
-}}
-html{scroll-behavior:smooth}
-body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
-a{color:var(--accent-light);text-decoration:none}
-a:hover{text-decoration:underline}
-.wrap{width:min(820px,calc(100% - 2rem));margin:0 auto}
-nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
-.nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px;gap:1rem}
-.nav-brand{display:flex;align-items:center;gap:.55rem;font-weight:700;color:var(--ink);font-size:1.05rem}
-.nav-brand:hover{text-decoration:none;color:var(--accent-light)}
-.nav-logo{width:26px;height:26px;border-radius:6px;display:block}
-.nav-links{display:flex;gap:1.1rem;list-style:none;font-size:.92rem;flex-wrap:wrap}
-.nav-links a{color:var(--ink-mid)}
-.nav-links a:hover{color:var(--ink);text-decoration:none}
-article,main{padding:2.6rem 0 4rem}
-.crumb{font-family:var(--mono);font-size:.76rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.9rem}
-h1{font-size:2.1rem;line-height:1.2;letter-spacing:-.02em;margin-bottom:.8rem}
-h2{font-size:1.4rem;line-height:1.3;margin:2.4rem 0 .8rem;letter-spacing:-.01em}
-h3{font-size:1.1rem;margin:1.6rem 0 .5rem}
-p{margin:0 0 1rem}
-.lede{font-size:1.15rem;color:var(--ink-mid);margin-bottom:1.6rem}
-ul,ol{margin:0 0 1rem 1.25rem}
-li{margin-bottom:.4rem}
-code{font-family:var(--mono);font-size:.88em;background:var(--surface-2);padding:.12em .38em;border-radius:4px}
-table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.94rem;display:block;overflow-x:auto}
-th,td{text-align:left;padding:.6rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
-th{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-dim);font-weight:600}
-blockquote{border-left:3px solid var(--accent);padding:.2rem 0 .2rem 1rem;margin:1rem 0;color:var(--ink-mid)}
-.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1.1rem 1.2rem;margin:1.4rem 0}
-.panel.warn{border-left:3px solid var(--warn)}
-.panel.ok{border-left:3px solid var(--ok)}
-.src{font-size:.85rem;color:var(--ink-dim);font-family:var(--mono);word-break:break-all}
-.pill{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:.16rem .5rem;border-radius:999px;border:1px solid var(--line);color:var(--ink-dim);margin-right:.3rem}
-.pill.checked{border-color:var(--ok);color:var(--ok)}
-.pill.unchecked{border-color:var(--warn);color:var(--warn)}
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.9rem;margin:1.4rem 0}
-.card{display:block;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1rem;color:var(--ink)}
-.card:hover{border-color:var(--accent);text-decoration:none}
-.card strong{display:block;margin-bottom:.25rem}
-.card span{font-size:.88rem;color:var(--ink-dim)}
-.cta{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:600;padding:.7rem 1.3rem;border-radius:8px;margin:.4rem .5rem .4rem 0}
-.cta:hover{text-decoration:none;opacity:.92}
-.cta.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
-footer{border-top:1px solid var(--line);padding:2rem 0 3rem;color:var(--ink-dim);font-size:.9rem}
-footer a{color:var(--ink-mid)}
-.hero{padding:3.4rem 0 1rem}
-.hero h1{font-size:2.6rem}
-@media(max-width:640px){.hero h1{font-size:2rem}h1{font-size:1.7rem}body{font-size:16px}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--black);color:var(--white);font-family:var(--sans);
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{max-width:100%}
+a{color:var(--ice);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+.wrap{width:min(var(--wr),calc(100% - 2.6rem));margin:0 auto}
+.wide{width:min(var(--w),calc(100% - 2.6rem));margin:0 auto}
+
+nav{position:sticky;top:0;z-index:80;background:rgba(0,0,0,.6);
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid rgba(28,32,41,.9)}
+.nav-inner{display:flex;align-items:center;gap:1.5rem;height:58px;
+  width:min(var(--w),calc(100% - 2.6rem));margin:0 auto}
+.nav-brand{display:flex;align-items:center;gap:.55rem;color:var(--white);font-weight:640;
+  font-size:1.02rem;letter-spacing:-.015em}
+.nav-brand:hover{text-decoration:none}
+.nav-logo{width:22px;height:22px;display:block}
+.nav-links{display:flex;gap:1.35rem;list-style:none;margin:0;padding:0;font-size:.9rem;
+  margin-left:auto;align-items:center}
+.nav-links a{color:var(--grey)}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+.nav-links .btn{padding:.48rem 1.05rem;font-size:.87rem;color:#02101f}
+/* .nav-links a sets grey; the button needs its own colour back or the label
+   disappears into the gradient it sits on. */
+.nav-links .btn:hover{color:#02101f}
+.nav-links .btn svg{flex:none}
+
+h1{font-size:clamp(2.1rem,4.6vw,3.2rem);line-height:1.06;letter-spacing:-.035em;
+  font-weight:690;margin:.6rem 0 1rem}
+h2{font-size:clamp(1.45rem,2.7vw,2rem);line-height:1.18;letter-spacing:-.028em;
+  font-weight:660;margin:3.2rem 0 .9rem}
+h3{font-size:1.12rem;font-weight:640;letter-spacing:-.012em;margin:2rem 0 .5rem}
+p{margin:0 0 1.05rem}
+ul,ol{margin:0 0 1.15rem 1.2rem;padding:0}
+li{margin-bottom:.5rem}
+.grad{background:linear-gradient(105deg,#cfe0ff 0%,#4c8dff 44%,#9d8cff 100%);
+  -webkit-background-clip:text;background-clip:text;color:transparent}
+.lede{font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.55;color:var(--grey);margin:0 0 1.6rem}
+.muted{color:var(--grey)}
+.crumb{font-size:.85rem;color:var(--grey-dim);margin:2.2rem 0 .4rem;font-family:var(--mono)}
+.crumb a{color:var(--grey)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
+  padding:.78rem 1.4rem;border-radius:999px;font-weight:600;font-size:.96rem;
+  background:linear-gradient(180deg,#7aaeff,#3272ea);color:#02101f;border:1px solid transparent;
+  box-shadow:0 10px 34px -12px rgba(76,141,255,.85);
+  transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 44px -12px rgba(76,141,255,1);
+  text-decoration:none}
+.btn.ghost{background:transparent;color:var(--white);border:1px solid var(--hair-lit);
+  box-shadow:none}
+.btn.ghost:hover{border-color:var(--blue);box-shadow:none}
+
+.hero{position:relative;text-align:center;padding:5rem 0 3.4rem}
+.hero::before{content:"";position:absolute;inset:-30% -50% auto;height:120%;pointer-events:none;
+  background:radial-gradient(760px 420px at 50% 0,rgba(76,141,255,.16),transparent 70%)}
+.hero>*{position:relative}
+.hero h1{font-size:clamp(2.6rem,7vw,4.6rem);margin:.9rem 0 1.2rem}
+.hero .lede{max-width:62ch;margin-inline:auto}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border-radius:999px;
+  border:1px solid var(--hair-lit);background:var(--panel-2);color:var(--ice);
+  font-size:.86rem;font-weight:560;white-space:nowrap}
+/* An inline SVG with no intrinsic size fills its flex line. Without this the
+   eyebrow tick rendered about 120px tall and pushed the label onto three
+   lines. Every icon in this stylesheet gets an explicit box. */
+.eyebrow svg{width:14px;height:14px;flex:none;color:var(--green)}
+.hero-actions{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin:2rem 0 1rem}
+.hero-sub{font-size:.88rem;color:var(--grey-dim);font-family:var(--mono)}
+.trust{display:flex;gap:1.6rem;justify-content:center;flex-wrap:wrap;margin-top:2.4rem;
+  font-size:.9rem;color:var(--grey)}
+.trust span{display:inline-flex;align-items:center;gap:.45rem}
+.trust svg{width:15px;height:15px;color:var(--green);flex:none}
+
+section{padding:1rem 0}
+.kicker{font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:.5rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:1.6rem 0}
+.card{display:block;padding:1.3rem 1.4rem;border:1px solid var(--hair);border-radius:var(--r);
+  background:linear-gradient(180deg,var(--card),var(--panel-2));color:var(--white);
+  transition:border-color .2s,transform .2s}
+.card:hover{border-color:var(--hair-lit);transform:translateY(-2px);text-decoration:none}
+.card strong{display:block;margin-bottom:.3rem;font-weight:640;letter-spacing:-.01em}
+.card span{font-size:.9rem;color:var(--grey);line-height:1.55}
+.card .num{font-family:var(--mono);font-size:2rem;font-weight:600;color:var(--blue);
+  line-height:1;display:block;margin-bottom:.5rem}
+
+.box{margin:2rem 0;padding:1.35rem 1.5rem;border:1px solid var(--hair);border-radius:var(--r-sm);
+  background:var(--panel-2);color:var(--grey)}
+.box strong{color:var(--white)}
+.box p:last-child{margin-bottom:0}
+.box.warn{border-left:3px solid var(--amber)}
+.box.ok{border-left:3px solid var(--green)}
+
+.cta-block{margin:3.4rem 0 1rem;padding:2.4rem 2rem;border:1px solid var(--hair);
+  border-radius:var(--r);text-align:center;
+  background:radial-gradient(600px 300px at 20% -20%,rgba(76,141,255,.13),transparent 70%),
+    linear-gradient(180deg,var(--card),var(--panel-2))}
+.cta-block p{color:var(--grey)}
+
+table{width:100%;border-collapse:collapse;margin:1.4rem 0;font-size:.94rem;display:block;
+  overflow-x:auto;white-space:nowrap}
+th,td{text-align:left;padding:.72rem .8rem;border-bottom:1px solid var(--hair);vertical-align:top;
+  white-space:normal}
+th{font-size:.74rem;text-transform:uppercase;letter-spacing:.07em;color:var(--grey-dim);
+  font-weight:600}
+td strong{font-weight:640}
+tbody tr:hover{background:rgba(255,255,255,.02)}
+blockquote{border-left:2px solid var(--blue);padding:.1rem 0 .1rem 1.1rem;margin:1.1rem 0;
+  color:var(--grey);font-style:normal}
+code{font-family:var(--mono);font-size:.88em;background:var(--panel-2);padding:.14em .4em;
+  border-radius:6px;border:1px solid var(--hair)}
+.src{font-size:.84rem;color:var(--grey-dim);font-family:var(--mono);word-break:break-all}
+.pill{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:.18rem .6rem;
+  border-radius:999px;border:1px solid var(--hair-lit);color:var(--grey-dim);margin-right:.35rem}
+.pill.checked{border-color:rgba(74,222,128,.5);color:var(--green)}
+.pill.unchecked{border-color:rgba(217,167,43,.5);color:var(--amber)}
+
+footer{border-top:1px solid var(--hair);margin-top:4rem;padding:2.6rem 0 3.4rem;
+  color:var(--grey-dim);font-size:.9rem}
+footer a{color:var(--grey)}
+footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
+  font-weight:640;margin-bottom:.7rem}
+@media(max-width:640px){
+  body{font-size:16px}
+  .hero{padding:3.2rem 0 2.4rem}
+  .nav-links{gap:.9rem;font-size:.84rem}
+  .nav-links li:nth-child(3){display:none}
+}
 """
 
 LOGO_SVG = (
@@ -121,7 +204,14 @@ LOGO_SVG = (
     "</svg>"
 )
 
-NAV = [("/specs/", "Ad specs"), ("/learn/", "Learn"), ("/vs/", "Compare"), ("/#get", "Get it")]
+NAV = [("/specs/", "Ad specs"), ("/learn/", "Learn"), ("/vs/", "Compare")]
+DOWNLOAD = ("https://github.com/mattkerr09/adplaybook-site/releases/download/"
+            "v0.1.0/AdPlaybook-0.1.0-arm64.dmg")
+DL_ICON = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" '
+           'width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/>'
+           '<path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>')
+TICK = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" '
+        'aria-hidden="true"><path d="M2.5 8.5l3.5 3.5 7.5-8"/></svg>')
 
 
 def esc(s: Any) -> str:
@@ -129,10 +219,13 @@ def esc(s: Any) -> str:
 
 
 def page(*, path: str, title: str, description: str, body: str,
-         schema: Dict[str, Any] | None = None, modified: str = BUILT) -> None:
+         schema: Dict[str, Any] | None = None, modified: str = BUILT,
+         wide: bool = False) -> None:
     """Write one page. `path` is the URL path, e.g. /specs/linkedin/."""
     url = BASE_URL + path
+    wrapcls = "wide" if wide else "wrap"
     nav = "".join(f'<li><a href="{h}">{esc(t)}</a></li>' for h, t in NAV)
+    nav += f'<li><a class="btn" href="{DOWNLOAD}">{DL_ICON}Download</a></li>'
     ld = ""
     if schema:
         ld = ('<script type="application/ld+json">'
@@ -165,14 +258,16 @@ def page(*, path: str, title: str, description: str, body: str,
 <a class="nav-brand" href="/">{LOGO_SVG}{BRAND}</a>
 <ul class="nav-links">{nav}</ul>
 </div></nav>
-<div class="wrap">{body}</div>
-<footer><div class="wrap">
-<p><strong>{BRAND}</strong> — {esc(TAGLINE)}</p>
+<div class="{wrapcls}">{body}</div>
+<footer><div class="wide">
+<div class="foot-brand">{LOGO_SVG}{BRAND}</div>
+<p>{esc(TAGLINE)}</p>
 <p>Every figure on this site is quoted from the platform's own documentation with
 the date it was read. Where something could not be verified, the page says so
 rather than leaving a gap you cannot see.</p>
 <p><a href="/specs/">Ad specs</a> · <a href="/learn/">Learn</a> ·
-<a href="/vs/">Compare</a> · <a href="/llms.txt">llms.txt</a></p>
+<a href="/vs/">Compare</a> · <a href="{DOWNLOAD}">Download</a> ·
+<a href="/llms.txt">llms.txt</a></p>
 </div></footer>
 </body>
 </html>
@@ -234,7 +329,7 @@ def spec_page(spec: Dict[str, Any]) -> None:
     if unverified:
         items = "".join(f"<li>{esc(u)}</li>" for u in unverified)
         unv_html = (
-            '<div class="panel warn"><strong>What we could not verify</strong>'
+            '<div class="box warn"><strong>What we could not verify</strong>'
             f"<ul>{items}</ul>"
             "<p>Listed rather than omitted. A spec sheet with no gaps is either "
             "complete or hiding something, and from the outside those look "
@@ -270,7 +365,7 @@ def spec_page(spec: Dict[str, Any]) -> None:
         "tiktok": "The 1,000 matched-user floor",
         "youtube": "The 10 and 12 second thresholds",
     }.get(key, "Hard floors")
-    floor_html = (f'<div class="panel"><strong>{esc(floor_label)}</strong><ul>{"".join(floors)}</ul>'
+    floor_html = (f'<div class="box"><strong>{esc(floor_label)}</strong><ul>{"".join(floors)}</ul>'
                   "<p>These are the numbers that decide whether a campaign delivers "
                   "at all, and none of them produce an error message when you cross "
                   "them.</p></div>" if floors else "")
@@ -290,7 +385,7 @@ def spec_page(spec: Dict[str, Any]) -> None:
 <h1>{esc(name)} ad specs and character limits</h1>
 <p class="lede">{esc(desc)}</p>
 
-<div class="panel ok">
+<div class="box ok">
 <p style="margin:0"><span class="pill checked">read {esc(read_on or 'unverified')}</span>
 Source: <a class="src" href="{esc(src)}" rel="nofollow noopener">{esc(src)}</a></p>
 </div>
@@ -313,8 +408,8 @@ guides publish only one of the two.</p>
 it — character counts, audience floors, forbidden exclusions — before you paste
 anything into {esc(manager)}. It is arithmetic, not a judgement call, so it runs
 on every campaign and costs nothing.</p>
-<p><a class="cta" href="/#get">Get {BRAND}</a>
-<a class="cta ghost" href="/specs/">All eight platforms</a></p>
+<p><a class="btn" href="/#get">Get {BRAND}</a>
+<a class="btn ghost" href="/specs/">All eight platforms</a></p>
 </article>
 """
     page(path=f"/specs/{key}/", title=title, description=desc, body=body,
@@ -370,7 +465,7 @@ def specs_hub(specs: List[Dict[str, Any]]) -> None:
 <p class="lede">Eight platforms. Every number quoted from the platform's own
 documentation, with the URL it came from and the date it was read.</p>
 
-<div class="panel warn">
+<div class="box warn">
 <strong>Why this page exists</strong>
 <p>The guides ranking for these queries are frequently wrong, and none of them
 show their working. Two examples found while building this, both checked
@@ -388,13 +483,13 @@ its date, and anything that could not be read is listed as unverified rather
 than quietly skipped.</p>
 </div>
 
-<div class="grid">{cards}</div>
+<div class="cards">{cards}</div>
 
 <h2>Where these come from</h2>
 <p>These pages are generated from the same files {BRAND} itself reads when it
 builds a campaign, so the site cannot drift from the product. When a platform
 changes a limit and the spec is re-checked, the page changes with it.</p>
-<p><a class="cta" href="/#get">Get {BRAND}</a></p>
+<p><a class="btn" href="/#get">Get {BRAND}</a></p>
 </article>
 """
     page(path="/specs/", title=f"Ad specs and character limits for 8 platforms | {BRAND}",

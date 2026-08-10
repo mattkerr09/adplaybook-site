@@ -44,90 +44,129 @@ def build_rest(page: Callable, specs: List[Dict[str, Any]], pages: List) -> None
 
 def _home(page: Callable, specs: List[Dict[str, Any]]) -> None:
     names = ", ".join(s["name"] for s in specs[:-1]) + f" and {specs[-1]['name']}"
+    tick = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2">'
+            '<path d="M2.5 8.5l3.5 3.5 7.5-8"/></svg>')
+    dl = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" '
+          'width="15" height="15"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/>'
+          '<path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>')
+
+    spec_cards = "".join(
+        f'<a class="card" href="/specs/{sp["key"]}/"><strong>{esc(sp["name"])}</strong>'
+        f'<span>{len(sp.get("placements", []))} placement(s), quoted and dated</span></a>'
+        for sp in specs)
+
     body = f"""
 <div class="hero">
-<h1>It writes the ad. Then it tries to prove you wrong.</h1>
-<p class="lede">{BRAND} turns a product page into a complete, buildable ad
-campaign — the strategy, the audiences, the exclusions, the copy, the test
-matrix and the measurement plan — and then attacks its own work before it shows
-you anything.</p>
-<p><a class="cta" href="/#get">Get it for Mac</a>
-<a class="cta ghost" href="/specs/">See the ad specs</a></p>
+<span class="eyebrow">{tick} Runs on your Mac. No account, no server.</span>
+<h1>It writes the ad.<br><span class="grad">Then it tries to prove you wrong.</span></h1>
+<p class="lede">{BRAND} turns a product page into a complete, buildable ad campaign —
+strategy, audiences, exclusions, copy, test matrix, measurement plan — then attacks
+its own work before it shows you anything.</p>
+<div class="hero-actions">
+<a class="btn" href="{{DMG}}">{dl} Download for Mac</a>
+<a class="btn ghost" href="/specs/">See the ad specs</a>
+</div>
+<p class="hero-sub">v0.1.0 · 22 MB · Apple Silicon · notarised by Apple</p>
+<div class="trust">
+<span>{tick} Every claim traced to a source</span>
+<span>{tick} Checked against 8 platforms' real limits</span>
+<span>{tick} Nothing leaves your machine</span>
+</div>
 </div>
 
-<h2>It picks the strategy, not just the words</h2>
-<p>Ten strategies, each with its own copy constraints, its own definition of
-success, and — stated before you choose it — <em>how it usually fails</em>.
-Direct response burns your warmest audience first. Community-native gets read by
-people who will argue in the replies. You are told that up front, because the
-expensive mistakes in advertising are strategic, not typographical.</p>
-<p>It reads your site, works out what you actually sell and to whom, then
-recommends the approach that fits your price, your sales cycle and your
-competition — and explains what that approach costs you.</p>
-
-<h2>Every claim traces to a line on your site</h2>
+<section>
+<p class="kicker">The part nobody else does</p>
+<h2>It refuses to write things it cannot back up</h2>
 <p>An ad that says "60-minute callouts" has to point at the page that says it.
-{BRAND} harvests the exact words from your own site and refuses to publish a
-figure that is not there. Recombine two true statements into a third one nobody
-said, and it flags it for your sign-off instead of quietly shipping it.</p>
+{BRAND} harvests the exact words from your own site and blocks any figure that
+is not there. Recombine two true statements into a third one nobody actually
+made, and it flags that for your sign-off instead of quietly shipping it.</p>
 <p>You get an <strong>evidence receipt</strong>: every claim beside the URL and
-verbatim quote behind it — plus the ones needing sign-off, the ones blocked, and
-the pages it could not read. Built for whoever signs the ad off and is
-personally liable for it.</p>
+verbatim quote behind it — plus the ones needing sign-off, the ones that were
+blocked, and the pages it could not read. It is built for whoever signs the ad
+off and carries the liability for it.</p>
+</section>
 
-<h2>It knows what will get rejected</h2>
-<p>Before you paste anything anywhere, it checks the campaign against each
-platform's published limits and hard floors:</p>
-<ul>
-<li>A LinkedIn campaign split two ways needs <strong>600</strong> people, not
-300 — the minimum is per ad set. A 500-person audience creates both ad sets,
-goes live, and delivers nothing, with no error anywhere.</li>
-<li>A 6-second YouTube bumper records <strong>no views</strong> and builds
-<strong>no remarketing list</strong>. A funnel planning to retarget its viewers
-has no second stage and no warning.</li>
-<li>A TikTok custom audience under <strong>1,000</strong> matched users cannot
-be used at all.</li>
-</ul>
-<p>It separates "the platform will refuse this" from "this will be cut off",
-because those need different reactions on different days — and it tells you what
-it could <em>not</em> check, so an empty warning list never reads as a clean
-bill of health.</p>
-
-<h2>{len(specs)} platforms, held as dated facts</h2>
-<p>{esc(names)}. Every character limit, aspect ratio and hard floor quoted from
-the platform's own documentation with the date it was read.
-<a href="/specs/">Read the specs</a>.</p>
-
-<h2 id="get">Get it</h2>
-<div class="panel">
-<p><strong>Mac, Apple Silicon. Signed, notarised and stapled</strong> — it opens
-without a Gatekeeper warning because it went through Apple's notary service, not
-because you right-clicked past one.</p>
-<p><a class="cta" href="{DMG}">Download for Mac · 22 MB</a></p>
-<p>Runs locally. No account, no server — there isn't one. Nothing about your
-product leaves the machine when you point it at a local model, and your API keys
-stay in your own config directory with owner-only permissions.</p>
-<p class="src">v0.1.0 · <a href="{RELEASES}">All releases</a></p>
+<section>
+<p class="kicker">Before you spend anything</p>
+<h2>It knows what will quietly fail</h2>
+<p>The expensive failures in paid media do not produce an error. These are
+checked by arithmetic against each platform's published limits, on every
+campaign, for free:</p>
+<div class="cards">
+<div class="card"><span class="num">600</span><strong>Not 300</strong>
+<span>LinkedIn's minimum is per ad set. Split an audience two ways and you need
+600 — below that both ad sets go live and neither delivers.</span></div>
+<div class="card"><span class="num">12s</span><strong>Or no funnel</strong>
+<span>A YouTube video under 12 seconds builds no remarketing list, and under 10
+records no views. Bumpers-then-retarget cannot work.</span></div>
+<div class="card"><span class="num">1,000</span><strong>Matched users</strong>
+<span>A TikTok custom audience below this cannot be used at all. Most small
+customer lists do not survive matching.</span></div>
+<div class="card"><span class="num">257</span><strong>Not 280</strong>
+<span>X charges 23 characters for every link. Every ad has one, so copy written
+to 280 does not fit.</span></div>
 </div>
+<p>It separates <em>the platform will refuse this</em> from <em>this will be cut
+off</em>, because those need different reactions — and it tells you what it could
+not check, so an empty warning list never reads as a clean bill of health.</p>
+</section>
 
+<section>
+<p class="kicker">Strategy, not just words</p>
+<h2>Ten approaches, each with its failure mode stated first</h2>
+<p>Direct response burns your warmest audience first. Community-native gets read
+by people who will argue in the replies. Retargeting recovery pays you for sales
+you were going to make anyway unless you hold out a control group.</p>
+<p>You are told all of that <em>before</em> you choose, because the expensive
+mistakes in advertising are strategic, not typographical. {BRAND} reads your
+site, works out what you sell and to whom, and recommends the approach that fits
+your price, your sales cycle and your competition — then explains what it costs
+you.</p>
+</section>
+
+<section>
+<p class="kicker">{len(specs)} platforms</p>
+<h2>Held as dated facts, not folklore</h2>
+<p>{esc(names)}. Every character limit, aspect ratio and hard floor quoted from
+the platform's own documentation, with the date it was read — and an explicit
+list of what could not be verified.</p>
+<div class="cards">{spec_cards}</div>
+</section>
+
+<section id="get">
+<div class="cta-block">
+<h2 style="margin-top:0">Get it</h2>
+<p>Mac, Apple Silicon. Signed, notarised and stapled — it opens without a
+Gatekeeper warning because Apple's notary service cleared it, not because you
+right-clicked past one.</p>
+<p><a class="btn" href="{{DMG}}">{dl} Download for Mac · 22 MB</a></p>
+<p class="src">v0.1.0 · <a href="{{RELEASES}}">All releases</a> · needs Outlier
+running locally, or an OpenAI or Anthropic key</p>
+</div>
+</section>
+
+<section>
 <h2>What it deliberately does not do</h2>
 <p>It does not make the image or the video. What it produces is a brief specific
 enough to hand to a designer or a creative generator — if the asset is what you
-need, buy one of those, and feed it this.</p>
-<p>It does not predict performance. A "conversion score" on an ad that has never
+need, buy one of those and feed it this.</p>
+<p>It does not predict performance. A conversion score on an ad that has never
 run is a guess in the typography of a metric, and this tool does not publish
-numbers it did not measure. That looks like a missing feature in a demo. It is
+numbers it did not measure. In a demo that looks like a missing feature. It is
 the reason to believe everything else it tells you.</p>
+</section>
 """.replace("{DMG}", DMG).replace("{RELEASES}", RELEASES)
     page(path="/", title=f"{BRAND} — the ad maker that proves its own claims",
          description=("Turns a product page into a complete ad campaign — strategy, "
                       "audiences, exclusions, copy and measurement — then traces every "
                       "claim to your site and checks it against each platform's real "
                       "limits before you spend anything."),
-         body=body,
+         body=body, wide=True,
          schema={"@context": "https://schema.org", "@type": "SoftwareApplication",
                  "name": BRAND, "applicationCategory": "BusinessApplication",
                  "operatingSystem": "macOS",
+                 "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
                  "description": "Ad campaign generator with claim substantiation "
                                 "and platform feasibility checking."})
 
@@ -144,7 +183,7 @@ def _learn_hub(page: Callable) -> None:
               "<h1>Why campaigns fail quietly</h1>"
               '<p class="lede">The expensive failures in paid media do not produce an '
               "error message. These are the ones worth knowing before you spend.</p>"
-              f'<div class="grid">{cards}</div></article>')
+              f'<div class="cards">{cards}</div></article>')
 
 
 def _vs(page: Callable) -> None:
@@ -190,8 +229,8 @@ product leaves the machine.</li>
 campaign is true, legal, and able to deliver — and to be able to prove it to
 someone who is liable for it — that is this. They compose well: the brief
 {BRAND} writes is a good thing to feed into one of them.</p>
-<p><a class="cta" href="/#get">Get {BRAND}</a>
-<a class="cta ghost" href="/specs/">See the ad specs</a></p>
+<p><a class="btn" href="/#get">Get {BRAND}</a>
+<a class="btn ghost" href="/specs/">See the ad specs</a></p>
 </article>
 """
     page(path="/vs/", title=f"{BRAND} vs AI creative generators — a straight answer | {BRAND}",
@@ -373,7 +412,7 @@ can produce the same outcome as excluding a protected characteristic directly.
 a different route, and financial promotions carry their own regime: under FSMA
 section 21, communicating an unapproved financial promotion is a criminal
 offence, not a compliance ticket.</p>
-<div class="panel warn"><p style="margin:0">This is a plain-English summary of
+<div class="box warn"><p style="margin:0">This is a plain-English summary of
 why the controls exist, not legal advice. If you are running these ads, the
 person who signs them off should be someone qualified to.</p></div>
 <p>{BRAND} runs a compliance pre-flight over these categories on every campaign
