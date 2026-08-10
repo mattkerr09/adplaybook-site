@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ad specs and character limits for 8 platforms | AdPlaybook</title>
+<meta name="description" content="Ad character limits, image sizes and hard floors for Meta, Google, LinkedIn, TikTok, X, Pinterest, Reddit and YouTube — every figure quoted from the platform&#x27;s own documentation with the date read.">
+<meta name="theme-color" content="#0d1017">
+<meta name="last-modified" content="2026-08-10">
+<link rel="canonical" href="https://adplaybook.app/specs/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Ad specs and character limits for 8 platforms | AdPlaybook">
+<meta property="og:description" content="Ad character limits, image sizes and hard floors for Meta, Google, LinkedIn, TikTok, X, Pinterest, Reddit and YouTube — every figure quoted from the platform&#x27;s own documentation with the date read.">
+<meta property="og:url" content="https://adplaybook.app/specs/">
+<meta property="og:site_name" content="AdPlaybook">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Ad specs and character limits for 8 platforms | AdPlaybook">
+<meta name="twitter:description" content="Ad character limits, image sizes and hard floors for Meta, Google, LinkedIn, TikTok, X, Pinterest, Reddit and YouTube — every figure quoted from the platform&#x27;s own documentation with the date read.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1017;--surface:#141822;--surface-2:#1b2130;--line:#242c3b;
+  --ink:#e8ecf4;--ink-mid:#a3adc0;--ink-dim:#6f7a8d;
+  --accent:#4c8dff;--accent-light:#7fb0ff;--accent-ink:#0d1420;
+  --ok:#4fae7a;--warn:#d9a72b;--bad:#d9554f;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:light){:root{
+  --bg:#f7f9fc;--surface:#fff;--surface-2:#eef2f8;--line:#dde4ee;
+  --ink:#131722;--ink-mid:#4d5768;--ink-dim:#7b8598;--accent:#1d5fd1;--accent-light:#164aa6;--accent-ink:#fff;
+}}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-light);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{width:min(820px,calc(100% - 2rem));margin:0 auto}
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px;gap:1rem}
+.nav-brand{display:flex;align-items:center;gap:.55rem;font-weight:700;color:var(--ink);font-size:1.05rem}
+.nav-brand:hover{text-decoration:none;color:var(--accent-light)}
+.nav-logo{width:26px;height:26px;border-radius:6px;display:block}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-size:.92rem;flex-wrap:wrap}
+.nav-links a{color:var(--ink-mid)}
+.nav-links a:hover{color:var(--ink);text-decoration:none}
+article,main{padding:2.6rem 0 4rem}
+.crumb{font-family:var(--mono);font-size:.76rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.9rem}
+h1{font-size:2.1rem;line-height:1.2;letter-spacing:-.02em;margin-bottom:.8rem}
+h2{font-size:1.4rem;line-height:1.3;margin:2.4rem 0 .8rem;letter-spacing:-.01em}
+h3{font-size:1.1rem;margin:1.6rem 0 .5rem}
+p{margin:0 0 1rem}
+.lede{font-size:1.15rem;color:var(--ink-mid);margin-bottom:1.6rem}
+ul,ol{margin:0 0 1rem 1.25rem}
+li{margin-bottom:.4rem}
+code{font-family:var(--mono);font-size:.88em;background:var(--surface-2);padding:.12em .38em;border-radius:4px}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.94rem;display:block;overflow-x:auto}
+th,td{text-align:left;padding:.6rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-dim);font-weight:600}
+blockquote{border-left:3px solid var(--accent);padding:.2rem 0 .2rem 1rem;margin:1rem 0;color:var(--ink-mid)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1.1rem 1.2rem;margin:1.4rem 0}
+.panel.warn{border-left:3px solid var(--warn)}
+.panel.ok{border-left:3px solid var(--ok)}
+.src{font-size:.85rem;color:var(--ink-dim);font-family:var(--mono);word-break:break-all}
+.pill{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:.16rem .5rem;border-radius:999px;border:1px solid var(--line);color:var(--ink-dim);margin-right:.3rem}
+.pill.checked{border-color:var(--ok);color:var(--ok)}
+.pill.unchecked{border-color:var(--warn);color:var(--warn)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.9rem;margin:1.4rem 0}
+.card{display:block;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1rem;color:var(--ink)}
+.card:hover{border-color:var(--accent);text-decoration:none}
+.card strong{display:block;margin-bottom:.25rem}
+.card span{font-size:.88rem;color:var(--ink-dim)}
+.cta{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:600;padding:.7rem 1.3rem;border-radius:8px;margin:.4rem .5rem .4rem 0}
+.cta:hover{text-decoration:none;opacity:.92}
+.cta.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+footer{border-top:1px solid var(--line);padding:2rem 0 3rem;color:var(--ink-dim);font-size:.9rem}
+footer a{color:var(--ink-mid)}
+.hero{padding:3.4rem 0 1rem}
+.hero h1{font-size:2.6rem}
+@media(max-width:640px){.hero h1{font-size:2rem}h1{font-size:1.7rem}body{font-size:16px}}
+</style>
+
+</head>
+<body>
+<nav><div class="wrap nav-inner">
+<a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#141822"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#4c8dff"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#4c8dff"/><circle cx="46" cy="70" r="9.5" fill="#141822"/><circle cx="46" cy="70" r="4.3" fill="#4c8dff"/><circle cx="61" cy="53" r="5" fill="#141822"/><circle cx="75" cy="36" r="5" fill="#141822"/></svg>AdPlaybook</a>
+<ul class="nav-links"><li><a href="/specs/">Ad specs</a></li><li><a href="/learn/">Learn</a></li><li><a href="/vs/">Compare</a></li><li><a href="/#get">Get it</a></li></ul>
+</div></nav>
+<div class="wrap">
+<article>
+<p class="crumb">Ad specs</p>
+<h1>Ad specs and character limits, with sources</h1>
+<p class="lede">Eight platforms. Every number quoted from the platform's own
+documentation, with the URL it came from and the date it was read.</p>
+
+<div class="panel warn">
+<strong>Why this page exists</strong>
+<p>The guides ranking for these queries are frequently wrong, and none of them
+show their working. Two examples found while building this, both checked
+against the platforms' own help centres on 2026-08-10:</p>
+<ul>
+<li>A widely-ranked page states LinkedIn's introductory text maxes out at 600
+characters. LinkedIn's own help centre says <strong>3,000</strong>, with 150 to
+avoid truncation.</li>
+<li>Several pages state TikTok caps ad captions at 100 characters. TikTok's own
+in-feed specification page states <strong>no character count at all</strong>.
+The figure appears nowhere in their documentation.</li>
+</ul>
+<p>Undated and uncited is the norm. So every figure here carries its source and
+its date, and anything that could not be read is listed as unverified rather
+than quietly skipped.</p>
+</div>
+
+<div class="grid"><a class="card" href="/specs/google/"><strong>Google Ads</strong><span>1 placement(s) · 3 thing(s) unverified</span></a><a class="card" href="/specs/linkedin/"><strong>LinkedIn</strong><span>3 placement(s) · 3 thing(s) unverified</span></a><a class="card" href="/specs/meta/"><strong>Meta (Facebook and Instagram)</strong><span>2 placement(s) · 3 thing(s) unverified</span></a><a class="card" href="/specs/pinterest/"><strong>Pinterest</strong><span>3 placement(s) · 3 thing(s) unverified</span></a><a class="card" href="/specs/reddit/"><strong>Reddit</strong><span>1 placement(s) · 4 thing(s) unverified</span></a><a class="card" href="/specs/tiktok/"><strong>TikTok</strong><span>2 placement(s) · 3 thing(s) unverified</span></a><a class="card" href="/specs/x/"><strong>X</strong><span>3 placement(s) · 3 thing(s) unverified</span></a><a class="card" href="/specs/youtube/"><strong>YouTube</strong><span>5 placement(s) · 3 thing(s) unverified</span></a></div>
+
+<h2>Where these come from</h2>
+<p>These pages are generated from the same files AdPlaybook itself reads when it
+builds a campaign, so the site cannot drift from the product. When a platform
+changes a limit and the spec is re-checked, the page changes with it.</p>
+<p><a class="cta" href="/#get">Get AdPlaybook</a></p>
+</article>
+</div>
+<footer><div class="wrap">
+<p><strong>AdPlaybook</strong> — The ad maker that knows which strategy fits — and proves every claim.</p>
+<p>Every figure on this site is quoted from the platform's own documentation with
+the date it was read. Where something could not be verified, the page says so
+rather than leaving a gap you cannot see.</p>
+<p><a href="/specs/">Ad specs</a> · <a href="/learn/">Learn</a> ·
+<a href="/vs/">Compare</a> · <a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+</body>
+</html>

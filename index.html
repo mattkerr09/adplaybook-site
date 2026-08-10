@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AdPlaybook — the ad maker that proves its own claims</title>
+<meta name="description" content="Turns a product page into a complete ad campaign — strategy, audiences, exclusions, copy and measurement — then traces every claim to your site and checks it against each platform&#x27;s real limits before you spend anything.">
+<meta name="theme-color" content="#0d1017">
+<meta name="last-modified" content="2026-08-10">
+<link rel="canonical" href="https://adplaybook.app/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="website">
+<meta property="og:title" content="AdPlaybook — the ad maker that proves its own claims">
+<meta property="og:description" content="Turns a product page into a complete ad campaign — strategy, audiences, exclusions, copy and measurement — then traces every claim to your site and checks it against each platform&#x27;s real limits before you spend anything.">
+<meta property="og:url" content="https://adplaybook.app/">
+<meta property="og:site_name" content="AdPlaybook">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="AdPlaybook — the ad maker that proves its own claims">
+<meta name="twitter:description" content="Turns a product page into a complete ad campaign — strategy, audiences, exclusions, copy and measurement — then traces every claim to your site and checks it against each platform&#x27;s real limits before you spend anything.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1017;--surface:#141822;--surface-2:#1b2130;--line:#242c3b;
+  --ink:#e8ecf4;--ink-mid:#a3adc0;--ink-dim:#6f7a8d;
+  --accent:#4c8dff;--accent-light:#7fb0ff;--accent-ink:#0d1420;
+  --ok:#4fae7a;--warn:#d9a72b;--bad:#d9554f;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:light){:root{
+  --bg:#f7f9fc;--surface:#fff;--surface-2:#eef2f8;--line:#dde4ee;
+  --ink:#131722;--ink-mid:#4d5768;--ink-dim:#7b8598;--accent:#1d5fd1;--accent-light:#164aa6;--accent-ink:#fff;
+}}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-light);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{width:min(820px,calc(100% - 2rem));margin:0 auto}
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px;gap:1rem}
+.nav-brand{display:flex;align-items:center;gap:.55rem;font-weight:700;color:var(--ink);font-size:1.05rem}
+.nav-brand:hover{text-decoration:none;color:var(--accent-light)}
+.nav-logo{width:26px;height:26px;border-radius:6px;display:block}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-size:.92rem;flex-wrap:wrap}
+.nav-links a{color:var(--ink-mid)}
+.nav-links a:hover{color:var(--ink);text-decoration:none}
+article,main{padding:2.6rem 0 4rem}
+.crumb{font-family:var(--mono);font-size:.76rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.9rem}
+h1{font-size:2.1rem;line-height:1.2;letter-spacing:-.02em;margin-bottom:.8rem}
+h2{font-size:1.4rem;line-height:1.3;margin:2.4rem 0 .8rem;letter-spacing:-.01em}
+h3{font-size:1.1rem;margin:1.6rem 0 .5rem}
+p{margin:0 0 1rem}
+.lede{font-size:1.15rem;color:var(--ink-mid);margin-bottom:1.6rem}
+ul,ol{margin:0 0 1rem 1.25rem}
+li{margin-bottom:.4rem}
+code{font-family:var(--mono);font-size:.88em;background:var(--surface-2);padding:.12em .38em;border-radius:4px}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.94rem;display:block;overflow-x:auto}
+th,td{text-align:left;padding:.6rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-dim);font-weight:600}
+blockquote{border-left:3px solid var(--accent);padding:.2rem 0 .2rem 1rem;margin:1rem 0;color:var(--ink-mid)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1.1rem 1.2rem;margin:1.4rem 0}
+.panel.warn{border-left:3px solid var(--warn)}
+.panel.ok{border-left:3px solid var(--ok)}
+.src{font-size:.85rem;color:var(--ink-dim);font-family:var(--mono);word-break:break-all}
+.pill{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:.16rem .5rem;border-radius:999px;border:1px solid var(--line);color:var(--ink-dim);margin-right:.3rem}
+.pill.checked{border-color:var(--ok);color:var(--ok)}
+.pill.unchecked{border-color:var(--warn);color:var(--warn)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.9rem;margin:1.4rem 0}
+.card{display:block;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1rem;color:var(--ink)}
+.card:hover{border-color:var(--accent);text-decoration:none}
+.card strong{display:block;margin-bottom:.25rem}
+.card span{font-size:.88rem;color:var(--ink-dim)}
+.cta{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:600;padding:.7rem 1.3rem;border-radius:8px;margin:.4rem .5rem .4rem 0}
+.cta:hover{text-decoration:none;opacity:.92}
+.cta.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+footer{border-top:1px solid var(--line);padding:2rem 0 3rem;color:var(--ink-dim);font-size:.9rem}
+footer a{color:var(--ink-mid)}
+.hero{padding:3.4rem 0 1rem}
+.hero h1{font-size:2.6rem}
+@media(max-width:640px){.hero h1{font-size:2rem}h1{font-size:1.7rem}body{font-size:16px}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AdPlaybook","applicationCategory":"BusinessApplication","operatingSystem":"macOS","description":"Ad campaign generator with claim substantiation and platform feasibility checking."}</script>
+</head>
+<body>
+<nav><div class="wrap nav-inner">
+<a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#141822"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#4c8dff"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#4c8dff"/><circle cx="46" cy="70" r="9.5" fill="#141822"/><circle cx="46" cy="70" r="4.3" fill="#4c8dff"/><circle cx="61" cy="53" r="5" fill="#141822"/><circle cx="75" cy="36" r="5" fill="#141822"/></svg>AdPlaybook</a>
+<ul class="nav-links"><li><a href="/specs/">Ad specs</a></li><li><a href="/learn/">Learn</a></li><li><a href="/vs/">Compare</a></li><li><a href="/#get">Get it</a></li></ul>
+</div></nav>
+<div class="wrap">
+<div class="hero">
+<h1>It writes the ad. Then it tries to prove you wrong.</h1>
+<p class="lede">AdPlaybook turns a product page into a complete, buildable ad
+campaign — the strategy, the audiences, the exclusions, the copy, the test
+matrix and the measurement plan — and then attacks its own work before it shows
+you anything.</p>
+<p><a class="cta" href="/#get">Get it for Mac</a>
+<a class="cta ghost" href="/specs/">See the ad specs</a></p>
+</div>
+
+<h2>It picks the strategy, not just the words</h2>
+<p>Ten strategies, each with its own copy constraints, its own definition of
+success, and — stated before you choose it — <em>how it usually fails</em>.
+Direct response burns your warmest audience first. Community-native gets read by
+people who will argue in the replies. You are told that up front, because the
+expensive mistakes in advertising are strategic, not typographical.</p>
+<p>It reads your site, works out what you actually sell and to whom, then
+recommends the approach that fits your price, your sales cycle and your
+competition — and explains what that approach costs you.</p>
+
+<h2>Every claim traces to a line on your site</h2>
+<p>An ad that says "60-minute callouts" has to point at the page that says it.
+AdPlaybook harvests the exact words from your own site and refuses to publish a
+figure that is not there. Recombine two true statements into a third one nobody
+said, and it flags it for your sign-off instead of quietly shipping it.</p>
+<p>You get an <strong>evidence receipt</strong>: every claim beside the URL and
+verbatim quote behind it — plus the ones needing sign-off, the ones blocked, and
+the pages it could not read. Built for whoever signs the ad off and is
+personally liable for it.</p>
+
+<h2>It knows what will get rejected</h2>
+<p>Before you paste anything anywhere, it checks the campaign against each
+platform's published limits and hard floors:</p>
+<ul>
+<li>A LinkedIn campaign split two ways needs <strong>600</strong> people, not
+300 — the minimum is per ad set. A 500-person audience creates both ad sets,
+goes live, and delivers nothing, with no error anywhere.</li>
+<li>A 6-second YouTube bumper records <strong>no views</strong> and builds
+<strong>no remarketing list</strong>. A funnel planning to retarget its viewers
+has no second stage and no warning.</li>
+<li>A TikTok custom audience under <strong>1,000</strong> matched users cannot
+be used at all.</li>
+</ul>
+<p>It separates "the platform will refuse this" from "this will be cut off",
+because those need different reactions on different days — and it tells you what
+it could <em>not</em> check, so an empty warning list never reads as a clean
+bill of health.</p>
+
+<h2>8 platforms, held as dated facts</h2>
+<p>Google Ads, LinkedIn, Meta (Facebook and Instagram), Pinterest, Reddit, TikTok, X and YouTube. Every character limit, aspect ratio and hard floor quoted from
+the platform's own documentation with the date it was read.
+<a href="/specs/">Read the specs</a>.</p>
+
+<h2 id="get">Get it</h2>
+<div class="panel">
+<p><strong>Mac, signed and notarised.</strong> Runs locally. No account, no
+server, nothing about your product leaves the machine when you use a local
+model. Your API keys stay in your own config directory.</p>
+<p class="src">Download link goes here once the build is published.</p>
+</div>
+
+<h2>What it deliberately does not do</h2>
+<p>It does not make the image or the video. What it produces is a brief specific
+enough to hand to a designer or a creative generator — if the asset is what you
+need, buy one of those, and feed it this.</p>
+<p>It does not predict performance. A "conversion score" on an ad that has never
+run is a guess in the typography of a metric, and this tool does not publish
+numbers it did not measure. That looks like a missing feature in a demo. It is
+the reason to believe everything else it tells you.</p>
+</div>
+<footer><div class="wrap">
+<p><strong>AdPlaybook</strong> — The ad maker that knows which strategy fits — and proves every claim.</p>
+<p>Every figure on this site is quoted from the platform's own documentation with
+the date it was read. Where something could not be verified, the page says so
+rather than leaving a gap you cannot see.</p>
+<p><a href="/specs/">Ad specs</a> · <a href="/learn/">Learn</a> ·
+<a href="/vs/">Compare</a> · <a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+</body>
+</html>

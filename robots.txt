@@ -1,0 +1,31 @@
+# AI answer engines are explicitly welcome. This site's whole value is that its
+# numbers are sourced and dated, which is exactly what an answer engine needs
+# and exactly what the pages it currently quotes do not have.
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: *
+Allow: /
+
+Sitemap: https://adplaybook.app/sitemap.xml

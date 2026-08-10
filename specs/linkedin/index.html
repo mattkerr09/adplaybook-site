@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LinkedIn ad specs and character limits (2026) | AdPlaybook</title>
+<meta name="description" content="LinkedIn ad character limits, image sizes and hard floors — every figure quoted from LinkedIn&#x27;s own documentation with the date it was read, 2026-08-10.">
+<meta name="theme-color" content="#0d1017">
+<meta name="last-modified" content="2026-08-10">
+<link rel="canonical" href="https://adplaybook.app/specs/linkedin/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<meta property="og:type" content="article">
+<meta property="og:title" content="LinkedIn ad specs and character limits (2026) | AdPlaybook">
+<meta property="og:description" content="LinkedIn ad character limits, image sizes and hard floors — every figure quoted from LinkedIn&#x27;s own documentation with the date it was read, 2026-08-10.">
+<meta property="og:url" content="https://adplaybook.app/specs/linkedin/">
+<meta property="og:site_name" content="AdPlaybook">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="LinkedIn ad specs and character limits (2026) | AdPlaybook">
+<meta name="twitter:description" content="LinkedIn ad character limits, image sizes and hard floors — every figure quoted from LinkedIn&#x27;s own documentation with the date it was read, 2026-08-10.">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0d1017;--surface:#141822;--surface-2:#1b2130;--line:#242c3b;
+  --ink:#e8ecf4;--ink-mid:#a3adc0;--ink-dim:#6f7a8d;
+  --accent:#4c8dff;--accent-light:#7fb0ff;--accent-ink:#0d1420;
+  --ok:#4fae7a;--warn:#d9a72b;--bad:#d9554f;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Inter,system-ui,sans-serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+}
+@media (prefers-color-scheme:light){:root{
+  --bg:#f7f9fc;--surface:#fff;--surface-2:#eef2f8;--line:#dde4ee;
+  --ink:#131722;--ink-mid:#4d5768;--ink-dim:#7b8598;--accent:#1d5fd1;--accent-light:#164aa6;--accent-ink:#fff;
+}}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:17px;line-height:1.65;-webkit-font-smoothing:antialiased}
+a{color:var(--accent-light);text-decoration:none}
+a:hover{text-decoration:underline}
+.wrap{width:min(820px,calc(100% - 2rem));margin:0 auto}
+nav{position:sticky;top:0;z-index:10;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--line)}
+.nav-inner{display:flex;align-items:center;justify-content:space-between;height:60px;gap:1rem}
+.nav-brand{display:flex;align-items:center;gap:.55rem;font-weight:700;color:var(--ink);font-size:1.05rem}
+.nav-brand:hover{text-decoration:none;color:var(--accent-light)}
+.nav-logo{width:26px;height:26px;border-radius:6px;display:block}
+.nav-links{display:flex;gap:1.1rem;list-style:none;font-size:.92rem;flex-wrap:wrap}
+.nav-links a{color:var(--ink-mid)}
+.nav-links a:hover{color:var(--ink);text-decoration:none}
+article,main{padding:2.6rem 0 4rem}
+.crumb{font-family:var(--mono);font-size:.76rem;color:var(--ink-dim);text-transform:uppercase;letter-spacing:.08em;margin-bottom:.9rem}
+h1{font-size:2.1rem;line-height:1.2;letter-spacing:-.02em;margin-bottom:.8rem}
+h2{font-size:1.4rem;line-height:1.3;margin:2.4rem 0 .8rem;letter-spacing:-.01em}
+h3{font-size:1.1rem;margin:1.6rem 0 .5rem}
+p{margin:0 0 1rem}
+.lede{font-size:1.15rem;color:var(--ink-mid);margin-bottom:1.6rem}
+ul,ol{margin:0 0 1rem 1.25rem}
+li{margin-bottom:.4rem}
+code{font-family:var(--mono);font-size:.88em;background:var(--surface-2);padding:.12em .38em;border-radius:4px}
+table{width:100%;border-collapse:collapse;margin:1.2rem 0;font-size:.94rem;display:block;overflow-x:auto}
+th,td{text-align:left;padding:.6rem .7rem;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-size:.8rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-dim);font-weight:600}
+blockquote{border-left:3px solid var(--accent);padding:.2rem 0 .2rem 1rem;margin:1rem 0;color:var(--ink-mid)}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1.1rem 1.2rem;margin:1.4rem 0}
+.panel.warn{border-left:3px solid var(--warn)}
+.panel.ok{border-left:3px solid var(--ok)}
+.src{font-size:.85rem;color:var(--ink-dim);font-family:var(--mono);word-break:break-all}
+.pill{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:.16rem .5rem;border-radius:999px;border:1px solid var(--line);color:var(--ink-dim);margin-right:.3rem}
+.pill.checked{border-color:var(--ok);color:var(--ok)}
+.pill.unchecked{border-color:var(--warn);color:var(--warn)}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:.9rem;margin:1.4rem 0}
+.card{display:block;background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:1rem;color:var(--ink)}
+.card:hover{border-color:var(--accent);text-decoration:none}
+.card strong{display:block;margin-bottom:.25rem}
+.card span{font-size:.88rem;color:var(--ink-dim)}
+.cta{display:inline-block;background:var(--accent);color:var(--accent-ink);font-weight:600;padding:.7rem 1.3rem;border-radius:8px;margin:.4rem .5rem .4rem 0}
+.cta:hover{text-decoration:none;opacity:.92}
+.cta.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+footer{border-top:1px solid var(--line);padding:2rem 0 3rem;color:var(--ink-dim);font-size:.9rem}
+footer a{color:var(--ink-mid)}
+.hero{padding:3.4rem 0 1rem}
+.hero h1{font-size:2.6rem}
+@media(max-width:640px){.hero h1{font-size:2rem}h1{font-size:1.7rem}body{font-size:16px}}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"LinkedIn ad specs and character limits","description":"LinkedIn ad character limits, image sizes and hard floors \u2014 every figure quoted from LinkedIn's own documentation with the date it was read, 2026-08-10.","datePublished":"2026-08-10","dateModified":"2026-08-10","publisher":{"@type":"Organization","name":"AdPlaybook"},"isBasedOn":"https://www.linkedin.com/help/lms/answer/a426534/single-image-ads-advertising-specifications"}</script>
+</head>
+<body>
+<nav><div class="wrap nav-inner">
+<a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#141822"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#4c8dff"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#4c8dff"/><circle cx="46" cy="70" r="9.5" fill="#141822"/><circle cx="46" cy="70" r="4.3" fill="#4c8dff"/><circle cx="61" cy="53" r="5" fill="#141822"/><circle cx="75" cy="36" r="5" fill="#141822"/></svg>AdPlaybook</a>
+<ul class="nav-links"><li><a href="/specs/">Ad specs</a></li><li><a href="/learn/">Learn</a></li><li><a href="/vs/">Compare</a></li><li><a href="/#get">Get it</a></li></ul>
+</div></nav>
+<div class="wrap">
+<article>
+<p class="crumb"><a href="/specs/">Ad specs</a> / LinkedIn</p>
+<h1>LinkedIn ad specs and character limits</h1>
+<p class="lede">LinkedIn ad character limits, image sizes and hard floors — every figure quoted from LinkedIn&#x27;s own documentation with the date it was read, 2026-08-10.</p>
+
+<div class="panel ok">
+<p style="margin:0"><span class="pill checked">read 2026-08-10</span>
+Source: <a class="src" href="https://www.linkedin.com/help/lms/answer/a426534/single-image-ads-advertising-specifications" rel="nofollow noopener">https://www.linkedin.com/help/lms/answer/a426534/single-image-ads-advertising-specifications</a></p>
+</div>
+
+<h2>Character limits and sizes</h2>
+<table><thead><tr><th>Placement</th><th>Headline</th><th>Body text</th><th>Max file</th></tr></thead>
+<tbody><tr><td><strong>Feed — single image</strong><br><span class='src'>1.91:1 1200 x 628</span></td><td><strong>70</strong> to stay visible · 200 hard cap</td><td><strong>150</strong> to stay visible · 3000 hard cap</td><td>5 MB</td></tr><tr><td><strong>Feed — carousel</strong><br><span class='src'>1:1 1080 x 1080</span></td><td><span class="pill unchecked">not stated</span></td><td><strong>150</strong> to stay visible · 255 hard cap</td><td>10 MB</td></tr><tr><td><strong>Right rail — text ad</strong><br><span class='src'>1:1 100 x 100</span></td><td><strong>25</strong></td><td><strong>75</strong></td><td>2 MB</td></tr></tbody></table>
+<p>Where two numbers are given, the first is what stays visible and the second
+is what the field accepts. They are different questions: copy over the cap is
+rejected at upload, copy over the visible limit runs and gets cut off. Most
+guides publish only one of the two.</p>
+
+<div class="panel"><strong>The 300-account floor, per ad set</strong><ul><li><strong>minimum audience size: 300</strong> — </li></ul><p>These are the numbers that decide whether a campaign delivers at all, and none of them produce an error message when you cross them.</p></div>
+<h3>Feed — single image — Headline</h3><blockquote>LinkedIn: &quot;Use up to 70 characters to avoid truncation (200 character maximum).&quot;</blockquote><h3>Feed — single image — Body text</h3><blockquote>LinkedIn calls this Introductory text: &quot;Use up to 150 characters including spaces, emojis, and punctuation to avoid truncation (3,000 character maximum).&quot;</blockquote><h3>Feed — single image — Description</h3><blockquote>LinkedIn: &quot;Use 100 characters to avoid truncation (300 character maximum).&quot; The description does not render in every placement — do not put a claim there that the ad depends on.</blockquote><h3>Feed — carousel — Headline</h3><blockquote>LinkedIn states no character count for a card headline, only that &quot;Headline text for each image card is a maximum of two lines before being truncated&quot;. Two lines is not a number this app can enforce, so no limit is asserted — keep card headlines short and check them in preview.</blockquote><h3>Feed — carousel — Body text</h3><blockquote>LinkedIn: &quot;Use up to 150 characters to avoid truncation on some devices (a maximum of 255 characters)&quot;. Note this 255 cap is far tighter than the single image ad&#x27;s 3,000 — the same introductory text will not carry across both formats.</blockquote><h3>Right rail — text ad — Headline</h3><blockquote>LinkedIn: &quot;Ad headline: Use up to 25 characters, including spaces.&quot; This is a hard cap, not a truncation guideline.</blockquote>
+<h2>Small audiences and the cost of splitting them</h2><p>LinkedIn audiences are small and expensive. The minimum audience is 300 member accounts and B2B targeting stacks land near that floor fast, so a four-cell test matrix that would be routine on Meta can leave every cell too thin to read. Prefer two cells over four, expect to wait weeks rather than days for a signal, and say plainly when a split would divide an audience below a size that can ever reach significance.</p>
+<div class="panel warn"><strong>What we could not verify</strong><ul><li>Which call-to-action buttons this platform offers.</li><li>Which ad categories are restricted here, and what declaring one does to your targeting.</li><li>How this platform tracks conversions, and its default attribution window.</li></ul><p>Listed rather than omitted. A spec sheet with no gaps is either complete or hiding something, and from the outside those look identical.</p></div>
+
+<h2>Count these before you paste</h2>
+<p>AdPlaybook holds this spec as dated data and checks a finished campaign against
+it — character counts, audience floors, forbidden exclusions — before you paste
+anything into LinkedIn Campaign Manager. It is arithmetic, not a judgement call, so it runs
+on every campaign and costs nothing.</p>
+<p><a class="cta" href="/#get">Get AdPlaybook</a>
+<a class="cta ghost" href="/specs/">All eight platforms</a></p>
+</article>
+</div>
+<footer><div class="wrap">
+<p><strong>AdPlaybook</strong> — The ad maker that knows which strategy fits — and proves every claim.</p>
+<p>Every figure on this site is quoted from the platform's own documentation with
+the date it was read. Where something could not be verified, the page says so
+rather than leaving a gap you cannot see.</p>
+<p><a href="/specs/">Ad specs</a> · <a href="/learn/">Learn</a> ·
+<a href="/vs/">Compare</a> · <a href="/llms.txt">llms.txt</a></p>
+</div></footer>
+</body>
+</html>

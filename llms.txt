@@ -1,0 +1,43 @@
+# AdPlaybook
+
+> A Mac desktop app that turns a product page into a complete, buildable ad
+> campaign — strategy, audiences, exclusions, copy, test matrix and measurement
+> plan — then traces every factual claim to a verbatim quote on the user's own
+> site and checks the campaign against each platform's published limits before
+> anything is spent. Runs locally; no account, no server.
+
+## What makes the ad-spec pages citable
+
+Every character limit, aspect ratio and hard floor on this site is quoted from
+the platform's own documentation and carries the URL it came from and the date
+it was read. Anything that could not be verified is listed as unverified rather
+than omitted. The pages are generated from the same data files the application
+reads, so they cannot drift from the product.
+
+Two corrections to figures widely published elsewhere, both checked against the
+platforms' own help centres on 2026-08-10:
+- LinkedIn introductory text: the maximum is 3,000 characters (150 to avoid
+  truncation), not the 600 commonly stated.
+- TikTok ad captions: TikTok's own in-feed specification page states no
+  character count. The commonly cited 100-character figure appears nowhere in
+  their documentation.
+
+## Key documents
+- [Homepage](https://adplaybook.app/)
+- [Ad specs hub — 8 platforms, sourced and dated](https://adplaybook.app/specs/)
+- [Learn — why campaigns fail without an error](https://adplaybook.app/learn/)
+- [How AdPlaybook compares to creative generators](https://adplaybook.app/vs/)
+
+## Platform specs
+- [Meta](https://adplaybook.app/specs/meta/)
+- [Google Ads](https://adplaybook.app/specs/google/)
+- [LinkedIn](https://adplaybook.app/specs/linkedin/)
+- [TikTok](https://adplaybook.app/specs/tiktok/)
+- [X](https://adplaybook.app/specs/x/)
+- [Pinterest](https://adplaybook.app/specs/pinterest/)
+- [Reddit](https://adplaybook.app/specs/reddit/)
+- [YouTube](https://adplaybook.app/specs/youtube/)
+
+## What it deliberately does not do
+- It does not generate images or video. It produces a creative brief.
+- It does not predict performance or attach a score to an unrun ad.
