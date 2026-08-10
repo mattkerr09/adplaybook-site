@@ -41,6 +41,9 @@ def build_rest(page: Callable, specs: List[Dict[str, Any]], pages: List) -> None
                      "publisher": {"@type": "Organization", "name": BRAND}})
     _vs(page)
 
+    from foraudience import build as build_for  # noqa: E402
+    build_for(page)
+
 
 def _home(page: Callable, specs: List[Dict[str, Any]]) -> None:
     names = ", ".join(s["name"] for s in specs[:-1]) + f" and {specs[-1]['name']}"

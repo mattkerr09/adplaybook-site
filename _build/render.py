@@ -204,7 +204,8 @@ LOGO_SVG = (
     "</svg>"
 )
 
-NAV = [("/specs/", "Ad specs"), ("/learn/", "Learn"), ("/vs/", "Compare")]
+NAV = [("/specs/", "Ad specs"), ("/learn/", "Learn"),
+       ("/for/", "By business"), ("/vs/", "Compare")]
 DOWNLOAD = ("https://github.com/mattkerr09/adplaybook-site/releases/download/"
             "v0.1.1/AdPlaybook-0.1.1-arm64.dmg")
 DL_ICON = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" '
