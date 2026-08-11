@@ -21,7 +21,7 @@ from typing import Any, Callable, Dict, List
 
 BRAND = "AdPlaybook"
 REPO = "https://github.com/mattkerr09/adplaybook-site"
-DMG = f"{REPO}/releases/download/v0.1.4/AdPlaybook-0.1.4-arm64.dmg"
+DMG = f"{REPO}/releases/download/v0.1.5/AdPlaybook-0.1.5-arm64.dmg"
 RELEASES = f"{REPO}/releases"
 
 
@@ -69,7 +69,7 @@ its own work before it shows you anything.</p>
 <a class="btn" href="{{DMG}}">{dl} Download for Mac</a>
 <a class="btn ghost" href="/specs/">See the ad specs</a>
 </div>
-<p class="hero-sub">v0.1.4 · 22 MB · Apple Silicon · notarised by Apple</p>
+<p class="hero-sub">v0.1.5 · 22 MB · Apple Silicon · notarised by Apple</p>
 <div class="trust">
 <span>{tick} Every claim traced to a source</span>
 <span>{tick} Checked against 8 platforms' real limits</span>
@@ -144,7 +144,7 @@ list of what could not be verified.</p>
 Gatekeeper warning because Apple's notary service cleared it, not because you
 right-clicked past one.</p>
 <p><a class="btn" href="{{DMG}}">{dl} Download for Mac · 22 MB</a></p>
-<p class="src">v0.1.4 · <a href="{{RELEASES}}">All releases</a> · needs Outlier
+<p class="src">v0.1.5 · <a href="{{RELEASES}}">All releases</a> · needs Outlier
 running locally, or an OpenAI or Anthropic key</p>
 </div>
 </section>
