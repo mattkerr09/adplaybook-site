@@ -181,6 +181,35 @@ code{font-family:var(--mono);font-size:.88em;background:var(--panel-2);padding:.
 .pill.checked{border-color:rgba(74,222,128,.5);color:var(--green)}
 .pill.unchecked{border-color:rgba(217,167,43,.5);color:var(--amber)}
 
+/* The product window. A screenshot would be a flat PNG that blurs on a
+   retina display and cannot follow the reader's theme; this is the real
+   interface rebuilt in markup, so it stays sharp and stays honest — the
+   content is verbatim from a run against HoneyBook. */
+.win{border:1px solid var(--hair);border-radius:14px;overflow:hidden;
+  background:linear-gradient(180deg,var(--card),var(--panel));
+  box-shadow:0 40px 80px -40px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.02);
+  margin:2.4rem 0}
+.win-bar{display:flex;align-items:center;gap:.5rem;padding:.7rem .9rem;
+  border-bottom:1px solid var(--hair);background:var(--panel-2)}
+.win-dot{width:11px;height:11px;border-radius:50%;flex:none}
+.win-title{margin-left:.5rem;font-size:.82rem;color:var(--grey-dim);
+  font-weight:560;letter-spacing:-.01em}
+.win-body{padding:1.1rem}
+.vd{display:flex;gap:.75rem;align-items:flex-start;padding:.85rem 1rem;
+  border:1px solid var(--hair);border-radius:10px;margin-bottom:.7rem;
+  background:var(--panel-2)}
+.vd.bad{border-left:3px solid var(--bad)}
+.vd.warn{border-left:3px solid var(--amber)}
+.vd-ic{font-family:var(--mono);font-weight:700;flex:none;line-height:1.5}
+.vd.bad .vd-ic{color:var(--bad)} .vd.warn .vd-ic{color:var(--amber)}
+.vd strong{display:block;font-weight:640;letter-spacing:-.01em;margin-bottom:.15rem}
+.vd span{font-size:.9rem;color:var(--grey);line-height:1.5}
+/* display:block because this sits inside a <span>; without it the quote runs
+   on from the sentence above and reads as one run-on line. */
+.vd-quote{display:block;margin:.5rem 0 0;padding-left:.8rem;border-left:2px solid var(--hair-lit);
+  font-size:.88rem;color:var(--grey)}
+@media(max-width:640px){.win-body{padding:.7rem}.vd{padding:.7rem .8rem}}
+
 footer{border-top:1px solid var(--hair);margin-top:4rem;padding:2.6rem 0 3.4rem;
   color:var(--grey-dim);font-size:.9rem}
 footer a{color:var(--grey)}

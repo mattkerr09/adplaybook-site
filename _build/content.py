@@ -97,6 +97,32 @@ off and carries the liability for it.</p>
 wrote three ad variants, then a second model was asked to find the reason the
 campaign fails. Nothing here is illustrative.</p>
 
+<div class="win">
+  <div class="win-bar">
+    <span class="win-dot" style="background:#ff5f57"></span>
+    <span class="win-dot" style="background:#febc2e"></span>
+    <span class="win-dot" style="background:#28c840"></span>
+    <span class="win-title">AdPlaybook — HoneyBook, Meta, Instagram Feed</span>
+  </div>
+  <div class="win-body">
+    <div class="vd bad"><span class="vd-ic">&times;</span><span>
+      <strong>It won't run as written</strong>2 things will stop this running</span></div>
+    <div class="vd bad"><span class="vd-ic">&times;</span><span>
+      <strong>Some claims could not be traced</strong>
+      1 of 3 variants blocked — a price we could not trace.
+      <span class="vd-quote">C — Price Axis: "Starting at $29/month" appears
+      nowhere on your site. Remove it, or add the price to a page we can read.</span>
+    </span></div>
+    <div class="vd bad"><span class="vd-ic">&times;</span><span>
+      <strong>We checked it again — do not build this</strong>
+      REJECT — 2 blockers, 1 serious.</span></div>
+    <div class="vd warn"><span class="vd-ic">!</span><span>
+      <strong>The landing page was not checked</strong>
+      No destination was given, so nothing looked at where the click lands.
+      That is not the same as it being fine.</span></div>
+  </div>
+</div>
+
 <div class="box">
 <p class="src" style="margin-bottom:.6rem">VARIANT B — what it wrote</p>
 <p style="margin-bottom:.2rem"><strong>All-in-one client management.</strong></p>
