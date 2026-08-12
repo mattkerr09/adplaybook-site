@@ -73,6 +73,82 @@ def check_referenced_assets(pages: list, fails: list[str]) -> None:
                 fails.append(f"{rel}: references {target}, which does not exist on disk")
 
 
+def check_download_link(pages, fails, warns) -> None:
+    """The download button is an instruction. Run it before publishing it.
+
+    The site has offered v0.1.5 since it went up. That build cannot complete a
+    single campaign — it calls Client() where the pipeline expects a Provider,
+    so every run dies with a TypeError before producing anything. Eighteen
+    later builds are signed, notarised and stapled on the developer's disk, and
+    a visitor downloading right now still gets the one that does not work.
+
+    Nothing here noticed, because nothing here looked. This looks.
+
+    Two separate checks, because they fail differently:
+
+      * the URL must resolve. A version bump with no matching release turns the
+        primary call to action into a 404, which is worse than stale.
+      * the version must not trail the app's own releases. Silent staleness is
+        how five months of shipping ends up invisible to everybody but the
+        person doing it.
+
+    Network access is required, so a failure to reach GitHub is reported as
+    unchecked rather than as a pass. A gate that cannot see something has to
+    say so — treating "no answer" as "fine" is how this got missed.
+    """
+    import re
+    import urllib.error
+    import urllib.request
+
+    urls = set()
+    for p in pages:
+        urls.update(re.findall(r'https://[^"\s]+\.dmg', p.read_text()))
+    if not urls:
+        fails.append("no download link anywhere on the site")
+        return
+
+    for url in sorted(urls):
+        m = re.search(r"/v?(\d+\.\d+\.\d+)/", url)
+        shown = m.group(1) if m else "?"
+        req = urllib.request.Request(url, method="HEAD")
+        try:
+            with urllib.request.urlopen(req, timeout=20) as r:
+                if r.status >= 400:
+                    fails.append(f"download link returns {r.status}: {url}")
+                    continue
+        except urllib.error.HTTPError as exc:
+            fails.append(
+                f"download link returns {exc.code}: {url} — the primary call "
+                "to action on this site is broken")
+            continue
+        except Exception as exc:  # noqa: BLE001
+            warns.append(
+                f"could not check the download link ({exc}). NOT verified — "
+                "this is unchecked, not clean.")
+            continue
+
+        # Does a newer build exist that nobody can download?
+        # Sorted as VERSIONS, not as filenames. The first draft of this sorted
+        # the .dmg names as strings and reported 0.1.9 as the newest build
+        # while 0.1.23 sat beside it — "0.1.9" > "0.1.23" lexicographically.
+        # A gate that publishes a wrong number is the thing it exists to catch.
+        found = []
+        for q in (pathlib.Path.home() / "ad maker app" / "dist").glob("*.dmg"):
+            m2 = re.search(r"(\d+\.\d+\.\d+)", q.name)
+            if m2:
+                found.append(_ver(m2.group(1)))
+        if found and max(found) > _ver(shown):
+            newest = ".".join(str(x) for x in max(found))
+            warns.append(
+                f"the site offers {shown} but {newest} is built and signed. "
+                "Every visitor is downloading a version the developer has "
+                "already replaced.")
+
+
+def _ver(s: str):
+    return tuple(int(x) for x in s.split("."))
+
+
 def main() -> int:
     pages = sorted(SITE.glob("**/index.html"))
     if not pages:
@@ -82,6 +158,7 @@ def main() -> int:
     warns: list[str] = []
 
     check_referenced_assets(pages, fails)
+    check_download_link(pages, fails, warns)
 
     openings, h2sets, lengths = [], [], {}
     for p in pages:
