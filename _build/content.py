@@ -44,6 +44,12 @@ def build_rest(page: Callable, specs: List[Dict[str, Any]], pages: List) -> None
     from foraudience import build as build_for  # noqa: E402
     build_for(page)
 
+    # Privacy, terms and contact. Through `page()` like everything else — a
+    # hand-written /privacy/index.html survives the rebuild but drops out of
+    # sitemap.xml every time, which is the failure that looks like success.
+    from legal import build as build_legal  # noqa: E402
+    build_legal(page)
+
 
 def _home(page: Callable, specs: List[Dict[str, Any]]) -> None:
     names = ", ".join(s["name"] for s in specs[:-1]) + f" and {specs[-1]['name']}"
@@ -58,6 +64,13 @@ def _home(page: Callable, specs: List[Dict[str, Any]]) -> None:
         f'<span>{len(sp.get("placements", []))} placement(s), quoted and dated</span></a>'
         for sp in specs)
 
+    # The third trust badge used to read "Nothing leaves your machine". It was
+    # false on the page whose whole argument is that every figure it prints is
+    # true. The crawl, the key and everything stored are genuinely local, but
+    # v0.1.5 does `run.client = Client()` unconditionally
+    # (git show dac347a:backend/adkit/server.py:329), so the harvested text,
+    # the product details and every draft ad go to Anthropic. The badge now
+    # claims only the part that holds; /privacy/ carries the destination list.
     body = f"""
 <div class="hero">
 <span class="eyebrow">{tick} Runs on your Mac. No account, no server.</span>
@@ -73,7 +86,7 @@ its own work before it shows you anything.</p>
 <div class="trust">
 <span>{tick} Every claim traced to a source</span>
 <span>{tick} Checked against 8 platforms' real limits</span>
-<span>{tick} Nothing leaves your machine</span>
+<span>{tick} No account, no telemetry, no server of ours</span>
 </div>
 </div>
 
