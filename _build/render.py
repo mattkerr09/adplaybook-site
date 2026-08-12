@@ -277,7 +277,12 @@ def page(*, path: str, title: str, description: str, body: str,
 <meta property="og:description" content="{esc(description)}">
 <meta property="og:url" content="{url}">
 <meta property="og:site_name" content="{BRAND}">
-<meta name="twitter:card" content="summary">
+<meta property="og:image" content="{BASE_URL}/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AdPlaybook - it writes the ad, then it tries to prove you wrong.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="{BASE_URL}/og.png">
 <meta name="twitter:title" content="{esc(title)}">
 <meta name="twitter:description" content="{esc(description)}">
 <style>{CSS}</style>

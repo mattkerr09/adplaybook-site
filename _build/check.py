@@ -41,6 +41,38 @@ def visible(h: str) -> str:
     return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", h))).strip()
 
 
+def check_referenced_assets(pages: list, fails: list[str]) -> None:
+    """Absolute URLs must be URLs, and referenced local assets must exist.
+
+    Added because a real bug got through: og:image was rendered from `SITE`,
+    which in render.py is a filesystem Path, so every page shipped
+    `content="/Users/matthewkerr/adplaybook-site/og.png"`. The page validated,
+    the build was clean, and the card would simply not have loaded anywhere.
+
+    Two things a program can settle, so it should:
+      * a src/href/content that looks like a local absolute path is never right
+      * a same-origin asset referenced by a page has to exist on disk
+    """
+    for p in pages:
+        raw = p.read_text()
+        rel = "/" + str(p.relative_to(SITE)).replace("index.html", "")
+
+        for m in re.finditer(r'(?:content|href|src)="(/Users/|/home/|file://|[A-Za-z]:\\\\)[^"]*"', raw):
+            fails.append(f"{rel}: a filesystem path published as a URL - {m.group(0)[:90]}")
+
+        for m in re.finditer(r'(?:content|href|src)="https://adplaybook\.app(/[^"]*)"', raw):
+            target = m.group(1)
+            if target.endswith("/") or "#" in target:
+                continue
+            if not (SITE / target.lstrip("/")).exists():
+                fails.append(f"{rel}: references {target}, which does not exist on disk")
+
+        for m in re.finditer(r'(?:src|href)="(/[^/"][^"]*\.(?:png|jpg|jpeg|webp|svg|css|js|pdf))"', raw):
+            target = m.group(1)
+            if not (SITE / target.lstrip("/")).exists():
+                fails.append(f"{rel}: references {target}, which does not exist on disk")
+
+
 def main() -> int:
     pages = sorted(SITE.glob("**/index.html"))
     if not pages:
@@ -48,6 +80,8 @@ def main() -> int:
 
     fails: list[str] = []
     warns: list[str] = []
+
+    check_referenced_assets(pages, fails)
 
     openings, h2sets, lengths = [], [], {}
     for p in pages:
