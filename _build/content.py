@@ -17,6 +17,7 @@ for theirs.
 from __future__ import annotations
 
 import html
+import re
 from typing import Any, Callable, Dict, List
 
 BRAND = "AdPlaybook"
@@ -74,6 +75,26 @@ def _latest_dmg() -> str:
 
 
 DMG = _latest_dmg()
+
+
+def _latest_tag() -> str:
+    """The version shown beside the download button.
+
+    This read a literal "v0.1.23" until 2026-08-13, in the same file and eight
+    lines from the DMG URL I had derived an hour earlier. Fixing one hardcoded
+    version and leaving its sibling is the shape of nearly everything found
+    today: the obvious instance gets corrected, the copy nobody thought about
+    keeps the old value, and the two never disagree because nothing compares
+    them.
+
+    It is taken from the DMG URL rather than fetched again, so the version and
+    the file a visitor downloads cannot drift apart — one lookup, one answer.
+    """
+    m = re.search(r"/releases/download/(v[^/]+)/", DMG)
+    return m.group(1) if m else ""
+
+
+VERSION_TAG = _latest_tag()
 
 
 def dmg_mb(url: str = DMG) -> str:
@@ -359,7 +380,7 @@ list of what could not be verified.</p>
 Gatekeeper warning because Apple's notary service cleared it, not because you
 right-clicked past one.</p>
 <p><a class="btn" href="{{DMG}}">{dl} Download for Mac · {dmg_size} MB</a></p>
-<p class="src">v0.1.23 · <a href="{{RELEASES}}">All releases</a> · needs Outlier
+<p class="src">{VERSION_TAG} · <a href="{{RELEASES}}">All releases</a> · needs Outlier
 running locally, or an OpenAI or Anthropic key</p>
 </div>
 <p class="win-cap"><span>A real run, not a mockup.</span> Verbatim output from
