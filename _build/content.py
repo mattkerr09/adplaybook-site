@@ -25,6 +25,39 @@ DMG = f"{REPO}/releases/download/v0.1.23/AdPlaybook-0.1.23-arm64.dmg"
 RELEASES = f"{REPO}/releases"
 
 
+def dmg_mb(url: str = DMG) -> str:
+    """The download size, measured from the DMG rather than typed.
+
+    Follows the rule _record() already sets a few lines down — commit the script
+    that derives a published figure or it goes stale silently — because the size
+    had gone stale exactly that way.
+
+    The hero and the download button both said "22 MB". The file is 22,923,679
+    bytes: 22.9 in the decimal units macOS Finder reports, 21.9 in binary. Neither
+    reading rounds to 22, so it was a truncation understating the download by
+    about 4%, and it would only widen — the source is already twenty versions
+    ahead of what this URL points at.
+
+    Decimal with one place, which is what docketseo.app publishes (22.6 MB for
+    22,562,184 bytes) and what crispvideo.app was corrected to on the same day.
+    crispvideo.app had the mirror-image error: it published 74 MB, the BINARY
+    figure, for a 78 MB download.
+
+    HEAD, not GET — a build should not pull the DMG. A missing Content-Length
+    raises instead of falling back to a constant: a size nobody could verify is
+    not a size worth publishing.
+    """
+    import urllib.request
+
+    req = urllib.request.Request(
+        url, method="HEAD", headers={"User-Agent": "adplaybook-build/1.0"})
+    with urllib.request.urlopen(req, timeout=30) as r:
+        length = r.headers.get("Content-Length")
+    if not length:
+        raise RuntimeError(f"no Content-Length for {url} — cannot publish a size")
+    return f"{int(length) / 1_000_000:.1f}"
+
+
 def esc(s: Any) -> str:
     return html.escape(str(s), quote=True)
 
@@ -123,6 +156,12 @@ def _home(page: Callable, specs: List[Dict[str, Any]]) -> None:
           'width="15" height="15"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/>'
           '<path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>')
 
+    # Measured once per build and used in both places that print it — the hero
+    # sub-line and the download button. They were two independent literals
+    # saying "22 MB", which is how they came to say a number the file has not
+    # been for twenty versions.
+    dmg_size = dmg_mb()
+
     spec_cards = "".join(
         f'<a class="card" href="/specs/{sp["key"]}/"><strong>{esc(sp["name"])}</strong>'
         f'<span>{len(sp.get("placements", []))} placement(s), quoted and dated</span></a>'
@@ -149,7 +188,7 @@ its own work before it shows you anything.</p>
 <a class="btn" href="{{DMG}}">{dl} Download for Mac</a>
 <a class="btn ghost" href="/specs/">See the ad specs</a>
 </div>
-<p class="hero-sub">v0.1.23 · 22 MB · Apple Silicon · notarised by Apple</p>
+<p class="hero-sub">v0.1.23 · {dmg_size} MB · Apple Silicon · notarised by Apple</p>
 </div>
 
 <section class="showcase">
@@ -268,7 +307,7 @@ list of what could not be verified.</p>
 <p>Mac, Apple Silicon. Signed, notarised and stapled — it opens without a
 Gatekeeper warning because Apple's notary service cleared it, not because you
 right-clicked past one.</p>
-<p><a class="btn" href="{{DMG}}">{dl} Download for Mac · 22 MB</a></p>
+<p><a class="btn" href="{{DMG}}">{dl} Download for Mac · {dmg_size} MB</a></p>
 <p class="src">v0.1.23 · <a href="{{RELEASES}}">All releases</a> · needs Outlier
 running locally, or an OpenAI or Anthropic key</p>
 </div>
