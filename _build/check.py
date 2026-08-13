@@ -144,6 +144,54 @@ def check_download_link(pages, fails, warns) -> None:
                 "Every visitor is downloading a version the developer has "
                 "already replaced.")
 
+        # A PUBLISHED release the site does not link is a different animal, and
+        # it fails rather than warns.
+        #
+        # A build sitting in dist/ is work in progress — source runs ahead of the
+        # download all day and a gate that fires on that would be red constantly,
+        # which is how a gate teaches people to ignore it. Publishing a release is
+        # a deliberate act that means "this is the one people should get". If the
+        # site then does not point at it, the release is unreachable and the
+        # publish silently did nothing.
+        #
+        # That is not hypothetical: v0.1.23 was published at 00:18 on 2026-08-13
+        # and adplaybook.app still served v0.1.5 — a build that could not complete
+        # a single campaign — for nearly two hours afterwards. The warning above
+        # was firing the whole time and blocked nothing.
+        latest = _latest_release()
+        if latest is None:
+            warns.append(
+                "could not reach the releases API. The published-release check "
+                "did NOT run — this is unchecked, not clean.")
+        elif _ver(latest) > _ver(shown):
+            fails.append(
+                f"the site offers {shown} but {latest} is PUBLISHED. A release "
+                "nobody can download from the site is a release that did not "
+                "happen — point the download at it or unpublish it.")
+
+
+def _latest_release():
+    """Newest published release tag, or None if GitHub could not be reached.
+
+    None means unknown, never 'fine'. The caller reports it as unchecked.
+    """
+    import json
+    import urllib.error
+    import urllib.request
+
+    url = ("https://api.github.com/repos/mattkerr09/adplaybook-site/"
+           "releases/latest")
+    try:
+        req = urllib.request.Request(
+            url, headers={"User-Agent": "adplaybook-site-check/1.0",
+                          "Accept": "application/vnd.github+json"})
+        with urllib.request.urlopen(req, timeout=20) as r:
+            tag = json.load(r).get("tag_name") or ""
+    except Exception:  # noqa: BLE001 — any failure means "unknown"
+        return None
+    m = re.search(r"(\d+\.\d+\.\d+)", tag)
+    return m.group(1) if m else None
+
 
 def _ver(s: str):
     return tuple(int(x) for x in s.split("."))
