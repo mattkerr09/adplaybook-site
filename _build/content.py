@@ -141,7 +141,6 @@ def _home(page: Callable, specs: List[Dict[str, Any]]) -> None:
     # /privacy/ carries the destination list.
     body = f"""
 <div class="hero">
-<span class="eyebrow">{tick} Runs on your Mac. No account, no server.</span>
 <h1>It writes the ad.<br><span class="grad">Then it tries to prove you wrong.</span></h1>
 <p class="lede">{BRAND} turns a product page into a complete, buildable ad campaign —
 strategy, audiences, exclusions, copy, test matrix, measurement plan — then attacks
@@ -151,11 +150,6 @@ its own work before it shows you anything.</p>
 <a class="btn ghost" href="/specs/">See the ad specs</a>
 </div>
 <p class="hero-sub">v0.1.23 · 22 MB · Apple Silicon · notarised by Apple</p>
-<div class="trust">
-<span>{tick} Every claim traced to a source</span>
-<span>{tick} Checked against 8 platforms' real limits</span>
-<span>{tick} No account, no telemetry, no server of ours</span>
-</div>
 </div>
 
 {_record()}

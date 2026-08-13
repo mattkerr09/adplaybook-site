@@ -72,7 +72,7 @@ a:hover{text-decoration:underline;text-underline-offset:3px}
 .wrap{width:min(var(--wr),calc(100% - 2.6rem));margin:0 auto}
 .wide{width:min(var(--w),calc(100% - 2.6rem));margin:0 auto}
 
-nav{position:sticky;top:0;z-index:80;background:rgba(0,0,0,.6);
+nav{position:sticky;top:0;z-index:80;background:rgba(6,8,12,.72);
   backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
   border-bottom:1px solid rgba(28,32,41,.9)}
 .nav-inner{display:flex;align-items:center;gap:1.5rem;height:58px;
@@ -97,11 +97,61 @@ h2{font-size:clamp(1.45rem,2.7vw,2rem);line-height:1.18;letter-spacing:-.028em;
   font-weight:660;margin:3.2rem 0 .9rem}
 h3{font-size:1.12rem;font-weight:640;letter-spacing:-.012em;margin:2rem 0 .5rem}
 p{margin:0 0 1.05rem}
+
+/* Measure.
+   Measured in the browser, not eyeballed: section paragraphs were running 127
+   characters per line at 1280px. The readable band is 45–75 and the usual
+   target is about 66, so this was near double the upper bound — which is why
+   the page felt tiring without anything looking obviously wrong. The hero lede
+   was already at 70ch and the record intro at 76ch; only the sections were
+   unbounded, because they had no max-width at all and inherited the 1080px
+   container.
+   Headings are left alone. A wide heading is fine — you do not read it in
+   lines, you read it in one glance.
+
+   The number is 52ch, not 68ch, and the difference matters: the CSS ch unit is
+   the advance width of "0", which in this face is noticeably wider than the
+   average letter. 68ch measured out at 95 REAL characters per line via canvas
+   metrics — still deep into the unreadable range while looking, in the
+   stylesheet, like a sensible value. Set by measuring rendered text rather
+   than by trusting the unit's name. */
+section > p, section > ul, section > ol{max-width:52ch}
+.record .rec-intro{max-width:48ch}
 ul,ol{margin:0 0 1.15rem 1.2rem;padding:0}
 li{margin-bottom:.5rem}
-.grad{background:linear-gradient(105deg,#cfe0ff 0%,#4c8dff 44%,#9d8cff 100%);
-  -webkit-background-clip:text;background-clip:text;color:transparent}
+/* .grad was a three-stop gradient across the second headline line. Screenshot
+   it beside Linear and Raycast and it is the one element that dates the page:
+   both set their headline in a single flat colour and spend the attention on
+   space instead. A gradient also fights --blue, which is the only colour on
+   this site allowed to mean "do this next".
+   Kept as a class so older pages do not break; it now just sets the ink. */
+.grad{color:var(--white)}
 .lede{font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.55;color:var(--grey);margin:0 0 1.6rem}
+
+/* --- hero -----------------------------------------------------------------
+   Measured against Raycast and Linear at 1280x800 rather than guessed at.
+   Ours stacked five things — pill eyebrow, gradient headline, lede, two
+   buttons, a version line, three tick chips — and began 25% down the viewport.
+   Theirs carry two or three and begin near 50%. The difference does not read
+   as "more minimal", it reads as more certain: a page that needs three rows of
+   reassurance under the button is arguing with itself.
+
+   So the eyebrow and the tick row are gone, and what is left gets the space
+   they were using. */
+.hero{padding:clamp(3.5rem,9vh,6rem) 0 clamp(1rem,2vh,1.6rem);text-align:left}
+.hero h1{margin:0 0 1.5rem;max-width:22ch}
+.hero-sub{margin-top:1.4rem;font-family:var(--mono);font-size:.8rem;
+  color:var(--grey-dim);letter-spacing:-.01em}
+
+/* One axis for the whole page.
+   Screenshotted at 1280x1500, the hero was centred and every section under it
+   was left-aligned. That mismatch is the actual generic tell — it is what a
+   template hero looks like with hand-written content below it. Linear is left
+   throughout, Raycast is centred throughout; both are internally consistent
+   and that is what reads as designed rather than assembled.
+   Left, because the rest of the page is already left and because a left-set
+   headline over a dense evidence table reads as an instrument. Centring is for
+   pages whose hero is the whole argument. */
 
 /* --- the measured record ------------------------------------------------
    Docket's instrument vocabulary rather than a marketing stat row: mono
@@ -113,7 +163,7 @@ li{margin-bottom:.5rem}
    tabular-nums so the columns line up; a proportional 1 next to a 7 in a
    headline number reads as sloppy at this scale. */
 .record{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
-  padding:clamp(2.6rem,5vw,4rem) 0;margin:clamp(3rem,6vw,5rem) 0}
+  padding:clamp(2.4rem,4.5vw,3.4rem) 0;margin:clamp(1.6rem,3vw,2.6rem) 0}
 .rec-intro{max-width:60ch;color:var(--grey);margin:.4rem 0 2.2rem}
 .recs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
   gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--r-sm);
@@ -145,12 +195,12 @@ li{margin-bottom:.5rem}
   box-shadow:none}
 .btn.ghost:hover{border-color:var(--blue);box-shadow:none}
 
-.hero{position:relative;text-align:center;padding:5rem 0 3.4rem}
+.hero{position:relative}
 .hero::before{content:"";position:absolute;inset:-30% -50% auto;height:120%;pointer-events:none;
   background:radial-gradient(760px 420px at 50% 0,rgba(76,141,255,.16),transparent 70%)}
 .hero>*{position:relative}
 .hero h1{font-size:clamp(2.6rem,7vw,4.6rem);margin:.9rem 0 1.2rem}
-.hero .lede{max-width:62ch;margin-inline:auto}
+.hero .lede{max-width:56ch}
 .eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border-radius:999px;
   border:1px solid var(--hair-lit);background:var(--panel-2);color:var(--ice);
   font-size:.86rem;font-weight:560;white-space:nowrap}
@@ -158,7 +208,7 @@ li{margin-bottom:.5rem}
    eyebrow tick rendered about 120px tall and pushed the label onto three
    lines. Every icon in this stylesheet gets an explicit box. */
 .eyebrow svg{width:14px;height:14px;flex:none;color:var(--green)}
-.hero-actions{display:flex;gap:.8rem;justify-content:center;flex-wrap:wrap;margin:2rem 0 1rem}
+.hero-actions{display:flex;gap:.8rem;justify-content:flex-start;flex-wrap:wrap;margin:2rem 0 1rem}
 .hero-sub{font-size:.88rem;color:var(--grey-dim);font-family:var(--mono)}
 .trust{display:flex;gap:1.6rem;justify-content:center;flex-wrap:wrap;margin-top:2.4rem;
   font-size:.9rem;color:var(--grey)}
