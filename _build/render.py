@@ -92,7 +92,12 @@ nav{position:sticky;top:0;z-index:80;background:rgba(6,8,12,.72);
 .nav-links .btn svg{flex:none}
 
 h1{font-size:clamp(2.1rem,4.6vw,3.2rem);line-height:1.06;letter-spacing:-.035em;
-  font-weight:690;margin:.6rem 0 1rem}
+  font-weight:560;margin:.6rem 0 1rem}
+/* 560, not 690, and 3.6rem, not 4.6rem.
+   Measured against the four references at 1280x800: Cursor sets its h1 at 26px
+   weight 400, Warp at 64px weight 400, Linear at 64px weight 510. Ours was
+   73.6px at 690 — the largest and heaviest of the set by a clear margin, which
+   is not confidence, it is volume. */
 h2{font-size:clamp(1.45rem,2.7vw,2rem);line-height:1.18;letter-spacing:-.028em;
   font-weight:660;margin:3.2rem 0 .9rem}
 h3{font-size:1.12rem;font-weight:640;letter-spacing:-.012em;margin:2rem 0 .5rem}
@@ -138,7 +143,7 @@ li{margin-bottom:.5rem}
 
    So the eyebrow and the tick row are gone, and what is left gets the space
    they were using. */
-.hero{padding:clamp(3.5rem,9vh,6rem) 0 clamp(1rem,2vh,1.6rem);text-align:left}
+.hero{padding:clamp(2.6rem,6vh,4rem) 0 clamp(.6rem,1.5vh,1.2rem);text-align:left}
 .hero h1{margin:0 0 1.5rem;max-width:22ch}
 .hero-sub{margin-top:1.4rem;font-family:var(--mono);font-size:.8rem;
   color:var(--grey-dim);letter-spacing:-.01em}
@@ -162,6 +167,17 @@ li{margin-bottom:.5rem}
 
    tabular-nums so the columns line up; a proportional 1 next to a 7 in a
    headline number reads as sloppy at this scale. */
+/* The product, then the caption.
+   Measured at 1280x800: Cursor puts its screenshot at y=351, Linear 550, Warp
+   593 — all inside the first screen. Ours was at 2005, three screens down,
+   behind a kicker, an h2 and an intro paragraph. None of the three references
+   puts a heading before the product; they go headline, buttons, product, and
+   explain underneath. */
+.showcase{margin:0 0 clamp(2rem,4vw,3rem)}
+.win-cap{max-width:64ch;margin:1.1rem 0 0;font-size:.92rem;line-height:1.6;
+  color:var(--grey-dim)}
+.win-cap span{color:var(--grey);font-weight:560}
+
 .record{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
   padding:clamp(2.4rem,4.5vw,3.4rem) 0;margin:clamp(1.6rem,3vw,2.6rem) 0}
 .rec-intro{max-width:60ch;color:var(--grey);margin:.4rem 0 2.2rem}
@@ -199,7 +215,7 @@ li{margin-bottom:.5rem}
 .hero::before{content:"";position:absolute;inset:-30% -50% auto;height:120%;pointer-events:none;
   background:radial-gradient(760px 420px at 50% 0,rgba(76,141,255,.16),transparent 70%)}
 .hero>*{position:relative}
-.hero h1{font-size:clamp(2.6rem,7vw,4.6rem);margin:.9rem 0 1.2rem}
+.hero h1{font-size:clamp(2.2rem,4.8vw,3.7rem);margin:.9rem 0 1.2rem}
 .hero .lede{max-width:56ch}
 .eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border-radius:999px;
   border:1px solid var(--hair-lit);background:var(--panel-2);color:var(--ice);

@@ -152,28 +152,7 @@ its own work before it shows you anything.</p>
 <p class="hero-sub">v0.1.23 · 22 MB · Apple Silicon · notarised by Apple</p>
 </div>
 
-{_record()}
-
-<section>
-<p class="kicker">The part nobody else does</p>
-<h2>It refuses to write things it cannot back up</h2>
-<p>An ad that says "60-minute callouts" has to point at the page that says it.
-{BRAND} harvests the exact words from your own site and blocks any figure that
-is not there. Recombine two true statements into a third one nobody actually
-made, and it flags that for your sign-off instead of quietly shipping it.</p>
-<p>You get an <strong>evidence receipt</strong>: every claim beside the URL and
-verbatim quote behind it — plus the ones needing sign-off, the ones that were
-blocked, and the pages it could not read. It is built for whoever signs the ad
-off and carries the liability for it.</p>
-</section>
-
-<section>
-<p class="kicker">A real run, not a mockup</p>
-<h2>Here is it refusing its own work</h2>
-<p>This is verbatim output from pointing {BRAND} at HoneyBook's website. It
-wrote three ad variants, then a second model was asked to find the reason the
-campaign fails. Nothing here is illustrative.</p>
-
+<section class="showcase">
 <div class="win">
   <div class="win-bar">
     <span class="win-dot" style="background:#ff5f57"></span>
@@ -293,6 +272,25 @@ right-clicked past one.</p>
 <p class="src">v0.1.23 · <a href="{{RELEASES}}">All releases</a> · needs Outlier
 running locally, or an OpenAI or Anthropic key</p>
 </div>
+<p class="win-cap"><span>A real run, not a mockup.</span> Verbatim output from
+pointing {BRAND} at HoneyBook's website. It wrote three ad variants, then a
+second model was asked to find the reason the campaign fails. Nothing here is
+illustrative.</p>
+</section>
+
+{_record()}
+
+<section>
+<p class="kicker">The part nobody else does</p>
+<h2>It refuses to write things it cannot back up</h2>
+<p>An ad that says "60-minute callouts" has to point at the page that says it.
+{BRAND} harvests the exact words from your own site and blocks any figure that
+is not there. Recombine two true statements into a third one nobody actually
+made, and it flags that for your sign-off instead of quietly shipping it.</p>
+<p>You get an <strong>evidence receipt</strong>: every claim beside the URL and
+verbatim quote behind it — plus the ones needing sign-off, the ones that were
+blocked, and the pages it could not read. It is built for whoever signs the ad
+off and carries the liability for it.</p>
 </section>
 
 <section>
