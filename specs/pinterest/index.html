@@ -363,6 +363,28 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
   .hero{padding:3.2rem 0 2.4rem}
   .nav-links{gap:.9rem;font-size:.84rem}
   .nav-links li:nth-child(3){display:none}
+
+  /* At 375px this nav was 442px wide — six links plus the Download button, with
+     nowhere to go. Shrinking the gap and hiding one item was not enough, and the
+     consequence was not merely a clipped nav: the document became 521px wide, so
+     the LAYOUT VIEWPORT widened, and `position:fixed; right:.85rem` on the theme
+     toggle resolved against that instead of the screen. The toggle rendered
+     132px off the right edge — invisible and unreachable on a phone, a control I
+     added the same evening and would not have found by looking at a desktop.
+     A horizontal overflow does not stay a local problem. */
+  .nav-inner{padding-right:2.9rem}     /* clear the fixed toggle */
+  .nav-links{
+    flex:1 1 auto; min-width:0;
+    overflow-x:auto; -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links li{flex:none}
+
+  /* WCAG 2.2 Target Size (Minimum). Measured on the live page at 375px: nav
+     links were 16-17px tall and footer links 15px, all with the hit box exactly
+     the height of the text. */
+  .nav-links a, footer a{display:inline-flex;align-items:center;min-height:24px}
 }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Pinterest ad specs and character limits","description":"Pinterest ad character limits, image sizes and hard floors. Every figure quoted from Pinterest's own documentation with the date it was read, 2026-08-10.","datePublished":"2026-08-10","dateModified":"2026-08-10","publisher":{"@type":"Organization","name":"AdPlaybook"},"isBasedOn":"https://help.pinterest.com/en/business/article/pinterest-product-specs"}</script>
