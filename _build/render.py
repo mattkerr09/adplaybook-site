@@ -102,6 +102,7 @@ li{margin-bottom:.5rem}
 .grad{background:linear-gradient(105deg,#cfe0ff 0%,#4c8dff 44%,#9d8cff 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .lede{font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.55;color:var(--grey);margin:0 0 1.6rem}
+.note{font-size:.92rem;line-height:1.6;color:var(--grey);border-left:2px solid var(--line);padding:.1rem 0 .1rem 1rem;margin:1.2rem 0}
 .muted{color:var(--grey)}
 .crumb{font-size:.85rem;color:var(--grey-dim);margin:2.2rem 0 .4rem;font-family:var(--mono)}
 .crumb a{color:var(--grey)}
@@ -550,6 +551,12 @@ def main() -> int:
 
     from content import build_rest  # noqa: E402
     build_rest(page, specs, PAGES)
+
+    # Inside the build, not after it. The sitemap is written from PAGES, which
+    # page() appends to — a hub built by a separate script produces four live
+    # pages that no crawler is told about, which the gate caught.
+    from howto import build as build_howto  # noqa: E402
+    build_howto(page)
 
     # sitemap
     urls = "".join(
