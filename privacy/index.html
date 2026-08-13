@@ -4,14 +4,14 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Privacy — what AdPlaybook sends, and where | AdPlaybook</title>
-<meta name="description" content="What AdPlaybook sends and where it sends it, named destination by named destination, for the build you can download today — including the one step that does leave your Mac.">
+<meta name="description" content="What AdPlaybook sends and where it sends it, named destination by named destination, for the build you can download today — including which steps leave your Mac, which do not, and why you do not get to choose.">
 <meta name="theme-color" content="#0d1017">
-<meta name="last-modified" content="2026-08-11">
+<meta name="last-modified" content="2026-08-12">
 <link rel="canonical" href="https://adplaybook.app/privacy/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Privacy — what AdPlaybook sends, and where | AdPlaybook">
-<meta property="og:description" content="What AdPlaybook sends and where it sends it, named destination by named destination, for the build you can download today — including the one step that does leave your Mac.">
+<meta property="og:description" content="What AdPlaybook sends and where it sends it, named destination by named destination, for the build you can download today — including which steps leave your Mac, which do not, and why you do not get to choose.">
 <meta property="og:url" content="https://adplaybook.app/privacy/">
 <meta property="og:site_name" content="AdPlaybook">
 <meta property="og:image" content="https://adplaybook.app/og.png">
@@ -21,7 +21,7 @@
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://adplaybook.app/og.png">
 <meta name="twitter:title" content="Privacy — what AdPlaybook sends, and where | AdPlaybook">
-<meta name="twitter:description" content="What AdPlaybook sends and where it sends it, named destination by named destination, for the build you can download today — including the one step that does leave your Mac.">
+<meta name="twitter:description" content="What AdPlaybook sends and where it sends it, named destination by named destination, for the build you can download today — including which steps leave your Mac, which do not, and why you do not get to choose.">
 <style>
 /* Design tokens match the sibling products on purpose — same black, same
    hairlines, same pill buttons — with this app's blue in place of Crisp's
@@ -198,20 +198,21 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 }
 </style>
 
+<script defer data-domain="adplaybook.app" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
 <nav><div class="wrap nav-inner">
 <a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#141822"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#4c8dff"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#4c8dff"/><circle cx="46" cy="70" r="9.5" fill="#141822"/><circle cx="46" cy="70" r="4.3" fill="#4c8dff"/><circle cx="61" cy="53" r="5" fill="#141822"/><circle cx="75" cy="36" r="5" fill="#141822"/></svg>AdPlaybook</a>
-<ul class="nav-links"><li><a href="/specs/">Ad specs</a></li><li><a href="/learn/">Learn</a></li><li><a href="/for/">By business</a></li><li><a href="/vs/">Compare</a></li><li><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.1.5/AdPlaybook-0.1.5-arm64.dmg"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>Download</a></li></ul>
+<ul class="nav-links"><li><a href="/specs/">Ad specs</a></li><li><a href="/learn/">Learn</a></li><li><a href="/for/">By business</a></li><li><a href="/vs/">Compare</a></li><li><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.1.23/AdPlaybook-0.1.23-arm64.dmg"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>Download</a></li></ul>
 </div></nav>
 <div class="wrap"><!-- DRAFT. Assembled from the product's source code, and NOT REVIEWED BY A LAWYER. The facts are cited in _build/legal.py; the legal framing around them has had no professional review. Do not treat as approved copy. -->
 <article>
 <p class="crumb">Privacy</p>
 <h1>What this sends, and where</h1>
-<p class="lede">What AdPlaybook sends and where it sends it, named destination by named destination, for the build you can download today — including the one step that does leave your Mac.</p>
+<p class="lede">What AdPlaybook sends and where it sends it, named destination by named destination, for the build you can download today — including which steps leave your Mac, which do not, and why you do not get to choose.</p>
 
 <div class="box ok">
-<p style="margin:0"><span class="pill checked">last changed 2026-08-11</span>
+<p style="margin:0"><span class="pill checked">last changed 2026-08-12</span>
 Checked against the source of the build behind the Download button, not against
 a template. Where the app and this page could disagree, the app is the fact and
 this page is the bug.</p>
@@ -221,19 +222,35 @@ this page is the bug.</p>
 <p>There is no account, no server of ours, and no telemetry. Nothing is reported
 back to Kerr &amp; Company LLC, because there is nowhere for it to be reported to. We hold no
 data about you at all, so there is nothing for you to ask us to delete.</p>
-<p>One step is different, and it is the one that matters. In the build you can
-download today, the writing is done by <strong>Anthropic's API, using your own
-key</strong> — so the text harvested from your site, your product details and
-every draft ad are sent to Anthropic. That is not a footnote and it is not
-optional in this build.</p>
+<p>One step is different, and it is the one that matters. The writing is done by
+a model, and <strong>which model — and therefore where your text goes — is
+settled by your machine, not by you.</strong> If Outlier is answering here and
+has issued a key this app can read, the writing happens on <code>127.0.0.1</code>
+and nothing about your product leaves this Mac. If it is not, the text harvested
+from your site, your product details, every draft ad, and up to 3,000 characters
+of any landing page you point the ad at go over the internet to Claude on your
+own Anthropic key. The app takes the first provider it can reach, in a fixed
+order, and does not ask first. That is not a footnote, and there is no setting in
+the app that changes it.</p>
 
 <div class="box warn">
-<strong>A correction to the homepage</strong>
-<p>The homepage carries a badge reading "Nothing leaves your machine". That is
-true of the crawl, true of your key, and true of everything the app stores. It
-is <em>not</em> true of the generation step in v0.1.5, which sends text to
-Anthropic. The badge overstates it, the badge is wrong, and this page is the
-accurate statement until the badge is corrected.</p>
+<strong>Why this page does not say "nothing leaves your machine"</strong>
+<p>The homepage used to carry that as a badge. It was removed because it was not
+true, and it is still not true — not even with Outlier running. Two fetches go
+out over the network whichever provider you end up on: the crawl of the site you
+typed, and, if you give the ad a destination URL, a fetch of that page. Both are
+aimed at sites you named yourself, and neither reaches us. What the model then
+sees is a separate question, and the table below answers it.</p>
+<p>The claim that does hold, and only while Outlier is the provider that
+answered, is the narrower one the app itself makes: <strong>nothing about your
+product leaves this Mac.</strong> When Outlier is not the one answering, the
+harvested text, your product details, every draft ad and the landing page's text
+go to a model vendor on your own key, and the app makes that choice without
+asking you.</p>
+<p style="margin-bottom:0"><strong>Outlier is also made by Kerr &amp; Company LLC.</strong> The
+app ranks it first because it runs locally and costs nothing per run, and you are
+entitled to know we have an interest in you using it before you take the
+recommendation.</p>
 </div>
 
 <h2>Where each thing actually goes</h2>
@@ -242,19 +259,49 @@ accurate statement until the badge is corrected.</p>
 <thead><tr><th>What</th><th>Where it goes</th><th>Kept how long</th></tr></thead>
 <tbody>
 <tr><td><strong>The website you point it at</strong></td>
-<td>Fetched directly by your Mac. At most 25 pages, obeying that site's
-<code>robots.txt</code> and its <code>Crawl-delay</code>, with the crawler
-identifying itself in the User-Agent rather than pretending to be a browser.</td>
+<td>Fetched directly by your Mac, at most 25 pages. It reads that site's
+<code>robots.txt</code> and skips links that <em>Googlebot</em> would be told to
+skip — that is the rule set it follows, because it asks the file about Googlebot
+rather than about itself — and it does not apply that check to the address you
+typed or to URLs listed in the sitemap. It leaves a quarter of a second between
+requests and backs off when a site says it is being asked too often; it does not
+read <code>Crawl-delay</code>. It sends a Chrome user-agent string with
+<code>AdPlaybook/1.0</code> appended, so a site owner reading their logs closely
+can tell what it was, but it does not present itself as a bot to anything that
+only checks the prefix. Certificates are not verified on these fetches, because a
+broken certificate is itself worth reporting — on a hostile network that means
+what it reads could have been tampered with.</td>
 <td>In memory for the run</td></tr>
-<tr><td><strong>The text it harvested, your product details, and every draft
-ad</strong></td>
-<td><strong>Anthropic's API</strong>, over the internet, authenticated with your
-key. What Anthropic then does with it is governed by Anthropic's terms and
-privacy policy, not ours.</td>
-<td>Ask Anthropic — we cannot see it and cannot speak for them</td></tr>
+<tr><td><strong>The landing page you point the ad at</strong></td>
+<td>Fetched by your Mac, following redirects wherever they lead, including onto a
+site you did not name. Its title, headings, calls to action and first 3,000
+characters of visible text are then sent to whichever provider is doing the
+writing, so the ad's promises can be checked against the page. Unlike the crawl,
+this fetch does not read that site's <code>robots.txt</code>, and it still
+identifies itself with a user-agent left over from the crawler this was built
+from (<code>Docket-SEO-Audit/1.0</code>). Both are bugs and both are on the list.
+Leave the destination field empty and none of it happens — and the app reports
+the check as skipped rather than as passed.</td>
+<td>The fetch itself, in memory for the run. What was sent onward is with the
+provider — the row below</td></tr>
+<tr><td><strong>The text it harvested, your product details, every draft ad, and
+the landing page's text</strong></td>
+<td>To exactly one provider, resolved once at the start of the run and used for
+all of it. <strong>Outlier</strong> — <code>http://127.0.0.1</code>, this Mac,
+nothing over the internet. Or <strong>Claude (Anthropic)</strong>, over the
+internet, authenticated with your key; what Anthropic then does with it is
+governed by Anthropic's terms and privacy policy, not ours. <strong>ChatGPT
+(OpenAI)</strong> is a third option in the code that the app as installed cannot
+reach — see the box below. Which one you get is settled by your machine, not by
+the picker.</td>
+<td>On Outlier it never leaves this Mac; how long Outlier itself then keeps it is
+Outlier's business, not ours. On Claude, ask Anthropic — we cannot see it and
+cannot speak for them</td></tr>
 <tr><td><strong>Your API key</strong></td>
-<td>Written to a file on your Mac and sent only to the provider it belongs to.
-Never to us, never to the other providers, never into a log line.</td>
+<td>Written to a file on your Mac. The Anthropic key is read back and sent to
+Anthropic when a run uses it. A key you enter for ChatGPT is written and read by
+nothing at all, so it is sent nowhere, including to OpenAI — see the box below.
+Never to us, never to a provider it does not belong to, never into a log line.</td>
 <td>Until you delete the file</td></tr>
 <tr><td><strong>The brief, the strategy scores, the campaign, the evidence
 receipt, the exports</strong></td>
@@ -268,16 +315,43 @@ no crash reporting, and no licence check that would phone home.</td>
 </table>
 
 <div class="box warn">
-<strong>The provider picker does not work in this build</strong>
-<p>The app lists three providers and recommends Outlier because Outlier runs on
-your Mac, which would mean nothing leaves it at all. In <strong>v0.1.5 —
-the build the Download button serves — choosing a provider does not change
-where the run goes.</strong> The run path calls Anthropic unconditionally.</p>
-<p>That is a defect, not a policy. The current source picks whichever provider
-is actually usable, Outlier first, so a later build will behave the way the
-interface describes. Until that build ships and this page changes, treat every
-run as going to Anthropic, and do not point it at anything you would not send
-there.</p>
+<strong>The provider picker still does not decide anything</strong>
+<p>If any provider is already usable on your Mac you never see this screen — the
+app goes straight to the start screen and uses that provider, and you reach the
+list only through the settings gear. When you do see it, the app lists three
+providers and marks Outlier as recommended because Outlier runs on your Mac. In
+<strong>v0.1.23 — the build the Download button serves — choosing one does not
+change where the run goes.</strong> The button moves you to the next screen and
+records nothing.</p>
+<p>The run asks the machine instead, in this order. <strong>Outlier</strong>, if
+it is both answering on <code>127.0.0.1</code> and has issued a local key this
+app can read from <code>~/.outlier/openai_api.json</code> — a running Outlier
+with no key in that file is skipped, and the provider screen says "ready" next to
+it only when both hold. Otherwise <strong>ChatGPT</strong>, if
+<code>OPENAI_API_KEY</code> is set in the environment the app inherits; nothing
+in the app sets it and the ChatGPT box in Settings cannot produce it, so unless
+you have set that variable yourself for the whole login session, this option is
+unreachable. Otherwise <strong>Claude</strong>, if an Anthropic key is on the
+machine. Otherwise it stops and names each one it checked and why it could not
+use it.</p>
+<p>That is a defect, not a policy, and it has a second half worth stating
+plainly: <strong>a key you paste into the ChatGPT box is saved and then never
+read.</strong> It is written to <code>~/.config/adkit/openai.key</code> and
+nothing loads it back. So the practical destination set for the app as shipped is
+Outlier or Claude: with Outlier not answering, the run goes to Claude if you have
+an Anthropic key and refuses to start if you do not.</p>
+<p>The app also does not tell you which one it chose. Nothing names the provider
+until the first cost line appears — after the first model call has already
+happened — and on Claude that line shows the cost without the vendor's name. The
+guide, the evidence receipt and the exports do not record it either. If you need
+that in writing for a compliance file, ask.</p>
+<p style="margin-bottom:0">Until this page says otherwise, do not treat the
+picker as a privacy control. If a run must stay on this Mac, check the provider
+screen says "ready" next to Outlier before you start it. If a run must not reach
+Anthropic, remove <code>ANTHROPIC_API_KEY</code> from the environment and delete
+<code>~/.config/adkit/key</code> (or <code>$XDG_CONFIG_HOME/adkit/key</code>).
+Deleting <code>openai.key</code> changes nothing, because that file is not what
+the app reads. Removing the key is the only control that actually works.</p>
 </div>
 
 <h2>What it writes to your Mac, and exactly where</h2>
@@ -285,11 +359,17 @@ there.</p>
 <li><code>~/.config/adkit/key</code> — your Anthropic key, created with
 owner-only permissions (<code>0600</code>). If <code>XDG_CONFIG_HOME</code> is
 set, that path is used instead.</li>
-<li><code>~/.config/adkit/&lt;provider&gt;.key</code> — the same, for any other
-provider you add a key for.</li>
+<li><code>~/.config/adkit/openai.key</code> — written with the same permissions
+when you enter a ChatGPT key, and read by nothing. Always under your home
+directory even when <code>XDG_CONFIG_HOME</code> is set, unlike the file above.
+Delete it; it does nothing.</li>
 <li><code>~/.outlier/openai_api.json</code> — <em>read</em>, never written. That
-file belongs to Outlier; the app reads it only to find the port Outlier is
-listening on and the local key it issued.</li>
+file belongs to Outlier; the app reads it to find the port Outlier is listening
+on and the local key it issued. It also checks an <code>OUTLIER_PORT</code>
+variable and, failing both, tries a short range of loopback ports. All of that
+stays on this Mac.</li>
+<li><code>~/Library/WebKit/app.adplaybook.desktop/</code> — created by the macOS
+web view the window is built from. The app stores nothing in it; macOS does.</li>
 <li>Anything you explicitly export or save, wherever you chose to save it.</li>
 </ul>
 <p>That is the complete list. Deleting those files and the app removes
@@ -297,9 +377,15 @@ everything it put on the machine.</p>
 
 <h2>This website</h2>
 <p>These pages are static files served by GitHub Pages. There are no cookies, no
-analytics script, no tag manager, no pixel, no embedded fonts and no form to
-submit — view the source of any page and there is nothing to find. We set
-nothing in your browser and we cannot see who you are.</p>
+tag manager, no pixel, no embedded fonts and no form to submit. We set nothing in
+your browser and we cannot see who you are.</p>
+<p>There is <strong>one</strong> script, and this page used to claim there was
+none. The site loads <a href="https://plausible.io/privacy" rel="nofollow">
+Plausible</a>, which counts page views without cookies and without collecting
+anything that identifies a visitor — no cookie, no device fingerprint, no
+cross-site profile, and nothing we could use to recognise you on a return visit.
+It tells us how many people read a page, not who. View the source of any page and
+that one script is what you will find; there is nothing else.</p>
 <p>Two things are true anyway and you should know them:</p>
 <ul>
 <li><strong>GitHub serves the site and the download.</strong> Fetching a page or
@@ -316,17 +402,22 @@ your data. We are not. There is no database, no mailing list, no customer
 record, and no copy of anything the app produced — so a request to see, correct
 or delete what we hold has the same answer every time, which is that there is
 nothing there.</p>
-<p>Where your data does exist is with the model provider you used, under your
-own account with them, and with GitHub as the host of this site. Those requests
-go to them. If it would help to have that in writing from us for a compliance
-file, ask and you will get it.</p>
+<p>Where your data may exist — if the run reached a cloud provider rather than
+Outlier on your own Mac — is with that provider, under your own account with
+them, and with GitHub as the host of this site. Those requests go to them. If it
+would help to have that in writing from us for a compliance file, ask and you
+will get it.</p>
 
 <div class="box">
 <strong>What this page does not cover</strong>
-<p>It describes v0.1.5, dated 2026-08-11. It does not describe any future build,
+<p>It describes v0.1.23, dated 2026-08-12. It does not describe any future build,
 and it does not describe a paid version, because there is not one — see
 <a href="/terms/">the terms</a>. If a payment mechanism, an account, a licence
 key or a server ever exists, this page changes before that ships, not after.</p>
+<p>It also cannot tell you what your own run will do. Where the writing happens
+depends on what is running and which keys are on your Mac at the moment you press
+go, and this page cannot see that. It can only tell you the order the app checks
+in and what each outcome means, which is what it does above.</p>
 <p style="margin-bottom:0">Listed rather than left blank, for the same reason
 the spec pages list what could not be verified: a policy with no gaps is either
 complete or hiding something, and from the outside those look identical.</p>
@@ -349,7 +440,7 @@ hand. It does not move when the site is rebuilt.</p>
 the date it was read. Where something could not be verified, the page says so
 rather than leaving a gap you cannot see.</p>
 <p><a href="/specs/">Ad specs</a> · <a href="/learn/">Learn</a> ·
-<a href="/vs/">Compare</a> · <a href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.1.5/AdPlaybook-0.1.5-arm64.dmg">Download</a> ·
+<a href="/vs/">Compare</a> · <a href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.1.23/AdPlaybook-0.1.23-arm64.dmg">Download</a> ·
 <a href="/llms.txt">llms.txt</a></p>
 <p><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> ·
 <a href="/contact/">Contact</a></p>
