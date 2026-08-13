@@ -76,6 +76,33 @@ li{margin-bottom:.5rem}
 .grad{background:linear-gradient(105deg,#cfe0ff 0%,#4c8dff 44%,#9d8cff 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .lede{font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.55;color:var(--grey);margin:0 0 1.6rem}
+
+/* --- the measured record ------------------------------------------------
+   Docket's instrument vocabulary rather than a marketing stat row: mono
+   numerals, a denominator that stays visible, and a caveat under every figure.
+   The numbers are large because they are the argument, not decoration — and
+   three of the four are failure rates, which is the whole point of showing
+   them at this size.
+
+   tabular-nums so the columns line up; a proportional 1 next to a 7 in a
+   headline number reads as sloppy at this scale. */
+.record{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  padding:clamp(2.6rem,5vw,4rem) 0;margin:clamp(3rem,6vw,5rem) 0}
+.rec-intro{max-width:60ch;color:var(--grey);margin:.4rem 0 2.2rem}
+.recs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--r-sm);
+  overflow:hidden}
+.rec{background:var(--panel);padding:1.5rem 1.35rem}
+.rec-n{font-family:var(--mono);font-size:clamp(2rem,4.4vw,2.9rem);line-height:1;
+  font-weight:620;letter-spacing:-.045em;color:var(--white);
+  font-variant-numeric:tabular-nums;margin:0 0 .55rem}
+.rec-n span{color:var(--grey-dim);font-size:.44em;letter-spacing:-.02em}
+.rec-l{margin:0 0 .5rem;font-size:.95rem;font-weight:560;letter-spacing:-.011em;
+  color:var(--white);line-height:1.35}
+.rec-w{margin:0;font-size:.845rem;line-height:1.5;color:var(--grey-dim)}
+.rec-src{margin:1.4rem 0 0;font-size:.83rem;color:var(--grey-dim)}
+.rec-src code{font-family:var(--mono);font-size:.95em;color:var(--grey)}
+@media (max-width:560px){.recs{grid-template-columns:1fr}}
 .note{font-size:.92rem;line-height:1.6;color:var(--grey);border-left:2px solid var(--line);padding:.1rem 0 .1rem 1rem;margin:1.2rem 0}
 .muted{color:var(--grey)}
 .crumb{font-size:.85rem;color:var(--grey-dim);margin:2.2rem 0 .4rem;font-family:var(--mono)}
@@ -223,6 +250,8 @@ its own work before it shows you anything.</p>
 <span><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2"><path d="M2.5 8.5l3.5 3.5 7.5-8"/></svg> No account, no telemetry, no server of ours</span>
 </div>
 </div>
+
+<section class="record"><p class="kicker">What it has actually done</p><h2>Three of these four are failure rates</h2><p class="rec-intro">Measured across 38 real businesses — every one a live crawl through a real model, not a demo. Most tools publish the number that flatters them. These are the ones that do not.</p><div class="recs"><div class="rec"><p class="rec-n">26<span>/38</span></p><p class="rec-l">campaigns its own review refused</p><p class="rec-w">It argues with itself before it argues with you.</p></div><div class="rec"><p class="rec-n">12<span>/38</span></p><p class="rec-l">sites it could not read — and said so</p><p class="rec-w">Bot protection is common. Inventing a business is not an option.</p></div><div class="rec"><p class="rec-n">3<span>/38</span></p><p class="rec-l">flagged as reading machine-written</p><p class="rec-w">Counted, not guessed. A model cannot judge its own register.</p></div><div class="rec"><p class="rec-n">38<span>/38</span></p><p class="rec-l">shipped with every claim traced</p><p class="rec-w">Each line of copy against the page it came from, or marked unproven.</p></div></div><p class="rec-src">Derived at build time from the run corpus. <code>scripts/sweep_report.py</code> reproduces every figure.</p></section>
 
 <section>
 <p class="kicker">The part nobody else does</p>

@@ -102,6 +102,33 @@ li{margin-bottom:.5rem}
 .grad{background:linear-gradient(105deg,#cfe0ff 0%,#4c8dff 44%,#9d8cff 100%);
   -webkit-background-clip:text;background-clip:text;color:transparent}
 .lede{font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.55;color:var(--grey);margin:0 0 1.6rem}
+
+/* --- the measured record ------------------------------------------------
+   Docket's instrument vocabulary rather than a marketing stat row: mono
+   numerals, a denominator that stays visible, and a caveat under every figure.
+   The numbers are large because they are the argument, not decoration — and
+   three of the four are failure rates, which is the whole point of showing
+   them at this size.
+
+   tabular-nums so the columns line up; a proportional 1 next to a 7 in a
+   headline number reads as sloppy at this scale. */
+.record{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  padding:clamp(2.6rem,5vw,4rem) 0;margin:clamp(3rem,6vw,5rem) 0}
+.rec-intro{max-width:60ch;color:var(--grey);margin:.4rem 0 2.2rem}
+.recs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--r-sm);
+  overflow:hidden}
+.rec{background:var(--panel);padding:1.5rem 1.35rem}
+.rec-n{font-family:var(--mono);font-size:clamp(2rem,4.4vw,2.9rem);line-height:1;
+  font-weight:620;letter-spacing:-.045em;color:var(--white);
+  font-variant-numeric:tabular-nums;margin:0 0 .55rem}
+.rec-n span{color:var(--grey-dim);font-size:.44em;letter-spacing:-.02em}
+.rec-l{margin:0 0 .5rem;font-size:.95rem;font-weight:560;letter-spacing:-.011em;
+  color:var(--white);line-height:1.35}
+.rec-w{margin:0;font-size:.845rem;line-height:1.5;color:var(--grey-dim)}
+.rec-src{margin:1.4rem 0 0;font-size:.83rem;color:var(--grey-dim)}
+.rec-src code{font-family:var(--mono);font-size:.95em;color:var(--grey)}
+@media (max-width:560px){.recs{grid-template-columns:1fr}}
 .note{font-size:.92rem;line-height:1.6;color:var(--grey);border-left:2px solid var(--line);padding:.1rem 0 .1rem 1rem;margin:1.2rem 0}
 .muted{color:var(--grey)}
 .crumb{font-size:.85rem;color:var(--grey-dim);margin:2.2rem 0 .4rem;font-family:var(--mono)}
