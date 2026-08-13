@@ -21,8 +21,59 @@ from typing import Any, Callable, Dict, List
 
 BRAND = "AdPlaybook"
 REPO = "https://github.com/mattkerr09/adplaybook-site"
-DMG = f"{REPO}/releases/download/v0.1.23/AdPlaybook-0.1.23-arm64.dmg"
 RELEASES = f"{REPO}/releases"
+
+
+def _latest_dmg() -> str:
+    """The download URL, asked of GitHub rather than carried in this file.
+
+    This line used to read:
+
+        DMG = f"{REPO}/releases/download/v0.1.23/AdPlaybook-0.1.23-arm64.dmg"
+
+    and it was correct. v0.1.23 genuinely was the newest release a stranger could
+    download, so every check passed and the site was not stale. What made it a
+    problem is what sat behind it: the app repo shipped twelve builds on
+    2026-08-13 and published none of them, because nothing in it called
+    `gh release`. The hardcoded URL was true only because the pipeline it pointed
+    at had stopped moving. Give that pipeline a publish step — which
+    scripts/publish_release.sh in the app repo now is — and this line becomes a
+    falsehood on the first ship, silently, with the site still passing its own
+    checks because a hardcoded URL cannot disagree with itself.
+
+    So it is derived now, from the same place a visitor would look. Same rule as
+    dmg_mb() below and _record() further down: commit the code that derives a
+    published figure, or the figure goes stale without anything noticing.
+
+    The fallback matters as much as the lookup. If the API is unreachable — no
+    network during a build, rate limiting, an outage — this returns the releases
+    PAGE rather than guessing at a version-shaped URL. A visitor who lands on the
+    releases list can still get the product; a visitor who follows an invented
+    URL gets a 404 and concludes the download is broken. Degrade toward a place
+    that is always true.
+    """
+    import json
+    import urllib.error
+    import urllib.request
+
+    api = "https://api.github.com/repos/mattkerr09/adplaybook-site/releases/latest"
+    req = urllib.request.Request(
+        api, headers={"User-Agent": "adplaybook-site-build",
+                      "Accept": "application/vnd.github+json"})
+    try:
+        with urllib.request.urlopen(req, timeout=20) as r:
+            data = json.load(r)
+    except (urllib.error.URLError, urllib.error.HTTPError, OSError, ValueError):
+        return RELEASES
+
+    for asset in data.get("assets", []):
+        url = asset.get("browser_download_url", "")
+        if url.endswith("-arm64.dmg"):
+            return url
+    return RELEASES
+
+
+DMG = _latest_dmg()
 
 
 def dmg_mb(url: str = DMG) -> str:
