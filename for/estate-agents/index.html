@@ -6,7 +6,7 @@
 <title>Advertising for estate agents and letting agents (AdPlaybook)</title>
 <meta name="description" content="What changes about running ads for estate agents and letting agents: the legal category that applies, the Meta numbers that matter, and the strategy that fits.">
 <meta name="theme-color" content="#0d1017">
-<meta name="last-modified" content="2026-08-12">
+<meta name="last-modified" content="2026-08-13">
 <link rel="canonical" href="https://adplaybook.app/for/estate-agents/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <meta property="og:type" content="article">
@@ -27,10 +27,19 @@
    hairlines, same pill buttons — with this app's blue in place of Crisp's
    cyan. A family of tools that look unrelated reads as three hobby projects. */
 :root{
-  --black:#000;--panel:#08090d;--panel-2:#0d0f15;--card:#101319;
+  --black:#080b09;--panel:#0c110e;--panel-2:#101613;--card:#141b17;
   --hair:#1c2029;--hair-lit:#2a3040;
   --white:#f5f7fa;--grey:#a1a9b8;--grey-dim:#6b7382;
-  --blue:#4c8dff;--ice:#a8c8ff;--violet:#9d8cff;--green:#4ade80;--amber:#d9a72b;
+  /* Four of the five sites in this portfolio were near-black with a blue
+     accent and -apple-system, so they read as one company shipping four
+     things. docketseo.app was the only escape and the strongest of the six;
+     its recipe is three things together — ground colour, typeface, structure.
+     AdPlaybook's is evidence: the product exists to refuse claims it cannot
+     trace back to the advertiser's own page. So the accent becomes the green
+     it already used for VERIFIED, and display type becomes the mono it already
+     used for kickers. --blue is kept as an alias rather than renamed at 40+
+     call sites; it no longer holds a blue and the name is legacy. */
+  --accent:#4ade80;--blue:var(--accent);--ice:#a8c8ff;--violet:#9d8cff;--green:#4ade80;--amber:#d9a72b;
   --r:18px;--r-sm:12px;
   --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,system-ui,sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
@@ -65,14 +74,14 @@ nav{position:sticky;top:0;z-index:80;background:rgba(6,8,12,.72);
 .nav-links .btn:hover{color:#02101f}
 .nav-links .btn svg{flex:none}
 
-h1{font-size:clamp(2.1rem,4.6vw,3.2rem);line-height:1.06;letter-spacing:-.035em;
+h1{font-family:var(--mono);font-size:clamp(2.1rem,4.6vw,3.2rem);line-height:1.06;letter-spacing:-.018em;
   font-weight:560;margin:.6rem 0 1rem}
 /* 560, not 690, and 3.6rem, not 4.6rem.
    Measured against the four references at 1280x800: Cursor sets its h1 at 26px
    weight 400, Warp at 64px weight 400, Linear at 64px weight 510. Ours was
    73.6px at 690 — the largest and heaviest of the set by a clear margin, which
    is not confidence, it is volume. */
-h2{font-size:clamp(1.45rem,2.7vw,2rem);line-height:1.18;letter-spacing:-.028em;
+h2{font-family:var(--mono);font-size:clamp(1.45rem,2.7vw,2rem);line-height:1.18;letter-spacing:-.014em;
   font-weight:660;margin:3.2rem 0 .9rem}
 h3{font-size:1.12rem;font-weight:640;letter-spacing:-.012em;margin:2rem 0 .5rem}
 p{margin:0 0 1.05rem}
@@ -295,7 +304,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 </head>
 <body>
 <nav><div class="wrap nav-inner">
-<a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#141822"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#4c8dff"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#4c8dff"/><circle cx="46" cy="70" r="9.5" fill="#141822"/><circle cx="46" cy="70" r="4.3" fill="#4c8dff"/><circle cx="61" cy="53" r="5" fill="#141822"/><circle cx="75" cy="36" r="5" fill="#141822"/></svg>AdPlaybook</a>
+<a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#101613"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#4ade80"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#4ade80"/><circle cx="46" cy="70" r="9.5" fill="#101613"/><circle cx="46" cy="70" r="4.3" fill="#4ade80"/><circle cx="61" cy="53" r="5" fill="#101613"/><circle cx="75" cy="36" r="5" fill="#101613"/></svg>AdPlaybook</a>
 <ul class="nav-links"><li><a href="/specs/">Ad specs</a></li><li><a href="/learn/">Learn</a></li><li><a href="/for/">By business</a></li><li><a href="/vs/">Compare</a></li><li><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.1.23/AdPlaybook-0.1.23-arm64.dmg"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>Download</a></li></ul>
 </div></nav>
 <div class="wrap">
@@ -329,7 +338,7 @@ it could not check.</p>
 </article>
 </div>
 <footer><div class="wide">
-<div class="foot-brand"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#141822"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#4c8dff"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#4c8dff"/><circle cx="46" cy="70" r="9.5" fill="#141822"/><circle cx="46" cy="70" r="4.3" fill="#4c8dff"/><circle cx="61" cy="53" r="5" fill="#141822"/><circle cx="75" cy="36" r="5" fill="#141822"/></svg>AdPlaybook</div>
+<div class="foot-brand"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#101613"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#4ade80"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#4ade80"/><circle cx="46" cy="70" r="9.5" fill="#101613"/><circle cx="46" cy="70" r="4.3" fill="#4ade80"/><circle cx="61" cy="53" r="5" fill="#101613"/><circle cx="75" cy="36" r="5" fill="#101613"/></svg>AdPlaybook</div>
 <p>The ad maker that knows which strategy fits — and proves every claim.</p>
 <p>Every figure on this site is quoted from the platform's own documentation with
 the date it was read. Where something could not be verified, the page says so
