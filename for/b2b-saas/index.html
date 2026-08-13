@@ -97,9 +97,21 @@ if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</s
   --window-shadow:rgba(12,18,14,.22);--window-edge:rgba(12,18,14,.06);
 }
 
-/* The toggle itself. Top corner on every site, per Matthew 2026-08-13. */
+/* The toggle. Top corner on every site, per Matthew 2026-08-13 — but inside the
+   sticky nav rather than position:fixed, and that distinction cost an evening.
+   
+   As `position:fixed;right:.85rem` it sat 132px off the right edge of a 375px
+   screen: invisible and unreachable. `right` resolves against the initial
+   containing block, which is as wide as the DOCUMENT when the document
+   overflows — and the button's own overflow was what widened it. The button
+   pushed the page wider, the wider page pushed the button further out, and the
+   loop sustained itself at 521px on a 375px screen.
+   
+   Living in the nav removes the dependency entirely: the nav is sticky, so the
+   control still sits in the top corner and still follows the reader, but it is
+   laid out in normal flow and cannot position itself off the screen. */
 #themeToggle{
-  position:fixed;top:.85rem;right:.85rem;z-index:120;
+  flex:none;margin-left:auto;
   width:2.1rem;height:2.1rem;border-radius:999px;
   border:1px solid var(--hair-lit);background:var(--panel);color:var(--grey);
   cursor:pointer;font-size:.9rem;line-height:1;
@@ -372,7 +384,6 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
      132px off the right edge — invisible and unreachable on a phone, a control I
      added the same evening and would not have found by looking at a desktop.
      A horizontal overflow does not stay a local problem. */
-  .nav-inner{padding-right:2.9rem}     /* clear the fixed toggle */
   .nav-links{
     flex:1 1 auto; min-width:0;
     overflow-x:auto; -webkit-overflow-scrolling:touch;
@@ -391,10 +402,10 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 <script defer data-domain="adplaybook.app" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
-<button id="themeToggle" type="button" aria-label="Switch between light and dark">&#9686;</button>
 <nav><div class="wrap nav-inner">
 <a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#101613"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#4ade80"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#4ade80"/><circle cx="46" cy="70" r="9.5" fill="#101613"/><circle cx="46" cy="70" r="4.3" fill="#4ade80"/><circle cx="61" cy="53" r="5" fill="#101613"/><circle cx="75" cy="36" r="5" fill="#101613"/></svg>AdPlaybook</a>
 <ul class="nav-links"><li><a href="/specs/">Ad specs</a></li><li><a href="/learn/">Learn</a></li><li><a href="/for/">By business</a></li><li><a href="/vs/">Compare</a></li><li><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.1.23/AdPlaybook-0.1.23-arm64.dmg"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>Download</a></li></ul>
+<button id="themeToggle" type="button" aria-label="Switch between light and dark">&#9686;</button>
 </div></nav>
 <div class="wrap">
 <article>

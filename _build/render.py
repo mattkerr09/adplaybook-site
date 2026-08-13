@@ -117,9 +117,21 @@ CSS = """
   --window-shadow:rgba(12,18,14,.22);--window-edge:rgba(12,18,14,.06);
 }
 
-/* The toggle itself. Top corner on every site, per Matthew 2026-08-13. */
+/* The toggle. Top corner on every site, per Matthew 2026-08-13 — but inside the
+   sticky nav rather than position:fixed, and that distinction cost an evening.
+   
+   As `position:fixed;right:.85rem` it sat 132px off the right edge of a 375px
+   screen: invisible and unreachable. `right` resolves against the initial
+   containing block, which is as wide as the DOCUMENT when the document
+   overflows — and the button's own overflow was what widened it. The button
+   pushed the page wider, the wider page pushed the button further out, and the
+   loop sustained itself at 521px on a 375px screen.
+   
+   Living in the nav removes the dependency entirely: the nav is sticky, so the
+   control still sits in the top corner and still follows the reader, but it is
+   laid out in normal flow and cannot position itself off the screen. */
 #themeToggle{
-  position:fixed;top:.85rem;right:.85rem;z-index:120;
+  flex:none;margin-left:auto;
   width:2.1rem;height:2.1rem;border-radius:999px;
   border:1px solid var(--hair-lit);background:var(--panel);color:var(--grey);
   cursor:pointer;font-size:.9rem;line-height:1;
@@ -392,7 +404,6 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
      132px off the right edge — invisible and unreachable on a phone, a control I
      added the same evening and would not have found by looking at a desktop.
      A horizontal overflow does not stay a local problem. */
-  .nav-inner{padding-right:2.9rem}     /* clear the fixed toggle */
   .nav-links{
     flex:1 1 auto; min-width:0;
     overflow-x:auto; -webkit-overflow-scrolling:touch;
@@ -494,10 +505,10 @@ if(t){{document.documentElement.setAttribute("data-theme",t);}}}}catch(e){{}}}})
 {ANALYTICS}
 </head>
 <body>
-<button id="themeToggle" type="button" aria-label="Switch between light and dark">&#9686;</button>
 <nav><div class="wrap nav-inner">
 <a class="nav-brand" href="/">{LOGO_SVG}{BRAND}</a>
 <ul class="nav-links">{nav}</ul>
+<button id="themeToggle" type="button" aria-label="Switch between light and dark">&#9686;</button>
 </div></nav>
 <div class="{wrapcls}">{body}</div>
 <footer><div class="wide">
