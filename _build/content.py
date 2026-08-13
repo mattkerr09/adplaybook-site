@@ -29,6 +29,70 @@ def esc(s: Any) -> str:
     return html.escape(str(s), quote=True)
 
 
+
+def _record() -> str:
+    """The app's own measured record, read from the batch corpus at build time.
+
+    Not hardcoded, because the rule this whole product argues for applies to
+    its own marketing: commit the script that derives any published figure or
+    it goes stale silently. These come from ad maker app/batch/runs/, the same
+    guides scripts/sweep_report.py reads.
+
+    Three of the four are failure rates. That is the point. Every tool in this
+    category publishes the number that flatters it — this one publishes how
+    often it refuses its own work, because a generator that never refuses is
+    not checking anything, and a reader who knows the refusal rate can tell the
+    difference. No competitor will copy this, and not because it is clever.
+    """
+    import glob
+    from pathlib import Path as _P
+
+    runs = sorted(glob.glob(str(_P.home() / "ad maker app" / "batch" / "runs" / "*.md")))
+    all_texts = [_P(f).read_text(errors="replace") for f in runs]
+
+    # Only guides carrying the CURRENT pipeline.
+    #
+    # The first draft counted all 75 and reported "38/75 checked against
+    # platform limits". That is not a property of the product — it is that 37
+    # guides predate 0.1.19, when the CLI did not run the feasibility check at
+    # all. Published as-is it reads as "this app checks half the time", which
+    # is false and is the kind of number this site exists to argue against.
+    #
+    # One denominator, and it is the set where every stat is measurable.
+    texts = [t for t in all_texts if "Will it run?" in t]
+    n = len(texts)
+    if n < 10:
+        return ""      # no corpus on this machine; say nothing rather than guess
+
+    unread = sum(1 for t in texts if "could not be read" in t)
+    refused = sum(1 for t in texts if "Rejected by the review" in t)
+    slop = sum(1 for t in texts if "read as generated copy" in t)
+    traced = sum(1 for t in texts if "Every claim in this campaign" in t)
+
+    rows = [
+        (f"{refused}<span>/{n}</span>", "campaigns its own review refused",
+         "It argues with itself before it argues with you."),
+        (f"{unread}<span>/{n}</span>", "sites it could not read — and said so",
+         "Bot protection is common. Inventing a business is not an option."),
+        (f"{slop}<span>/{n}</span>", "flagged as reading machine-written",
+         "Counted, not guessed. A model cannot judge its own register."),
+        (f"{traced}<span>/{n}</span>", "shipped with every claim traced",
+         "Each line of copy against the page it came from, or marked unproven."),
+    ]
+    cells = "".join(
+        f'<div class="rec"><p class="rec-n">{a}</p>'
+        f'<p class="rec-l">{b}</p><p class="rec-w">{c}</p></div>'
+        for a, b, c in rows)
+    return (f'<section class="record"><p class="kicker">What it has actually done</p>'
+            f'<h2>Three of these four are failure rates</h2>'
+            f'<p class="rec-intro">Measured across {n} real businesses — every one a live '
+            f'crawl through a real model, not a demo. Most tools publish the number that '
+            f'flatters them. These are the ones that do not.</p>'
+            f'<div class="recs">{cells}</div>'
+            f'<p class="rec-src">Derived at build time from the run corpus. '
+            f'<code>scripts/sweep_report.py</code> reproduces every figure.</p></section>')
+
+
 def build_rest(page: Callable, specs: List[Dict[str, Any]], pages: List) -> None:
     _home(page, specs)
     _learn_hub(page)
@@ -93,6 +157,8 @@ its own work before it shows you anything.</p>
 <span>{tick} No account, no telemetry, no server of ours</span>
 </div>
 </div>
+
+{_record()}
 
 <section>
 <p class="kicker">The part nobody else does</p>
