@@ -94,10 +94,10 @@ nav{position:sticky;top:0;z-index:80;background:rgba(6,8,12,.72);
   margin-left:auto;align-items:center}
 .nav-links a{color:var(--grey)}
 .nav-links a:hover{color:var(--white);text-decoration:none}
-.nav-links .btn{padding:.48rem 1.05rem;font-size:.87rem;color:#02101f}
+.nav-links .btn{padding:.48rem 1.05rem;font-size:.87rem;color:#04140b}
 /* .nav-links a sets grey; the button needs its own colour back or the label
    disappears into the gradient it sits on. */
-.nav-links .btn:hover{color:#02101f}
+.nav-links .btn:hover{color:#04140b}
 .nav-links .btn svg{flex:none}
 
 h1{font-family:var(--mono);font-size:clamp(2.1rem,4.6vw,3.2rem);line-height:1.06;letter-spacing:-.018em;
@@ -211,10 +211,10 @@ li{margin-bottom:.5rem}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
   padding:.78rem 1.4rem;border-radius:999px;font-weight:600;font-size:.96rem;
-  background:linear-gradient(180deg,#7aaeff,#3272ea);color:#02101f;border:1px solid transparent;
-  box-shadow:0 10px 34px -12px rgba(76,141,255,.85);
+  background:linear-gradient(180deg,#6ee7a0,#2fa864);color:#04140b;border:1px solid transparent;
+  box-shadow:0 10px 34px -12px rgba(74,222,128,.85);
   transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
-.btn:hover{transform:translateY(-2px);box-shadow:0 16px 44px -12px rgba(76,141,255,1);
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 44px -12px rgba(74,222,128,1);
   text-decoration:none}
 .btn.ghost{background:transparent;color:var(--white);border:1px solid var(--hair-lit);
   box-shadow:none}
@@ -222,7 +222,7 @@ li{margin-bottom:.5rem}
 
 .hero{position:relative}
 .hero::before{content:"";position:absolute;inset:-30% -50% auto;height:120%;pointer-events:none;
-  background:radial-gradient(760px 420px at 50% 0,rgba(76,141,255,.16),transparent 70%)}
+  background:radial-gradient(760px 420px at 50% 0,rgba(74,222,128,.16),transparent 70%)}
 .hero>*{position:relative}
 .hero h1{font-size:clamp(2.2rem,4.8vw,3.7rem);margin:.9rem 0 1.2rem}
 .hero .lede{max-width:56ch}
@@ -262,7 +262,7 @@ section{padding:1rem 0}
 
 .cta-block{margin:3.4rem 0 1rem;padding:2.4rem 2rem;border:1px solid var(--hair);
   border-radius:var(--r);text-align:center;
-  background:radial-gradient(600px 300px at 20% -20%,rgba(76,141,255,.13),transparent 70%),
+  background:radial-gradient(600px 300px at 20% -20%,rgba(74,222,128,.13),transparent 70%),
     linear-gradient(180deg,var(--card),var(--panel-2))}
 .cta-block p{color:var(--grey)}
 
