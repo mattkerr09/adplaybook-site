@@ -40,7 +40,23 @@ def visible_text(html: str) -> str:
     h = re.sub(r"<style.*?</style>", " ", h, flags=re.S | re.I)
     h = re.sub(r"<nav.*?</nav>", " ", h, flags=re.S | re.I)
     h = re.sub(r"<footer.*?</footer>", " ", h, flags=re.S | re.I)
+
+    # A quoted tell is a citation, not a usage.
+    #
+    # /how-to/stop-ad-copy-reading-like-ai/ scored 35 — the worst page on the
+    # site — because it LISTS the phrases readers have learned to skip:
+    # "elevate your", "look no further", "unlock the", "in today's
+    # fast-paced". Every one was counted as though the page had reached for it.
+    #
+    # Rewriting the page to remove its own examples would have made it useless,
+    # which is the tell that the detector was wrong rather than the prose. So
+    # text inside quotation marks and <em>/<code> is dropped before counting,
+    # the same way the app strips its own report before measuring repetition in
+    # a guide. A checker that cannot tell mention from use will always punish
+    # the page that explains the problem.
+    h = re.sub(r"<(em|code)\b[^>]*>.*?</\1>", " ", h, flags=re.S | re.I)
     h = re.sub(r"<[^>]+>", " ", h)
+    h = re.sub(r"[\u201c\"'][^\u201d\"']{2,60}[\u201d\"']", " ", h)
     h = (h.replace("&amp;", "&").replace("&nbsp;", " ").replace("&middot;", "·")
           .replace("&rsquo;", "'").replace("&ldquo;", '"').replace("&rdquo;", '"')
           .replace("&mdash;", "—").replace("&#8212;", "—"))
