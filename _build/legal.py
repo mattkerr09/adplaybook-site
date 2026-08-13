@@ -34,15 +34,36 @@ So each claim below is sourced, the same way a spec page is:
 * run state in memory  `backend/adkit/server.py:122` (`_RUNS`, never written)
 * no telemetry         swept `backend/`, `ui/src/`, `ui/src-tauri/` on 2026-08-11
 * crawler behaviour    `vendor/seo_engine/crawler.py:46,292-302`, `ingest.py:168`
-* what v0.1.5 does     `git show dac347a:backend/adkit/server.py:53,329`
-* signing identity     `codesign -dvvv` on `dist/AdPlaybook-0.1.5-arm64.dmg`
-* zero MX records      `dig +short MX adplaybook.app` -> empty, 2026-08-11
+* provider resolution  `git show 2636bed:backend/adkit/server.py:330,608`,
+                       `providers.py:948,972,981,1020-1029`
+* picker is inert      `ui/src/app.js:184` — binds "Use X" to `show('start')`
+* openai.key unread    written `server.py:229-234`; resolved only from
+                       `providers.py:977` (environment), so never read back
+* landing-page fetch   `coherence.py:169,277-284`, `server.py:645-659`
+* what v0.1.5 did      `git show dac347a:backend/adkit/llm.py:249-258` against
+                       every call site — `brief.py:181`, `strategy.py:222`,
+                       `generate.py:292`, `critique.py:260`, `coherence.py:285`
+* signing identity     `codesign -dvvv` on `dist/AdPlaybook-0.1.23-arm64.dmg`
+* zero MX records      `dig +short MX adplaybook.app` -> empty, 2026-08-12
 
-The one that matters most is `dac347a`. In the build behind the Download
-button, `run.client = Client()` — the Anthropic client, unconditionally. The
-provider picker is in the API surface but not in the run path. So the honest
-privacy statement for the *shipped* build is "it goes to Anthropic", not "it
-depends which provider you chose", and this page says that.
+Citations are pinned to `2636bed`, the commit v0.1.23 was built from, not to the
+working tree. The tree is already on 0.1.24 and will move again; a page that
+names a version has to cite that version's code.
+
+Two things matter most.
+
+First, `server.py:330` now reads `run.client = providers_mod.default_provider()`
+— the first provider whose probe passes, in rank order: Outlier on `127.0.0.1`,
+then OpenAI, then Anthropic. So the destination is no longer one name, and this
+page names every outcome rather than the reassuring one. What did *not* get
+fixed is the picker: `app.js:184` records nothing, so the choice is the
+machine's.
+
+Second, this page used to say v0.1.5 sent every run to Anthropic. **It sent
+nothing.** `dac347a:llm.py:249-258` has no `tier` parameter and every call site
+passes `tier=`, so CPython raised `TypeError` while binding the arguments —
+before the method body, before any HTTP request. The page was confessing to a
+disclosure that never happened.
 """
 
 from __future__ import annotations
@@ -57,7 +78,7 @@ COMPANY_PLAIN = "Kerr & Company LLC"
 #: Bumped by hand when the text changes, never generated from `date.today()`.
 #: A policy whose "last updated" moves every time the site is rebuilt is
 #: telling the reader something untrue about when it was last thought about.
-EFFECTIVE = "2026-08-11"
+EFFECTIVE = "2026-08-12"
 
 #: The only mailbox that has been confirmed to receive mail.
 #:
@@ -113,7 +134,8 @@ def build(page: Callable) -> None:
 def _privacy(page: Callable) -> None:
     desc = ("What AdPlaybook sends and where it sends it, named destination by "
             "named destination, for the build you can download today — including "
-            "the one step that does leave your Mac.")
+            "which steps leave your Mac, which do not, and why you do not get to "
+            "choose.")
 
     body = f"""{DRAFT_NOTE}
 <article>
@@ -132,19 +154,35 @@ this page is the bug.</p>
 <p>There is no account, no server of ours, and no telemetry. Nothing is reported
 back to {COMPANY}, because there is nowhere for it to be reported to. We hold no
 data about you at all, so there is nothing for you to ask us to delete.</p>
-<p>One step is different, and it is the one that matters. In the build you can
-download today, the writing is done by <strong>Anthropic's API, using your own
-key</strong> — so the text harvested from your site, your product details and
-every draft ad are sent to Anthropic. That is not a footnote and it is not
-optional in this build.</p>
+<p>One step is different, and it is the one that matters. The writing is done by
+a model, and <strong>which model — and therefore where your text goes — is
+settled by your machine, not by you.</strong> If Outlier is answering here and
+has issued a key this app can read, the writing happens on <code>127.0.0.1</code>
+and nothing about your product leaves this Mac. If it is not, the text harvested
+from your site, your product details, every draft ad, and up to 3,000 characters
+of any landing page you point the ad at go over the internet to Claude on your
+own Anthropic key. The app takes the first provider it can reach, in a fixed
+order, and does not ask first. That is not a footnote, and there is no setting in
+the app that changes it.</p>
 
 <div class="box warn">
-<strong>A correction to the homepage</strong>
-<p>The homepage carries a badge reading "Nothing leaves your machine". That is
-true of the crawl, true of your key, and true of everything the app stores. It
-is <em>not</em> true of the generation step in v0.1.5, which sends text to
-Anthropic. The badge overstates it, the badge is wrong, and this page is the
-accurate statement until the badge is corrected.</p>
+<strong>Why this page does not say "nothing leaves your machine"</strong>
+<p>The homepage used to carry that as a badge. It was removed because it was not
+true, and it is still not true — not even with Outlier running. Two fetches go
+out over the network whichever provider you end up on: the crawl of the site you
+typed, and, if you give the ad a destination URL, a fetch of that page. Both are
+aimed at sites you named yourself, and neither reaches us. What the model then
+sees is a separate question, and the table below answers it.</p>
+<p>The claim that does hold, and only while Outlier is the provider that
+answered, is the narrower one the app itself makes: <strong>nothing about your
+product leaves this Mac.</strong> When Outlier is not the one answering, the
+harvested text, your product details, every draft ad and the landing page's text
+go to a model vendor on your own key, and the app makes that choice without
+asking you.</p>
+<p style="margin-bottom:0"><strong>Outlier is also made by {COMPANY}.</strong> The
+app ranks it first because it runs locally and costs nothing per run, and you are
+entitled to know we have an interest in you using it before you take the
+recommendation.</p>
 </div>
 
 <h2>Where each thing actually goes</h2>
@@ -153,19 +191,49 @@ accurate statement until the badge is corrected.</p>
 <thead><tr><th>What</th><th>Where it goes</th><th>Kept how long</th></tr></thead>
 <tbody>
 <tr><td><strong>The website you point it at</strong></td>
-<td>Fetched directly by your Mac. At most 25 pages, obeying that site's
-<code>robots.txt</code> and its <code>Crawl-delay</code>, with the crawler
-identifying itself in the User-Agent rather than pretending to be a browser.</td>
+<td>Fetched directly by your Mac, at most 25 pages. It reads that site's
+<code>robots.txt</code> and skips links that <em>Googlebot</em> would be told to
+skip — that is the rule set it follows, because it asks the file about Googlebot
+rather than about itself — and it does not apply that check to the address you
+typed or to URLs listed in the sitemap. It leaves a quarter of a second between
+requests and backs off when a site says it is being asked too often; it does not
+read <code>Crawl-delay</code>. It sends a Chrome user-agent string with
+<code>AdPlaybook/1.0</code> appended, so a site owner reading their logs closely
+can tell what it was, but it does not present itself as a bot to anything that
+only checks the prefix. Certificates are not verified on these fetches, because a
+broken certificate is itself worth reporting — on a hostile network that means
+what it reads could have been tampered with.</td>
 <td>In memory for the run</td></tr>
-<tr><td><strong>The text it harvested, your product details, and every draft
-ad</strong></td>
-<td><strong>Anthropic's API</strong>, over the internet, authenticated with your
-key. What Anthropic then does with it is governed by Anthropic's terms and
-privacy policy, not ours.</td>
-<td>Ask Anthropic — we cannot see it and cannot speak for them</td></tr>
+<tr><td><strong>The landing page you point the ad at</strong></td>
+<td>Fetched by your Mac, following redirects wherever they lead, including onto a
+site you did not name. Its title, headings, calls to action and first 3,000
+characters of visible text are then sent to whichever provider is doing the
+writing, so the ad's promises can be checked against the page. Unlike the crawl,
+this fetch does not read that site's <code>robots.txt</code>, and it still
+identifies itself with a user-agent left over from the crawler this was built
+from (<code>Docket-SEO-Audit/1.0</code>). Both are bugs and both are on the list.
+Leave the destination field empty and none of it happens — and the app reports
+the check as skipped rather than as passed.</td>
+<td>The fetch itself, in memory for the run. What was sent onward is with the
+provider — the row below</td></tr>
+<tr><td><strong>The text it harvested, your product details, every draft ad, and
+the landing page's text</strong></td>
+<td>To exactly one provider, resolved once at the start of the run and used for
+all of it. <strong>Outlier</strong> — <code>http://127.0.0.1</code>, this Mac,
+nothing over the internet. Or <strong>Claude (Anthropic)</strong>, over the
+internet, authenticated with your key; what Anthropic then does with it is
+governed by Anthropic's terms and privacy policy, not ours. <strong>ChatGPT
+(OpenAI)</strong> is a third option in the code that the app as installed cannot
+reach — see the box below. Which one you get is settled by your machine, not by
+the picker.</td>
+<td>On Outlier it never leaves this Mac; how long Outlier itself then keeps it is
+Outlier's business, not ours. On Claude, ask Anthropic — we cannot see it and
+cannot speak for them</td></tr>
 <tr><td><strong>Your API key</strong></td>
-<td>Written to a file on your Mac and sent only to the provider it belongs to.
-Never to us, never to the other providers, never into a log line.</td>
+<td>Written to a file on your Mac. The Anthropic key is read back and sent to
+Anthropic when a run uses it. A key you enter for ChatGPT is written and read by
+nothing at all, so it is sent nowhere, including to OpenAI — see the box below.
+Never to us, never to a provider it does not belong to, never into a log line.</td>
 <td>Until you delete the file</td></tr>
 <tr><td><strong>The brief, the strategy scores, the campaign, the evidence
 receipt, the exports</strong></td>
@@ -179,16 +247,43 @@ no crash reporting, and no licence check that would phone home.</td>
 </table>
 
 <div class="box warn">
-<strong>The provider picker does not work in this build</strong>
-<p>The app lists three providers and recommends Outlier because Outlier runs on
-your Mac, which would mean nothing leaves it at all. In <strong>v0.1.5 —
-the build the Download button serves — choosing a provider does not change
-where the run goes.</strong> The run path calls Anthropic unconditionally.</p>
-<p>That is a defect, not a policy. The current source picks whichever provider
-is actually usable, Outlier first, so a later build will behave the way the
-interface describes. Until that build ships and this page changes, treat every
-run as going to Anthropic, and do not point it at anything you would not send
-there.</p>
+<strong>The provider picker still does not decide anything</strong>
+<p>If any provider is already usable on your Mac you never see this screen — the
+app goes straight to the start screen and uses that provider, and you reach the
+list only through the settings gear. When you do see it, the app lists three
+providers and marks Outlier as recommended because Outlier runs on your Mac. In
+<strong>v0.1.23 — the build the Download button serves — choosing one does not
+change where the run goes.</strong> The button moves you to the next screen and
+records nothing.</p>
+<p>The run asks the machine instead, in this order. <strong>Outlier</strong>, if
+it is both answering on <code>127.0.0.1</code> and has issued a local key this
+app can read from <code>~/.outlier/openai_api.json</code> — a running Outlier
+with no key in that file is skipped, and the provider screen says "ready" next to
+it only when both hold. Otherwise <strong>ChatGPT</strong>, if
+<code>OPENAI_API_KEY</code> is set in the environment the app inherits; nothing
+in the app sets it and the ChatGPT box in Settings cannot produce it, so unless
+you have set that variable yourself for the whole login session, this option is
+unreachable. Otherwise <strong>Claude</strong>, if an Anthropic key is on the
+machine. Otherwise it stops and names each one it checked and why it could not
+use it.</p>
+<p>That is a defect, not a policy, and it has a second half worth stating
+plainly: <strong>a key you paste into the ChatGPT box is saved and then never
+read.</strong> It is written to <code>~/.config/adkit/openai.key</code> and
+nothing loads it back. So the practical destination set for the app as shipped is
+Outlier or Claude: with Outlier not answering, the run goes to Claude if you have
+an Anthropic key and refuses to start if you do not.</p>
+<p>The app also does not tell you which one it chose. Nothing names the provider
+until the first cost line appears — after the first model call has already
+happened — and on Claude that line shows the cost without the vendor's name. The
+guide, the evidence receipt and the exports do not record it either. If you need
+that in writing for a compliance file, ask.</p>
+<p style="margin-bottom:0">Until this page says otherwise, do not treat the
+picker as a privacy control. If a run must stay on this Mac, check the provider
+screen says "ready" next to Outlier before you start it. If a run must not reach
+Anthropic, remove <code>ANTHROPIC_API_KEY</code> from the environment and delete
+<code>~/.config/adkit/key</code> (or <code>$XDG_CONFIG_HOME/adkit/key</code>).
+Deleting <code>openai.key</code> changes nothing, because that file is not what
+the app reads. Removing the key is the only control that actually works.</p>
 </div>
 
 <h2>What it writes to your Mac, and exactly where</h2>
@@ -196,11 +291,17 @@ there.</p>
 <li><code>~/.config/adkit/key</code> — your Anthropic key, created with
 owner-only permissions (<code>0600</code>). If <code>XDG_CONFIG_HOME</code> is
 set, that path is used instead.</li>
-<li><code>~/.config/adkit/&lt;provider&gt;.key</code> — the same, for any other
-provider you add a key for.</li>
+<li><code>~/.config/adkit/openai.key</code> — written with the same permissions
+when you enter a ChatGPT key, and read by nothing. Always under your home
+directory even when <code>XDG_CONFIG_HOME</code> is set, unlike the file above.
+Delete it; it does nothing.</li>
 <li><code>~/.outlier/openai_api.json</code> — <em>read</em>, never written. That
-file belongs to Outlier; the app reads it only to find the port Outlier is
-listening on and the local key it issued.</li>
+file belongs to Outlier; the app reads it to find the port Outlier is listening
+on and the local key it issued. It also checks an <code>OUTLIER_PORT</code>
+variable and, failing both, tries a short range of loopback ports. All of that
+stays on this Mac.</li>
+<li><code>~/Library/WebKit/app.adplaybook.desktop/</code> — created by the macOS
+web view the window is built from. The app stores nothing in it; macOS does.</li>
 <li>Anything you explicitly export or save, wherever you chose to save it.</li>
 </ul>
 <p>That is the complete list. Deleting those files and the app removes
@@ -208,9 +309,15 @@ everything it put on the machine.</p>
 
 <h2>This website</h2>
 <p>These pages are static files served by GitHub Pages. There are no cookies, no
-analytics script, no tag manager, no pixel, no embedded fonts and no form to
-submit — view the source of any page and there is nothing to find. We set
-nothing in your browser and we cannot see who you are.</p>
+tag manager, no pixel, no embedded fonts and no form to submit. We set nothing in
+your browser and we cannot see who you are.</p>
+<p>There is <strong>one</strong> script, and this page used to claim there was
+none. The site loads <a href="https://plausible.io/privacy" rel="nofollow">
+Plausible</a>, which counts page views without cookies and without collecting
+anything that identifies a visitor — no cookie, no device fingerprint, no
+cross-site profile, and nothing we could use to recognise you on a return visit.
+It tells us how many people read a page, not who. View the source of any page and
+that one script is what you will find; there is nothing else.</p>
 <p>Two things are true anyway and you should know them:</p>
 <ul>
 <li><strong>GitHub serves the site and the download.</strong> Fetching a page or
@@ -227,17 +334,22 @@ your data. We are not. There is no database, no mailing list, no customer
 record, and no copy of anything the app produced — so a request to see, correct
 or delete what we hold has the same answer every time, which is that there is
 nothing there.</p>
-<p>Where your data does exist is with the model provider you used, under your
-own account with them, and with GitHub as the host of this site. Those requests
-go to them. If it would help to have that in writing from us for a compliance
-file, ask and you will get it.</p>
+<p>Where your data may exist — if the run reached a cloud provider rather than
+Outlier on your own Mac — is with that provider, under your own account with
+them, and with GitHub as the host of this site. Those requests go to them. If it
+would help to have that in writing from us for a compliance file, ask and you
+will get it.</p>
 
 <div class="box">
 <strong>What this page does not cover</strong>
-<p>It describes v0.1.5, dated {EFFECTIVE}. It does not describe any future build,
+<p>It describes v0.1.23, dated {EFFECTIVE}. It does not describe any future build,
 and it does not describe a paid version, because there is not one — see
 <a href="/terms/">the terms</a>. If a payment mechanism, an account, a licence
 key or a server ever exists, this page changes before that ships, not after.</p>
+<p>It also cannot tell you what your own run will do. Where the writing happens
+depends on what is running and which keys are on your Mac at the moment you press
+go, and this page cannot see that. It can only tell you the order the app checks
+in and what each outcome means, which is what it does above.</p>
 <p style="margin-bottom:0">Listed rather than left blank, for the same reason
 the spec pages list what could not be verified: a policy with no gaps is either
 complete or hiding something, and from the outside those look identical.</p>
@@ -308,11 +420,14 @@ checkout, no trial, no subscription and no payment mechanism anywhere in this
 product or on this site. If any page anywhere asks you to pay for {BRAND}, it is
 not us and you should not pay it.</p>
 <p>Free is not the same as costless. The app calls a model on every generation
-and you pay that bill directly to your provider, never to us. What a run costs
-depends on the provider you choose, the size of your site and the rates in force
-at the time, so we do not publish a figure we cannot stand behind. The app shows
-the running cost as it goes rather than presenting a total at the end. Running
-it against a local model instead costs nothing at all.</p>
+and you pay that bill directly to your provider, never to us. Which provider that
+is depends on what your Mac can reach, not on what you pick — see the box below —
+so whether a run costs anything is not something you choose either. If Outlier is
+answering locally it is used first and the run costs nothing at all; if it is not,
+the run goes to a metered provider on your own key without asking. What a metered
+run costs depends on the size of your site and the rates in force at the time, so
+we do not publish a figure we cannot stand behind. The app shows the running cost
+as it goes rather than presenting a total at the end.</p>
 
 <h2>Refunds and cancellation</h2>
 <p>There is nothing to refund and nothing to cancel. No money has been taken
@@ -366,18 +481,29 @@ you are running it — including in the special categories the app itself warns
 you about.</li>
 </ul>
 
-<h2>No warranty, and one known defect</h2>
+<h2>No warranty, two known defects, and one correction</h2>
 <p>{BRAND} is provided <strong>as is</strong>, with no warranty of any kind: not
 of merchantability, not of fitness for a particular purpose, not that it will be
 uninterrupted or error-free. It is a free tool made by one person.</p>
 <div class="box warn">
-<p style="margin:0">One thing we already know about the build behind the
-Download button and would rather you heard from us: <strong>in v0.1.5 the
-provider picker does not change where a run goes.</strong> The interface offers
-Outlier, ChatGPT and Claude and recommends Outlier as the local option; the run
-path calls Anthropic regardless. If you installed it expecting nothing to leave
-the machine, it did. <a href="/privacy/">The privacy page</a> sets out what was
-sent.</p>
+<p>Two things we already know about the build behind the Download button and
+would rather you heard from us. <strong>In v0.1.23 the provider picker still does
+not change where a run goes.</strong> The interface offers Outlier, ChatGPT and
+Claude and recommends Outlier as the local option, but the button records
+nothing: the run uses whichever provider your machine can actually reach, in that
+order. And <strong>a key entered for ChatGPT is saved but never used</strong> —
+it is written to disk and nothing reads it back, so that option cannot be reached
+from the interface at all.</p>
+<p style="margin:0">We also owe a correction about <strong>v0.1.5</strong>, the
+build this site offered until now. These terms and the privacy page used to say
+it sent every run to Anthropic regardless of what you picked. That was wrong, and
+wrong in the direction of overstating what left your machine: v0.1.5 could not
+complete a single campaign, because every model call raised a
+<code>TypeError</code> on the way in, before any request was made. Nothing you
+typed reached a model vendor, because it never got that far — the only thing that
+left your Mac was the crawl of the site you pointed it at.
+<a href="/privacy/">The privacy page</a> sets out what v0.1.23 sends, and to
+whom.</p>
 </div>
 
 <h2>What we owe you if it goes wrong</h2>
@@ -456,8 +582,8 @@ When there is a mailbox on the domain, this page will say so.</p>
 above. What makes a report actionable here is unusual, because the app keeps
 nothing: we have no copy of your run, no log on a server, and no way to
 reproduce what you saw from our end. So please include the URL you pointed it
-at, the version from the title bar, which provider was configured, and what the
-app said verbatim.</p>
+at, the version from the title bar, which provider the app showed as "ready" on
+the provider screen, and what the app said verbatim.</p>
 <p>If a number on this site is wrong, that is worth reporting on its own. Every
 figure here is supposed to carry the source it came from and the date it was
 read, and a wrong one is a bug in the same sense the app is.</p>

@@ -237,7 +237,20 @@ LOGO_SVG = (
 NAV = [("/specs/", "Ad specs"), ("/learn/", "Learn"),
        ("/for/", "By business"), ("/vs/", "Compare")]
 DOWNLOAD = ("https://github.com/mattkerr09/adplaybook-site/releases/download/"
-            "v0.1.5/AdPlaybook-0.1.5-arm64.dmg")
+            "v0.1.23/AdPlaybook-0.1.23-arm64.dmg")
+# Plausible, added to the GENERATOR rather than to index.html.
+#
+# It was originally pasted straight into the generated index.html (e4d0020). That
+# file is rebuilt from here, so the next render silently deleted it and the site
+# would have gone back to having no analytics at all while looking like it had
+# some. Anything that must survive a rebuild belongs in _build/.
+#
+# Cookieless and carries no personal data, but the privacy page discloses it by
+# name regardless — it previously claimed there was no script at all, which was
+# false the moment this went live.
+ANALYTICS = ('<script defer data-domain="adplaybook.app" '
+             'src="https://plausible.io/js/script.js"></script>')
+
 DL_ICON = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" '
            'width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/>'
            '<path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>')
@@ -288,6 +301,7 @@ def page(*, path: str, title: str, description: str, body: str,
 <meta name="twitter:description" content="{esc(description)}">
 <style>{CSS}</style>
 {ld}
+{ANALYTICS}
 </head>
 <body>
 <nav><div class="wrap nav-inner">

@@ -21,7 +21,7 @@ from typing import Any, Callable, Dict, List
 
 BRAND = "AdPlaybook"
 REPO = "https://github.com/mattkerr09/adplaybook-site"
-DMG = f"{REPO}/releases/download/v0.1.5/AdPlaybook-0.1.5-arm64.dmg"
+DMG = f"{REPO}/releases/download/v0.1.23/AdPlaybook-0.1.23-arm64.dmg"
 RELEASES = f"{REPO}/releases"
 
 
@@ -67,10 +67,14 @@ def _home(page: Callable, specs: List[Dict[str, Any]]) -> None:
     # The third trust badge used to read "Nothing leaves your machine". It was
     # false on the page whose whole argument is that every figure it prints is
     # true. The crawl, the key and everything stored are genuinely local, but
-    # v0.1.5 does `run.client = Client()` unconditionally
-    # (git show dac347a:backend/adkit/server.py:329), so the harvested text,
-    # the product details and every draft ad go to Anthropic. The badge now
-    # claims only the part that holds; /privacy/ carries the destination list.
+    # the destination depends on which provider the machine can reach, so no
+    # single-destination badge can be true. CORRECTION 2026-08-12: this comment
+    # used to say v0.1.5 sent everything to Anthropic. It sent NOTHING —
+    # dac347a:llm.py:249-258 has no `tier` parameter while every call site passes
+    # `tier=`, so CPython raised TypeError binding the arguments, before any HTTP
+    # request. Repeating that claim anywhere else would spread a false statement
+    # about a user's data. The badge now claims only the part that holds;
+    # /privacy/ carries the destination list.
     body = f"""
 <div class="hero">
 <span class="eyebrow">{tick} Runs on your Mac. No account, no server.</span>
@@ -82,7 +86,7 @@ its own work before it shows you anything.</p>
 <a class="btn" href="{{DMG}}">{dl} Download for Mac</a>
 <a class="btn ghost" href="/specs/">See the ad specs</a>
 </div>
-<p class="hero-sub">v0.1.5 · 22 MB · Apple Silicon · notarised by Apple</p>
+<p class="hero-sub">v0.1.23 · 22 MB · Apple Silicon · notarised by Apple</p>
 <div class="trust">
 <span>{tick} Every claim traced to a source</span>
 <span>{tick} Checked against 8 platforms' real limits</span>
@@ -226,7 +230,7 @@ list of what could not be verified.</p>
 Gatekeeper warning because Apple's notary service cleared it, not because you
 right-clicked past one.</p>
 <p><a class="btn" href="{{DMG}}">{dl} Download for Mac · 22 MB</a></p>
-<p class="src">v0.1.5 · <a href="{{RELEASES}}">All releases</a> · needs Outlier
+<p class="src">v0.1.23 · <a href="{{RELEASES}}">All releases</a> · needs Outlier
 running locally, or an OpenAI or Anthropic key</p>
 </div>
 </section>
@@ -305,8 +309,10 @@ credit, health, alcohol, children, political, subscription and pricing claims,
 with the statutes cited.</li>
 <li><strong>Checks the landing page</strong> delivers what the ad promised —
 the most expensive invisible failure in paid media.</li>
-<li><strong>Runs locally.</strong> No account, no server, nothing about your
-product leaves the machine.</li>
+<li><strong>Runs on your Mac.</strong> No account and no server of ours. With
+Outlier answering locally, nothing about your product leaves the machine; without
+it, the writing goes to Claude on your own key — see
+<a href="/privacy/">what this sends and where</a>.</li>
 </ul>
 
 <h2>The honest recommendation</h2>
