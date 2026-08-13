@@ -9,6 +9,12 @@
 <meta name="last-modified" content="2026-08-13">
 <link rel="canonical" href="https://adplaybook.app/for/agencies/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>/* Before first paint, or the page flashes the wrong theme and the flash
+tells every visitor the site is cheap. Must stay INLINE and stay in <head>.
+Braces are doubled because this template is an f-string. */
+(function(){try{var t=localStorage.getItem("adplaybook-theme");
+if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</script>
 <meta property="og:type" content="article">
 <meta property="og:title" content="Advertising for agencies running client campaigns (AdPlaybook)">
 <meta property="og:description" content="What changes about running ads for agencies running client campaigns: the legal category that applies, the Google numbers that matter, and the strategy that fits.">
@@ -40,11 +46,71 @@
      used for kickers. --blue is kept as an alias rather than renamed at 40+
      call sites; it no longer holds a blue and the name is legacy. */
   --accent:#4ade80;--blue:var(--accent);--ice:#a8c8ff;--violet:#9d8cff;--green:#4ade80;--amber:#d9a72b;
+  /* Everything below used to be a literal somewhere in the stylesheet. They are
+     tokens now because of a bug I shipped to kerrandcompanyholdings.com on
+     2026-08-13: a light theme whose seven contrast ratios I had measured and
+     confirmed, which still rendered wrong, because the nav background, a
+     heading gradient and four glow rules were hard-coded and never read the
+     palette. Measuring a token set is not the same as checking what reads it.
+     A colour that only exists as a literal cannot follow a theme. */
+  --nav-bg:rgba(6,8,12,.72);--nav-hair:rgba(28,32,41,.9);
+  --on-accent:#04140b;                      /* text ON the green button */
+  --accent-lift:#6ee7a0;--accent-deep:#2fa864;
+  --accent-glow:rgba(74,222,128,.85);--accent-glow-2:rgba(74,222,128,1);
+  --accent-wash:rgba(74,222,128,.16);--accent-wash-2:rgba(74,222,128,.13);
+  --accent-edge:rgba(74,222,128,.5);--amber-edge:rgba(217,167,43,.5);
+  --row-hover:rgba(255,255,255,.02);
+  --window-shadow:rgba(0,0,0,.9);--window-edge:rgba(255,255,255,.02);
   --r:18px;--r-sm:12px;
   --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,system-ui,sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
   --w:1080px;--wr:820px;
 }
+/* The light palette. This site is dark-first on purpose — the product window in
+   the hero is a real interface, not a screenshot, and it was designed against a
+   near-black ground. So dark stays the default and light is the deliberate
+   alternative, rather than the other way round.
+
+   The token NAMES are wrong in light mode and I am keeping them. --black holds a
+   near-white and --white holds a near-black, which reads badly here and reads
+   correctly at all forty-plus call sites. Renaming them would touch every rule
+   in the file to fix a comment; this way the risk stays in one block that is
+   easy to read in full.
+
+   The accent could not simply carry over. #4ade80 is a bright green built for a
+   near-black ground; on white it measures about 1.7:1 and is unreadable as text.
+   Light mode uses #15803D, which is the same hue several stops down and clears
+   4.5:1 on this ground. Buttons then need light text rather than dark, which is
+   what --on-accent flipping is for. */
+:root[data-theme="light"]{
+  --black:#f7f9f7;--panel:#ffffff;--panel-2:#eef2ef;--card:#ffffff;
+  --hair:#e0e6e2;--hair-lit:#c7d0ca;
+  --white:#0c120e;--grey:#4d5a52;--grey-dim:#67736c;
+  --accent:#15803d;--ice:#1d4ed8;--violet:#6d28d9;--green:#15803d;--amber:#8a5a12;
+  --nav-bg:rgba(247,249,247,.82);--nav-hair:rgba(200,208,203,.9);
+  --on-accent:#ffffff;
+  --accent-lift:#22a555;--accent-deep:#127034;
+  --accent-glow:rgba(21,128,61,.34);--accent-glow-2:rgba(21,128,61,.42);
+  --accent-wash:rgba(21,128,61,.10);--accent-wash-2:rgba(21,128,61,.08);
+  --accent-edge:rgba(21,128,61,.45);--amber-edge:rgba(138,90,18,.45);
+  --row-hover:rgba(12,18,14,.035);
+  --window-shadow:rgba(12,18,14,.22);--window-edge:rgba(12,18,14,.06);
+}
+
+/* The toggle itself. Top corner on every site, per Matthew 2026-08-13. */
+#themeToggle{
+  position:fixed;top:.85rem;right:.85rem;z-index:120;
+  width:2.1rem;height:2.1rem;border-radius:999px;
+  border:1px solid var(--hair-lit);background:var(--panel);color:var(--grey);
+  cursor:pointer;font-size:.9rem;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+}
+#themeToggle:hover{color:var(--white);border-color:var(--grey-dim)}
+#themeToggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){
+  #themeToggle{transition:color .15s,border-color .15s}
+}
+
 *{box-sizing:border-box}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 body{margin:0;background:var(--black);color:var(--white);font-family:var(--sans);
@@ -55,9 +121,9 @@ a:hover{text-decoration:underline;text-underline-offset:3px}
 .wrap{width:min(var(--wr),calc(100% - 2.6rem));margin:0 auto}
 .wide{width:min(var(--w),calc(100% - 2.6rem));margin:0 auto}
 
-nav{position:sticky;top:0;z-index:80;background:rgba(6,8,12,.72);
+nav{position:sticky;top:0;z-index:80;background:var(--nav-bg);
   backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
-  border-bottom:1px solid rgba(28,32,41,.9)}
+  border-bottom:1px solid var(--nav-hair)}
 .nav-inner{display:flex;align-items:center;gap:1.5rem;height:58px;
   width:min(var(--w),calc(100% - 2.6rem));margin:0 auto}
 .nav-brand{display:flex;align-items:center;gap:.55rem;color:var(--white);font-weight:640;
@@ -68,10 +134,10 @@ nav{position:sticky;top:0;z-index:80;background:rgba(6,8,12,.72);
   margin-left:auto;align-items:center}
 .nav-links a{color:var(--grey)}
 .nav-links a:hover{color:var(--white);text-decoration:none}
-.nav-links .btn{padding:.48rem 1.05rem;font-size:.87rem;color:#04140b}
+.nav-links .btn{padding:.48rem 1.05rem;font-size:.87rem;color:var(--on-accent)}
 /* .nav-links a sets grey; the button needs its own colour back or the label
    disappears into the gradient it sits on. */
-.nav-links .btn:hover{color:#04140b}
+.nav-links .btn:hover{color:var(--on-accent)}
 .nav-links .btn svg{flex:none}
 
 h1{font-family:var(--mono);font-size:clamp(2.1rem,4.6vw,3.2rem);line-height:1.06;letter-spacing:-.018em;
@@ -185,10 +251,10 @@ li{margin-bottom:.5rem}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
   padding:.78rem 1.4rem;border-radius:999px;font-weight:600;font-size:.96rem;
-  background:linear-gradient(180deg,#6ee7a0,#2fa864);color:#04140b;border:1px solid transparent;
-  box-shadow:0 10px 34px -12px rgba(74,222,128,.85);
+  background:linear-gradient(180deg,var(--accent-lift),var(--accent-deep));color:var(--on-accent);border:1px solid transparent;
+  box-shadow:0 10px 34px -12px var(--accent-glow);
   transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
-.btn:hover{transform:translateY(-2px);box-shadow:0 16px 44px -12px rgba(74,222,128,1);
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 44px -12px var(--accent-glow-2);
   text-decoration:none}
 .btn.ghost{background:transparent;color:var(--white);border:1px solid var(--hair-lit);
   box-shadow:none}
@@ -196,7 +262,7 @@ li{margin-bottom:.5rem}
 
 .hero{position:relative}
 .hero::before{content:"";position:absolute;inset:-30% -50% auto;height:120%;pointer-events:none;
-  background:radial-gradient(760px 420px at 50% 0,rgba(74,222,128,.16),transparent 70%)}
+  background:radial-gradient(760px 420px at 50% 0,var(--accent-wash),transparent 70%)}
 .hero>*{position:relative}
 .hero h1{font-size:clamp(2.2rem,4.8vw,3.7rem);margin:.9rem 0 1.2rem}
 .hero .lede{max-width:56ch}
@@ -236,7 +302,7 @@ section{padding:1rem 0}
 
 .cta-block{margin:3.4rem 0 1rem;padding:2.4rem 2rem;border:1px solid var(--hair);
   border-radius:var(--r);text-align:center;
-  background:radial-gradient(600px 300px at 20% -20%,rgba(74,222,128,.13),transparent 70%),
+  background:radial-gradient(600px 300px at 20% -20%,var(--accent-wash-2),transparent 70%),
     linear-gradient(180deg,var(--card),var(--panel-2))}
 .cta-block p{color:var(--grey)}
 
@@ -247,7 +313,7 @@ th,td{text-align:left;padding:.72rem .8rem;border-bottom:1px solid var(--hair);v
 th{font-size:.74rem;text-transform:uppercase;letter-spacing:.07em;color:var(--grey-dim);
   font-weight:600}
 td strong{font-weight:640}
-tbody tr:hover{background:rgba(255,255,255,.02)}
+tbody tr:hover{background:var(--row-hover)}
 blockquote{border-left:2px solid var(--blue);padding:.1rem 0 .1rem 1.1rem;margin:1.1rem 0;
   color:var(--grey);font-style:normal}
 code{font-family:var(--mono);font-size:.88em;background:var(--panel-2);padding:.14em .4em;
@@ -255,8 +321,8 @@ code{font-family:var(--mono);font-size:.88em;background:var(--panel-2);padding:.
 .src{font-size:.84rem;color:var(--grey-dim);font-family:var(--mono);word-break:break-all}
 .pill{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:.18rem .6rem;
   border-radius:999px;border:1px solid var(--hair-lit);color:var(--grey-dim);margin-right:.35rem}
-.pill.checked{border-color:rgba(74,222,128,.5);color:var(--green)}
-.pill.unchecked{border-color:rgba(217,167,43,.5);color:var(--amber)}
+.pill.checked{border-color:var(--accent-edge);color:var(--green)}
+.pill.unchecked{border-color:var(--amber-edge);color:var(--amber)}
 
 /* The product window. A screenshot would be a flat PNG that blurs on a
    retina display and cannot follow the reader's theme; this is the real
@@ -264,7 +330,7 @@ code{font-family:var(--mono);font-size:.88em;background:var(--panel-2);padding:.
    content is verbatim from a run against HoneyBook. */
 .win{border:1px solid var(--hair);border-radius:14px;overflow:hidden;
   background:linear-gradient(180deg,var(--card),var(--panel));
-  box-shadow:0 40px 80px -40px rgba(0,0,0,.9),0 0 0 1px rgba(255,255,255,.02);
+  box-shadow:0 40px 80px -40px var(--window-shadow),0 0 0 1px var(--window-edge);
   margin:2.4rem 0}
 .win-bar{display:flex;align-items:center;gap:.5rem;padding:.7rem .9rem;
   border-bottom:1px solid var(--hair);background:var(--panel-2)}
@@ -303,6 +369,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 <script defer data-domain="adplaybook.app" src="https://plausible.io/js/script.js"></script>
 </head>
 <body>
+<button id="themeToggle" type="button" aria-label="Switch between light and dark">&#9686;</button>
 <nav><div class="wrap nav-inner">
 <a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#101613"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#4ade80"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#4ade80"/><circle cx="46" cy="70" r="9.5" fill="#101613"/><circle cx="46" cy="70" r="4.3" fill="#4ade80"/><circle cx="61" cy="53" r="5" fill="#101613"/><circle cx="75" cy="36" r="5" fill="#101613"/></svg>AdPlaybook</a>
 <ul class="nav-links"><li><a href="/specs/">Ad specs</a></li><li><a href="/learn/">Learn</a></li><li><a href="/for/">By business</a></li><li><a href="/vs/">Compare</a></li><li><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.1.23/AdPlaybook-0.1.23-arm64.dmg"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>Download</a></li></ul>
@@ -351,5 +418,22 @@ rather than leaving a gap you cannot see.</p>
 <p>Published by Kerr &amp; Company LLC, Grand Rapids, Michigan. Free to
 download — there is no price, no checkout and no licence key.</p>
 </div></footer>
+<script>/* THIS MUST STAY IN THE BODY. On 2026-08-13 the identical handler was
+placed inside the pre-paint <head> script on kerrandcompanyholdings.com, where it
+ran before <body> existed, so getElementById returned null and no listener was
+ever attached. The button rendered perfectly and did nothing — and a dead toggle
+is indistinguishable from a live one in a screenshot. ~/ops/bin/theme-toggle-gate.py
+checks this position specifically. */
+(function(){
+  var b=document.getElementById("themeToggle");
+  if(!b)return;
+  b.addEventListener("click",function(){
+    var c=document.documentElement.getAttribute("data-theme");
+    if(!c){c="dark";}  /* dark is this site's default, not the OS preference */
+    var n=c==="dark"?"light":"dark";
+    document.documentElement.setAttribute("data-theme",n);
+    try{localStorage.setItem("adplaybook-theme",n);}catch(e){}
+  });
+})();</script>
 </body>
 </html>
