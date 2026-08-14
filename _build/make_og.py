@@ -44,7 +44,7 @@ def font(kind: str, size: int, index: int = 0) -> ImageFont.FreeTypeFont:
 def tokens() -> dict[str, str]:
     """Pull the palette out of render.py rather than restating it here."""
     css = (ROOT / "_build" / "render.py").read_text(encoding="utf-8", errors="replace")
-    want = {"black": "#000000", "white": "#f5f7fa", "grey": "#a1a9b8",
+    want = {"black": "#000000", "white": "#f5f7fa", "grey": "#8a8f98",
             "blue": "#4c8dff", "hair": "#1c2029"}
     found = dict(want)
     for name in want:
