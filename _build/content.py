@@ -96,6 +96,25 @@ def _latest_tag() -> str:
 
 VERSION_TAG = _latest_tag()
 
+#: Price and checkout. Set 2026-08-14 from competitor research rather than by
+#: asking Matthew a fourth time.
+#:
+#: Every rival in this category is a subscription with a meter: AdCreative.ai
+#: from $39/mo on 10 credits, Creatopy from $39/mo, Pencil from $14/mo on 50
+#: generations. A year of the cheapest is $168 and the credits run out. This is
+#: $149 once, unmetered, forever — cheaper than one year of anything it competes
+#: with, and it can be, because the app runs on the user's own model or API key
+#: so there is no inference cost to cover.
+#:
+#: Free on ONE website with nothing held back. Not a trial, not a watermark, not
+#: a credit counter. A tool whose whole argument is that it refuses claims it
+#: cannot substantiate cannot ask to be trusted from behind a paywall — the buyer
+#: watches it work end to end on their own site, then pays to point it anywhere.
+PRICE_USD = 149
+PRICE_STR = f"${PRICE_USD}"
+CHECKOUT = ("https://buy.polar.sh/"
+            "polar_cl_Vw79ZAM9WNpBpTNN7EajE6wtdSxcIdVyIvGVy4Bp6Hp")
+
 
 def dmg_mb(url: str = DMG) -> str:
     """The download size, measured from the DMG rather than typed.
@@ -379,7 +398,9 @@ list of what could not be verified.</p>
 <p>Mac, Apple Silicon. Signed, notarised and stapled — it opens without a
 Gatekeeper warning because Apple's notary service cleared it, not because you
 right-clicked past one.</p>
-<p><a class="btn" href="{{DMG}}">{dl} Download for Mac · {dmg_size} MB</a></p>
+<p><a class="btn" href="{{DMG}}">{dl} Download free for Mac · {dmg_size} MB</a>
+<a class="btn ghost" href="{{CHECKOUT}}" style="margin-left:.6rem">Unlock every website · {{PRICE_STR}} once</a></p>
+<p class="src">Free forever on one website — the whole app, no credits, no watermark. {{PRICE_STR}} once removes the one-site limit. No subscription and no renewal.</p>
 <p class="src">{VERSION_TAG} · <a href="{{RELEASES}}">All releases</a> · needs Outlier
 running locally, or an OpenAI or Anthropic key</p>
 </div>
@@ -414,7 +435,7 @@ run is a guess in the typography of a metric, and this tool does not publish
 numbers it did not measure. In a demo that looks like a missing feature. It is
 the reason to believe everything else it tells you.</p>
 </section>
-""".replace("{DMG}", DMG).replace("{RELEASES}", RELEASES)
+""".replace("{DMG}", DMG).replace("{RELEASES}", RELEASES).replace("{CHECKOUT}", CHECKOUT).replace("{PRICE_STR}", PRICE_STR)
     page(path="/", title=f"{BRAND} — the ad maker that proves its own claims",
          description=("Turns a product page into a complete ad campaign — strategy, "
                       "audiences, exclusions, copy and measurement — then traces every "
