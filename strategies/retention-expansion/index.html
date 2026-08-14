@@ -1,54 +1,34 @@
-#!/usr/bin/env python3
-"""Build adplaybook.app from the product's own data.
-
-The whole SEO thesis of this site is one observation: **the pages currently
-ranking for ad-spec queries are wrong.** A page ranking today for LinkedIn's
-limits states the introductory text maxes at 600 characters; LinkedIn's own
-help centre says 3,000, with 150 to avoid truncation. Another states TikTok
-caps ad captions at 100 characters; TikTok's own in-feed specification page
-states no character count at all. Both were checked against the platforms'
-documentation on 2026-08-10.
-
-Undated, uncited and incorrect is what page one looks like. So this site's
-pages carry, for every number: the platform's own words, the URL they came
-from, and the date they were read — plus an explicit list of what could *not*
-be verified, because a spec sheet with no gaps is either complete or lying and
-the reader cannot tell which.
-
-They are generated straight from `backend/adkit/platforms/*.json` — the same
-files the app itself reads. That is deliberate: the site cannot drift from the
-product, and when the daily spec-diff job updates a limit, the page changes
-with it. A marketing site maintained separately from the thing it describes
-goes stale in a month and nobody notices.
-
-    python _build/render.py [--app-repo PATH]
-"""
-
-from __future__ import annotations
-
-import argparse
-import html
-import json
-import re
-import shutil
-import sys
-from datetime import date
-from pathlib import Path
-from typing import Any, Dict, List
-
-SITE = Path(__file__).resolve().parents[1]
-BASE_URL = "https://adplaybook.app"
-BUILT = date.today().isoformat()
-
-BRAND = "AdPlaybook"
-TAGLINE = "The ad maker that knows which strategy fits — and proves every claim."
-
-
-# ---------------------------------------------------------------------------
-# Page shell
-# ---------------------------------------------------------------------------
-
-CSS = """
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Retention and Expansion: what it is, what it is judged on, how it fails | AdPlaybook</title>
+<meta name="description" content="Advertising to people who already pay you: to keep them, to bring them back, or to sell them the next thing. What it is judged on, where it works, and the documented ways it goes wrong.">
+<meta name="theme-color" content="#0d1017">
+<meta name="last-modified" content="2026-08-14">
+<link rel="canonical" href="https://adplaybook.app/strategies/retention-expansion/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>/* Before first paint, or the page flashes the wrong theme and the flash
+tells every visitor the site is cheap. Must stay INLINE and stay in <head>.
+Braces are doubled because this template is an f-string. */
+(function(){try{var t=localStorage.getItem("adplaybook-theme");
+if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</script>
+<meta property="og:type" content="article">
+<meta property="og:title" content="Retention and Expansion: what it is, what it is judged on, how it fails | AdPlaybook">
+<meta property="og:description" content="Advertising to people who already pay you: to keep them, to bring them back, or to sell them the next thing. What it is judged on, where it works, and the documented ways it goes wrong.">
+<meta property="og:url" content="https://adplaybook.app/strategies/retention-expansion/">
+<meta property="og:site_name" content="AdPlaybook">
+<meta property="og:image" content="https://adplaybook.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AdPlaybook - it writes the ad, then it tries to prove you wrong.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://adplaybook.app/og.png">
+<meta name="twitter:title" content="Retention and Expansion: what it is, what it is judged on, how it fails | AdPlaybook">
+<meta name="twitter:description" content="Advertising to people who already pay you: to keep them, to bring them back, or to sell them the next thing. What it is judged on, where it works, and the documented ways it goes wrong.">
+<style>
 /* Design tokens match the sibling products on purpose — same black, same
    hairlines, same pill buttons — with this app's blue in place of Crisp's
    cyan. A family of tools that look unrelated reads as three hobby projects. */
@@ -429,127 +409,32 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
      the height of the text. */
   .nav-links a, footer a, .src a{display:inline-flex;align-items:center;min-height:24px}
 }
-"""
-
-LOGO_SVG = (
-    '<svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">'
-    '<rect width="100" height="100" rx="22" fill="#1b1714"/>'
-    '<rect x="14" y="14" width="14" height="72" rx="4" fill="#f0b429"/>'
-    '<rect x="33" y="14" width="53" height="72" rx="6" fill="#f0b429"/>'
-    '<circle cx="46" cy="70" r="9.5" fill="#1b1714"/><circle cx="46" cy="70" r="4.3" fill="#f0b429"/>'
-    '<circle cx="61" cy="53" r="5" fill="#1b1714"/><circle cx="75" cy="36" r="5" fill="#1b1714"/>'
-    "</svg>"
-)
-
-NAV = [("/specs/", "Ad specs"), ("/learn/", "Learn"),
-       ("/for/", "By business"), ("/vs/", "Compare")]
-# The nav and footer Download links. Derived, not typed — this was the FOURTH
-# hardcoded copy of the release URL in this repo, after the one in content.py and
-# the version strings in the hero and the legal pages. Publishing 0.1.89 updated
-# the #get section and left the nav button, the hero line and the footer pointing
-# at a build from the previous midnight, on the same page, at the same time.
-#
-# One source now. If content.py cannot reach the GitHub API it falls back to the
-# releases PAGE, which is always true, so this cannot invent a URL either.
-from content import DMG as DOWNLOAD  # noqa: E402
-# Plausible, added to the GENERATOR rather than to index.html.
-#
-# It was originally pasted straight into the generated index.html (e4d0020). That
-# file is rebuilt from here, so the next render silently deleted it and the site
-# would have gone back to having no analytics at all while looking like it had
-# some. Anything that must survive a rebuild belongs in _build/.
-#
-# Cookieless and carries no personal data, but the privacy page discloses it by
-# name regardless — it previously claimed there was no script at all, which was
-# false the moment this went live.
-ANALYTICS = ('<script defer data-domain="adplaybook.app" '
-             'src="https://plausible.io/js/script.js"></script>'
-             # Sled affiliate attribution. It sets a ta_ref cookie only when a
-             # visitor arrives through an affiliate link, so an ordinary visitor
-             # gets no cookie at all — which is why the privacy page describes it
-             # as conditional rather than as tracking everybody.
-             #
-             # Added 2026-08-14 because affiliate tracking was live on
-             # crispvideo.app and NOWHERE ELSE. The board read "tracker verified
-             # real and serving", which was true of one site out of four, so an
-             # affiliate who sent someone to AdPlaybook, Docket or Outlier earned
-             # nothing and had no way to know.
-             '<script async src="https://usesled.com/kerr-and-company/t.js">'
-             '</script>')
-
-DL_ICON = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" '
-           'width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/>'
-           '<path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>')
-TICK = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="2" '
-        'aria-hidden="true"><path d="M2.5 8.5l3.5 3.5 7.5-8"/></svg>')
-
-
-def esc(s: Any) -> str:
-    return html.escape(str(s), quote=True)
-
-
-def page(*, path: str, title: str, description: str, body: str,
-         schema: Dict[str, Any] | None = None, modified: str = BUILT,
-         wide: bool = False) -> None:
-    """Write one page. `path` is the URL path, e.g. /specs/linkedin/."""
-    url = BASE_URL + path
-    wrapcls = "wide" if wide else "wrap"
-    nav = "".join(f'<li><a href="{h}">{esc(t)}</a></li>' for h, t in NAV)
-    nav += f'<li><a class="btn" href="{DOWNLOAD}">{DL_ICON}Download</a></li>'
-    ld = ""
-    if schema:
-        ld = ('<script type="application/ld+json">'
-              + json.dumps(schema, separators=(",", ":")) + "</script>")
-
-    doc = f"""<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>{esc(title)}</title>
-<meta name="description" content="{esc(description)}">
-<meta name="theme-color" content="#0d1017">
-<meta name="last-modified" content="{modified}">
-<link rel="canonical" href="{url}">
-<link rel="icon" href="/favicon.svg" type="image/svg+xml">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<script>/* Before first paint, or the page flashes the wrong theme and the flash
-tells every visitor the site is cheap. Must stay INLINE and stay in <head>.
-Braces are doubled because this template is an f-string. */
-(function(){{try{{var t=localStorage.getItem("adplaybook-theme");
-if(t){{document.documentElement.setAttribute("data-theme",t);}}}}catch(e){{}}}})();</script>
-<meta property="og:type" content="{'website' if path == '/' else 'article'}">
-<meta property="og:title" content="{esc(title)}">
-<meta property="og:description" content="{esc(description)}">
-<meta property="og:url" content="{url}">
-<meta property="og:site_name" content="{BRAND}">
-<meta property="og:image" content="{BASE_URL}/og.png">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="AdPlaybook - it writes the ad, then it tries to prove you wrong.">
-<meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="{BASE_URL}/og.png">
-<meta name="twitter:title" content="{esc(title)}">
-<meta name="twitter:description" content="{esc(description)}">
-<style>{CSS}</style>
-{ld}
-{ANALYTICS}
+</style>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Retention and Expansion advertising strategy","description":"Advertising to people who already pay you: to keep them, to bring them back, or to sell them the next thing. What it is judged on, where it works, and the documented ways it goes wrong.","publisher":{"@type":"Organization","name":"AdPlaybook"}}</script>
+<script defer data-domain="adplaybook.app" src="https://plausible.io/js/script.js"></script><script async src="https://usesled.com/kerr-and-company/t.js"></script>
 </head>
 <body>
 <nav><div class="wrap nav-inner">
-<a class="nav-brand" href="/">{LOGO_SVG}{BRAND}</a>
-<ul class="nav-links">{nav}</ul>
+<a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#1b1714"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#f0b429"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#f0b429"/><circle cx="46" cy="70" r="9.5" fill="#1b1714"/><circle cx="46" cy="70" r="4.3" fill="#f0b429"/><circle cx="61" cy="53" r="5" fill="#1b1714"/><circle cx="75" cy="36" r="5" fill="#1b1714"/></svg>AdPlaybook</a>
+<ul class="nav-links"><li><a href="/specs/">Ad specs</a></li><li><a href="/learn/">Learn</a></li><li><a href="/for/">By business</a></li><li><a href="/vs/">Compare</a></li><li><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.23/AdPlaybook-0.2.23-arm64.dmg"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>Download</a></li></ul>
 <button id="themeToggle" type="button" aria-label="Switch between light and dark">&#9686;</button>
 </div></nav>
-<div class="{wrapcls}">{body}</div>
+<div class="wrap">
+<article>
+<p class="crumb"><a href="/strategies/">Strategies</a></p>
+<h1>Retention and Expansion</h1>
+<p class="lede">Advertising to people who already pay you: to keep them, to bring them back, or to sell them the next thing. Almost always the cheapest revenue in the account and almost always the last thing anyone builds, because it does not feel like marketing. The audience is small, known and reachable by email for free — so the honest position is that paid should only cover what email cannot: people who stopped opening, people mid-decision about renewing, people who would buy the second product if they knew it existed. If your email list reaches them fine, do not pay to reach them again.</p>
+<h2>What retention and expansion is judged on</h2><p>Cost per expansion event (upgrade, renewal, or win-back). The landing page has to ask for <strong>An in-account action — upgrade, renew, enable the feature — behind their existing login. Never a marketing page that makes an existing customer re-enter details you already hold.</strong> — if it asks for something else, the campaign underperforms for a reason that never appears in the ad account, because people arrive expecting one thing and are shown another.</p><p>The offer that fits: upgrade, add-on, renewal, referral, or win-back.</p><h2>It usually fails by paying to reach people email already reaches for nothing</h2><p>That is the first entry on the list AdPlaybook checks a generated campaign against. The rest:</p><ul><li>Paying to reach people email already reaches for nothing. Check the email path first; if it works, this loadout is not the answer.</li><li>No holdout, so natural renewals are counted as ad-driven — the most inflated number in the whole account.</li><li>Advertising an upgrade to customers who are unhappy with what they already bought, which accelerates churn.</li><li>Customer list not refreshed, so recent churners keep seeing upgrade ads and recent upgraders keep seeing the same offer.</li><li>Frequency unbounded against a tiny audience, turning a paying customer into someone who hides your ads.</li></ul><h2>Surfaces it suits, and one it contradicts</h2><p>Rated highest for meta, linkedin. Rated <strong>0.25 or below</strong> for reddit — the app will not offer it there, because the surface contradicts the approach rather than merely suiting it poorly.</p><h2>What the creative has to do for retention and expansion</h2><p>Speak to someone who already knows you — no re-introduction, no explaining what the product is. Show the part they are not using, the outcome they have not reached, or the next tier. For win-back, name the gap honestly rather than pretending they never left. Feature-in-use footage beats aspiration here, because the audience can already tell the difference.</p>
+</article>
+</div>
 <footer><div class="wide">
-<div class="foot-brand">{LOGO_SVG}{BRAND}</div>
-<p>{esc(TAGLINE)}</p>
+<div class="foot-brand"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#1b1714"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#f0b429"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#f0b429"/><circle cx="46" cy="70" r="9.5" fill="#1b1714"/><circle cx="46" cy="70" r="4.3" fill="#f0b429"/><circle cx="61" cy="53" r="5" fill="#1b1714"/><circle cx="75" cy="36" r="5" fill="#1b1714"/></svg>AdPlaybook</div>
+<p>The ad maker that knows which strategy fits — and proves every claim.</p>
 <p>Every figure on this site is quoted from the platform's own documentation with
 the date it was read. Where something could not be verified, the page says so
 rather than leaving a gap you cannot see.</p>
 <p><a href="/specs/">Ad specs</a> · <a href="/learn/">Learn</a> ·
-<a href="/vs/">Compare</a> · <a href="{DOWNLOAD}">Download</a> ·
+<a href="/vs/">Compare</a> · <a href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.23/AdPlaybook-0.2.23-arm64.dmg">Download</a> ·
 <a href="/llms.txt">llms.txt</a></p>
 <p><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> ·
 <a href="/contact/">Contact</a></p>
@@ -562,282 +447,16 @@ ran before <body> existed, so getElementById returned null and no listener was
 ever attached. The button rendered perfectly and did nothing — and a dead toggle
 is indistinguishable from a live one in a screenshot. ~/ops/bin/theme-toggle-gate.py
 checks this position specifically. */
-(function(){{
+(function(){
   var b=document.getElementById("themeToggle");
   if(!b)return;
-  b.addEventListener("click",function(){{
+  b.addEventListener("click",function(){
     var c=document.documentElement.getAttribute("data-theme");
-    if(!c){{c="dark";}}  /* dark is this site's default, not the OS preference */
+    if(!c){c="dark";}  /* dark is this site's default, not the OS preference */
     var n=c==="dark"?"light":"dark";
     document.documentElement.setAttribute("data-theme",n);
-    try{{localStorage.setItem("adplaybook-theme",n);}}catch(e){{}}
-  }});
-}})();</script>
+    try{localStorage.setItem("adplaybook-theme",n);}catch(e){}
+  });
+})();</script>
 </body>
 </html>
-"""
-    out = SITE / path.strip("/") / "index.html" if path != "/" else SITE / "index.html"
-    out.parent.mkdir(parents=True, exist_ok=True)
-    out.write_text(doc)
-    PAGES.append((path, modified))
-
-
-PAGES: List[tuple] = []
-
-
-# ---------------------------------------------------------------------------
-# Platform spec pages — the reason this site can win
-# ---------------------------------------------------------------------------
-
-def _fmt_limit(pl: Dict[str, Any], stem: str) -> str:
-    safe, hard = pl.get(f"{stem}_chars"), pl.get(f"{stem}_max_chars")
-    if safe and hard and safe != hard:
-        return f"<strong>{safe}</strong> to stay visible · {hard} hard cap"
-    if safe:
-        return f"<strong>{safe}</strong>"
-    if hard:
-        return f"<strong>{hard}</strong>"
-    return '<span class="pill unchecked">not stated</span>'
-
-
-def spec_page(spec: Dict[str, Any]) -> None:
-    key, name = spec["key"], spec["name"]
-    manager = spec.get("manager_name", name)
-    placements = spec.get("placements", [])
-    checked = [p for p in placements if p.get("verified_on")]
-    read_on = max((p["verified_on"] for p in checked), default=None)
-
-    rows = []
-    for p in placements:
-        rows.append(
-            f"<tr><td><strong>{esc(p.get('name', p['key']))}</strong><br>"
-            f"<span class='src'>{esc(p.get('aspect_ratio', ''))} "
-            f"{esc(p.get('recommended_resolution', ''))}</span></td>"
-            f"<td>{_fmt_limit(p, 'headline')}</td>"
-            f"<td>{_fmt_limit(p, 'primary_text')}</td>"
-            f"<td>{esc(p.get('max_file_size_mb', '—'))}"
-            f"{' MB' if p.get('max_file_size_mb') else ''}</td></tr>"
-        )
-
-    notes = []
-    for p in placements:
-        for stem, label in (("headline", "Headline"), ("primary_text", "Body text"),
-                            ("description", "Description")):
-            n = p.get(f"{stem}_note")
-            if n and '"' in n:
-                notes.append(f"<h3>{esc(p.get('name', p['key']))} — {label}</h3>"
-                             f"<blockquote>{esc(n)}</blockquote>")
-
-    unverified = spec.get("_unverified", [])
-    unv_html = ""
-    if unverified:
-        items = "".join(f"<li>{esc(u)}</li>" for u in unverified)
-        unv_html = (
-            '<div class="box warn"><strong>What we could not verify</strong>'
-            f"<ul>{items}</ul>"
-            "<p>Listed rather than omitted. A spec sheet with no gaps is either "
-            "complete or hiding something, and from the outside those look "
-            "identical.</p></div>"
-        )
-
-    caveat = spec.get("_experiment_caveat", "")
-    # The heading is derived from the platform's own numbers rather than being
-    # one shared string. Seven spec pages with an identical H2 skeleton is what
-    # a thin-content penalty is actually measuring — the pages differ in
-    # substance, so they should differ in shape.
-    caveat_head = {
-        "linkedin": "Small audiences and the cost of splitting them",
-        "tiktok":   "Why an ad group here refuses to spend",
-        "youtube":  "Decide the video length before anything else",
-        "pinterest": "The description nobody reads",
-        "x":        "A link costs you 23 characters",
-        "reddit":   "The comment thread is part of the ad",
-        "google":   "Responsive ads recombine before anyone sees them",
-        "meta":     "What the learning phase does to a test",
-    }.get(key, "What breaks a campaign here")
-    caveat_html = (f"<h2>{esc(caveat_head)}</h2><p>{esc(caveat)}</p>"
-                   if caveat else "")
-
-    targeting = spec.get("targeting_capabilities", {}) or {}
-    floors = []
-    for k, v in targeting.items():
-        if isinstance(v, (int, float)) and not isinstance(v, bool):
-            note = targeting.get(f"{k}_note", "")
-            floors.append(f"<li><strong>{esc(k.replace('_', ' '))}: {v}</strong> — {esc(note)}</li>")
-    floor_label = {
-        "linkedin": "The 300-account floor, per ad set",
-        "tiktok": "The 1,000 matched-user floor",
-        "youtube": "The 10 and 12 second thresholds",
-    }.get(key, "Hard floors")
-    floor_html = (f'<div class="box"><strong>{esc(floor_label)}</strong><ul>{"".join(floors)}</ul>'
-                  "<p>These are the numbers that decide whether a campaign delivers "
-                  "at all, and none of them produces an error message when you "
-                  "cross it.</p></div>" if floors else "")
-
-    src = spec.get("source_url", "")
-    check_head = ("Count these before you paste" if placements and any(
-        p.get("headline_chars") or p.get("primary_text_chars") for p in placements)
-        else "Check a campaign against this spec")
-    title = f"{name} ad specs and character limits ({BUILT[:4]}) | {BRAND}"
-    desc = (f"{name} ad character limits, image sizes and hard floors. Every "
-            f"figure quoted from {name}'s own documentation with the date it was read"
-            + (f", {read_on}." if read_on else "."))
-
-    body = f"""
-<article>
-<p class="crumb"><a href="/specs/">Ad specs</a> / {esc(name)}</p>
-<h1>{esc(name)} ad specs and character limits</h1>
-<p class="lede">{esc(desc)}</p>
-
-<div class="box ok">
-<p style="margin:0"><span class="pill checked">read {esc(read_on or 'unverified')}</span>
-Source: <a class="src" href="{esc(src)}" rel="nofollow noopener">{esc(src)}</a></p>
-</div>
-
-<h2>Character limits and sizes</h2>
-<table><thead><tr><th>Placement</th><th>Headline</th><th>Body text</th><th>Max file</th></tr></thead>
-<tbody>{''.join(rows)}</tbody></table>
-<p>Where two numbers are given, the first is what stays visible and the second
-is what the field accepts. They're different questions. Copy over the cap gets
-rejected at upload. Copy over the visible limit runs, and gets cut off. Most
-guides publish only one of the two.</p>
-
-{floor_html}
-{''.join(notes[:6])}
-{caveat_html}
-{unv_html}
-
-<h2>{check_head}</h2>
-<p>{BRAND} holds this spec as dated data and checks a finished campaign against
-it — character counts, audience floors, forbidden exclusions — before you paste
-anything into {esc(manager)}. It is arithmetic, not a judgement call, so it runs
-on every campaign and costs nothing.</p>
-<p><a class="btn" href="/#get">Get {BRAND}</a>
-<a class="btn ghost" href="/specs/">All eight platforms</a></p>
-</article>
-"""
-    page(path=f"/specs/{key}/", title=title, description=desc, body=body,
-         modified=read_on or BUILT,
-         schema={
-             "@context": "https://schema.org", "@type": "TechArticle",
-             "headline": f"{name} ad specs and character limits",
-             "description": desc, "datePublished": read_on or BUILT,
-             "dateModified": read_on or BUILT,
-             "publisher": {"@type": "Organization", "name": BRAND},
-             "isBasedOn": src,
-         })
-
-
-def load_specs(app_repo: Path) -> List[Dict[str, Any]]:
-    d = app_repo / "backend" / "adkit" / "platforms"
-    if not d.is_dir():
-        sys.exit(f"platform specs not found at {d} — pass --app-repo")
-    out = []
-    for f in sorted(d.glob("*.json")):
-        spec = json.loads(f.read_text())
-        # Recompute the unverified list the same way the app does, so the page
-        # and the product can never disagree about what was checked.
-        unv = []
-        for p in spec.get("placements", []):
-            if not p.get("verified_on"):
-                unv.append(f"The limits for {p.get('name', p['key'])} were never "
-                           "checked against the platform's own documentation.")
-        if not spec.get("cta_buttons_verified_on"):
-            unv.append("Which call-to-action buttons this platform offers.")
-        if not (spec.get("special_ad_categories") or {}).get("verified_on"):
-            unv.append("Which ad categories are restricted here, and what "
-                       "declaring one does to your targeting.")
-        if not (spec.get("measurement") or {}).get("verified_on"):
-            unv.append("How this platform tracks conversions, and its default "
-                       "attribution window.")
-        spec["_unverified"] = unv
-        out.append(spec)
-    return out
-
-
-def specs_hub(specs: List[Dict[str, Any]]) -> None:
-    cards = "".join(
-        f'<a class="card" href="/specs/{s["key"]}/"><strong>{esc(s["name"])}</strong>'
-        f'<span>{len(s.get("placements", []))} placement(s) · '
-        f'{len(s["_unverified"])} thing(s) unverified</span></a>'
-        for s in specs
-    )
-    body = f"""
-<article>
-<p class="crumb">Ad specs</p>
-<h1>Ad specs and character limits, with sources</h1>
-<p class="lede">Eight platforms. Every number quoted from the platform's own
-documentation, with the URL it came from and the date it was read.</p>
-
-<div class="box warn">
-<strong>Why this page exists</strong>
-<p>The guides ranking for these queries are frequently wrong, and none of them
-show their working. Two examples found while building this, both checked
-against the platforms' own help centres on 2026-08-10:</p>
-<ul>
-<li>A widely-ranked page states LinkedIn's introductory text maxes out at 600
-characters. LinkedIn's own help centre says <strong>3,000</strong>, with 150 to
-avoid truncation.</li>
-<li>Several pages state TikTok caps ad captions at 100 characters. TikTok's own
-in-feed specification page states <strong>no character count at all</strong>.
-The figure appears nowhere in their documentation.</li>
-</ul>
-<p>Undated and uncited is the norm. So every figure here carries its source and
-its date, and anything that could not be read is listed as unverified rather
-than quietly skipped.</p>
-</div>
-
-<div class="cards">{cards}</div>
-
-<h2>Where these come from</h2>
-<p>These pages are generated from the same files {BRAND} itself reads when it
-builds a campaign, so the site cannot drift from the product. When a platform
-changes a limit and the spec is re-checked, the page changes with it.</p>
-<p><a class="btn" href="/#get">Get {BRAND}</a></p>
-</article>
-"""
-    page(path="/specs/", title=f"Ad specs and character limits for 8 platforms | {BRAND}",
-         description=("Ad character limits, image sizes and hard floors for Meta, Google, "
-                      "LinkedIn, TikTok, X, Pinterest, Reddit and YouTube — every figure "
-                      "quoted from the platform's own documentation with the date read."),
-         body=body)
-
-
-def main() -> int:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--app-repo", default=str(Path.home() / "ad maker app"))
-    args = ap.parse_args()
-
-    specs = load_specs(Path(args.app_repo))
-    specs_hub(specs)
-    for s in specs:
-        spec_page(s)
-
-    from content import build_rest  # noqa: E402
-    build_rest(page, specs, PAGES, Path(args.app_repo))
-
-    # Inside the build, not after it. The sitemap is written from PAGES, which
-    # page() appends to — a hub built by a separate script produces four live
-    # pages that no crawler is told about, which the gate caught.
-    from howto import build as build_howto  # noqa: E402
-    build_howto(page)
-
-    # sitemap
-    urls = "".join(
-        f"<url><loc>{BASE_URL}{p}</loc><lastmod>{m}</lastmod></url>"
-        for p, m in sorted(set(PAGES))
-    )
-    (SITE / "sitemap.xml").write_text(
-        '<?xml version="1.0" encoding="UTF-8"?>'
-        '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
-        f"{urls}</urlset>\n")
-
-    print(f"built {len(PAGES)} pages")
-    for p, _ in sorted(set(PAGES)):
-        print(f"  {p}")
-    return 0
-
-
-if __name__ == "__main__":
-    sys.path.insert(0, str(Path(__file__).resolve().parent))
-    raise SystemExit(main())

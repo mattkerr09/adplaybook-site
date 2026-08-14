@@ -228,7 +228,8 @@ def _record() -> str:
             f'<code>scripts/sweep_report.py</code> reproduces every figure.</p></section>')
 
 
-def build_rest(page: Callable, specs: List[Dict[str, Any]], pages: List) -> None:
+def build_rest(page: Callable, specs: List[Dict[str, Any]], pages: List,
+               app_repo=None) -> None:
     _home(page, specs)
     _learn_hub(page)
     for slug, title, desc, body in _ARTICLES:
@@ -242,6 +243,14 @@ def build_rest(page: Callable, specs: List[Dict[str, Any]], pages: List) -> None
 
     from foraudience import build as build_for  # noqa: E402
     build_for(page)
+
+    # One page per strategy, read from the app's own loadout files. The site
+    # had a page for every platform and none for any strategy, which is
+    # backwards — the specs are facts anyone can look up on Meta's site, and
+    # the ten strategies are the thing this product actually decides.
+    from strategies import build as build_strategies  # noqa: E402
+    if app_repo is not None:
+        build_strategies(page, app_repo)
 
     # Privacy, terms and contact. Through `page()` like everything else — a
     # hand-written /privacy/index.html survives the rebuild but drops out of
