@@ -450,14 +450,23 @@ which models fit, including the ones that do not and why.</p>
 across our test corpus and judged, so we will not tell you they match a
 frontier model — we have not measured it and neither has anyone else for this
 particular job.</p>
-<p>The one measurement we do have is unflattering: running the smallest model,
-Qwen2.5 1.5B, on a real product page produced a complete campaign
-document and <strong>one ad variant where three were asked for</strong>. A
-three-cell test is the entire point of the exercise, so on that machine the
-built-in model gets you a usable draft and not a usable test. The larger
-models in the table have more room; how much more, we have not measured.</p>
-<p>If you have an API key or Outlier running, use those. This is the floor,
-and the floor exists so that having neither still gets you something.</p>
+<p>The measurements we have are unflattering, and they got worse rather than
+better. Running the smallest model, Qwen2.5 1.5B:</p>
+<ul>
+<li>Two early attempts produced a complete campaign document, one of them with
+<strong>a single ad variant where three were asked for</strong> — a usable
+draft, not a usable test.</li>
+<li><strong>Four later attempts produced nothing usable at all.</strong> The
+campaign schema has since gained three required fields, and this model now
+runs out of retries without filling them.</li>
+</ul>
+<p>That is two of six attempts, and none of the four most recent. We are
+publishing it because it is what we measured, and because a page that quoted
+only the first success would be selling you a download that fails on your
+machine. The larger models in the table have more room; how much more, we have
+not measured yet, and we will not guess.</p>
+<p>If you have an API key or Outlier running, use those. The built-in model is
+a floor, and on this evidence the smallest one is currently below it.</p>
 
 <h2>What it will not do</h2>
 <ul>
