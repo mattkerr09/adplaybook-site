@@ -446,26 +446,28 @@ which models fit, including the ones that do not and why.</p>
 2026-08-14, not estimated.</p>
 
 <h2>Which of these actually finishes the job</h2>
-<p>We ran three of them against a real product description, on the same
-machine, and counted. This is the whole of what we know:</p>
+<p>We ran four of them against a real product description on the same machine,
+two attempts each. Counts, not percentages:</p>
 <ul>
-<li><strong>Qwen2.5 1.5B — 0 of 7.</strong> Never produced a valid campaign.
-It leaves 13 required fields out at once, which is not a near miss.</li>
-<li><strong>Llama 3.2 3B — 0 of 2.</strong> Same shape, 11 fields short.</li>
-<li><strong>Qwen2.5 7B — 2 of 2.</strong> Both times it came back one field
-short and the app patched that field rather than throwing the answer away.
-Before that repair existed it was 0 of 2.</li>
+<li><strong>Qwen2.5 1.5B — 2 of 2.</strong> The smallest model here does
+finish a campaign.</li>
+<li><strong>Llama 3.2 3B — 0 of 2.</strong> Eleven required fields short both
+times.</li>
+<li><strong>Qwen3 4B — 2 of 2.</strong></li>
+<li><strong>Qwen2.5 7B — 2 of 2.</strong></li>
 </ul>
-<p>Two attempts each is a small sample and we are giving you the counts rather
-than a percentage. The 4B, 8B and 30B have not been run against the campaign
-schema at all, and we would rather say so than imply they sit on a line
-between the ones we did test.</p>
-<p>The practical reading: <strong>on this evidence the floor is around 7B</strong>,
-which needs about 12GB of memory. The smaller models will download, load and
-write fluent English, and then fail to produce a campaign. They stay in the
-list with that result attached, because someone who reads about them elsewhere
-should find this out here rather than after an hour.</p>
-<p>If you have an API key or Outlier running, use those.</p>
+<p><strong>An earlier version of this page said the 1.5B never finished a
+campaign, and that was our bug rather than the model.</strong> Our JSON
+extraction cut the answer short and the missing tail looked like missing
+fields. Three of these four only started working once that was fixed. We are
+leaving the correction visible because a page that quietly improves its own
+numbers is not worth reading.</p>
+<p>The 3B is the odd one out and it stayed broken after the fix, so on this
+evidence that is the model. The 8B and 30B have not been run against the
+campaign schema at all, and we would rather say so than let you assume they
+sit on a line between the ones we tested.</p>
+<p>If you have an API key or Outlier running, use those — a bigger model
+writes better copy. The built-in models are the floor, and the floor is real.</p>
 
 <h2>What it will not do</h2>
 <ul>
