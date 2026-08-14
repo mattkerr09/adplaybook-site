@@ -68,6 +68,10 @@ disclosure that never happened.
 
 from __future__ import annotations
 
+# The version these documents describe is the build the Download button serves.
+# It was typed as v0.1.23 and went false the moment 0.1.89 was published.
+from content import VERSION_TAG  # noqa: E402
+
 import html
 from typing import Any, Callable
 
@@ -252,7 +256,7 @@ no crash reporting, and no licence check that would phone home.</td>
 app goes straight to the start screen and uses that provider, and you reach the
 list only through the settings gear. When you do see it, the app lists three
 providers and marks Outlier as recommended because Outlier runs on your Mac. In
-<strong>v0.1.23 — the build the Download button serves — choosing one does not
+<strong>{VERSION_TAG} — the build the Download button serves — choosing one does not
 change where the run goes.</strong> The button moves you to the next screen and
 records nothing.</p>
 <p>The run asks the machine instead, in this order. <strong>Outlier</strong>, if
@@ -342,7 +346,7 @@ will get it.</p>
 
 <div class="box">
 <strong>What this page does not cover</strong>
-<p>It describes v0.1.23, dated {EFFECTIVE}. It does not describe any future build,
+<p>It describes {VERSION_TAG}, dated {EFFECTIVE}. It does not describe any future build,
 and it does not describe a paid version, because there is not one — see
 <a href="/terms/">the terms</a>. If a payment mechanism, an account, a licence
 key or a server ever exists, this page changes before that ships, not after.</p>
@@ -487,7 +491,7 @@ of merchantability, not of fitness for a particular purpose, not that it will be
 uninterrupted or error-free. It is a free tool made by one person.</p>
 <div class="box warn">
 <p>Two things we already know about the build behind the Download button and
-would rather you heard from us. <strong>In v0.1.23 the provider picker still does
+would rather you heard from us. <strong>In {VERSION_TAG} the provider picker still does
 not change where a run goes.</strong> The interface offers Outlier, ChatGPT and
 Claude and recommends Outlier as the local option, but the button records
 nothing: the run uses whichever provider your machine can actually reach, in that
@@ -502,7 +506,7 @@ complete a single campaign, because every model call raised a
 <code>TypeError</code> on the way in, before any request was made. Nothing you
 typed reached a model vendor, because it never got that far — the only thing that
 left your Mac was the crawl of the site you pointed it at.
-<a href="/privacy/">The privacy page</a> sets out what v0.1.23 sends, and to
+<a href="/privacy/">The privacy page</a> sets out what {VERSION_TAG} sends, and to
 whom.</p>
 </div>
 
