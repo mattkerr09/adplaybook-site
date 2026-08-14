@@ -41,10 +41,22 @@ if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</s
      things. docketseo.app was the only escape and the strongest of the six;
      its recipe is three things together — ground colour, typeface, structure.
      AdPlaybook's is evidence: the product exists to refuse claims it cannot
-     trace back to the advertiser's own page. So the accent becomes the green
-     it already used for VERIFIED, and display type becomes the mono it already
-     used for kickers. --blue is kept as an alias rather than renamed at 40+
-     call sites; it no longer holds a blue and the name is legacy. */
+     trace back to the advertiser's own page.
+
+     The accent was that green until 2026-08-13, when four reference sites were
+     measured at 1440px: Linear #08090A / 64px w510, Raycast #07080A / 64px
+     w600, Cursor #14120B / 26px w400, Warp light / 72px w400. Three of the
+     four carry no chromatic accent at all, and #4ade80 had become the most
+     common accent in the category — so it was the default rather than a
+     choice, and it says "pass", which is backwards for a product whose value
+     is refusing. Amber is what a flag looks like. --green keeps the old value
+     and is now used only for the PASS chips in the product mock, where it
+     means something because it is not the brand colour.
+
+     Display type moved off the mono at the same time: not one of the four
+     sets display type in a monospace, and none ships a weight above 600.
+     --blue is kept as an alias rather than renamed at 40+
+call sites; it no longer holds a blue and the name is legacy. */
   --accent:#f0b429;--blue:var(--accent);--ice:#a8c8ff;--violet:#9d8cff;--green:#4ade80;--amber:#f0b429;
   /* Everything below used to be a literal somewhere in the stylesheet. They are
      tokens now because of a bug I shipped to kerrandcompanyholdings.com on
@@ -403,7 +415,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 </head>
 <body>
 <nav><div class="wrap nav-inner">
-<a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#101613"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#f0b429"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#f0b429"/><circle cx="46" cy="70" r="9.5" fill="#101613"/><circle cx="46" cy="70" r="4.3" fill="#f0b429"/><circle cx="61" cy="53" r="5" fill="#101613"/><circle cx="75" cy="36" r="5" fill="#101613"/></svg>AdPlaybook</a>
+<a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#1b1714"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#f0b429"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#f0b429"/><circle cx="46" cy="70" r="9.5" fill="#1b1714"/><circle cx="46" cy="70" r="4.3" fill="#f0b429"/><circle cx="61" cy="53" r="5" fill="#1b1714"/><circle cx="75" cy="36" r="5" fill="#1b1714"/></svg>AdPlaybook</a>
 <ul class="nav-links"><li><a href="/specs/">Ad specs</a></li><li><a href="/learn/">Learn</a></li><li><a href="/for/">By business</a></li><li><a href="/vs/">Compare</a></li><li><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.1.89/AdPlaybook-0.1.89-arm64.dmg"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>Download</a></li></ul>
 <button id="themeToggle" type="button" aria-label="Switch between light and dark">&#9686;</button>
 </div></nav>
@@ -548,7 +560,7 @@ second model was asked to find the reason the campaign fails. Nothing here is
 illustrative.</p>
 </section>
 
-<section class="record"><p class="kicker">What it has actually done</p><h2>Three of these four are failure rates</h2><p class="rec-intro">Measured across 49 real businesses — every one a live crawl through a real model, not a demo. Most tools publish the number that flatters them. These are the ones that do not.</p><div class="recs"><div class="rec"><p class="rec-n">22<span>/49</span></p><p class="rec-l">campaigns its own review refused</p><p class="rec-w">It argues with itself before it argues with you.</p></div><div class="rec"><p class="rec-n">13<span>/49</span></p><p class="rec-l">sites it could not read — and said so</p><p class="rec-w">Bot protection is common. Inventing a business is not an option.</p></div><div class="rec"><p class="rec-n">3<span>/49</span></p><p class="rec-l">flagged as reading machine-written</p><p class="rec-w">Counted, not guessed. A model cannot judge its own register.</p></div><div class="rec"><p class="rec-n">49<span>/49</span></p><p class="rec-l">shipped with every claim traced</p><p class="rec-w">Each line of copy against the page it came from, or marked unproven.</p></div></div><p class="rec-src">Derived at build time from the run corpus. <code>scripts/sweep_report.py</code> reproduces every figure.</p></section>
+<section class="record"><p class="kicker">What it has actually done</p><h2>Three of these four are failure rates</h2><p class="rec-intro">Measured across 49 real businesses — every one a live crawl through a real model, not a demo. Most tools publish the number that flatters them. These are the ones that do not.</p><div class="recs"><div class="rec"><p class="rec-n">21<span>/49</span></p><p class="rec-l">campaigns its own review refused</p><p class="rec-w">It argues with itself before it argues with you.</p></div><div class="rec"><p class="rec-n">13<span>/49</span></p><p class="rec-l">sites it could not read — and said so</p><p class="rec-w">Bot protection is common. Inventing a business is not an option.</p></div><div class="rec"><p class="rec-n">3<span>/49</span></p><p class="rec-l">flagged as reading machine-written</p><p class="rec-w">Counted, not guessed. A model cannot judge its own register.</p></div><div class="rec"><p class="rec-n">49<span>/49</span></p><p class="rec-l">shipped with every claim traced</p><p class="rec-w">Each line of copy against the page it came from, or marked unproven.</p></div></div><p class="rec-src">Derived at build time from the run corpus. <code>scripts/sweep_report.py</code> reproduces every figure.</p></section>
 
 <section>
 <p class="kicker">The part nobody else does</p>
@@ -575,7 +587,7 @@ the reason to believe everything else it tells you.</p>
 </section>
 </div>
 <footer><div class="wide">
-<div class="foot-brand"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#101613"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#f0b429"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#f0b429"/><circle cx="46" cy="70" r="9.5" fill="#101613"/><circle cx="46" cy="70" r="4.3" fill="#f0b429"/><circle cx="61" cy="53" r="5" fill="#101613"/><circle cx="75" cy="36" r="5" fill="#101613"/></svg>AdPlaybook</div>
+<div class="foot-brand"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#1b1714"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#f0b429"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#f0b429"/><circle cx="46" cy="70" r="9.5" fill="#1b1714"/><circle cx="46" cy="70" r="4.3" fill="#f0b429"/><circle cx="61" cy="53" r="5" fill="#1b1714"/><circle cx="75" cy="36" r="5" fill="#1b1714"/></svg>AdPlaybook</div>
 <p>The ad maker that knows which strategy fits — and proves every claim.</p>
 <p>Every figure on this site is quoted from the platform's own documentation with
 the date it was read. Where something could not be verified, the page says so

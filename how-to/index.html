@@ -33,19 +33,31 @@ if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</s
    hairlines, same pill buttons — with this app's blue in place of Crisp's
    cyan. A family of tools that look unrelated reads as three hobby projects. */
 :root{
-  --black:#080b09;--panel:#0c110e;--panel-2:#101613;--card:#141b17;
-  --hair:#1c2029;--hair-lit:#2a3040;
-  --white:#f5f7fa;--grey:#a1a9b8;--grey-dim:#6b7382;
+  --black:#0f0d0b;--panel:#151210;--panel-2:#1b1714;--card:#211c18;
+  --hair:#2a2320;--hair-lit:#3a312c;
+  --white:#f5f7fa;--grey:#8a8f98;--grey-dim:#61656e;
   /* Four of the five sites in this portfolio were near-black with a blue
      accent and -apple-system, so they read as one company shipping four
      things. docketseo.app was the only escape and the strongest of the six;
      its recipe is three things together — ground colour, typeface, structure.
      AdPlaybook's is evidence: the product exists to refuse claims it cannot
-     trace back to the advertiser's own page. So the accent becomes the green
-     it already used for VERIFIED, and display type becomes the mono it already
-     used for kickers. --blue is kept as an alias rather than renamed at 40+
-     call sites; it no longer holds a blue and the name is legacy. */
-  --accent:#4ade80;--blue:var(--accent);--ice:#a8c8ff;--violet:#9d8cff;--green:#4ade80;--amber:#d9a72b;
+     trace back to the advertiser's own page.
+
+     The accent was that green until 2026-08-13, when four reference sites were
+     measured at 1440px: Linear #08090A / 64px w510, Raycast #07080A / 64px
+     w600, Cursor #14120B / 26px w400, Warp light / 72px w400. Three of the
+     four carry no chromatic accent at all, and #4ade80 had become the most
+     common accent in the category — so it was the default rather than a
+     choice, and it says "pass", which is backwards for a product whose value
+     is refusing. Amber is what a flag looks like. --green keeps the old value
+     and is now used only for the PASS chips in the product mock, where it
+     means something because it is not the brand colour.
+
+     Display type moved off the mono at the same time: not one of the four
+     sets display type in a monospace, and none ships a weight above 600.
+     --blue is kept as an alias rather than renamed at 40+
+call sites; it no longer holds a blue and the name is legacy. */
+  --accent:#f0b429;--blue:var(--accent);--ice:#a8c8ff;--violet:#9d8cff;--green:#4ade80;--amber:#f0b429;
   /* Everything below used to be a literal somewhere in the stylesheet. They are
      tokens now because of a bug I shipped to kerrandcompanyholdings.com on
      2026-08-13: a light theme whose seven contrast ratios I had measured and
@@ -53,12 +65,12 @@ if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</s
      heading gradient and four glow rules were hard-coded and never read the
      palette. Measuring a token set is not the same as checking what reads it.
      A colour that only exists as a literal cannot follow a theme. */
-  --nav-bg:rgba(6,8,12,.72);--nav-hair:rgba(28,32,41,.9);
-  --on-accent:#04140b;                      /* text ON the green button */
-  --accent-lift:#6ee7a0;--accent-deep:#2fa864;
-  --accent-glow:rgba(74,222,128,.85);--accent-glow-2:rgba(74,222,128,1);
-  --accent-wash:rgba(74,222,128,.16);--accent-wash-2:rgba(74,222,128,.13);
-  --accent-edge:rgba(74,222,128,.5);--amber-edge:rgba(217,167,43,.5);
+  --nav-bg:rgba(15,13,11,.72);--nav-hair:rgba(42,35,32,.9);
+  --on-accent:#1a1206;                      /* text ON the green button */
+  --accent-lift:#ffc94d;--accent-deep:#c2891a;
+  --accent-glow:rgba(240,180,41,.85);--accent-glow-2:rgba(240,180,41,1);
+  --accent-wash:rgba(240,180,41,.16);--accent-wash-2:rgba(240,180,41,.13);
+  --accent-edge:rgba(240,180,41,.5);--amber-edge:rgba(217,167,43,.5);
   --row-hover:rgba(255,255,255,.02);
   --window-shadow:rgba(0,0,0,.9);--window-edge:rgba(255,255,255,.02);
   --r:18px;--r-sm:12px;
@@ -83,18 +95,18 @@ if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</s
    4.5:1 on this ground. Buttons then need light text rather than dark, which is
    what --on-accent flipping is for. */
 :root[data-theme="light"]{
-  --black:#f7f9f7;--panel:#ffffff;--panel-2:#eef2ef;--card:#ffffff;
-  --hair:#e0e6e2;--hair-lit:#c7d0ca;
-  --white:#0c120e;--grey:#4d5a52;--grey-dim:#67736c;
-  --accent:#15803d;--ice:#1d4ed8;--violet:#6d28d9;--green:#15803d;--amber:#8a5a12;
-  --nav-bg:rgba(247,249,247,.82);--nav-hair:rgba(200,208,203,.9);
+  --black:#faf8f5;--panel:#ffffff;--panel-2:#f2ede6;--card:#ffffff;
+  --hair:#e6ded3;--hair-lit:#cfc3b3;
+  --white:#14100c;--grey:#5c554c;--grey-dim:#7a7268;
+  --accent:#8a5a12;--ice:#1d4ed8;--violet:#6d28d9;--green:#15803d;--amber:#8a5a12;
+  --nav-bg:rgba(250,248,245,.82);--nav-hair:rgba(207,195,179,.9);
   --on-accent:#ffffff;
-  --accent-lift:#22a555;--accent-deep:#127034;
-  --accent-glow:rgba(21,128,61,.34);--accent-glow-2:rgba(21,128,61,.42);
-  --accent-wash:rgba(21,128,61,.10);--accent-wash-2:rgba(21,128,61,.08);
-  --accent-edge:rgba(21,128,61,.45);--amber-edge:rgba(138,90,18,.45);
-  --row-hover:rgba(12,18,14,.035);
-  --window-shadow:rgba(12,18,14,.22);--window-edge:rgba(12,18,14,.06);
+  --accent-lift:#a86f1c;--accent-deep:#6b450d;
+  --accent-glow:rgba(138,90,18,.34);--accent-glow-2:rgba(138,90,18,.42);
+  --accent-wash:rgba(138,90,18,.10);--accent-wash-2:rgba(138,90,18,.08);
+  --accent-edge:rgba(138,90,18,.45);--amber-edge:rgba(138,90,18,.45);
+  --row-hover:rgba(20,16,12,.035);
+  --window-shadow:rgba(20,16,12,.22);--window-edge:rgba(20,16,12,.06);
 }
 
 /* The toggle. Top corner on every site, per Matthew 2026-08-13 — but inside the
@@ -138,7 +150,7 @@ nav{position:sticky;top:0;z-index:80;background:var(--nav-bg);
   border-bottom:1px solid var(--nav-hair)}
 .nav-inner{display:flex;align-items:center;gap:1.5rem;height:58px;
   width:min(var(--w),calc(100% - 2.6rem));margin:0 auto}
-.nav-brand{display:flex;align-items:center;gap:.55rem;color:var(--white);font-weight:640;
+.nav-brand{display:flex;align-items:center;gap:.55rem;color:var(--white);font-weight:550;
   font-size:1.02rem;letter-spacing:-.015em}
 .nav-brand:hover{text-decoration:none}
 .nav-logo{width:22px;height:22px;display:block}
@@ -152,16 +164,16 @@ nav{position:sticky;top:0;z-index:80;background:var(--nav-bg);
 .nav-links .btn:hover{color:var(--on-accent)}
 .nav-links .btn svg{flex:none}
 
-h1{font-family:var(--mono);font-size:clamp(2.1rem,4.6vw,3.2rem);line-height:1.06;letter-spacing:-.018em;
-  font-weight:560;margin:.6rem 0 1rem}
+h1{font-family:var(--sans);font-optical-sizing:auto;text-wrap:balance;font-size:clamp(2.4rem,5.2vw,4rem);line-height:1.04;letter-spacing:-.028em;
+  font-weight:520;margin:.6rem 0 1rem}
 /* 560, not 690, and 3.6rem, not 4.6rem.
    Measured against the four references at 1280x800: Cursor sets its h1 at 26px
    weight 400, Warp at 64px weight 400, Linear at 64px weight 510. Ours was
    73.6px at 690 — the largest and heaviest of the set by a clear margin, which
    is not confidence, it is volume. */
-h2{font-family:var(--mono);font-size:clamp(1.45rem,2.7vw,2rem);line-height:1.18;letter-spacing:-.014em;
-  font-weight:660;margin:3.2rem 0 .9rem}
-h3{font-size:1.12rem;font-weight:640;letter-spacing:-.012em;margin:2rem 0 .5rem}
+h2{font-family:var(--sans);font-optical-sizing:auto;text-wrap:balance;font-size:clamp(1.6rem,3.1vw,2.4rem);line-height:1.12;letter-spacing:-.024em;
+  font-weight:520;margin:3.2rem 0 .9rem}
+h3{font-size:1.12rem;font-weight:550;letter-spacing:-.012em;margin:2rem 0 .5rem}
 p{margin:0 0 1.05rem}
 
 /* Measure.
@@ -192,7 +204,7 @@ li{margin-bottom:.5rem}
    this site allowed to mean "do this next".
    Kept as a class so older pages do not break; it now just sets the ink. */
 .grad{color:var(--white)}
-.lede{font-size:clamp(1.05rem,1.6vw,1.2rem);line-height:1.55;color:var(--grey);margin:0 0 1.6rem}
+.lede{font-size:clamp(1rem,1.25vw,1.075rem);line-height:1.55;color:var(--grey);margin:0 0 1.6rem}
 
 /* --- hero -----------------------------------------------------------------
    Measured against Raycast and Linear at 1280x800 rather than guessed at.
@@ -237,7 +249,7 @@ li{margin-bottom:.5rem}
 .showcase{margin:0 0 clamp(2rem,4vw,3rem)}
 .win-cap{max-width:64ch;margin:1.1rem 0 0;font-size:.92rem;line-height:1.6;
   color:var(--grey-dim)}
-.win-cap span{color:var(--grey);font-weight:560}
+.win-cap span{color:var(--grey);font-weight:520}
 
 .record{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
   padding:clamp(2.4rem,4.5vw,3.4rem) 0;margin:clamp(1.6rem,3vw,2.6rem) 0}
@@ -246,11 +258,11 @@ li{margin-bottom:.5rem}
   gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--r-sm);
   overflow:hidden}
 .rec{background:var(--panel);padding:1.5rem 1.35rem}
-.rec-n{font-family:var(--mono);font-size:clamp(2rem,4.4vw,2.9rem);line-height:1;
-  font-weight:620;letter-spacing:-.045em;color:var(--white);
+.rec-n{font-family:var(--sans);font-size:clamp(2rem,4.4vw,3rem);line-height:1;letter-spacing:-.03em;
+  font-weight:540;letter-spacing:-.045em;color:var(--white);
   font-variant-numeric:tabular-nums;margin:0 0 .55rem}
 .rec-n span{color:var(--grey-dim);font-size:.44em;letter-spacing:-.02em}
-.rec-l{margin:0 0 .5rem;font-size:.95rem;font-weight:560;letter-spacing:-.011em;
+.rec-l{margin:0 0 .5rem;font-size:.95rem;font-weight:520;letter-spacing:-.011em;
   color:var(--white);line-height:1.35}
 .rec-w{margin:0;font-size:.845rem;line-height:1.5;color:var(--grey-dim)}
 .rec-src{margin:1.4rem 0 0;font-size:.83rem;color:var(--grey-dim)}
@@ -280,7 +292,7 @@ li{margin-bottom:.5rem}
 .hero .lede{max-width:56ch}
 .eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border-radius:999px;
   border:1px solid var(--hair-lit);background:var(--panel-2);color:var(--ice);
-  font-size:.86rem;font-weight:560;white-space:nowrap}
+  font-size:.86rem;font-weight:520;white-space:nowrap}
 /* An inline SVG with no intrinsic size fills its flex line. Without this the
    eyebrow tick rendered about 120px tall and pushed the label onto three
    lines. Every icon in this stylesheet gets an explicit box. */
@@ -300,7 +312,7 @@ section{padding:1rem 0}
   background:linear-gradient(180deg,var(--card),var(--panel-2));color:var(--white);
   transition:border-color .2s,transform .2s}
 .card:hover{border-color:var(--hair-lit);transform:translateY(-2px);text-decoration:none}
-.card strong{display:block;margin-bottom:.3rem;font-weight:640;letter-spacing:-.01em}
+.card strong{display:block;margin-bottom:.3rem;font-weight:550;letter-spacing:-.01em}
 .card span{font-size:.9rem;color:var(--grey);line-height:1.55}
 .card .num{font-family:var(--mono);font-size:2rem;font-weight:600;color:var(--blue);
   line-height:1;display:block;margin-bottom:.5rem}
@@ -324,7 +336,7 @@ th,td{text-align:left;padding:.72rem .8rem;border-bottom:1px solid var(--hair);v
   white-space:normal}
 th{font-size:.74rem;text-transform:uppercase;letter-spacing:.07em;color:var(--grey-dim);
   font-weight:600}
-td strong{font-weight:640}
+td strong{font-weight:550}
 tbody tr:hover{background:var(--row-hover)}
 blockquote{border-left:2px solid var(--blue);padding:.1rem 0 .1rem 1.1rem;margin:1.1rem 0;
   color:var(--grey);font-style:normal}
@@ -348,16 +360,16 @@ code{font-family:var(--mono);font-size:.88em;background:var(--panel-2);padding:.
   border-bottom:1px solid var(--hair);background:var(--panel-2)}
 .win-dot{width:11px;height:11px;border-radius:50%;flex:none}
 .win-title{margin-left:.5rem;font-size:.82rem;color:var(--grey-dim);
-  font-weight:560;letter-spacing:-.01em}
+  font-weight:520;letter-spacing:-.01em}
 .win-body{padding:1.1rem}
 .vd{display:flex;gap:.75rem;align-items:flex-start;padding:.85rem 1rem;
   border:1px solid var(--hair);border-radius:10px;margin-bottom:.7rem;
   background:var(--panel-2)}
 .vd.bad{border-left:3px solid var(--bad)}
 .vd.warn{border-left:3px solid var(--amber)}
-.vd-ic{font-family:var(--mono);font-weight:700;flex:none;line-height:1.5}
+.vd-ic{font-family:var(--mono);font-weight:600;flex:none;line-height:1.5}
 .vd.bad .vd-ic{color:var(--bad)} .vd.warn .vd-ic{color:var(--amber)}
-.vd strong{display:block;font-weight:640;letter-spacing:-.01em;margin-bottom:.15rem}
+.vd strong{display:block;font-weight:550;letter-spacing:-.01em;margin-bottom:.15rem}
 .vd span{font-size:.9rem;color:var(--grey);line-height:1.5}
 /* display:block because this sits inside a <span>; without it the quote runs
    on from the sentence above and reads as one run-on line. */
@@ -369,7 +381,7 @@ footer{border-top:1px solid var(--hair);margin-top:4rem;padding:2.6rem 0 3.4rem;
   color:var(--grey-dim);font-size:.9rem}
 footer a{color:var(--grey)}
 footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
-  font-weight:640;margin-bottom:.7rem}
+  font-weight:550;margin-bottom:.7rem}
 @media(max-width:640px){
   body{font-size:16px}
   .hero{padding:3.2rem 0 2.4rem}
@@ -403,7 +415,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 </head>
 <body>
 <nav><div class="wrap nav-inner">
-<a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#101613"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#4ade80"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#4ade80"/><circle cx="46" cy="70" r="9.5" fill="#101613"/><circle cx="46" cy="70" r="4.3" fill="#4ade80"/><circle cx="61" cy="53" r="5" fill="#101613"/><circle cx="75" cy="36" r="5" fill="#101613"/></svg>AdPlaybook</a>
+<a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#1b1714"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#f0b429"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#f0b429"/><circle cx="46" cy="70" r="9.5" fill="#1b1714"/><circle cx="46" cy="70" r="4.3" fill="#f0b429"/><circle cx="61" cy="53" r="5" fill="#1b1714"/><circle cx="75" cy="36" r="5" fill="#1b1714"/></svg>AdPlaybook</a>
 <ul class="nav-links"><li><a href="/specs/">Ad specs</a></li><li><a href="/learn/">Learn</a></li><li><a href="/for/">By business</a></li><li><a href="/vs/">Compare</a></li><li><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.1.89/AdPlaybook-0.1.89-arm64.dmg"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>Download</a></li></ul>
 <button id="themeToggle" type="button" aria-label="Switch between light and dark">&#9686;</button>
 </div></nav>
@@ -421,7 +433,7 @@ denominator beside it. Where we have not measured something, the page says so
 rather than reaching for a number that sounds right.</p>
 </div>
 <footer><div class="wide">
-<div class="foot-brand"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#101613"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#4ade80"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#4ade80"/><circle cx="46" cy="70" r="9.5" fill="#101613"/><circle cx="46" cy="70" r="4.3" fill="#4ade80"/><circle cx="61" cy="53" r="5" fill="#101613"/><circle cx="75" cy="36" r="5" fill="#101613"/></svg>AdPlaybook</div>
+<div class="foot-brand"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#1b1714"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#f0b429"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#f0b429"/><circle cx="46" cy="70" r="9.5" fill="#1b1714"/><circle cx="46" cy="70" r="4.3" fill="#f0b429"/><circle cx="61" cy="53" r="5" fill="#1b1714"/><circle cx="75" cy="36" r="5" fill="#1b1714"/></svg>AdPlaybook</div>
 <p>The ad maker that knows which strategy fits — and proves every claim.</p>
 <p>Every figure on this site is quoted from the platform's own documentation with
 the date it was read. Where something could not be verified, the page says so
