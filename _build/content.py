@@ -252,6 +252,12 @@ def build_rest(page: Callable, specs: List[Dict[str, Any]], pages: List,
     if app_repo is not None:
         build_strategies(page, app_repo)
 
+        # The offline models. Shipped in 0.2.23 with no page at all, which was
+        # the largest gap on the site: it is the only claim here most
+        # competitors cannot make.
+        from offline import build as build_offline  # noqa: E402
+        build_offline(page, app_repo)
+
     # Privacy, terms and contact. Through `page()` like everything else — a
     # hand-written /privacy/index.html survives the rebuild but drops out of
     # sitemap.xml every time, which is the failure that looks like success.
