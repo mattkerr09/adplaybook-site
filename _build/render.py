@@ -463,7 +463,19 @@ from content import DMG as DOWNLOAD  # noqa: E402
 # name regardless — it previously claimed there was no script at all, which was
 # false the moment this went live.
 ANALYTICS = ('<script defer data-domain="adplaybook.app" '
-             'src="https://plausible.io/js/script.js"></script>')
+             'src="https://plausible.io/js/script.js"></script>'
+             # Sled affiliate attribution. It sets a ta_ref cookie only when a
+             # visitor arrives through an affiliate link, so an ordinary visitor
+             # gets no cookie at all — which is why the privacy page describes it
+             # as conditional rather than as tracking everybody.
+             #
+             # Added 2026-08-14 because affiliate tracking was live on
+             # crispvideo.app and NOWHERE ELSE. The board read "tracker verified
+             # real and serving", which was true of one site out of four, so an
+             # affiliate who sent someone to AdPlaybook, Docket or Outlier earned
+             # nothing and had no way to know.
+             '<script async src="https://usesled.com/kerr-and-company/t.js">'
+             '</script>')
 
 DL_ICON = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" '
            'width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/>'
