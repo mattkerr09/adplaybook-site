@@ -260,7 +260,7 @@ its own work before it shows you anything.</p>
 <a class="btn" href="{{DMG}}">{dl} Download for Mac</a>
 <a class="btn ghost" href="/specs/">See the ad specs</a>
 </div>
-<p class="hero-sub">v0.1.23 · {dmg_size} MB · Apple Silicon · notarised by Apple</p>
+<p class="hero-sub">{VERSION_TAG} · {dmg_size} MB · Apple Silicon · notarised by Apple</p>
 </div>
 
 <section class="showcase">

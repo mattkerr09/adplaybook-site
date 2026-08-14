@@ -431,8 +431,15 @@ LOGO_SVG = (
 
 NAV = [("/specs/", "Ad specs"), ("/learn/", "Learn"),
        ("/for/", "By business"), ("/vs/", "Compare")]
-DOWNLOAD = ("https://github.com/mattkerr09/adplaybook-site/releases/download/"
-            "v0.1.23/AdPlaybook-0.1.23-arm64.dmg")
+# The nav and footer Download links. Derived, not typed — this was the FOURTH
+# hardcoded copy of the release URL in this repo, after the one in content.py and
+# the version strings in the hero and the legal pages. Publishing 0.1.89 updated
+# the #get section and left the nav button, the hero line and the footer pointing
+# at a build from the previous midnight, on the same page, at the same time.
+#
+# One source now. If content.py cannot reach the GitHub API it falls back to the
+# releases PAGE, which is always true, so this cannot invent a URL either.
+from content import DMG as DOWNLOAD  # noqa: E402
 # Plausible, added to the GENERATOR rather than to index.html.
 #
 # It was originally pasted straight into the generated index.html (e4d0020). That
