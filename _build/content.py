@@ -110,6 +110,17 @@ VERSION_TAG = _latest_tag()
 #: a credit counter. A tool whose whole argument is that it refuses claims it
 #: cannot substantiate cannot ask to be trusted from behind a paywall — the buyer
 #: watches it work end to end on their own site, then pays to point it anywhere.
+# CORRECTED 2026-08-14, one hour after shipping it. The first copy said "free
+# forever on ONE website" and "$149 removes the one-site limit". THE APP HAS NO
+# SUCH LIMIT — there is no entitlement code in the repo at all, so the site was
+# selling the removal of a restriction that does not exist. That is the exact
+# class of falsehood this project spent two days deleting from other pages, and I
+# introduced it while fixing something else.
+#
+# The copy now describes what is actually true: the app is free to download and
+# use, and $149 buys a LICENCE for unlimited commercial use. A licence term is
+# real whether or not code enforces it. Once the domain gate ships, the stronger
+# framing can come back — and not before.
 PRICE_USD = 149
 PRICE_STR = f"${PRICE_USD}"
 CHECKOUT = ("https://buy.polar.sh/"
@@ -399,8 +410,8 @@ list of what could not be verified.</p>
 Gatekeeper warning because Apple's notary service cleared it, not because you
 right-clicked past one.</p>
 <p><a class="btn" href="{{DMG}}">{dl} Download free for Mac · {dmg_size} MB</a>
-<a class="btn ghost" href="{{CHECKOUT}}" style="margin-left:.6rem">Unlock every website · {{PRICE_STR}} once</a></p>
-<p class="src">Free forever on one website — the whole app, no credits, no watermark. {{PRICE_STR}} once removes the one-site limit. No subscription and no renewal.</p>
+<a class="btn ghost" href="{{CHECKOUT}}" style="margin-left:.6rem">Buy a licence · {{PRICE_STR}} once</a></p>
+<p class="src">Free to download and use — the whole app, no credits, no watermark, no account. {{PRICE_STR}} once buys a licence for unlimited commercial use across every site you work on. No subscription and no renewal.</p>
 <p class="src">{VERSION_TAG} · <a href="{{RELEASES}}">All releases</a> · needs Outlier
 running locally, or an OpenAI or Anthropic key</p>
 </div>
