@@ -445,28 +445,27 @@ which models fit, including the ones that do not and why.</p>
 <p class="muted">Download sizes read from the Hugging Face API on
 2026-08-14, not estimated.</p>
 
-<h2>What it costs you in quality</h2>
-<p>This is the part most pages leave out. None of these models has been run
-across our test corpus and judged, so we will not tell you they match a
-frontier model — we have not measured it and neither has anyone else for this
-particular job.</p>
-<p>The measurements we have are unflattering, and they got worse rather than
-better. Running the smallest model, Qwen2.5 1.5B:</p>
+<h2>Which of these actually finishes the job</h2>
+<p>We ran three of them against a real product description, on the same
+machine, and counted. This is the whole of what we know:</p>
 <ul>
-<li>Two early attempts produced a complete campaign document, one of them with
-<strong>a single ad variant where three were asked for</strong> — a usable
-draft, not a usable test.</li>
-<li><strong>Four later attempts produced nothing usable at all.</strong> The
-campaign schema has since gained three required fields, and this model now
-runs out of retries without filling them.</li>
+<li><strong>Qwen2.5 1.5B — 0 of 7.</strong> Never produced a valid campaign.
+It leaves 13 required fields out at once, which is not a near miss.</li>
+<li><strong>Llama 3.2 3B — 0 of 2.</strong> Same shape, 11 fields short.</li>
+<li><strong>Qwen2.5 7B — 2 of 2.</strong> Both times it came back one field
+short and the app patched that field rather than throwing the answer away.
+Before that repair existed it was 0 of 2.</li>
 </ul>
-<p>That is two of six attempts, and none of the four most recent. We are
-publishing it because it is what we measured, and because a page that quoted
-only the first success would be selling you a download that fails on your
-machine. The larger models in the table have more room; how much more, we have
-not measured yet, and we will not guess.</p>
-<p>If you have an API key or Outlier running, use those. The built-in model is
-a floor, and on this evidence the smallest one is currently below it.</p>
+<p>Two attempts each is a small sample and we are giving you the counts rather
+than a percentage. The 4B, 8B and 30B have not been run against the campaign
+schema at all, and we would rather say so than imply they sit on a line
+between the ones we did test.</p>
+<p>The practical reading: <strong>on this evidence the floor is around 7B</strong>,
+which needs about 12GB of memory. The smaller models will download, load and
+write fluent English, and then fail to produce a campaign. They stay in the
+list with that result attached, because someone who reads about them elsewhere
+should find this out here rather than after an hour.</p>
+<p>If you have an API key or Outlier running, use those.</p>
 
 <h2>What it will not do</h2>
 <ul>
