@@ -600,6 +600,108 @@ def _fmt_limit(pl: Dict[str, Any], stem: str) -> str:
     return '<span class="pill unchecked">not stated</span>'
 
 
+def _conversion_section(spec: Dict[str, Any]) -> str:
+    """What the platform will actually count as a conversion, and who says so.
+
+    The spec pages carried character limits and nothing about measurement,
+    which is the half of a campaign that decides whether the other half can be
+    judged. Somebody searching "LinkedIn conversion event types" or "Google Ads
+    conversion categories" was finding nothing here, and these lists were read
+    from each platform's own API reference on a stated date — provenance that
+    the tutorial blogs ranking for those terms do not carry.
+
+    Nothing is invented for a platform whose list was not read. Four of the
+    eight have no events recorded, and saying so is the honest page: a made-up
+    list of TikTok events would rank and then send somebody looking for a
+    dropdown entry that does not exist.
+    """
+    m = spec.get("measurement") or {}
+    events = list(m.get("standard_events") or [])
+    src = m.get("standard_events_source") or ""
+    seen = m.get("standard_events_verified_on") or ""
+    buttons = list(spec.get("cta_buttons") or [])
+    key, name = spec["key"], spec["name"]
+
+    # Headings differ per platform on purpose — sameness.py counts repeated
+    # H2s across the corpus, and eight pages sharing one skeleton is the thing
+    # a thin-content penalty measures.
+    head = {
+        "meta": "The eighteen events the pixel can count",
+        "linkedin": "Seven conversion rule types, and no more",
+        "google": "Conversion categories, not conversion events",
+        "youtube": "YouTube conversions are Google Ads conversions",
+        "tiktok": "Eighteen events, and a policy nobody here has read",
+        "reddit": "What Reddit counts, and what we have not checked",
+        "pinterest": "Nothing recorded, and why that is the entry",
+        "x": "Nothing recorded, and why that is the entry",
+    }.get(key, "What counts as a conversion here")
+
+    out = [f"<h2>{esc(head)}</h2>"]
+
+    if events:
+        if seen and src.startswith("http"):
+            out.append(
+                f'<div class="box ok"><p style="margin:0">'
+                f'<span class="pill checked">read {esc(seen)}</span> '
+                f'Source: <a class="src" href="{esc(src)}" rel="nofollow noopener">'
+                f'{esc(src)}</a></p></div>')
+        else:
+            out.append(
+                '<div class="box"><p style="margin:0">'
+                '<span class="pill unchecked">no source recorded</span> '
+                'This list has no citation behind it, so treat it as a '
+                'starting point and check the dropdown.</p></div>')
+
+        if m.get("standard_events_are_categories"):
+            out.append(
+                f"<p>These are conversion action <strong>categories</strong>, "
+                f"not a fixed list of event names. In {esc(spec.get('manager_name', name))} "
+                "you create a conversion action with whatever name you like and "
+                "assign it one of these — so your own event does not have to be "
+                "spelled like anything below, and a checker that demands it "
+                "matches is wrong about how this platform works.</p>")
+        else:
+            out.append(
+                f"<p>This is the whole list. An event {esc(name)} does not "
+                "recognise cannot be selected in the conversion dropdown, so a "
+                "campaign written around one has to be re-planned rather than "
+                "renamed.</p>")
+
+        out.append("<ul class='cols'>"
+                   + "".join(f"<li><code>{esc(e)}</code></li>" for e in events)
+                   + "</ul>")
+    else:
+        out.append(
+            f"<p><strong>Not recorded.</strong> {esc(name)}'s conversion event "
+            "list was not read off their own documentation, so none is printed "
+            "here. That is deliberate: a plausible list would rank for this "
+            "search and then send you looking for a dropdown entry that does "
+            "not exist. Read it in "
+            f"{esc(spec.get('manager_name', name))} before you plan around "
+            "it.</p>")
+
+    if buttons:
+        bsrc = spec.get("cta_buttons_source") or ""
+        bseen = spec.get("cta_buttons_verified_on") or ""
+        cite = (f' — read from <a class="src" href="{esc(bsrc)}" '
+                f'rel="nofollow noopener">their documentation</a> on {esc(bseen)}'
+                if bseen and bsrc.startswith("http") else
+                " — no source recorded against this list, so check the dropdown")
+        out.append(
+            f"<h3>Call-to-action buttons</h3><p>{esc(name)} offers "
+            f"{len(buttons)} button labels{cite}.</p>"
+            "<ul class='cols'>"
+            + "".join(f"<li>{esc(b)}</li>" for b in buttons) + "</ul>")
+    elif key == "google":
+        out.append(
+            "<h3>There is no button</h3><p>A responsive search ad has no "
+            "call-to-action button at all — the headline is the call to action, "
+            "and any CTA belongs inside it rather than in a separate field. "
+            "Tools that leave a button field empty here are right to.</p>")
+
+    return "".join(out)
+
+
 def spec_page(spec: Dict[str, Any]) -> None:
     key, name = spec["key"], spec["name"]
     manager = spec.get("manager_name", name)
@@ -705,6 +807,7 @@ guides publish only one of the two.</p>
 {floor_html}
 {''.join(notes[:6])}
 {caveat_html}
+{_conversion_section(spec)}
 {unv_html}
 
 <h2>{check_head}</h2>
