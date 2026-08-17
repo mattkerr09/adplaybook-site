@@ -390,8 +390,7 @@ hand. It does not move when the site is rebuilt.</p>
 
 def _terms(page: Callable) -> None:
     desc = ("The terms for using AdPlaybook: who publishes it, what the licence "
-            "is, who is responsible for the ads it drafts, and why there is "
-            "nothing to refund.")
+            "is, who is responsible for the ads it drafts, and how refunds work.")
 
     body = f"""{DRAFT_NOTE}
 <article>
@@ -444,9 +443,36 @@ we do not publish a figure we cannot stand behind. The app shows the running cos
 as it goes rather than presenting a total at the end.</p>
 
 <h2>Refunds and cancellation</h2>
-<p>There is nothing to refund and nothing to cancel. No money has been taken
-from anyone, and there is no mechanism by which it could be. Stopping is
-dragging the app to the trash.</p>
+<p>If AdPlaybook does not do what you need, email us within <strong>30 days of
+purchase</strong> and we will refund you in full. You do not need to give a
+reason. Refunds go to the original payment method only and typically appear
+within 5&ndash;10 business days.</p>
+<p><strong>Try it before you buy it.</strong> AdPlaybook is free forever on one
+website. We would rather you confirm it does what you need than rely on a refund
+afterwards &mdash; and if the free tier does not convince you, the paid version
+very likely will not either.</p>
+<p><strong>One refund per customer.</strong> We refund one purchase per person.
+If you buy again after a refund, that purchase is final. This is not aimed at
+anyone acting in good faith; it exists because a policy with no limit is a policy
+that gets automated against.</p>
+<p><strong>After a refund</strong> your licence is deactivated and paid features
+stop working. Anything you have already produced with AdPlaybook remains yours to
+keep and to use commercially. We do not ask you to delete work.</p>
+<p><strong>Purchases made through an affiliate link.</strong> Affiliates earn
+commission on sales they refer, and commission is held until the refund window
+closes. We reserve the right to decline a refund, and to withhold the related
+commission, where a purchase and its refund appear designed to extract commission
+rather than to try the product. Ordinary refunds are unaffected and we will not
+ask you to justify one.</p>
+<p><strong>UK and EU customers.</strong> You normally have a 14-day right to
+cancel a purchase of digital content. Because AdPlaybook is supplied immediately
+on purchase, you are asked at checkout to acknowledge that supply begins right
+away and that you therefore lose that statutory cancellation right once it does.
+The 30-day policy above is offered voluntarily and is more generous than the
+statutory minimum, so in practice you are not worse off. Nothing here removes
+rights you have under mandatory consumer law where you live.</p>
+<p><strong>Chargebacks.</strong> Please contact us before raising one. We will
+almost certainly just refund you, and it is faster for both of us.</p>
 <p>If that ever changes, this section is rewritten and dated <em>before</em> a
 paid build ships, not after.</p>
 
