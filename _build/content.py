@@ -426,6 +426,10 @@ Gatekeeper warning because Apple's notary service cleared it, not because you
 right-clicked past one.</p>
 <p><a class="btn" href="{{DMG}}">{dl} Download free for Mac · {dmg_size} MB</a>
 <a class="btn ghost" href="{{CHECKOUT}}" style="margin-left:.6rem">Buy a licence · {{PRICE_STR}} once</a></p>
+<p class="src"><strong>30 days to change your mind.</strong> If it does not do what
+you need, email within 30 days of purchase and we refund in full — no reason
+required, back to the original payment method. One refund per customer, and the
+full policy is in the <a href="/terms/">terms</a>.</p>
 <p class="src">Free to download and use — the whole app, no credits, no watermark, no account. {{PRICE_STR}} once buys a licence for unlimited commercial use across every site you work on. No subscription and no renewal.</p>
 <p class="src">{VERSION_TAG} · <a href="{{RELEASES}}">All releases</a> · needs Outlier
 running locally, or an OpenAI or Anthropic key</p>
