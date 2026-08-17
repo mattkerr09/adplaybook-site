@@ -82,7 +82,14 @@ COMPANY_PLAIN = "Kerr & Company LLC"
 #: Bumped by hand when the text changes, never generated from `date.today()`.
 #: A policy whose "last updated" moves every time the site is rebuilt is
 #: telling the reader something untrue about when it was last thought about.
-EFFECTIVE = "2026-08-12"
+#: One date per DOCUMENT, not one for the site. These were a single shared
+#: constant until 2026-08-17, when the refund terms materially changed and
+#: privacy did not. Bumping the shared value would have re-dated a page whose
+#: text had not moved — the same untruth this constant exists to prevent,
+#: pointed the other way.
+TERMS_EFFECTIVE = "2026-08-17"   # refunds section rewritten: real policy, was "nothing to refund"
+PRIVACY_EFFECTIVE = "2026-08-12"
+EFFECTIVE = PRIVACY_EFFECTIVE    # legacy alias; prefer the explicit names
 
 #: The only mailbox that has been confirmed to receive mail.
 #:
@@ -399,7 +406,7 @@ def _terms(page: Callable) -> None:
 <p class="lede">{esc(desc)}</p>
 
 <div class="box ok">
-<p style="margin:0"><span class="pill checked">last changed {EFFECTIVE}</span>
+<p style="margin:0"><span class="pill checked">last changed {TERMS_EFFECTIVE}</span>
 These cover the desktop app and this website. They are short because the
 product is small: there is no account to close, no subscription to cancel and
 no data of yours for us to lose.</p>
