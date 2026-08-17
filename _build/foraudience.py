@@ -34,6 +34,136 @@ def esc(s: Any) -> str:
     return html.escape(str(s), quote=True)
 
 
+#: For audiences with no special legal category and no platform floor, the two
+#: sections that carry the differentiation elsewhere are both empty, and the page
+#: collapses onto the shared template. This supplies what is genuinely and
+#: checkably different about how that business buys advertising instead.
+#:
+#: Rules for anything added here, both learned the hard way on this site:
+#:  * No figures. Not a percentage, not a benchmark, not a "most businesses".
+#:    Everything in AdPlaybook that states a number traces to a source, and 25
+#:    specs render as `verified_on: null` rather than pass off an unchecked one.
+#:    A page may not hold a claim the app would refuse to make.
+#:  * Structural truths only — things that follow from the shape of the business
+#:    rather than from data someone would have to go and measure.
+PRESSURE: Dict[str, Any] = {
+    "plumbers-and-trades": (
+        "The ad is buying a phone call, not a click",
+        [
+            "Everything downstream of the tap is a liability. A landing page "
+            "asking someone to fill in a form, while water is coming through "
+            "their ceiling, loses to the competitor whose ad dialled straight "
+            "from the result. Judge the campaign on calls connected, not on "
+            "traffic, because traffic here is the thing that happened instead "
+            "of a call.",
+
+            "A missed call is not a lost lead, it is a lost lead you already "
+            "paid for. That is the difference between this and almost every "
+            "other kind of advertising: the spend is committed at the moment "
+            "of the click and the value is destroyed a few seconds later by "
+            "nobody picking up. Staffing and scheduling are advertising "
+            "decisions for a callout business, whether or not anyone treats "
+            "them that way.",
+
+            "Which makes hours the setting to get right before budget. "
+            "Emergencies do not keep business hours, so the instinct is to run "
+            "around the clock — but you can only sell what you can answer, and "
+            "an ad running at 3am with nobody on the phone is a donation to "
+            "whoever is. Buy the hours you can genuinely cover, then widen them "
+            "deliberately if you decide to cover more.",
+        ],
+    ),
+
+    "agencies": (
+        "You are spending someone else's money, and that changes the job",
+        [
+            "Every other business on this site answers to itself. An agency "
+            "answers for a decision it made months ago, to a client who was not "
+            "in the room, often after the person who approved it has left. That "
+            "is the real constraint, and it shapes the work more than any "
+            "platform difference does.",
+
+            "So the reasoning is the deliverable. A client who cannot follow "
+            "why the budget moved will leave over a good quarter, and a client "
+            "who can follow it will stay through a bad one. The campaign is "
+            "what you produce; the account is kept or lost on whether the "
+            "argument behind it survives being repeated back by someone who "
+            "does not do this for a living.",
+
+            "The specific failure to watch is carrying a winner across "
+            "accounts. A structure that worked for one client is evidence about "
+            "that client, not a template — the audience, the offer and the "
+            "season all moved. Reusing it wholesale is the most common way an "
+            "agency turns one good result into two mediocre ones, and it is "
+            "hard to see from inside because the structure looks proven.",
+
+            "Plan for the handover from the start. Whether a client takes it "
+            "in-house or moves on, what is written down at that point decides "
+            "whether they come back — and an account nobody but you can explain "
+            "is not defensible, it is just opaque.",
+        ],
+    ),
+
+    # These two have a platform floor but no legal category, which left them at
+    # 0.455 against each other — the last pair above the watch line. They are
+    # also genuine opposites on the one axis that matters here, how long it takes
+    # to find out whether the money worked, so the honest differentiation was
+    # sitting there unused.
+    "b2b-saas": (
+        "You will not find out whether this worked for months",
+        [
+            "The thing you are buying is entry into a consideration set, and it "
+            "gets decided by a committee in which nobody has the job title "
+            "\"customer\". Several people have to not object. That is a "
+            "different purchase from anything on the rest of this site, and an "
+            "ad written to close it will read as pushy to every person whose "
+            "agreement you actually need.",
+
+            "Which breaks attribution rather than merely weakening it. The deal "
+            "closes long after the click, usually through a channel that had "
+            "nothing to do with it — a referral, a conference, an inbound demo "
+            "from someone who first saw your name in an ad they never clicked. "
+            "Optimising to what the platform can see reliably moves budget "
+            "toward the last touch and away from the one that created the "
+            "opportunity.",
+
+            "Treat trial signups as the trap they are. They are the metric the "
+            "platform can optimise toward and the one most likely to be "
+            "uncorrelated with revenue, because the cheapest way to buy a "
+            "signup is to find people with no budget and no urgency. If you "
+            "cannot pass a real outcome back, be honest that the campaign is "
+            "being steered by a proxy.",
+        ],
+    ),
+
+    "ecommerce": (
+        "The margin per order is the whole constraint",
+        [
+            "You are the rare advertiser who can actually settle the question. "
+            "Contribution per order is knowable, so whether an ad is profitable "
+            "is arithmetic rather than argument — and that means the discipline "
+            "here is not finding a signal, it is refusing to spend past the "
+            "point where the arithmetic stops working, which is a decision "
+            "everyone makes late.",
+
+            "Returns are where the arithmetic quietly breaks. They land weeks "
+            "after the order, they are not in the platform's reporting, and "
+            "they are not distributed evenly — the creative that drives the "
+            "most volume is often the one that oversells the product and gets "
+            "the most sent back. A campaign can look like the winner and be "
+            "the one losing money, and nothing in the ad account will say so.",
+
+            "Discounting to make a campaign work is borrowing from the next "
+            "one. It moves the arithmetic in your favour today by moving "
+            "margin out of it, and it teaches the customers most responsive to "
+            "advertising to wait for the next code. That is a strategy rather "
+            "than a mistake, but it should be chosen deliberately and not "
+            "arrived at because a campaign needed rescuing.",
+        ],
+    ),
+}
+
+
 #: slug, plural noun, the sentence that opens it, compliance keys that apply,
 #: the platform that fits with why, the floor that bites, the strategy note.
 AUDIENCES = [
@@ -228,6 +358,35 @@ def build(page: Callable) -> None:
         else:
             floor_html = ""
 
+        # The differentiation on these pages comes from the legal section and
+        # the platform floor. Measured 2026-08-17, the pages that have NEITHER
+        # fall back to the shared template and collide:
+        #
+        #   agencies vs plumbers-and-trades   0.509   <- both: no legal, no floor
+        #   b2b-saas vs ecommerce             0.455   <- no legal, floor only
+        #   every page WITH a legal category  <0.35
+        #
+        # agencies and plumbers-and-trades were also the two shortest pages on
+        # the site. Thin and near-identical is the exact profile that does not
+        # get indexed, and it is the portfolio's only real duplicate cluster.
+        #
+        # The fix is NOT to give them a legal section. This module's own rule is
+        # that a page which manufactures risk to look thorough is the same
+        # failure as one that hides it, and neither trade has a special category
+        # — saying so plainly is the honest answer and it stays.
+        #
+        # So they get the thing that is actually true of them instead: the
+        # pressure that is specific to how that business buys advertising. No
+        # figures are asserted here, because an unverifiable number is the other
+        # way this site could lie.
+        pressure = PRESSURE.get(slug)
+        if pressure:
+            p_head, p_paras = pressure
+            pressure_html = (f"<h2>{esc(p_head)}</h2>"
+                             + "".join(f"<p>{esc(p)}</p>" for p in p_paras))
+        else:
+            pressure_html = ""
+
         # Headings are per-audience rather than one shared set. Five of these
         # pages shared an identical H2 skeleton on the first build, which is
         # precisely what a thin-content penalty measures — the pages differ in
@@ -279,6 +438,7 @@ because the expensive mistakes here are strategic rather than typographical.</p>
 
 {legal}
 {floor_html}
+{pressure_html}
 
 <h2>{h_what}</h2>
 <p>It reads your site, works out what you sell and to whom, recommends the
