@@ -41,6 +41,31 @@ def visible(h: str) -> str:
     return re.sub(r"\s+", " ", html.unescape(re.sub(r"<[^>]+>", " ", h))).strip()
 
 
+def check_no_unsubstituted_placeholders(pages: list, fails: list[str]) -> None:
+    """A `{TOKEN}` that survived into the built HTML is always a bug.
+
+    Added 2026-08-17 after I wrote `<a href="{{TERMS}}">` on the strength of
+    `{{CHECKOUT}}` and `{{DMG}}` existing nearby. There is no TERMS placeholder,
+    so the built page shipped `href="{TERMS}"` — a dead link on the buy section
+    of the homepage. Every other gate passed it: the build was clean, the HTML
+    was valid, and the anchor was well formed. It was simply pointing at a
+    filename that does not exist.
+
+    The same shape as the og:image bug this file already guards: a value that is
+    syntactically fine and semantically nonsense. A program can settle it, so it
+    should.
+
+    Deliberately narrow — ALL-CAPS tokens with underscores only. Real copy does
+    not contain `{LIKE_THIS}`, but it does contain braces in code samples, so a
+    looser pattern would fire on legitimate content.
+    """
+    token = re.compile(r"\{[A-Z][A-Z0-9_]{2,}\}")
+    for p in pages:
+        rel = "/" + str(p.relative_to(SITE)).replace("index.html", "")
+        for m in sorted(set(token.findall(p.read_text()))):
+            fails.append(f"{rel}: unsubstituted placeholder {m} in the built HTML")
+
+
 def check_referenced_assets(pages: list, fails: list[str]) -> None:
     """Absolute URLs must be URLs, and referenced local assets must exist.
 
@@ -205,6 +230,7 @@ def main() -> int:
     fails: list[str] = []
     warns: list[str] = []
 
+    check_no_unsubstituted_placeholders(pages, fails)
     check_referenced_assets(pages, fails)
     check_download_link(pages, fails, warns)
 
