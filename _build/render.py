@@ -408,6 +408,44 @@ li{margin-bottom:.5rem}
 .stages li{display:flex;flex-direction:column;gap:.28rem;padding:.9rem 1rem;
   background:var(--panel);border-right:1px solid var(--edge)}
 .stages li:last-child{border-right:0}
+/* ── The live claim gate ────────────────────────────────────────────────────
+   avo.bet puts a working arbitrage calculator on its homepage. We owned real
+   engines and published pictures of them. The gate is deterministic — regex
+   plus a figure trace, no model on the path — so it can actually run here.
+   The patterns are exported from the engine and a test runs the same strings
+   through Python and node and fails if the verdicts differ. */
+.livegate{margin:4rem 0 2rem;padding:2rem 1.9rem;border:1px solid var(--hair);
+  border-radius:var(--r);background:linear-gradient(180deg,var(--card),var(--panel-2));
+  box-shadow:var(--lift-3),inset 0 1px 0 var(--lift-edge)}
+.livegate h2{margin:.2rem 0 .5rem}
+.livegate-lede{color:var(--grey);max-width:64ch;margin:0 0 1.5rem}
+.lg-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:760px){.lg-grid{grid-template-columns:1fr}}
+.lg-field{display:flex;flex-direction:column;gap:.4rem}
+.lg-field>span{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--grey-dim)}
+.lg-field textarea{width:100%;box-sizing:border-box;resize:vertical;
+  font-family:var(--mono);font-size:.82rem;line-height:1.55;
+  padding:.8rem .9rem;border-radius:var(--r-sm);
+  border:1px solid var(--hair-lit);background:var(--black);color:var(--white);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
+.lg-field textarea:focus{outline:none;border-color:var(--accent-edge);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.35),0 0 0 3px var(--accent-wash-2)}
+.lg-out{margin-top:1.4rem;display:flex;flex-direction:column;gap:1px;
+  background:var(--hair);border:1px solid var(--hair);border-radius:var(--r-sm);
+  overflow:hidden}
+.lg-verdict{margin:0;padding:.75rem .95rem;background:var(--panel-2);
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.03em}
+.lg-verdict.bad{color:var(--accent)}
+.lg-verdict.ok{color:var(--green)}
+.lg-row{display:flex;gap:.7rem;padding:.8rem .95rem;background:var(--panel);
+  align-items:flex-start}
+.lg-row .lg-ic{flex:0 0 auto;width:1.1rem;text-align:center;font-weight:600}
+.lg-row.bad .lg-ic{color:var(--accent)}
+.lg-row.ok .lg-ic{color:var(--green)}
+.lg-row strong{display:block;font-weight:550;letter-spacing:-.01em}
+.lg-why{display:block;color:var(--grey);font-size:.86rem;margin-top:.15rem}
+.lg-foot{color:var(--grey-dim);font-size:.88rem;margin:1.1rem 0 0;max-width:70ch}
 /* ── The hero runs, rather than describing a run ─────────────────────────────
    Measured 2026-08-18 against the six reference sites: adplaybook.app carried
    0 img, 0 video, 0 canvas and no media above 100x100 across 8,938px, and 18

@@ -425,7 +425,22 @@ def main() -> int:
     defined = set(re.findall(r"\.([a-z][a-z0-9-]*)", css))
     used = set()
     for p_ in pages:
-        for m in re.findall(r'class="([^"]+)"', p_.read_text()):
+        html = p_.read_text()
+        # Strip <script> and <style> bodies FIRST. Inside a script,
+        # `class="lg-row ' + (ok ? 'ok' : 'bad') + '"` is JavaScript building a
+        # string, not markup — and scanning it as markup invented seven classes
+        # named `.'`, `.(ok`, `.?` and so on, then reported every one as an
+        # undefined style. The check was reading JS as HTML.
+        #
+        # It only surfaced when the live claim gate put the first inline script
+        # with a computed class on the site. Any page with one would have done
+        # it, and the failure reads as a real finding rather than a parser
+        # confusion, which is the expensive kind.
+        html = re.sub(r"<script\b[^>]*>.*?</script>", "", html,
+                      flags=re.S | re.I)
+        html = re.sub(r"<style\b[^>]*>.*?</style>", "", html,
+                      flags=re.S | re.I)
+        for m in re.findall(r'class="([^"]+)"', html):
             used.update(m.split())
     for name in sorted(used - defined):
         fails.append(f"class .{name} is used in HTML but defined nowhere in the CSS")

@@ -634,6 +634,8 @@ second model was asked to find the reason the campaign fails. Nothing here is
 illustrative.</p>
 </section>
 
+{_livegate_section()}
+
 {_record()}
 
 <section>
@@ -776,3 +778,14 @@ someone who is liable for it — that is this. They compose well: the brief
 # ---------------------------------------------------------------------------
 
 from articles import ARTICLES as _ARTICLES  # noqa: E402
+
+def _livegate_section() -> str:
+    """The live claim gate, dropped in as one block.
+
+    Kept out of the f-string above because the script contains braces and would
+    have to be doubled everywhere — which is exactly the kind of edit that
+    produces a page that renders and a script that silently does not run.
+    """
+    import livegate
+    return livegate.SECTION + livegate.SCRIPT
+
