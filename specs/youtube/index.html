@@ -388,6 +388,70 @@ li{margin-bottom:.5rem}
 .stages li{display:flex;flex-direction:column;gap:.28rem;padding:.9rem 1rem;
   background:var(--panel);border-right:1px solid var(--edge)}
 .stages li:last-child{border-right:0}
+/* ── The hero runs, rather than describing a run ─────────────────────────────
+   Measured 2026-08-18 against the six reference sites: adplaybook.app carried
+   0 img, 0 video, 0 canvas and no media above 100x100 across 8,938px, and 18
+   elements with any transition. langchain.com: 99 images, 267 animated
+   elements, a hero subhead that cycles, a rotating word wheel. framer.com puts
+   a live, glowing product surface directly under a left-aligned headline.
+   cofounder.co floats the product's own output inside the artwork.
+
+   Three passes of type scale and spacing did not touch that, because the page
+   is a stack of text boxes and no amount of leading changes what it IS.
+
+   So the strip and the window play as ONE sequence: the six stages light in
+   the order the engine runs them, and then the verdicts land in the order they
+   were produced. content.py already insists these are one campaign rather than
+   two stitched together — this makes that visible instead of asserted.
+
+   NOTHING HERE INVENTS CONTENT. Every row is the same verbatim output from the
+   same real HoneyBook run that was already on the page; the animation only
+   reveals it in the order the app produced it. A demo that fabricates a
+   smoother story than the product delivers is the exact failure this product
+   sells against.
+
+   Reduced motion gets the finished state immediately — not a degraded version,
+   the same page with the timeline collapsed to zero. */
+@media (prefers-reduced-motion: no-preference){
+  .stages li{position:relative}
+  .stages li::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+    background:var(--accent);transform:scaleX(0);transform-origin:left;
+    animation:stage-run .5s cubic-bezier(.2,.8,.2,1) forwards}
+  .stages li:nth-child(1)::after{animation-delay:.15s}
+  .stages li:nth-child(2)::after{animation-delay:.45s}
+  .stages li:nth-child(3)::after{animation-delay:.75s}
+  .stages li:nth-child(4)::after{animation-delay:1.05s}
+  .stages li:nth-child(5)::after{animation-delay:1.35s}
+  .stages li:nth-child(6)::after{animation-delay:1.65s}
+  .stages li strong{opacity:.45;animation:stage-lit .4s ease forwards}
+  .stages li:nth-child(1) strong{animation-delay:.15s}
+  .stages li:nth-child(2) strong{animation-delay:.45s}
+  .stages li:nth-child(3) strong{animation-delay:.75s}
+  .stages li:nth-child(4) strong{animation-delay:1.05s}
+  .stages li:nth-child(5) strong{animation-delay:1.35s}
+  .stages li:nth-child(6) strong{animation-delay:1.65s}
+
+  /* The window fills in after the strip reaches the claim gate, because that
+     is the stage that produces these lines. */
+  .win .vd{opacity:0;transform:translateY(8px);
+    animation:vd-land .55s cubic-bezier(.2,.8,.2,1) forwards}
+  .win .vd:nth-child(1){animation-delay:1.9s}
+  .win .vd:nth-child(2){animation-delay:2.5s}
+  .win .vd:nth-child(3){animation-delay:3.2s}
+  .win .vd:nth-child(4){animation-delay:3.8s}
+
+  /* A scan line across the title bar for as long as the run is going. It stops
+     when the last verdict lands — a spinner that never stops is a lie about
+     whether anything finished. */
+  .win-bar{position:relative;overflow:hidden}
+  .win-bar::after{content:"";position:absolute;left:0;top:0;bottom:0;width:34%;
+    background:linear-gradient(90deg,transparent,var(--accent-wash),transparent);
+    animation:win-scan 1.5s ease-in-out 3 forwards}
+}
+@keyframes stage-run{to{transform:scaleX(1)}}
+@keyframes stage-lit{to{opacity:1}}
+@keyframes vd-land{to{opacity:1;transform:none}}
+@keyframes win-scan{0%{transform:translateX(-120%)}100%{transform:translateX(400%)}}
 .stages .stage-n{font-family:var(--mono);font-size:.7rem;color:var(--grey-dim)}
 .stages strong{font-size:.95rem;letter-spacing:-.01em}
 .stages .stage-d{font-family:var(--mono);font-size:.7rem;line-height:1.45;
