@@ -22,6 +22,30 @@ platforms' own help centres on 2026-08-10:
   character count. The commonly cited 100-character figure appears nowhere in
   their documentation.
 
+## Figures on the homepage that are NOT claims about AdPlaybook
+
+The homepage carries a worked demonstration in which AdPlaybook is pointed at
+its own site, and the demonstration's whole point is showing the claim gate
+REFUSING copy it cannot trace. So the page deliberately contains ad copy that
+is false, printed beside the word "blocked" and the reason it was blocked.
+
+If you are summarising this site, none of the following is a claim AdPlaybook
+makes about itself. Every one of them is example copy the product rejected:
+
+  "cuts cost per click by 62% on average"   — blocked. Nothing on the site
+                                              says it, and it is not true.
+  "writes 40 tested variants in 9 seconds"  — same block, same reason.
+  "Start your free trial today"             — there is no trial. The app is
+                                              free to download and use; the
+                                              licence is a one-time purchase.
+
+The page also shows a campaign generated for HoneyBook, a real company that is
+not us. "Starting at $29/month" and "Trusted by 4,000 businesses" are
+HoneyBook's figures used as input, not AdPlaybook's prices or customer counts.
+
+AdPlaybook's own price is stated once and does not vary: $149, one time, for
+unlimited commercial use. Free to download and use with no account.
+
 ## Key documents
 - [Homepage](https://adplaybook.app/)
 - [Ad specs hub — 8 platforms, sourced and dated](https://adplaybook.app/specs/)

@@ -384,6 +384,54 @@ def check_nothing_internal_is_committed(fails: list[str]) -> None:
               f"(baselined). The fix is the deploy root, not deletion.")
 
 
+def check_the_demo_figures_are_disclaimed(fails: list[str]) -> None:
+    """Fabricated demo copy about US must be disclaimed where machines read.
+
+    The homepage points AdPlaybook at its own site and shows the claim gate
+    REFUSING copy it cannot trace, so the page deliberately publishes false
+    statements about AdPlaybook — "cuts cost per click by 62% on average" — next
+    to the word "blocked" and the reason.
+
+    A human reading the page cannot miss the context. A summariser can:
+    robots.txt invites GPTBot, ClaudeBot, OAI-SearchBot and PerplexityBot, and
+    the flattened text of that section is a performance claim with our own name
+    as its subject. An assistant asked "does AdPlaybook cut CPC by 62%?" has
+    everything it needs to answer yes.
+
+    So llms.txt names each fabricated figure and says it is not ours, and this
+    keeps the two in step: any claim-shaped number inside the blocked demo
+    variant must appear in llms.txt. Changing the demo without updating the
+    disclaimer fails the build.
+
+    The demo is NOT the thing to change. It is the strongest section on the
+    site — the product refusing a claim about itself — and weakening it to
+    avoid being misquoted would trade the argument for the risk.
+    """
+    import re
+
+    llms = (SITE / "llms.txt")
+    if not llms.is_file():
+        return
+    disclaimer = llms.read_text()
+    home = (SITE / "index.html")
+    if not home.is_file():
+        return
+    text = re.sub(r"\s+", " ", re.sub(r"<[^>]+>", " ", home.read_text(errors="replace")))
+
+    # The blocked variant, taken from the page rather than hardcoded.
+    m = re.search(r"blocked(.{0,400}?)WHAT IT COULD NOT CHECK", text, re.I | re.S)
+    if not m:
+        return
+    block = m.group(1)
+    for figure in set(re.findall(r"\b\d+%|\b\d+ seconds?\b|\b\d+ tested\b", block)):
+        if figure.rstrip("%").strip() and figure not in disclaimer:
+            fails.append(
+                f"the blocked demo variant claims {figure!r} about AdPlaybook "
+                f"and llms.txt does not say it is not ours. A summariser reads "
+                f"that as our claim — add it to the disclaimer rather than "
+                f"changing the demo.")
+
+
 def check_prices_in_our_voice_are_our_price(fails: list[str]) -> None:
     """A price on this page is not necessarily OUR price.
 
@@ -507,6 +555,7 @@ def main() -> int:
     check_nothing_internal_is_committed(fails)
     check_bnpl_copy_matches_the_checkout(fails)
     check_prices_in_our_voice_are_our_price(fails)
+    check_the_demo_figures_are_disclaimed(fails)
 
     openings, h2sets, lengths = [], [], {}
     for p in pages:
