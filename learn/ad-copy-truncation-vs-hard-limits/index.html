@@ -388,6 +388,19 @@ li{margin-bottom:.5rem}
 .stages li{display:flex;flex-direction:column;gap:.28rem;padding:.9rem 1rem;
   background:var(--panel);border-right:1px solid var(--edge)}
 .stages li:last-child{border-right:0}
+/* Pay-in-4. The copy lives in _build/bnpl.py and is NOT published — the Buy
+   button still points at Polar, which is card-only, so every instalment
+   sentence would be false at the checkout it sends people to. check.py fails
+   the build if the copy reaches a page before the button moves to Dodo.
+   The styles are here so that turning it on is one flag rather than a flag
+   and a design pass. */
+.paylater{margin:4rem 0 2rem;padding:2rem 1.9rem;border:1px solid var(--hair);
+  border-radius:var(--r);background:linear-gradient(180deg,var(--card),var(--panel-2));
+  box-shadow:var(--lift-2),inset 0 1px 0 var(--lift-edge)}
+.paylater h2{margin:.2rem 0 .9rem;letter-spacing:-.02em}
+.paylater p{max-width:62ch;color:var(--grey)}
+.paylater p:first-of-type{color:var(--white)}
+.paylater .src{margin-top:1.2rem;font-size:.86rem;color:var(--grey-dim)}
 /* The first real image on this site. Everything else here is type in a box —
    measured 2026-08-18: 0 img, 0 video, 0 canvas across 8,938px, against
    langchain.com's 99 images. This one is drawn by the product itself, exported

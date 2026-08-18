@@ -384,6 +384,58 @@ def check_nothing_internal_is_committed(fails: list[str]) -> None:
               f"(baselined). The fix is the deploy root, not deletion.")
 
 
+def check_bnpl_copy_matches_the_checkout(fails: list[str]) -> None:
+    """Pay-in-4 copy must not be published while the checkout is card-only.
+
+    The Buy button points at buy.polar.sh, and Polar is card-only through
+    Stripe — no Klarna, no Afterpay, no instalments at all. So every BNPL
+    sentence would be false the moment somebody clicked, on the page of a
+    product whose whole pitch is refusing claims it cannot trace.
+
+    This is a gate rather than a note because "do not publish it yet" is
+    exactly the kind of instruction that survives until the person holding it
+    is replaced. The copy is written and sitting in _build/bnpl.py; the only
+    thing keeping it off the site is this function and the flag it reads.
+
+    Both directions fail:
+      copy on a served page while the checkout is Polar -> the claim is false
+      BNPL_LIVE set while the checkout is Polar         -> the flag is a lie
+    """
+    import sys as _sys
+    _sys.path.insert(0, str(SITE / "_build"))
+    try:
+        import bnpl
+    except Exception:  # noqa: BLE001 — the copy is optional, the gate is not
+        return
+
+    served = "\n".join(p_.read_text(errors="replace")
+                        for p_ in SITE.glob("**/index.html"))
+    on_page = bnpl.MARKER.lower() in served.lower()
+    dodo = bnpl.CHECKOUT_PROVIDER == "dodo"
+
+    if bnpl.BNPL_LIVE and not dodo:
+        fails.append(
+            "BNPL_LIVE is set while CHECKOUT_PROVIDER is "
+            f"{bnpl.CHECKOUT_PROVIDER!r}. Polar is card-only, so the "
+            "instalment copy would be false at the checkout it sends people to.")
+    if on_page and not dodo:
+        fails.append(
+            "pay-in-4 copy is on a published page while the Buy button still "
+            "points at a card-only checkout. Move the button to Dodo first, or "
+            "take the copy off the page.")
+    if dodo and not on_page and bnpl.BNPL_LIVE:
+        fails.append(
+            "BNPL_LIVE is set and the checkout is Dodo, but the copy is on no "
+            "page — the flag says shipped and nothing is.")
+
+    # Affirm is not available on Dodo. It reads as safe because it is enabled
+    # in the Stripe account, which is a different processor entirely.
+    if "affirm" in served.lower():
+        fails.append(
+            "a served page names Affirm, which Dodo does not offer. It is "
+            "available in Stripe, which is not where our checkout is.")
+
+
 def main() -> int:
     pages = sorted(SITE.glob("**/index.html"))
     if not pages:
@@ -396,6 +448,7 @@ def main() -> int:
     check_referenced_assets(pages, fails)
     check_download_link(pages, fails, warns)
     check_nothing_internal_is_committed(fails)
+    check_bnpl_copy_matches_the_checkout(fails)
 
     openings, h2sets, lengths = [], [], {}
     for p in pages:
