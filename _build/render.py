@@ -100,6 +100,31 @@ call sites; it no longer holds a blue and the name is legacy. */
   --row-hover:rgba(255,255,255,.02);
   --window-shadow:rgba(0,0,0,.9);--window-edge:rgba(255,255,255,.02);
   --r:18px;--r-sm:12px;
+  /* Elevation. Asked for as: make the content feel like it is floating just
+     above the page, the way Outlier's desktop app does.
+
+     Read out of Outlier's own stylesheet
+     (Projects/Outlier/desktop/outlier-desktop/src/styles.css) rather than
+     eyeballed from a screenshot, so these are its actual values and not my
+     impression of them. Its recipe is three things at once and only the first
+     was here already:
+
+       1. a ramp of surfaces, page darker than the things on it
+       2. a soft downward shadow, large blur, negative spread — never a glow
+       3. a hairline of LIGHT along the top edge, which is what sells the lift
+
+     Its comment on its own shadows is "restrained; no glowy purple halos", and
+     that is the trap on this site specifically: the only shadows here were the
+     amber glow on the CTA, so copying that shape would have lit every card
+     with the brand colour. These are neutral black, exactly as Outlier has
+     them — the accent stays the one thing that glows. */
+  --lift-1:0 1px 2px rgba(0,0,0,.30);
+  --lift-2:0 4px 14px -2px rgba(0,0,0,.40);
+  --lift-3:0 12px 32px -4px rgba(0,0,0,.50);
+  /* The top-edge highlight. Outlier's --border-soft, same value. An inset
+     hairline reads as a surface catching light from above; without it the
+     shadow alone reads as a drop-shadow sticker rather than a raised plane. */
+  --lift-edge:rgba(255,255,255,.06);
   --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,system-ui,sans-serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
   --w:1080px;--wr:820px;
@@ -139,6 +164,15 @@ call sites; it no longer holds a blue and the name is legacy. */
   --accent-edge:rgba(138,90,18,.45);--amber-edge:rgba(138,90,18,.45);
   --row-hover:rgba(20,16,12,.035);
   --window-shadow:rgba(20,16,12,.22);--window-edge:rgba(20,16,12,.06);
+  /* Elevation, light. Not the dark values at lower opacity — on a light ground
+     a black shadow at .4 reads as dirt. Warm-tinted from the ink colour,
+     shallower, and the top edge becomes white rather than a white film that
+     would be invisible. This file already records the bug of a value that
+     exists in only one theme; these are here so the ramp follows the theme. */
+  --lift-1:0 1px 2px rgba(20,16,12,.06);
+  --lift-2:0 4px 14px -2px rgba(20,16,12,.10);
+  --lift-3:0 12px 32px -4px rgba(20,16,12,.14);
+  --lift-edge:rgba(255,255,255,.9);
 }
 
 /* The toggle. Top corner on every site, per Matthew 2026-08-13 — but inside the
@@ -299,7 +333,7 @@ li{margin-bottom:.5rem}
 .rec-intro{max-width:60ch;color:var(--grey);margin:.4rem 0 2.2rem}
 .recs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
   gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--r-sm);
-  overflow:hidden}
+  overflow:hidden;box-shadow:var(--lift-2),inset 0 1px 0 var(--lift-edge)}
 .rec{background:var(--panel);padding:1.5rem 1.35rem}
 .rec-n{font-family:var(--sans);font-size:clamp(2rem,4.4vw,3rem);line-height:1;letter-spacing:-.03em;
   font-weight:540;letter-spacing:-.045em;color:var(--white);
@@ -409,15 +443,21 @@ section+section{margin-top:clamp(1.6rem,3.4vw,2.8rem)}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:1.6rem 0}
 .card{display:block;padding:1.3rem 1.4rem;border:1px solid var(--hair);border-radius:var(--r);
   background:linear-gradient(180deg,var(--card),var(--panel-2));color:var(--white);
-  transition:border-color .2s,transform .2s}
-.card:hover{border-color:var(--hair-lit);transform:translateY(-2px);text-decoration:none}
+  box-shadow:var(--lift-2),inset 0 1px 0 var(--lift-edge);
+  transition:border-color .2s,transform .2s,box-shadow .2s}
+/* It already rose 2px on hover with nothing under it, which reads as the card
+   sliding rather than lifting. The shadow deepening with the movement is the
+   whole difference. */
+.card:hover{border-color:var(--hair-lit);transform:translateY(-2px);text-decoration:none;
+  box-shadow:var(--lift-3),inset 0 1px 0 var(--lift-edge)}
 .card strong{display:block;margin-bottom:.3rem;font-weight:550;letter-spacing:-.01em}
 .card span{font-size:.9rem;color:var(--grey);line-height:1.55}
 .card .num{font-family:var(--mono);font-size:2rem;font-weight:600;color:var(--blue);
   line-height:1;display:block;margin-bottom:.5rem}
 
 .box{margin:2rem 0;padding:1.35rem 1.5rem;border:1px solid var(--hair);border-radius:var(--r-sm);
-  background:var(--panel-2);color:var(--grey)}
+  background:var(--panel-2);color:var(--grey);
+  box-shadow:var(--lift-1),inset 0 1px 0 var(--lift-edge)}
 .box strong{color:var(--white)}
 .box p:last-child{margin-bottom:0}
 .box.warn{border-left:3px solid var(--amber)}
@@ -425,6 +465,7 @@ section+section{margin-top:clamp(1.6rem,3.4vw,2.8rem)}
 
 .cta-block{margin:3.4rem 0 1rem;padding:2.4rem 2rem;border:1px solid var(--hair);
   border-radius:var(--r);text-align:center;
+  box-shadow:var(--lift-3),inset 0 1px 0 var(--lift-edge);
   background:radial-gradient(600px 300px at 20% -20%,var(--accent-wash-2),transparent 70%),
     linear-gradient(180deg,var(--card),var(--panel-2))}
 .cta-block p{color:var(--grey)}
