@@ -22,10 +22,29 @@ WHAT IS HONEST TO CLAIM ABOUT THIS, and the page says exactly this much:
   Those come from `adkit.gate` and `adkit.feasibility`, the same modules the
   shipped app runs, against a live crawl of this site.
 
-Variant C carries claims that are not on this site — "4,000 marketers", "3x
-faster", "4.9 out of 5". They are there to be caught. If a future version of
-this site ever publishes one of those figures, the gate will substantiate it
-and C will pass, and that is correct behaviour rather than a broken fixture.
+Variant C carries claims that are not on this site — a 62% cost-per-click
+reduction, 40 variants in 9 seconds. They are there to be caught.
+
+TWO THINGS THE FIRST DRAFT GOT WRONG, both found by shipping it.
+
+**It planted social proof.** "Trusted by 4,000 marketers" and "Rated 4.9 out of
+5" went live, and ops/bin/traction-gate.py caught them on the homepage —
+correctly. A fabricated traction claim printed in order to refute it is still
+that string, published, on our own domain, where a search snippet or an answer
+engine can lift it away from the strike-through that makes it false. The gate
+cannot tell refutation from assertion, and neither can a snippet. Exempting the
+gate was the wrong repair: it guards six sites and its worth comes from having
+no exceptions. Performance promises exercise the same code — gate._find_undeclared
+hunts speed and price promises alongside social proof — so the demonstration is
+unchanged and nothing about our traction is asserted anywhere.
+
+**The specimen substantiated itself.** This section prints variant C's copy, so
+the next crawl of this site READ THAT COPY BACK and the gate cleared all three
+variants. The planted claims had become true statements about the site, because
+we published them. That is the corollary in ops/RULES.md — a check that compares
+a thing to itself proves nothing — arriving through a door nobody was watching.
+`_drop_specimen_page` removes the page carrying this section from the evidence
+before the gate runs, and the page says so.
 
 WHY THE JSON IS COMMITTED rather than the check running inside render.py: the
 crawl is a live network call, and a site build that fails because a crawler
@@ -75,17 +94,45 @@ def _variants(V):
           axis="leads with spec accuracy rather than the review pass",
           cta_intent="download the app", cta="Download",
           tests="A win means spec accuracy is the stronger hook."),
-        V(label="C — the social-proof axis",
-          headline="Trusted by 4,000 marketers",
+        V(label="C — the performance axis",
+          headline="Cut your cost per click by 62%",
           primary_text=(
-              "Join 4,000 marketers who ship campaigns 3x faster with "
-              "AdPlaybook. Rated 4.9 out of 5. Start your free trial today and "
+              "AdPlaybook writes 40 tested variants in 9 seconds and cuts cost "
+              "per click by 62% on average. Start your free trial today and "
               "see results in the first week."),
           description="Free download for Mac.",
-          axis="social proof instead of mechanism",
+          axis="an outcome promise instead of mechanism",
           cta_intent="start a trial", cta="Sign Up",
-          tests="A win would mean social proof beats mechanism."),
+          tests="A win would mean an outcome promise beats a mechanism."),
     ]
+
+
+def _drop_specimen_page(crawl) -> list:
+    """Remove the page that renders this specimen from its own evidence.
+
+    The section built from this data quotes variant C verbatim. Once it is
+    live, a crawl of this site reads those sentences back and the gate
+    substantiates them — against a page that only contains them because we
+    printed them. The demonstration then reports every variant clean, which is
+    the exact opposite of what it is for.
+
+    Verified rather than assumed: the first live run blocked one variant on
+    five claims; the run immediately after the section shipped cleared all
+    three, and the crawl had grown by exactly one span.
+
+    Only the page carrying the section is dropped. Everything else on the site
+    stays, which is why "Eight platforms" still resolves — it sits on
+    /for/agencies/, which was making that claim long before this ran.
+    """
+    roots = {r.rstrip("/") for r in
+             (SITE_URL, SITE_URL + "/", SITE_URL + "/index.html")}
+    removed = sorted(u for u in crawl.corpus if u.rstrip("/") in roots)
+    for u in removed:
+        crawl.corpus.pop(u, None)
+    for k, ev in list(crawl.evidence.items()):
+        if getattr(ev, "url", "").rstrip("/") in roots:
+            crawl.evidence.pop(k, None)
+    return removed
 
 
 def build(app_repo: Path) -> dict:
@@ -97,6 +144,7 @@ def build(app_repo: Path) -> dict:
     from adkit.models import ProductBrief
 
     crawl = ing.ingest(SITE_URL, max_pages=8, max_seconds=120)
+    dropped = _drop_specimen_page(crawl)
 
     plat = P.get("linkedin")
     place = plat.placements[0]
@@ -131,8 +179,8 @@ def build(app_repo: Path) -> dict:
             when_to_judge="After 14 days.",
             honest_caveat="A desktop download is not a paying customer.",
             how_the_result_gets_back="Plausible goal, read weekly."),
-        claims_used=["Eight platforms", "Trusted by 4,000 marketers",
-                     "3x faster", "4.9 out of 5"],
+        claims_used=["Eight platforms", "Cut your cost per click by 62%",
+                     "40 tested variants in 9 seconds", "62% on average"],
     )
 
     gen = GeneratedCampaign(
@@ -152,6 +200,7 @@ def build(app_repo: Path) -> dict:
         "crawl": {
             "reliable": bool(crawl.reliable),
             "spans": len(crawl.evidence),
+            "excluded_pages": dropped,
             "blind_spots": list(crawl.blind_spots),
         },
         "variants": [

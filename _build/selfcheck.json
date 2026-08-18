@@ -5,7 +5,10 @@
   "platform": "LinkedIn — Feed: single image",
   "crawl": {
     "reliable": true,
-    "spans": 86,
+    "spans": 65,
+    "excluded_pages": [
+      "https://adplaybook.app/"
+    ],
     "blind_spots": [
       "56 internal URLs were discovered but not read because the page budget ran out."
     ]
@@ -24,16 +27,16 @@
       "axis": "leads with spec accuracy rather than the review pass"
     },
     {
-      "label": "C — the social-proof axis",
-      "headline": "Trusted by 4,000 marketers",
-      "primary_text": "Join 4,000 marketers who ship campaigns 3x faster with AdPlaybook. Rated 4.9 out of 5. Start your free trial today and see results in the first week.",
-      "axis": "social proof instead of mechanism"
+      "label": "C — the performance axis",
+      "headline": "Cut your cost per click by 62%",
+      "primary_text": "AdPlaybook writes 40 tested variants in 9 seconds and cuts cost per click by 62% on average. Start your free trial today and see results in the first week.",
+      "axis": "an outcome promise instead of mechanism"
     }
   ],
   "gate": {
-    "summary": "1 of 3 variants are blocked: 5 claim(s) assert something the site does not.",
+    "summary": "1 of 3 variants are blocked: 4 claim(s) assert something the site does not.",
     "blocked": [
-      "C — the social-proof axis"
+      "C — the performance axis"
     ],
     "passed": [
       "A — control",
@@ -48,44 +51,37 @@
         "undeclared": false
       },
       {
-        "text": "Trusted by 4,000 marketers",
+        "text": "Cut your cost per click by 62%",
         "verdict": "unsubstantiated",
         "note": "Nothing on the crawled pages says this. Either add it to the site and re-run, or tell us where it comes from — it cannot go in a paid ad on the model's word alone.",
         "source_url": "",
         "undeclared": false
       },
       {
-        "text": "3x faster",
+        "text": "40 tested variants in 9 seconds",
         "verdict": "unsubstantiated",
         "note": "Nothing on the crawled pages says this. Either add it to the site and re-run, or tell us where it comes from — it cannot go in a paid ad on the model's word alone.",
         "source_url": "",
         "undeclared": false
       },
       {
-        "text": "4.9 out of 5",
+        "text": "62% on average",
         "verdict": "unsubstantiated",
         "note": "Nothing on the crawled pages says this. Either add it to the site and re-run, or tell us where it comes from — it cannot go in a paid ad on the model's word alone.",
         "source_url": "",
         "undeclared": false
       },
       {
-        "text": "Join 4,000 marketers who ship campaigns 3x faster with AdPlaybook",
+        "text": "AdPlaybook writes 40 tested variants in 9 seconds and cuts cost per click by 62% on average",
         "verdict": "unsubstantiated",
-        "note": "The copy asserts social proof, and the figure 4000 appears nowhere on the pages that were read. Either it is wrong, or it lives on a page this crawl did not reach — but it cannot go into a paid ad unchecked.",
-        "source_url": "",
-        "undeclared": true
-      },
-      {
-        "text": "Rated 4",
-        "verdict": "unsubstantiated",
-        "note": "The copy asserts a credential, and the figure 4 appears nowhere on the pages that were read. Either it is wrong, or it lives on a page this crawl did not reach — but it cannot go into a paid ad unchecked.",
+        "note": "The copy asserts a speed promise, and the figure 40, 9, 62% appears nowhere on the pages that were read. Either it is wrong, or it lives on a page this crawl did not reach — but it cannot go into a paid ad unchecked.",
         "source_url": "",
         "undeclared": true
       }
     ]
   },
   "feasibility": {
-    "summary": "It will run. 2 thing(s) will be cut off — 2 thing(s) could not be checked",
+    "summary": "It will run. 3 thing(s) will be cut off — 2 thing(s) could not be checked",
     "will_run": true,
     "issues": [
       {
@@ -101,6 +97,13 @@
         "what": "209 characters. About 150 will show; the rest is cut off.",
         "quote": "LinkedIn calls this Introductory text: \"Use up to 150 characters including spaces, emojis, and punctuation to avoid truncation (3,000 character maximum).\"",
         "fix": "Cut 59 characters to keep all of it visible."
+      },
+      {
+        "severity": "truncates",
+        "where": "C — the performance axis body text",
+        "what": "155 characters. About 150 will show; the rest is cut off.",
+        "quote": "LinkedIn calls this Introductory text: \"Use up to 150 characters including spaces, emojis, and punctuation to avoid truncation (3,000 character maximum).\"",
+        "fix": "Cut 5 characters to keep all of it visible."
       }
     ],
     "not_checked": [

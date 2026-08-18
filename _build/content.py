@@ -349,6 +349,15 @@ under them was not: they come from <code>adkit.gate</code> and
 crawl of this site that read {d.get("crawl", {}).get("spans", 0)} spans.
 Produced on {esc(d.get("generated_on", ""))} against {BRAND}
 {esc(d.get("app_version", ""))}. <code>_build/selfcheck.py</code> reproduces it.</p>
+
+<p class="win-cap"><span>One page was held out, and here is why.</span> The crawl
+behind this skips <em>this</em> page. It has to: the section you are reading
+quotes variant C word for word, so the next crawl read those sentences back off
+our own site and cleared all three variants &mdash; the invented claims had
+become true statements about the page that printed them. Every other page was
+read, which is why &ldquo;Eight platforms&rdquo; still resolves: it lives on
+<a href="/for/agencies/">/for/agencies/</a> and was there long before this
+existed. A check that reads what it just wrote is checking itself.</p>
 </section>
 """
 
