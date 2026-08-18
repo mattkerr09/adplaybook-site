@@ -30,8 +30,39 @@ WHAT MUST NOT BE SAID:
     either and finding neither.
 """
 
-#: The Buy button's provider. BNPL copy is only true when this is "dodo".
-CHECKOUT_PROVIDER = "polar"
+import pathlib
+
+#: This file's own directory, so the checkout URL is read from the source of
+#: truth rather than from a copy of it.
+SITE_BUILD = pathlib.Path(__file__).resolve().parent
+
+
+def checkout_provider() -> str:
+    """Which processor the Buy button actually points at.
+
+    DERIVED FROM THE URL, never declared. This was a constant reading
+    "polar", which is a second representation of a fact that already lives in
+    content.py's CHECKOUT — and two representations of one fact is the defect
+    this repo and the app have now fixed four times in a day.
+
+    The dangerous drift direction is specific and it defeats the gate rather
+    than merely annoying it: a stale constant reading "dodo" while the button
+    still points at Polar would make the gate PASS instalment copy that is
+    false at the checkout. A gate whose premise can go stale silently is worse
+    than no gate, because it is trusted.
+
+    Unknown is treated as not-Dodo by the caller, so an unrecognised URL
+    withholds the copy rather than publishing it on a guess.
+    """
+    import re
+    src = (SITE_BUILD / "content.py").read_text()
+    m = re.search(r"CHECKOUT\s*=\s*\(?\s*\"([^\"]+)\"", src)
+    url = m.group(1) if m else ""
+    if "dodopayments.com" in url:
+        return "dodo"
+    if "polar.sh" in url:
+        return "polar"
+    return "unknown"
 
 #: Flip when the button moves. check.py enforces the pairing.
 BNPL_LIVE = False

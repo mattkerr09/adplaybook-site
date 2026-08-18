@@ -411,13 +411,14 @@ def check_bnpl_copy_matches_the_checkout(fails: list[str]) -> None:
     served = "\n".join(p_.read_text(errors="replace")
                         for p_ in SITE.glob("**/index.html"))
     on_page = bnpl.MARKER.lower() in served.lower()
-    dodo = bnpl.CHECKOUT_PROVIDER == "dodo"
+    provider = bnpl.checkout_provider()
+    dodo = provider == "dodo"
 
     if bnpl.BNPL_LIVE and not dodo:
         fails.append(
-            "BNPL_LIVE is set while CHECKOUT_PROVIDER is "
-            f"{bnpl.CHECKOUT_PROVIDER!r}. Polar is card-only, so the "
-            "instalment copy would be false at the checkout it sends people to.")
+            "BNPL_LIVE is set while the Buy button points at "
+            f"{provider!r}. Polar is card-only, so the instalment copy "
+            "would be false at the checkout it sends people to.")
     if on_page and not dodo:
         fails.append(
             "pay-in-4 copy is on a published page while the Buy button still "
