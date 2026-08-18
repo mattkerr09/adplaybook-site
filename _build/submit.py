@@ -26,7 +26,24 @@ import sys
 import urllib.error
 import urllib.request
 
-SITE = pathlib.Path(__file__).resolve().parents[1]
+REPO = pathlib.Path(__file__).resolve().parents[1]
+# The PUBLISHED directory, which is no longer the repo root.
+#
+# GitHub Pages (legacy builder) serves whatever the source path points at, and
+# that was `main:/` — so every tracked file was a public URL, including this
+# directory. _build/content.py, the whole marketing source with the pricing
+# strategy and the editorial policy on competitors, was fetchable, as were
+# render.py, selfcheck.json, the .pyc files and DEPLOY.md. Confirmed 200 on
+# each before the move.
+#
+# Legacy Pages allows exactly two source paths, `/` and `/docs`, so this is the
+# only structural fix available without switching to the Actions builder. The
+# repo root now holds the machinery and docs/ holds the site; nothing outside
+# docs/ is reachable over HTTP.
+#
+# CNAME and .nojekyll moved with it — both have to sit in the PUBLISHED
+# directory or the custom domain and the underscore-path handling stop working.
+SITE = REPO / "docs"
 HOST = "adplaybook.app"
 BASE = f"https://{HOST}"
 ENDPOINTS = ["https://api.indexnow.org/IndexNow", "https://www.bing.com/indexnow"]

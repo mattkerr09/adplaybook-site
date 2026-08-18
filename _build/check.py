@@ -22,7 +22,24 @@ import re
 import sys
 from collections import Counter
 
-SITE = pathlib.Path(__file__).resolve().parents[1]
+REPO = pathlib.Path(__file__).resolve().parents[1]
+# The PUBLISHED directory, which is no longer the repo root.
+#
+# GitHub Pages (legacy builder) serves whatever the source path points at, and
+# that was `main:/` — so every tracked file was a public URL, including this
+# directory. _build/content.py, the whole marketing source with the pricing
+# strategy and the editorial policy on competitors, was fetchable, as were
+# render.py, selfcheck.json, the .pyc files and DEPLOY.md. Confirmed 200 on
+# each before the move.
+#
+# Legacy Pages allows exactly two source paths, `/` and `/docs`, so this is the
+# only structural fix available without switching to the Actions builder. The
+# repo root now holds the machinery and docs/ holds the site; nothing outside
+# docs/ is reachable over HTTP.
+#
+# CNAME and .nojekyll moved with it — both have to sit in the PUBLISHED
+# directory or the custom domain and the underscore-path handling stop working.
+SITE = REPO / "docs"
 
 # Named third parties. Saying a competitor exists is fine; stating their
 # pricing, features or policy as fact is what this is looking for.
@@ -295,12 +312,18 @@ def check_nothing_internal_is_committed(fails: list[str]) -> None:
 
     try:
         tracked = subprocess.run(
-            ["git", "ls-files"], cwd=SITE, capture_output=True, text=True,
+            ["git", "ls-files"], cwd=REPO, capture_output=True, text=True,
             timeout=20).stdout.split()
     except Exception:  # noqa: BLE001
         return  # Not a git checkout; nothing to say.
 
-    served = _internal_files(tracked)
+    # Only what is PUBLISHED can leak, and since the deploy root moved that is
+    # exactly docs/. Files at the repo root — _build/, .claude/, DEPLOY.md —
+    # are no longer reachable over HTTP, so they are not this check's business
+    # any more. Before the move this scanned every tracked file, because every
+    # tracked file was a URL.
+    published = [rel[len("docs/"):] for rel in tracked if rel.startswith("docs/")]
+    served = _internal_files(published)
 
     # A RATCHET, not a blanket block.
     #
@@ -311,7 +334,7 @@ def check_nothing_internal_is_committed(fails: list[str]) -> None:
     # the person who can make it. The correct end state is an empty baseline.
     import json as _json
 
-    base_path = SITE / "_build" / "served_internals_baseline.json"
+    base_path = REPO / "_build" / "served_internals_baseline.json"
     try:
         known = set(_json.loads(base_path.read_text())["files"])
     except Exception:  # noqa: BLE001
@@ -419,7 +442,7 @@ def main() -> int:
     # name — the build succeeds, the check passed, and the pages render as
     # unstyled text. That happened here when the stylesheet was rewritten:
     # panel, grid and cta survived in the generators and matched nothing.
-    css_src = (SITE / "_build" / "render.py").read_text()
+    css_src = (REPO / "_build" / "render.py").read_text()
     css = css_src[css_src.index('CSS = """'):
                   css_src.index('"""', css_src.index('CSS = """') + 10)]
     defined = set(re.findall(r"\.([a-z][a-z0-9-]*)", css))
@@ -464,10 +487,11 @@ def _update_baseline() -> int:
     import json
     import subprocess
 
-    tracked = subprocess.run(["git", "ls-files"], cwd=SITE,
+    tracked = subprocess.run(["git", "ls-files"], cwd=REPO,
                              capture_output=True, text=True).stdout.split()
-    files = sorted(_internal_files(tracked))
-    path = SITE / "_build" / "served_internals_baseline.json"
+    published = [rel[len("docs/"):] for rel in tracked if rel.startswith("docs/")]
+    files = sorted(_internal_files(published))
+    path = REPO / "_build" / "served_internals_baseline.json"
     existing = {}
     try:
         existing = json.loads(path.read_text())
