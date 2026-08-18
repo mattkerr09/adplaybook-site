@@ -153,10 +153,39 @@ def dmg_mb(url: str = DMG) -> str:
 
     req = urllib.request.Request(
         url, method="HEAD", headers={"User-Agent": "adplaybook-build/1.0"})
-    with urllib.request.urlopen(req, timeout=30) as r:
-        length = r.headers.get("Content-Length")
+    try:
+        with urllib.request.urlopen(req, timeout=30) as r:
+            length = r.headers.get("Content-Length")
+    except Exception:  # noqa: BLE001
+        # The same reasoning as the missing-Content-Length branch below, and it
+        # has to be here too: on a real outage urlopen RAISES before any header
+        # is read, so handling only the missing-header case still let a network
+        # blip kill the build. Found by simulating the outage rather than
+        # reasoning about it — the first version of this fix looked complete
+        # and died one line earlier.
+        return ""
     if not length:
-        raise RuntimeError(f"no Content-Length for {url} — cannot publish a size")
+        # No size rather than a wrong size — and no dead build either.
+        #
+        # This raised, and the raise was half right. _latest_dmg() degrades to
+        # the releases PAGE when GitHub's API is unreachable, deliberately:
+        # "degrade toward a place that is always true". That page is HTML with
+        # no Content-Length, so the graceful fallback fed straight into a fatal
+        # one and the whole site became unbuildable during an API blip.
+        #
+        # Hit for real on 2026-08-18: `no Content-Length for
+        # .../releases — cannot publish a size`, with the API answering 200
+        # and 52/60 rate limit left a minute later. It was a blip, and a blip
+        # must not be able to stop a build.
+        #
+        # It matters because publish_release.sh treats a failed site build as
+        # fatal AFTER the release is already published — "the release exists
+        # but nothing links it". So a two-second GitHub hiccup during a ship
+        # breaks the ship at its worst moment.
+        #
+        # The guarantee the raise protected is kept: no size is ever guessed.
+        # The caller omits the figure instead.
+        return ""
     return f"{int(length) / 1_000_000:.1f}"
 
 
@@ -412,6 +441,10 @@ def _home(page: Callable, specs: List[Dict[str, Any]]) -> None:
     # saying "22 MB", which is how they came to say a number the file has not
     # been for twenty versions.
     dmg_size = dmg_mb()
+    # Empty when the asset could not be measured. Both call sites drop the
+    # whole segment rather than print "· MB" or a bare number.
+    size_bit = f" {dmg_size} MB ·" if dmg_size else ""
+    size_suffix = f" · {dmg_size} MB" if dmg_size else ""
 
     spec_cards = "".join(
         f'<a class="card" href="/specs/{sp["key"]}/"><strong>{esc(sp["name"])}</strong>'
@@ -444,7 +477,7 @@ its own work before it shows you anything.</p>
 <a class="btn" href="{{DMG}}">{dl} Download for Mac</a>
 <a class="btn ghost" href="/specs/">See the ad specs</a>
 </div>
-<p class="hero-sub">{VERSION_TAG} · {dmg_size} MB · Apple Silicon · notarised by Apple</p>
+<p class="hero-sub">{VERSION_TAG} ·{size_bit} Apple Silicon · notarised by Apple</p>
 </div>
 </div>
 </div>
@@ -585,7 +618,7 @@ list of what could not be verified.</p>
 <p>Mac, Apple Silicon. Signed, notarised and stapled — it opens without a
 Gatekeeper warning because Apple's notary service cleared it, not because you
 right-clicked past one.</p>
-<p><a class="btn" href="{{DMG}}">{dl} Download free for Mac · {dmg_size} MB</a>
+<p><a class="btn" href="{{DMG}}">{dl} Download free for Mac{size_suffix}</a>
 <a class="btn ghost" href="{{CHECKOUT}}" style="margin-left:.6rem">Buy a licence · {{PRICE_STR}} once</a></p>
 <p class="src"><strong>30 days to change your mind.</strong> If it does not do what
 you need, email within 30 days of purchase and we refund in full — no reason
