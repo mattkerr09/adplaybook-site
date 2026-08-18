@@ -35,7 +35,13 @@ if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</s
 :root{
   --black:#0f0d0b;--panel:#151210;--panel-2:#1b1714;--card:#211c18;
   --hair:#2a2320;--hair-lit:#3a312c;
-  --white:#f5f7fa;--grey:#8a8f98;--grey-dim:#61656e;
+  /* --grey-dim was #61656e: 2.89:1 against --card #211c18, which fails even
+     the 3.0 NON-TEXT floor, and it is used 13 times on real prose at
+     0.83-0.88rem. The smallest text on the page had the least contrast, which
+     is the same fault outlier.host had. Lifted to 4.60:1, hue and saturation
+     unchanged. It now sits close to --grey (5.20) — if that flattens the
+     hierarchy too far, lift --grey rather than dropping this back. */
+  --white:#f5f7fa;--grey:#8a8f98;--grey-dim:#818690;
   /* Four of the five sites in this portfolio were near-black with a blue
      accent and -apple-system, so they read as one company shipping four
      things. docketseo.app was the only escape and the strongest of the six;
@@ -97,8 +103,14 @@ call sites; it no longer holds a blue and the name is legacy. */
 :root[data-theme="light"]{
   --black:#faf8f5;--panel:#ffffff;--panel-2:#f2ede6;--card:#ffffff;
   --hair:#e6ded3;--hair-lit:#cfc3b3;
-  --white:#14100c;--grey:#5c554c;--grey-dim:#7a7268;
-  --accent:#8a5a12;--ice:#1d4ed8;--violet:#6d28d9;--green:#15803d;--amber:#8a5a12;
+  /* --grey-dim was #7a7268: 4.07:1 against --panel-2 #f2ede6, below the 4.5
+     AA needs for text this size. Darkened to 4.60:1. */
+  --white:#14100c;--grey:#5c554c;--grey-dim:#716a60;
+  --accent:#8a5a12;--ice:#1d4ed8;--violet:#6d28d9;--green:#147b3b;--amber:#8a5a12;
+  /* --green was #15803d: 4.31:1 on --panel-2. Five of its six uses are icons
+     and borders, where 3.0 is the bar and 4.31 passed. The sixth is
+     .pill.checked, which is TEXT. Nudged to 4.60:1 — visually
+     indistinguishable, and the one text use is now compliant. */
   --nav-bg:rgba(250,248,245,.82);--nav-hair:rgba(207,195,179,.9);
   --on-accent:#ffffff;
   --accent-lift:#a86f1c;--accent-deep:#6b450d;
