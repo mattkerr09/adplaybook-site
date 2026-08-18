@@ -58,6 +58,9 @@ def _faq(pairs: List[tuple]) -> Dict:
 
 def _split_test(page) -> None:
     body = """
+<article>
+<p class="crumb">How to</p>
+<h1>How to run an ad split test that actually says something</h1>
 <p class="lede">If both cells contain the same words, the test can't give you a result. Whichever wins, the number is noise — and you paid twice for one ad.</p>
 
 <p>It's the most common way a first campaign wastes its budget, and it's almost invisible: the ads manager accepts it, both cells deliver, and the report
@@ -92,6 +95,7 @@ cell. The campaign goes live and nothing happens — you won't be told why.</li>
 <h2>What this page does not tell you</h2>
 <p>Whether your two distinct cells are any <em>good</em>. This is about whether a
 test can produce an answer at all. A campaign can clear every point here and still be two weak ads.</p>
+</article>
 """
     page(
         path="/how-to/split-test-ads-that-actually-say-something/",
@@ -148,6 +152,9 @@ def _not_delivering(page) -> None:
     published = [r for r in rows if r[1]]
 
     body = f"""
+<article>
+<p class="crumb">How to</p>
+<h1>How to fix an ad that is not delivering</h1>
 <p class="lede">A campaign that spends nothing usually isn't broken. But
 "your audience is too small" is the first thing anyone is told, and on seven of
 the eight platforms we track there is no published number behind that advice.</p>
@@ -184,6 +191,7 @@ audience is not the one you selected.</li>
 <h2>What we could not check for you</h2>
 <p>Whether your specific audience clears anything. No tool outside your ads
 manager can see your forecast panel, and any tool that claims otherwise is guessing. Read the number there before launching.</p>
+</article>
 """
     page(
         path="/how-to/fix-an-ad-that-is-not-delivering/",
@@ -213,6 +221,9 @@ manager can see your forecast panel, and any tool that claims otherwise is guess
 
 def _ai_slop(page) -> None:
     body = """
+<article>
+<p class="crumb">How to</p>
+<h1>How to stop your ad copy reading like AI wrote it</h1>
 <p class="lede">A feed is a place where people are already looking for a reason
 to scroll past. "Elevate your workflow with our cutting-edge solution" hands
 them one in six words.</p>
@@ -249,6 +260,7 @@ quarter needed a rewrite before they were worth paying to show anyone. We publis
 
 <h2>What this does not tell you</h2>
 <p>Whether the copy is any good. It finds machine register, not weak positioning, and a page of plain human sentences can still be a bad ad.</p>
+</article>
 """
     page(
         path="/how-to/stop-ad-copy-reading-like-ai/",
@@ -289,7 +301,20 @@ def _hub(page) -> None:
          "The phrases readers have learned to skip, and why a model cannot be "
          "trusted to check its own register."),
     ]
+    # The hub had NO h1 and no h2 — it went straight to the card h3s.
+    #
+    # Every other hub on this site opens <article> / crumb / h1 / lede: /specs/
+    # and /learn/ both do. This one supplied a <title> and nothing on the page,
+    # so a reader navigating by heading landed on three card titles with no
+    # page heading above them, and an index page shipped without an h1.
+    #
+    # Same wording as the <title> rather than a second invented phrase, because
+    # a page whose heading and title disagree is a page that ranks for one and
+    # reads as the other.
     body = """
+<article>
+<p class="crumb">How to</p>
+<h1>How to fix common ad problems</h1>
 <p class="lede">Organised by what went wrong, not by what a feature is called.
 Nobody arrives here typing "character limits" — they arrive typing "why is my
 ad not delivering".</p>
@@ -303,6 +328,7 @@ ad not delivering".</p>
 <p class="note">Every figure on these pages is one we counted, with its
 denominator beside it. Where we have not measured something, the page says so
 rather than reaching for a number that sounds right.</p>
+</article>
 """
     page(
         path="/how-to/",
