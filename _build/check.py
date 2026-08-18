@@ -222,6 +222,42 @@ def _ver(s: str):
     return tuple(int(x) for x in s.split("."))
 
 
+#: Extensions a visitor is meant to be able to fetch.
+_PUBLIC_EXT = {".html", ".css", ".js", ".png", ".jpg", ".jpeg", ".svg", ".ico",
+               ".xml", ".txt", ".json", ".webmanifest", ".woff", ".woff2"}
+
+#: Published on purpose despite their extension or name. `.gitignore` is here
+#: because it is repo plumbing every checkout has, and serving it discloses
+#: nothing that `git ls-files` on a public repo would not.
+_ALLOWED_NAMES = {"CNAME", ".nojekyll", ".gitignore", "updater.json",
+                  "llms.txt", "robots.txt", "sitemap.xml"}
+
+
+def _internal_files(tracked: list) -> list:
+    """Which tracked files are internal, by one definition used everywhere.
+
+    This lived twice: once here and once in the throwaway script that wrote
+    the first baseline. The two disagreed about `.gitignore` within an hour,
+    so the gate failed on a file its own baseline generator had deliberately
+    excluded — while reporting it as a NEW leak.
+
+    That is the same defect fixed in the app's cli.py this morning: a rule
+    with two implementations, where the fix reaches one of them. The baseline
+    is written by `--update-baseline` below, through this function, so there
+    is no second copy to drift.
+    """
+    out = []
+    for rel in tracked:
+        name = rel.rsplit("/", 1)[-1]
+        if rel in _ALLOWED_NAMES or name in _ALLOWED_NAMES:
+            continue
+        ext = ("." + name.rsplit(".", 1)[-1]) if "." in name else ""
+        if rel.startswith("_build/") or rel.startswith(".claude/") \
+                or ext in {".py", ".pyc", ".md"} or ext not in _PUBLIC_EXT:
+            out.append(rel)
+    return out
+
+
 def check_nothing_internal_is_committed(fails: list[str]) -> None:
     """Every committed file is a published URL, so the repo IS the web root.
 
@@ -264,23 +300,7 @@ def check_nothing_internal_is_committed(fails: list[str]) -> None:
     except Exception:  # noqa: BLE001
         return  # Not a git checkout; nothing to say.
 
-    #: Extensions a visitor is meant to be able to fetch.
-    PUBLIC = {".html", ".css", ".js", ".png", ".jpg", ".jpeg", ".svg", ".ico",
-              ".xml", ".txt", ".json", ".webmanifest", ".woff", ".woff2"}
-    #: Published on purpose despite their extension or name.
-    ALLOWED = {"CNAME", ".nojekyll", "updater.json", "llms.txt", "robots.txt",
-               "sitemap.xml"}
-
-    served = []
-    for rel in tracked:
-        name = rel.rsplit("/", 1)[-1]
-        if rel in ALLOWED or name in ALLOWED:
-            continue
-        ext = ("." + name.rsplit(".", 1)[-1]) if "." in name else ""
-        # Source and build machinery, whatever its extension.
-        if rel.startswith("_build/") or rel.startswith(".claude/") \
-                or ext in {".py", ".pyc", ".md"} or ext not in PUBLIC:
-            served.append(rel)
+    served = _internal_files(tracked)
 
     # A RATCHET, not a blanket block.
     #
@@ -433,5 +453,42 @@ def main() -> int:
     return 1 if fails else 0
 
 
+def _update_baseline() -> int:
+    """Rewrite the baseline from the current tree, through _internal_files().
+
+    Deliberate and explicit: the ratchet is worthless if the way to make it
+    green is to regenerate it, so this is never called by main(). It exists so
+    that when files legitimately move, the baseline is rebuilt by the SAME rule
+    the check applies, rather than by a fresh script that quietly disagrees.
+    """
+    import json
+    import subprocess
+
+    tracked = subprocess.run(["git", "ls-files"], cwd=SITE,
+                             capture_output=True, text=True).stdout.split()
+    files = sorted(_internal_files(tracked))
+    path = SITE / "_build" / "served_internals_baseline.json"
+    existing = {}
+    try:
+        existing = json.loads(path.read_text())
+    except Exception:  # noqa: BLE001
+        pass
+    existing["files"] = files
+    existing.setdefault("recorded", "2026-08-18")
+    existing["why"] = (
+        "Files that are public URLs today because the repo root is the web "
+        "root. Confirmed live, not inferred. A NEW internal file is a hard "
+        "failure; these are recorded so the pre-existing structural issue — "
+        "moving the deploy root, which repoints a live site — does not block "
+        "every release meanwhile. A ratchet, not an approval: the correct end "
+        "state is an empty list.")
+    path.write_text(json.dumps(existing, indent=2) + "\n")
+    print(f"baseline rewritten: {len(files)} internal file(s)")
+    return 0
+
+
 if __name__ == "__main__":
+    import sys as _sys
+    if "--update-baseline" in _sys.argv:
+        raise SystemExit(_update_baseline())
     raise SystemExit(main())

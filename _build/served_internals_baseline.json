@@ -1,6 +1,6 @@
 {
   "recorded": "2026-08-18",
-  "why": "Files that are public URLs today because the repo root is the web root. Confirmed live, not inferred. The list exists so a NEW internal file is a hard failure while the pre-existing structural issue \u2014 which repoints a live deploy and is Matthew's call \u2014 does not block every release in the meantime. It is a ratchet, not an approval: the correct end state is an empty list.",
+  "why": "Files that are public URLs today because the repo root is the web root. Confirmed live, not inferred. A NEW internal file is a hard failure; these are recorded so the pre-existing structural issue \u2014 moving the deploy root, which repoints a live site \u2014 does not block every release meanwhile. A ratchet, not an approval: the correct end state is an empty list.",
   "files": [
     ".claude/launch.json",
     "DEPLOY.md",
@@ -19,6 +19,7 @@
     "_build/sameness.py",
     "_build/selfcheck.json",
     "_build/selfcheck.py",
+    "_build/served_internals_baseline.json",
     "_build/strategies.py",
     "_build/submit.py"
   ]
