@@ -196,7 +196,7 @@ nav{position:sticky;top:0;z-index:80;background:var(--nav-bg);
 .nav-links .btn:hover{color:var(--on-accent)}
 .nav-links .btn svg{flex:none}
 
-h1{font-family:var(--sans);font-optical-sizing:auto;text-wrap:balance;font-size:clamp(2.4rem,5.2vw,4rem);line-height:1.04;letter-spacing:-.028em;
+h1{font-family:var(--sans);font-optical-sizing:auto;text-wrap:balance;font-size:clamp(2.4rem,5.2vw,3.25rem);line-height:1.06;letter-spacing:-.028em;
   font-weight:520;margin:.6rem 0 1rem}
 /* 560, not 690, and 3.6rem, not 4.6rem.
    Measured against the four references at 1280x800: Cursor sets its h1 at 26px
@@ -320,7 +320,7 @@ li{margin-bottom:.5rem}
 .hero::before{content:"";position:absolute;inset:-30% -50% auto;height:120%;pointer-events:none;
   background:radial-gradient(760px 420px at 50% 0,var(--accent-wash),transparent 70%)}
 .hero>*{position:relative}
-.hero h1{font-size:clamp(2.2rem,4.8vw,3.7rem);margin:.9rem 0 1.2rem}
+.hero h1{font-size:clamp(2.2rem,4.8vw,3.25rem);margin:.9rem 0 1.2rem}
 .hero .lede{max-width:56ch}
 .eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border-radius:999px;
   border:1px solid var(--hair-lit);background:var(--panel-2);color:var(--ice);
