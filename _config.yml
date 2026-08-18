@@ -1,0 +1,59 @@
+# GitHub Pages build configuration.
+#
+# WHY THIS FILE EXISTS. Every tracked file in this repo was a public URL:
+# adplaybook.app/_build/content.py served the marketing source including the
+# pricing strategy and editorial policy, and adplaybook.app/.claude/launch.json
+# served the dev-server config. Twenty-one files in total.
+#
+# The cause was structural rather than careless. `.nojekyll` disables Jekyll,
+# and with it the default exclusion of dot- and underscore-prefixed paths, so
+# the legacy Pages builder published the branch root verbatim. Deleting the
+# offending files would have fixed today and not tomorrow — the next internal
+# file lands the same way.
+#
+# WHAT WAS TRIED FIRST AND MUST NOT BE TRIED AGAIN. Moving the deploy root to
+# /docs. It took adplaybook.app down on EVERY path for about twelve minutes,
+# and reverting the commit did NOT bring it back — Pages sat on "Page build
+# failed" with no detail. Only a forced rebuild through the API recovered it:
+#
+#     gh api -X POST repos/mattkerr09/adplaybook-site/pages/builds
+#
+# So the serving path stays exactly where it is. `main:/` before, `main:/`
+# after. Only what gets INCLUDED in the build changes.
+#
+# BEFORE MAKING THIS CHANGE, two things were proven rather than assumed:
+#   1. That recovery command works — run against the live site, build queued,
+#      completed, site still 200.
+#   2. No served file contains Liquid syntax. Enabling Jekyll means `{{ }}` and
+#      `{% %}` are parsed, and a stray one would break the build or mangle a
+#      page. Checked across every tracked html/txt/xml/json/svg: zero.
+#      (Checked with git ls-files read in Python. `grep --include=*.html` under
+#      zsh eats the glob and returns a confident, uniform zero — that false
+#      clean has already cost this portfolio a day.)
+#
+# The exclusions below are EXPLICIT rather than left to Jekyll's defaults.
+# Jekyll would drop `_`-prefixed and dot-prefixed paths on its own, but a
+# default is a thing you have to remember; a list is a thing you can read.
+exclude:
+  - _build/
+  - _data/
+  - .claude/
+  - DEPLOY.md
+  - README.md
+  - .gitignore
+  - Gemfile
+  - Gemfile.lock
+
+# Markdown files must not be converted into pages. Without this, DEPLOY.md and
+# README.md would come back as /DEPLOY.html and /README.html — excluded above,
+# but any future .md would publish itself silently.
+defaults:
+  - scope:
+      path: ""
+    values:
+      published: true
+
+# The site is pre-rendered by _build/render.py. Jekyll is here to EXCLUDE, not
+# to build: no theme, no plugins, no layouts.
+theme: null
+plugins: []
