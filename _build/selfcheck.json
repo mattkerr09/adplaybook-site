@@ -1,0 +1,111 @@
+{
+  "generated_on": "2026-08-17",
+  "app_version": "0.2.45",
+  "site": "https://adplaybook.app",
+  "platform": "LinkedIn — Feed: single image",
+  "crawl": {
+    "reliable": true,
+    "spans": 86,
+    "blind_spots": [
+      "56 internal URLs were discovered but not read because the page budget ran out."
+    ]
+  },
+  "variants": [
+    {
+      "label": "A — control",
+      "headline": "Every claim, checked against your own site",
+      "primary_text": "AdPlaybook turns a product page into a complete ad campaign — strategy, audiences, exclusions, copy, a test matrix and a measurement plan — then attacks its own work before it shows you anything.",
+      "axis": "control"
+    },
+    {
+      "label": "B — the specs axis",
+      "headline": "Eight platforms, every number quoted",
+      "primary_text": "Ad specs go stale and the pages ranking for them are wrong. AdPlaybook reads each platform's own published limits and checks your copy against them by arithmetic, before you paste anything into an ads manager.",
+      "axis": "leads with spec accuracy rather than the review pass"
+    },
+    {
+      "label": "C — the social-proof axis",
+      "headline": "Trusted by 4,000 marketers",
+      "primary_text": "Join 4,000 marketers who ship campaigns 3x faster with AdPlaybook. Rated 4.9 out of 5. Start your free trial today and see results in the first week.",
+      "axis": "social proof instead of mechanism"
+    }
+  ],
+  "gate": {
+    "summary": "1 of 3 variants are blocked: 5 claim(s) assert something the site does not.",
+    "blocked": [
+      "C — the social-proof axis"
+    ],
+    "passed": [
+      "A — control",
+      "B — the specs axis"
+    ],
+    "claims": [
+      {
+        "text": "Eight platforms",
+        "verdict": "substantiated",
+        "note": "Found on the page.",
+        "source_url": "https://adplaybook.app/for/agencies/",
+        "undeclared": false
+      },
+      {
+        "text": "Trusted by 4,000 marketers",
+        "verdict": "unsubstantiated",
+        "note": "Nothing on the crawled pages says this. Either add it to the site and re-run, or tell us where it comes from — it cannot go in a paid ad on the model's word alone.",
+        "source_url": "",
+        "undeclared": false
+      },
+      {
+        "text": "3x faster",
+        "verdict": "unsubstantiated",
+        "note": "Nothing on the crawled pages says this. Either add it to the site and re-run, or tell us where it comes from — it cannot go in a paid ad on the model's word alone.",
+        "source_url": "",
+        "undeclared": false
+      },
+      {
+        "text": "4.9 out of 5",
+        "verdict": "unsubstantiated",
+        "note": "Nothing on the crawled pages says this. Either add it to the site and re-run, or tell us where it comes from — it cannot go in a paid ad on the model's word alone.",
+        "source_url": "",
+        "undeclared": false
+      },
+      {
+        "text": "Join 4,000 marketers who ship campaigns 3x faster with AdPlaybook",
+        "verdict": "unsubstantiated",
+        "note": "The copy asserts social proof, and the figure 4000 appears nowhere on the pages that were read. Either it is wrong, or it lives on a page this crawl did not reach — but it cannot go into a paid ad unchecked.",
+        "source_url": "",
+        "undeclared": true
+      },
+      {
+        "text": "Rated 4",
+        "verdict": "unsubstantiated",
+        "note": "The copy asserts a credential, and the figure 4 appears nowhere on the pages that were read. Either it is wrong, or it lives on a page this crawl did not reach — but it cannot go into a paid ad unchecked.",
+        "source_url": "",
+        "undeclared": true
+      }
+    ]
+  },
+  "feasibility": {
+    "summary": "It will run. 2 thing(s) will be cut off — 2 thing(s) could not be checked",
+    "will_run": true,
+    "issues": [
+      {
+        "severity": "truncates",
+        "where": "A — control body text",
+        "what": "195 characters. About 150 will show; the rest is cut off.",
+        "quote": "LinkedIn calls this Introductory text: \"Use up to 150 characters including spaces, emojis, and punctuation to avoid truncation (3,000 character maximum).\"",
+        "fix": "Cut 45 characters to keep all of it visible."
+      },
+      {
+        "severity": "truncates",
+        "where": "B — the specs axis body text",
+        "what": "209 characters. About 150 will show; the rest is cut off.",
+        "quote": "LinkedIn calls this Introductory text: \"Use up to 150 characters including spaces, emojis, and punctuation to avoid truncation (3,000 character maximum).\"",
+        "fix": "Cut 59 characters to keep all of it visible."
+      }
+    ],
+    "not_checked": [
+      "Whether the audience clears LinkedIn's minimum of 300. This campaign splits into 3 cell(s), so the audience needs to be at least 900 for every cell to deliver. Check the forecast in LinkedIn Campaign Manager before launching.",
+      "Whether the ad complies with the platform's advertising policies. This checks sizes and limits only — it is arithmetic, not a policy review."
+    ]
+  }
+}
