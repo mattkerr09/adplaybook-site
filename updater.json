@@ -1,11 +1,11 @@
 {
-  "version": "0.2.47",
-  "notes": "0.2.47 \u2014 automated bump: 0.2.46 is already released with different code",
-  "pub_date": "2026-08-18T15:36:03Z",
+  "version": "0.2.48",
+  "notes": "0.2.48 \u2014 automated bump: 0.2.47 is already released with different code",
+  "pub_date": "2026-08-18T17:39:57Z",
   "platforms": {
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRY2orVUpOUUQ2ZGQ5bjluM1c4azZvR2llZmJPRExXZFEvRnBCTWNmVmNycWFLWkhLUThGN0JpU2hyVkQxYXJ0RitzS0lRa0FCVVEwQVdWZjRmVGp6R2FoTWJjek5QcVF3PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg3MDY3MjA3CWZpbGU6QWRQbGF5Ym9vay5hcHAudGFyLmd6CkxnYnp1dndaWnNBam5jb1JJb3RabXJXenViRER5UWszV0J6Y0RhTk1GM3dJZTU1STl3VG42NUN6OU0zOVdPN2szWWthOU9LeDdORTZ6ZnQrWWNYdUJnPT0K",
-      "url": "https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.47/AdPlaybook.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRY2orVUpOUUQ2ZGRrcVljcEc2Zk9IbjZJR0l6ME9TMWdoaysyQ3VlRVFBaG5tOHduVkVTZzhvM0RIM0ZlYjRFS0pvc3U3cjdhblR0cWlMdVd5TVBCSzFLUFVyNmZMVkFVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg3MDc0NTU3CWZpbGU6QWRQbGF5Ym9vay5hcHAudGFyLmd6CjNYVFNSVm1zN1FoVlZSV3REN0hieUVveXZVWWRZR2Q3REV6ZnlpQ0pzd2NvcjYwUEtDeEZ4SDVHYkFBOWt1MERqZTFKMG93T0NTZ1RUb3ZZNjJRTEF3PT0K",
+      "url": "https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.48/AdPlaybook.app.tar.gz"
     }
   }
 }
