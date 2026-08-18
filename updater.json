@@ -1,7 +1,7 @@
 {
   "version": "0.2.48",
-  "notes": "0.2.48 \u2014 automated bump: 0.2.47 is already released with different code",
-  "pub_date": "2026-08-18T17:39:57Z",
+  "notes": "automated release: closing version drift \u2014 see the commit log for this version",
+  "pub_date": "2026-08-18T17:51:47Z",
   "platforms": {
     "darwin-aarch64": {
       "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRY2orVUpOUUQ2ZGRrcVljcEc2Zk9IbjZJR0l6ME9TMWdoaysyQ3VlRVFBaG5tOHduVkVTZzhvM0RIM0ZlYjRFS0pvc3U3cjdhblR0cWlMdVd5TVBCSzFLUFVyNmZMVkFVPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg3MDc0NTU3CWZpbGU6QWRQbGF5Ym9vay5hcHAudGFyLmd6CjNYVFNSVm1zN1FoVlZSV3REN0hieUVveXZVWWRZR2Q3REV6ZnlpQ0pzd2NvcjYwUEtDeEZ4SDVHYkFBOWt1MERqZTFKMG93T0NTZ1RUb3ZZNjJRTEF3PT0K",

@@ -216,7 +216,12 @@ li{margin-bottom:.5rem}
    this site allowed to mean "do this next".
    Kept as a class so older pages do not break; it now just sets the ink. */
 .grad{color:var(--white)}
-.lede{font-size:clamp(1rem,1.25vw,1.075rem);line-height:1.55;color:var(--grey);margin:0 0 1.6rem}
+/* A lede must be a real step or not a step at all.
+   clamp(1rem,1.25vw,1.075rem) rendered 17.2px against a 17px body — 0.2px,
+   which nobody can see and which the type-scale count pays for as a whole
+   extra size. Widened so the difference is legible and intentional; the
+   distinct-size count is unchanged because 17.2 leaves as 18.4 arrives. */
+.lede{font-size:clamp(1rem,1.3vw,1.15rem);line-height:1.55;color:var(--grey);margin:0 0 1.6rem}
 
 /* --- hero -----------------------------------------------------------------
    Measured against Raycast and Linear at 1280x800 rather than guessed at.
@@ -265,7 +270,7 @@ li{margin-bottom:.5rem}
    stages of the run the window below is showing, so they are one unit and a
    rhythm gap between them would read as two unrelated things. */
 .showcase{margin-bottom:clamp(1.6rem,3.4vw,2.8rem)}
-.win-cap{max-width:64ch;margin:1.1rem 0 0;font-size:.92rem;line-height:1.6;
+.win-cap{max-width:64ch;margin:1.1rem 0 0;font-size:.9rem;line-height:1.6;
   color:var(--grey-dim)}
 .win-cap span{color:var(--grey);font-weight:520}
 
@@ -282,17 +287,17 @@ li{margin-bottom:.5rem}
 .rec-n span{color:var(--grey-dim);font-size:.44em;letter-spacing:-.02em}
 .rec-l{margin:0 0 .5rem;font-size:.95rem;font-weight:520;letter-spacing:-.011em;
   color:var(--white);line-height:1.35}
-.rec-w{margin:0;font-size:.845rem;line-height:1.5;color:var(--grey-dim)}
-.rec-src{margin:1.4rem 0 0;font-size:.83rem;color:var(--grey-dim)}
+.rec-w{margin:0;font-size:.84rem;line-height:1.5;color:var(--grey-dim)}
+.rec-src{margin:1.4rem 0 0;font-size:.84rem;color:var(--grey-dim)}
 .rec-src code{font-family:var(--mono);font-size:.95em;color:var(--grey)}
 @media (max-width:560px){.recs{grid-template-columns:1fr}}
-.note{font-size:.92rem;line-height:1.6;color:var(--grey);border-left:2px solid var(--line);padding:.1rem 0 .1rem 1rem;margin:1.2rem 0}
+.note{font-size:.9rem;line-height:1.6;color:var(--grey);border-left:2px solid var(--line);padding:.1rem 0 .1rem 1rem;margin:1.2rem 0}
 .muted{color:var(--grey)}
-.crumb{font-size:.85rem;color:var(--grey-dim);margin:2.2rem 0 .4rem;font-family:var(--mono)}
+.crumb{font-size:.84rem;color:var(--grey-dim);margin:2.2rem 0 .4rem;font-family:var(--mono)}
 .crumb a{color:var(--grey)}
 
 .btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
-  padding:.78rem 1.4rem;border-radius:999px;font-weight:600;font-size:.96rem;
+  padding:.78rem 1.4rem;border-radius:999px;font-weight:600;font-size:.95rem;
   background:linear-gradient(180deg,var(--accent-lift),var(--accent-deep));color:var(--on-accent);border:1px solid transparent;
   box-shadow:0 10px 34px -12px var(--accent-glow);
   transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
@@ -349,20 +354,20 @@ li{margin-bottom:.5rem}
 .stages li{display:flex;flex-direction:column;gap:.28rem;padding:.9rem 1rem;
   background:var(--panel);border-right:1px solid var(--edge)}
 .stages li:last-child{border-right:0}
-.stages .stage-n{font-family:var(--mono);font-size:.68rem;color:var(--grey-dim)}
-.stages strong{font-size:.94rem;letter-spacing:-.01em}
+.stages .stage-n{font-family:var(--mono);font-size:.7rem;color:var(--grey-dim)}
+.stages strong{font-size:.95rem;letter-spacing:-.01em}
 .stages .stage-d{font-family:var(--mono);font-size:.7rem;line-height:1.45;
   color:var(--grey-dim)}
 @media(max-width:900px){.stages li{border-right:0;border-bottom:1px solid var(--edge)}}
 .eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border-radius:999px;
   border:1px solid var(--hair-lit);background:var(--panel-2);color:var(--ice);
-  font-size:.86rem;font-weight:520;white-space:nowrap}
+  font-size:.87rem;font-weight:520;white-space:nowrap}
 /* An inline SVG with no intrinsic size fills its flex line. Without this the
    eyebrow tick rendered about 120px tall and pushed the label onto three
    lines. Every icon in this stylesheet gets an explicit box. */
 .eyebrow svg{width:14px;height:14px;flex:none;color:var(--green)}
 .hero-actions{display:flex;gap:.8rem;justify-content:flex-start;flex-wrap:wrap;margin:2rem 0 1rem}
-.hero-sub{font-size:.88rem;color:var(--grey-dim);font-family:var(--mono)}
+.hero-sub{font-size:.87rem;color:var(--grey-dim);font-family:var(--mono)}
 .trust{display:flex;gap:1.6rem;justify-content:center;flex-wrap:wrap;margin-top:2.4rem;
   font-size:.9rem;color:var(--grey)}
 .trust span{display:inline-flex;align-items:center;gap:.45rem}
@@ -379,7 +384,7 @@ section{padding:1rem 0}
    same value here and on .showcase gives every break the same gap without any
    pair doubling up. That is why this is a margin and not extra padding. */
 section+section{margin-top:clamp(1.6rem,3.4vw,2.8rem)}
-.kicker{font-family:var(--mono);font-size:.76rem;letter-spacing:.1em;text-transform:uppercase;
+.kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--blue);margin-bottom:.5rem}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:1.6rem 0}
 .card{display:block;padding:1.3rem 1.4rem;border:1px solid var(--hair);border-radius:var(--r);
@@ -404,7 +409,7 @@ section+section{margin-top:clamp(1.6rem,3.4vw,2.8rem)}
     linear-gradient(180deg,var(--card),var(--panel-2))}
 .cta-block p{color:var(--grey)}
 
-table{width:100%;border-collapse:collapse;margin:1.4rem 0;font-size:.94rem;display:block;
+table{width:100%;border-collapse:collapse;margin:1.4rem 0;font-size:.95rem;display:block;
   overflow-x:auto;white-space:nowrap}
 th,td{text-align:left;padding:.72rem .8rem;border-bottom:1px solid var(--hair);vertical-align:top;
   white-space:normal}
@@ -417,7 +422,7 @@ blockquote{border-left:2px solid var(--blue);padding:.1rem 0 .1rem 1.1rem;margin
 code{font-family:var(--mono);font-size:.88em;background:var(--panel-2);padding:.14em .4em;
   border-radius:6px;border:1px solid var(--hair)}
 .src{font-size:.84rem;color:var(--grey-dim);font-family:var(--mono);word-break:break-all}
-.pill{display:inline-block;font-family:var(--mono);font-size:.72rem;padding:.18rem .6rem;
+.pill{display:inline-block;font-family:var(--mono);font-size:.74rem;padding:.18rem .6rem;
   border-radius:999px;border:1px solid var(--hair-lit);color:var(--grey-dim);margin-right:.35rem}
 .pill.checked{border-color:var(--accent-edge);color:var(--green)}
 .pill.unchecked{border-color:var(--amber-edge);color:var(--amber)}
@@ -433,7 +438,7 @@ code{font-family:var(--mono);font-size:.88em;background:var(--panel-2);padding:.
 .win-bar{display:flex;align-items:center;gap:.5rem;padding:.7rem .9rem;
   border-bottom:1px solid var(--hair);background:var(--panel-2)}
 .win-dot{width:11px;height:11px;border-radius:50%;flex:none}
-.win-title{margin-left:.5rem;font-size:.82rem;color:var(--grey-dim);
+.win-title{margin-left:.5rem;font-size:.84rem;color:var(--grey-dim);
   font-weight:520;letter-spacing:-.01em}
 .win-body{padding:1.1rem}
 .vd{display:flex;gap:.75rem;align-items:flex-start;padding:.85rem 1rem;
@@ -451,7 +456,7 @@ code{font-family:var(--mono);font-size:.88em;background:var(--panel-2);padding:.
 /* display:block because this sits inside a <span>; without it the quote runs
    on from the sentence above and reads as one run-on line. */
 .vd-quote{display:block;margin:.5rem 0 0;padding-left:.8rem;border-left:2px solid var(--hair-lit);
-  font-size:.88rem;color:var(--grey)}
+  font-size:.87rem;color:var(--grey)}
 @media(max-width:640px){.win-body{padding:.7rem}.vd{padding:.7rem .8rem}}
 
 footer{border-top:1px solid var(--hair);margin-top:4rem;padding:2.6rem 0 3.4rem;
