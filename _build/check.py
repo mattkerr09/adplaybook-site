@@ -222,6 +222,104 @@ def _ver(s: str):
     return tuple(int(x) for x in s.split("."))
 
 
+def check_nothing_internal_is_committed(fails: list[str]) -> None:
+    """Every committed file is a published URL, so the repo IS the web root.
+
+    GitHub's legacy Pages builder serves the branch root, and `.nojekyll` —
+    which this site needs — disables the default exclusion of dot- and
+    underscore-prefixed paths. So everything tracked is fetchable, including
+    the directory that BUILDS the site.
+
+    Confirmed live on 2026-08-18, not inferred:
+
+        200  /_build/content.py          the entire marketing source, with
+                                         internal pricing strategy and the
+                                         editorial policy on competitors
+        200  /_build/render.py
+        200  /_build/selfcheck.json
+        200  /_build/__pycache__/content.cpython-311.pyc
+        200  /.claude/launch.json
+        200  /DEPLOY.md
+
+    No credentials were in any of them — checked for sk-/ghp_/AKIA/passwords
+    and for /Users/ paths, and found none. This is internal reasoning exposed,
+    not a breach, and the distinction is worth keeping straight.
+
+    THE REAL FIX IS STRUCTURAL and is not this function: deploy from a
+    subdirectory so the repo root stops being the web root. That repoints a
+    live site and is Matthew's call. Until then this at least makes the
+    exposure impossible to GROW silently — a new internal file added to the
+    repo fails the build that would publish it.
+
+    Deleting the offenders was deliberately not done instead. It treats one
+    file and leaves the mechanism, and the next internal file lands the same
+    way with nobody watching.
+    """
+    import subprocess
+
+    try:
+        tracked = subprocess.run(
+            ["git", "ls-files"], cwd=SITE, capture_output=True, text=True,
+            timeout=20).stdout.split()
+    except Exception:  # noqa: BLE001
+        return  # Not a git checkout; nothing to say.
+
+    #: Extensions a visitor is meant to be able to fetch.
+    PUBLIC = {".html", ".css", ".js", ".png", ".jpg", ".jpeg", ".svg", ".ico",
+              ".xml", ".txt", ".json", ".webmanifest", ".woff", ".woff2"}
+    #: Published on purpose despite their extension or name.
+    ALLOWED = {"CNAME", ".nojekyll", "updater.json", "llms.txt", "robots.txt",
+               "sitemap.xml"}
+
+    served = []
+    for rel in tracked:
+        name = rel.rsplit("/", 1)[-1]
+        if rel in ALLOWED or name in ALLOWED:
+            continue
+        ext = ("." + name.rsplit(".", 1)[-1]) if "." in name else ""
+        # Source and build machinery, whatever its extension.
+        if rel.startswith("_build/") or rel.startswith(".claude/") \
+                or ext in {".py", ".pyc", ".md"} or ext not in PUBLIC:
+            served.append(rel)
+
+    # A RATCHET, not a blanket block.
+    #
+    # Failing on all 19 would fail every build until the deploy root moves,
+    # and a gate that is red on day one is a gate people learn to pass with
+    # --no-verify. The baseline records what is already public so that a NEW
+    # internal file is a hard stop today, while the structural fix waits for
+    # the person who can make it. The correct end state is an empty baseline.
+    import json as _json
+
+    base_path = SITE / "_build" / "served_internals_baseline.json"
+    try:
+        known = set(_json.loads(base_path.read_text())["files"])
+    except Exception:  # noqa: BLE001
+        known = set()
+
+    fresh = sorted(set(served) - known)
+    if fresh:
+        fails.append(
+            f"{len(fresh)} NEW committed file(s) would be published as URLs: "
+            f"{', '.join(fresh[:6])}. Every tracked file is a public URL here. "
+            f"Remove them, or move the deploy root.")
+
+    stale = sorted(known - set(served))
+    if stale:
+        # Progress, and the baseline must shrink to match or it stops meaning
+        # anything. Not a failure.
+        warns_note = ", ".join(stale[:4])
+        fails.append(
+            f"{len(stale)} baselined file(s) are gone ({warns_note}). Update "
+            f"_build/served_internals_baseline.json — a baseline that lists "
+            f"files which no longer exist overstates the problem and hides "
+            f"the next real one.")
+
+    if served and not fresh:
+        print(f"  NOTE  {len(served)} internal file(s) are still public "
+              f"(baselined). The fix is the deploy root, not deletion.")
+
+
 def main() -> int:
     pages = sorted(SITE.glob("**/index.html"))
     if not pages:
@@ -233,6 +331,7 @@ def main() -> int:
     check_no_unsubstituted_placeholders(pages, fails)
     check_referenced_assets(pages, fails)
     check_download_link(pages, fails, warns)
+    check_nothing_internal_is_committed(fails)
 
     openings, h2sets, lengths = [], [], {}
     for p in pages:

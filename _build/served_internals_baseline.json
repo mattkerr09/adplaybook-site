@@ -1,0 +1,25 @@
+{
+  "recorded": "2026-08-18",
+  "why": "Files that are public URLs today because the repo root is the web root. Confirmed live, not inferred. The list exists so a NEW internal file is a hard failure while the pre-existing structural issue \u2014 which repoints a live deploy and is Matthew's call \u2014 does not block every release in the meantime. It is a ratchet, not an approval: the correct end state is an empty list.",
+  "files": [
+    ".claude/launch.json",
+    "DEPLOY.md",
+    "README.md",
+    "_build/aitell.py",
+    "_build/aitell_report.json",
+    "_build/articles.py",
+    "_build/check.py",
+    "_build/content.py",
+    "_build/foraudience.py",
+    "_build/howto.py",
+    "_build/legal.py",
+    "_build/make_og.py",
+    "_build/offline.py",
+    "_build/render.py",
+    "_build/sameness.py",
+    "_build/selfcheck.json",
+    "_build/selfcheck.py",
+    "_build/strategies.py",
+    "_build/submit.py"
+  ]
+}
