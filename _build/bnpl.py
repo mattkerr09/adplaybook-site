@@ -24,6 +24,14 @@ WHAT MUST NOT BE SAID:
     automatic or needs enabling in the dashboard, and the API would not answer
     it. Unverified until Matthew confirms, so the copy says what the PRICE is
     and does not promise which logos appear.
+  * A machine count. I wrote "on up to five machines" here, having taken the
+    number from a message rather than from anything I could read. It is
+    probably right — both providers are configured for five — but I cannot
+    verify a vendor's activation limit from this repo, the live site states no
+    machine count anywhere today, and the argument does not need one. A number
+    I cannot check does not belong on the page of a product that refuses claims
+    it cannot trace. Removed rather than hedged.
+
   * Anything implying coverage we do not have. Klarna is US + 19 European
     countries; Afterpay is US and UK only. A UK visitor reading "Klarna" and
     finding Afterpay is a smaller problem than an Australian visitor reading
@@ -86,8 +94,8 @@ SECTION = f"""
   <p>It is the opposite of how this category bills. Every other ad tool charges
   you monthly for as long as you use it, and the day you stop paying you stop
   having it. Here the payments end and the licence does not: unlimited
-  commercial use, on every site you work on, on up to five machines, with no
-  renewal to forget and nothing to cancel.</p>
+  commercial use, on every site you work on, with no renewal to forget and
+  nothing to cancel.</p>
   <p class="src">Availability depends on where you are and is decided by the
   provider at checkout, not by us. Klarna covers the US and 19 European
   countries; Afterpay covers the US and UK.</p>

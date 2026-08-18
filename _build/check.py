@@ -384,6 +384,62 @@ def check_nothing_internal_is_committed(fails: list[str]) -> None:
               f"(baselined). The fix is the deploy root, not deletion.")
 
 
+def check_prices_in_our_voice_are_our_price(fails: list[str]) -> None:
+    """A price on this page is not necessarily OUR price.
+
+    This site deliberately publishes money that is not ours. The product
+    demonstration contains HoneyBook's own ad copy — "Starting at $29/month",
+    "Trusted by 4,000 businesses" — because the whole point of that section is
+    showing the claim gate blocking a figure it could not trace. Comparison
+    pages carry competitors' prices for the same honest reason.
+
+    So a naive sweep over this repo for "$29" or "3 machines" hits demo input,
+    competitor facts and our own terms, and only the last of those is ours to
+    edit. Three sessions made a version of that mistake today. One nearly
+    rewrote a COMPETITOR'S licence terms into a false statement about their
+    product, which is worse than misstating our own because it is a claim about
+    somebody else that we published. I nearly invented $19 and $29 AdPlaybook
+    tiers out of the HoneyBook block on this very page.
+
+    So this does not sweep for numbers. It checks the far narrower thing that
+    is actually ours: wherever a sentence names AdPlaybook AND a dollar figure,
+    that figure must be PRICE_USD. Demo blocks and competitor sentences do not
+    name us as the seller, so they are untouched by construction rather than by
+    an exclusion list that would itself go stale.
+    """
+    import re
+
+    import content
+
+    ours = f"${content.PRICE_USD}"
+    bad = []
+    for page in sorted(SITE.glob("**/index.html")):
+        raw = page.read_text(errors="replace")
+        # Scripts and styles out FIRST. Without this the sentence stream picks
+        # up the theme-toggle JavaScript, and the failure message quotes a
+        # line of javascript instead of the sentence that broke the rule —
+        # sending the reader somewhere the fault is not. The same read-JS-as-
+        # HTML mistake was fixed in the class scanner earlier today.
+        raw = re.sub(r"<script\b[^>]*>.*?</script>", " ", raw, flags=re.S | re.I)
+        raw = re.sub(r"<style\b[^>]*>.*?</style>", " ", raw, flags=re.S | re.I)
+        text = re.sub(r"<[^>]+>", " ", raw)
+        text = re.sub(r"\s+", " ", text)
+        for sentence in re.split(r"(?<=[.!?]) ", text):
+            if "AdPlaybook" not in sentence:
+                continue
+            for money in re.findall(r"\$\d[\d,]*(?:\.\d{2})?", sentence):
+                # Instalments are derived from the price, not a second price.
+                if money in (ours, f"${content.PRICE_USD / 4:.2f}"):
+                    continue
+                bad.append((page.relative_to(SITE), money, sentence.strip()[:110]))
+    for rel, money, sentence in bad[:6]:
+        fails.append(
+            f"{rel} names AdPlaybook and {money} in one sentence, but our price "
+            f"is {ours}. If that figure belongs to a competitor or to demo ad "
+            f"copy, keep the subject out of the sentence — a reader cannot tell "
+            f"whose price it is either. Sentence: {sentence!r}")
+
+
 def check_bnpl_copy_matches_the_checkout(fails: list[str]) -> None:
     """Pay-in-4 copy must not be published while the checkout is card-only.
 
@@ -450,6 +506,7 @@ def main() -> int:
     check_download_link(pages, fails, warns)
     check_nothing_internal_is_committed(fails)
     check_bnpl_copy_matches_the_checkout(fails)
+    check_prices_in_our_voice_are_our_price(fails)
 
     openings, h2sets, lengths = [], [], {}
     for p in pages:
