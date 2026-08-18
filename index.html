@@ -388,6 +388,19 @@ li{margin-bottom:.5rem}
 .stages li{display:flex;flex-direction:column;gap:.28rem;padding:.9rem 1rem;
   background:var(--panel);border-right:1px solid var(--edge)}
 .stages li:last-child{border-right:0}
+/* The first real image on this site. Everything else here is type in a box —
+   measured 2026-08-18: 0 img, 0 video, 0 canvas across 8,938px, against
+   langchain.com's 99 images. This one is drawn by the product itself, exported
+   from a real run, so it is evidence rather than decoration. */
+.adshot{margin:2.4rem 0 0;display:grid;grid-template-columns:auto 1fr;gap:1.6rem;
+  align-items:start}
+@media(max-width:760px){.adshot{grid-template-columns:1fr}}
+.adshot img{display:block;width:300px;max-width:100%;height:auto;
+  border-radius:var(--r-sm);border:1px solid var(--hair);
+  box-shadow:var(--lift-3),inset 0 1px 0 var(--lift-edge)}
+.adshot figcaption{color:var(--grey);font-size:.92rem;line-height:1.6;max-width:52ch}
+.adshot figcaption span{color:var(--white);font-weight:550}
+.adshot code{font-size:.86em}
 /* ── The live claim gate ────────────────────────────────────────────────────
    avo.bet puts a working arbitrage calculator on its homepage. We owned real
    engines and published pictures of them. The gate is deterministic — regex
@@ -810,6 +823,18 @@ full policy is in the <a href="/terms/">terms</a>.</p>
 <p class="src">v0.2.48 · <a href="https://github.com/mattkerr09/adplaybook-site/releases">All releases</a> · needs Outlier
 running locally, or an OpenAI or Anthropic key</p>
 </div>
+<figure class="adshot">
+  <img src="/img/honeybook-a-control-preview.svg" width="460" height="808"
+       alt="Ad preview drawn by AdPlaybook: primary text 61 of 90 characters,
+            headline 27 of 30, description 54 of 90, for a Google Ads
+            responsive search ad." loading="lazy">
+  <figcaption><span>Drawn by the app, from this run.</span> Variant A as it will
+  run, with every field counted against Google's published limits and the page
+  those limits were read from printed underneath. Downloaded from the result
+  screen as <code>a-control-preview.svg</code> — this is the file, not a picture
+  of it.</figcaption>
+</figure>
+
 <p class="win-cap"><span>A real run, not a mockup.</span> Verbatim output from
 pointing AdPlaybook at HoneyBook's website. It wrote three ad variants, then a
 second model was asked to find the reason the campaign fails. Nothing here is

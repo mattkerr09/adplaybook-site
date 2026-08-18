@@ -408,6 +408,19 @@ li{margin-bottom:.5rem}
 .stages li{display:flex;flex-direction:column;gap:.28rem;padding:.9rem 1rem;
   background:var(--panel);border-right:1px solid var(--edge)}
 .stages li:last-child{border-right:0}
+/* The first real image on this site. Everything else here is type in a box —
+   measured 2026-08-18: 0 img, 0 video, 0 canvas across 8,938px, against
+   langchain.com's 99 images. This one is drawn by the product itself, exported
+   from a real run, so it is evidence rather than decoration. */
+.adshot{margin:2.4rem 0 0;display:grid;grid-template-columns:auto 1fr;gap:1.6rem;
+  align-items:start}
+@media(max-width:760px){.adshot{grid-template-columns:1fr}}
+.adshot img{display:block;width:300px;max-width:100%;height:auto;
+  border-radius:var(--r-sm);border:1px solid var(--hair);
+  box-shadow:var(--lift-3),inset 0 1px 0 var(--lift-edge)}
+.adshot figcaption{color:var(--grey);font-size:.92rem;line-height:1.6;max-width:52ch}
+.adshot figcaption span{color:var(--white);font-weight:550}
+.adshot code{font-size:.86em}
 /* ── The live claim gate ────────────────────────────────────────────────────
    avo.bet puts a working arbitrage calculator on its homepage. We owned real
    engines and published pictures of them. The gate is deterministic — regex
