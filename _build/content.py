@@ -475,7 +475,18 @@ the reason to believe everything else it tells you.</p>
          schema={"@context": "https://schema.org", "@type": "SoftwareApplication",
                  "name": BRAND, "applicationCategory": "BusinessApplication",
                  "operatingSystem": "macOS",
-                 "offers": {"@type": "Offer", "price": "0", "priceCurrency": "USD"},
+                 # Interpolated, never typed. This said "0" for a $149 product
+                 # from 2026-08-10 until 2026-08-17: written before there was a
+                 # price, and the pricing commit rewrote the CTA and licence copy
+                 # in this same function while missing the schema fifty lines
+                 # below. It is the ONLY machine-readable price on all 49 pages,
+                 # and robots.txt explicitly welcomes GPTBot, ClaudeBot,
+                 # OAI-SearchBot and PerplexityBot — so "how much does AdPlaybook
+                 # cost?" was being answered "free" by every AI that asked.
+                 "offers": {"@type": "Offer", "price": str(PRICE_USD),
+                            "priceCurrency": "USD",
+                            "description": f"One-time licence for unlimited "
+                                           f"websites. Free forever on one site."},
                  "description": "Ad campaign generator with claim substantiation "
                                 "and platform feasibility checking."})
 
