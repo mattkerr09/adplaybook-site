@@ -1,0 +1,11 @@
+{
+  "version": "0.2.46",
+  "notes": "Loop state: the updater chain, and what is still unproven",
+  "pub_date": "2026-08-18T08:59:24Z",
+  "platforms": {
+    "darwin-aarch64": {
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRY2orVUpOUUQ2ZGY3U2hyTnBjb20wSFQ3OXBWTlRZS2pVKzY0Qys1MDhtZE5zd2l4UTVITUtXb2MrdUMrNVBuaC8vYVBaYWJBQ1cwb1NmcE03eHY2cGEvaHdJclQvaGc0PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg3MDQzNDUwCWZpbGU6QWRQbGF5Ym9vay5hcHAudGFyLmd6CkwyV2Y1MVdwQThHN1VjK3BZTFpJNXBOaWRaa085akNRWkhxbVVEa1dCL2RINHRVdDhCNHlSZTViZFR3NGRmY3pMdEFuYi9KOFp6VStHVmxNaWxSbkF3PT0K",
+      "url": "https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.46/AdPlaybook.app.tar.gz"
+    }
+  }
+}
