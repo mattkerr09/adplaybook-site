@@ -387,8 +387,11 @@ code{font-family:var(--mono);font-size:.88em;background:var(--panel-2);padding:.
   background:var(--panel-2)}
 .vd.bad{border-left:3px solid var(--bad)}
 .vd.warn{border-left:3px solid var(--amber)}
+.vd.ok{border-left:3px solid var(--green)}
 .vd-ic{font-family:var(--mono);font-weight:600;flex:none;line-height:1.5}
 .vd.bad .vd-ic{color:var(--bad)} .vd.warn .vd-ic{color:var(--amber)}
+.vd.ok .vd-ic{color:var(--green)}
+.vd-quote a{color:var(--ice)}
 .vd strong{display:block;font-weight:550;letter-spacing:-.01em;margin-bottom:.15rem}
 .vd span{font-size:.9rem;color:var(--grey);line-height:1.5}
 /* display:block because this sits inside a <span>; without it the quote runs

@@ -228,6 +228,131 @@ def _record() -> str:
             f'<code>scripts/sweep_report.py</code> reproduces every figure.</p></section>')
 
 
+def _selfcheck() -> str:
+    """The product's own verdict on an ad written for the product.
+
+    Read from _build/selfcheck.json, which `_build/selfcheck.py` regenerates by
+    crawling this site and running `adkit.gate` and `adkit.feasibility` — the
+    same modules the shipped app runs. Same doctrine as `_record()`: commit the
+    script that derives a published figure, or it goes stale silently.
+
+    The section says plainly that the three variants were written by hand and
+    the verdicts were not. That distinction is the entire honesty of the page,
+    and the HoneyBook showcase above it earns its "verbatim" caption precisely
+    because docs/EVIDENCE.md records the run that produced it. This one is
+    weaker in one way — no model wrote the copy — and stronger in another: the
+    reader can go and check the site it was run against, because it is this one.
+
+    Returns "" when the JSON is absent, rather than inventing a specimen.
+    """
+    import json
+    from pathlib import Path as _P
+
+    f = _P(__file__).resolve().parent / "selfcheck.json"
+    if not f.exists():
+        return ""
+    try:
+        d = json.loads(f.read_text())
+    except (ValueError, OSError):
+        return ""
+
+    gate_d, feas = d.get("gate", {}), d.get("feasibility", {})
+    blocked = set(gate_d.get("blocked", []))
+    claims = gate_d.get("claims", [])
+
+    # The one claim that resolved to a real span, with the page it was found
+    # on. A gate that only ever says no is a filter, not a check — showing the
+    # substantiated case is what makes the blocked ones mean something.
+    proved = next((c for c in claims
+                   if c.get("verdict") == "substantiated" and c.get("source_url")), None)
+    failed = [c for c in claims if c.get("verdict") == "unsubstantiated"]
+
+    rows = []
+    if proved:
+        rows.append(
+            f'<div class="vd ok"><span class="vd-ic">&check;</span><span>'
+            f'<strong>Substantiated &mdash; and here is where</strong>'
+            f'{esc(proved["text"])}'
+            f'<span class="vd-quote">Found on '
+            f'<a href="{esc(proved["source_url"])}">{esc(proved["source_url"])}</a>. '
+            f'A claim the gate can point at is a claim you can sign off.</span>'
+            f'</span></div>')
+    if failed:
+        first = failed[0]
+        rows.append(
+            f'<div class="vd bad"><span class="vd-ic">&times;</span><span>'
+            f'<strong>{len(blocked)} of {len(d.get("variants", []))} variants blocked</strong>'
+            f'{esc(gate_d.get("summary", ""))}'
+            f'<span class="vd-quote">{esc(first["text"])} &mdash; '
+            f'{esc(first.get("note", ""))}</span></span></div>')
+
+    undeclared = [c for c in failed if c.get("undeclared")]
+    if undeclared:
+        rows.append(
+            f'<div class="vd bad"><span class="vd-ic">&times;</span><span>'
+            f'<strong>{len(undeclared)} it caught that the campaign never declared</strong>'
+            f'The copy was scanned for claim-shaped language as well as checked '
+            f'against the list it declared, because a generator that under-reports '
+            f'its own claims would otherwise sail through.</span></div>')
+
+    for i in feas.get("issues", [])[:2]:
+        rows.append(
+            f'<div class="vd warn"><span class="vd-ic">!</span><span>'
+            f'<strong>{esc(i["where"])}</strong>{esc(i["what"])}'
+            + (f'<span class="vd-quote">{esc(i["quote"])}<br>'
+               f'<strong style="display:inline">Fix:</strong> {esc(i["fix"])}</span>'
+               if i.get("quote") else "")
+            + '</span></div>')
+
+    not_checked = "".join(f"<li>{esc(x)}</li>" for x in feas.get("not_checked", []))
+    variants = "".join(
+        f'<div class="box{" warn" if v["label"] in blocked else ""}">'
+        f'<p class="src" style="margin-bottom:.6rem">{esc(v["label"].upper())}'
+        + ('<span class="pill unchecked" style="margin-left:.5rem">blocked</span>'
+           if v["label"] in blocked else "")
+        + f'</p><p style="margin-bottom:.2rem"><strong>{esc(v["headline"])}</strong></p>'
+        f'<p class="muted" style="margin-bottom:0">{esc(v["primary_text"])}</p></div>'
+        for v in d.get("variants", []))
+
+    return f"""
+<section class="showcase">
+<p class="kicker">Run against ourselves</p>
+<h2>We pointed it at this website</h2>
+<p>Everything above describes what the gate does. This is it doing it &mdash; to
+an ad for {BRAND}, checked against {BRAND}&rsquo;s own site, which you are
+reading and can go and check yourself.</p>
+
+<div class="win">
+  <div class="win-bar">
+    <span class="win-dot" style="background:#ff5f57"></span>
+    <span class="win-dot" style="background:#febc2e"></span>
+    <span class="win-dot" style="background:#28c840"></span>
+    <span class="win-title">{BRAND} &mdash; adplaybook.app, {esc(d.get("platform", ""))}</span>
+  </div>
+  <div class="win-body">{"".join(rows)}</div>
+</div>
+
+{variants}
+
+<div class="box">
+<p class="src" style="margin-bottom:.6rem">WHAT IT COULD NOT CHECK</p>
+<ul style="margin:0;padding-left:1.1rem;color:var(--grey);font-size:.9rem;line-height:1.6">{not_checked}</ul>
+<p class="src" style="margin:.7rem 0 0">An empty warning list has to mean
+&ldquo;checked and clean&rdquo;, never &ldquo;did not look&rdquo;. This is the
+part every other tool leaves out, and it is the reason to believe the rest.</p>
+</div>
+
+<p class="win-cap"><span>Who wrote what.</span> The three variants were written
+by hand, here, so the specimen does not change between builds. Every verdict
+under them was not: they come from <code>adkit.gate</code> and
+<code>adkit.feasibility</code>, the same modules the app runs, against a live
+crawl of this site that read {d.get("crawl", {}).get("spans", 0)} spans.
+Produced on {esc(d.get("generated_on", ""))} against {BRAND}
+{esc(d.get("app_version", ""))}. <code>_build/selfcheck.py</code> reproduces it.</p>
+</section>
+"""
+
+
 def build_rest(page: Callable, specs: List[Dict[str, Any]], pages: List,
                app_repo=None) -> None:
     _home(page, specs)
@@ -454,6 +579,8 @@ verbatim quote behind it — plus the ones needing sign-off, the ones that were
 blocked, and the pages it could not read. It is built for whoever signs the ad
 off and carries the liability for it.</p>
 </section>
+
+{_selfcheck()}
 
 <section>
 <h2>What it deliberately does not do</h2>
