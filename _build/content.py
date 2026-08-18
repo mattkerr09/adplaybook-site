@@ -430,9 +430,10 @@ def _home(page: Callable, specs: List[Dict[str, Any]]) -> None:
     # about a user's data. The badge now claims only the part that holds;
     # /privacy/ carries the destination list.
     body = f"""
-<div class="hero hero-split">
-<div class="hero-lead">
+<div class="hero">
 <p class="kicker">AD CAMPAIGNS, WITH THE REASONING SHOWN</p>
+<div class="hero-split">
+<div class="hero-lead">
 <h1>It writes the ad.<br><span class="grad">Then it tries to prove you wrong.</span></h1>
 </div>
 <div class="hero-aside">
@@ -444,6 +445,7 @@ its own work before it shows you anything.</p>
 <a class="btn ghost" href="/specs/">See the ad specs</a>
 </div>
 <p class="hero-sub">{VERSION_TAG} · {dmg_size} MB · Apple Silicon · notarised by Apple</p>
+</div>
 </div>
 </div>
 
