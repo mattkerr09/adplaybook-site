@@ -229,8 +229,12 @@ _PUBLIC_EXT = {".html", ".css", ".js", ".png", ".jpg", ".jpeg", ".svg", ".ico",
 #: Published on purpose despite their extension or name. `.gitignore` is here
 #: because it is repo plumbing every checkout has, and serving it discloses
 #: nothing that `git ls-files` on a public repo would not.
+#: Files that are fine to have in the repo. `_config.yml` is here because
+#: Jekyll never publishes its own config — verified live, adplaybook.app/
+#: _config.yml returns 404 — and `.nojekyll` stays listed so removing it again
+#: is a deliberate act rather than a silent one.
 _ALLOWED_NAMES = {"CNAME", ".nojekyll", ".gitignore", "updater.json",
-                  "llms.txt", "robots.txt", "sitemap.xml"}
+                  "llms.txt", "robots.txt", "sitemap.xml", "_config.yml"}
 
 
 def _internal_files(tracked: list) -> list:
@@ -246,15 +250,55 @@ def _internal_files(tracked: list) -> list:
     is written by `--update-baseline` below, through this function, so there
     is no second copy to drift.
     """
+    excluded = _jekyll_excluded()
     out = []
     for rel in tracked:
         name = rel.rsplit("/", 1)[-1]
         if rel in _ALLOWED_NAMES or name in _ALLOWED_NAMES:
             continue
+        # A file the BUILD drops is not a public URL, whatever its name.
+        if any(rel == e or rel.startswith(e.rstrip("/") + "/") for e in excluded):
+            continue
         ext = ("." + name.rsplit(".", 1)[-1]) if "." in name else ""
         if rel.startswith("_build/") or rel.startswith(".claude/") \
                 or ext in {".py", ".pyc", ".md"} or ext not in _PUBLIC_EXT:
             out.append(rel)
+    return out
+
+
+def _jekyll_excluded() -> list:
+    """Paths _config.yml keeps out of the build.
+
+    This function is the difference between the gate measuring what is PUBLIC
+    and measuring what is TRACKED. Those were the same thing while `.nojekyll`
+    was in place and the branch root was published verbatim; they stopped
+    being the same the moment _config.yml started excluding things.
+
+    A gate that kept counting tracked files would have gone on reporting
+    twenty-one public internals that return 404, which overstates the problem
+    and — worse — leaves the baseline non-empty, so a genuinely new leak could
+    hide inside a number nobody trusts.
+
+    Parsed rather than hardcoded, because a list of exclusions in two places is
+    the drift this file already has a comment about.
+    """
+    cfg = SITE / "_config.yml"
+    if not cfg.is_file():
+        return []
+    out, in_exclude = [], False
+    for raw in cfg.read_text().splitlines():
+        line = raw.rstrip()
+        if not line or line.lstrip().startswith("#"):
+            continue
+        if line.startswith("exclude:"):
+            in_exclude = True
+            continue
+        if in_exclude:
+            stripped = line.lstrip()
+            if stripped.startswith("- "):
+                out.append(stripped[2:].strip())
+                continue
+            in_exclude = False          # a new top-level key ends the list
     return out
 
 

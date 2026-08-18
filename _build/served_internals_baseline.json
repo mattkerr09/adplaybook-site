@@ -1,26 +1,5 @@
 {
   "recorded": "2026-08-18",
-  "why": "Files that are public URLs today because the repo root is the web root. Confirmed live, not inferred. A NEW internal file is a hard failure; these are recorded so the pre-existing structural issue \u2014 moving the deploy root, which repoints a live site \u2014 does not block every release meanwhile. A ratchet, not an approval: the correct end state is an empty list.",
-  "files": [
-    ".claude/launch.json",
-    "DEPLOY.md",
-    "README.md",
-    "_build/aitell.py",
-    "_build/aitell_report.json",
-    "_build/articles.py",
-    "_build/check.py",
-    "_build/content.py",
-    "_build/foraudience.py",
-    "_build/howto.py",
-    "_build/legal.py",
-    "_build/make_og.py",
-    "_build/offline.py",
-    "_build/render.py",
-    "_build/sameness.py",
-    "_build/selfcheck.json",
-    "_build/selfcheck.py",
-    "_build/served_internals_baseline.json",
-    "_build/strategies.py",
-    "_build/submit.py"
-  ]
+  "why": "Empty, which is the correct end state. Twenty-one internal files were public URLs until 2026-08-18 \u2014 including _build/content.py, the marketing source with the pricing strategy \u2014 because .nojekyll disabled Jekyll and with it the exclusion of dot- and underscore-prefixed paths. _config.yml now excludes them and the serving path was NOT moved, since moving it is what took the site down on every path for twelve minutes. Verified live: each file returns 404 and all 14 real paths return 200. Any entry appearing here again is a regression, not a backlog.",
+  "files": []
 }
