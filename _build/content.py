@@ -430,8 +430,12 @@ def _home(page: Callable, specs: List[Dict[str, Any]]) -> None:
     # about a user's data. The badge now claims only the part that holds;
     # /privacy/ carries the destination list.
     body = f"""
-<div class="hero">
+<div class="hero hero-split">
+<div class="hero-lead">
+<p class="kicker">AD CAMPAIGNS, WITH THE REASONING SHOWN</p>
 <h1>It writes the ad.<br><span class="grad">Then it tries to prove you wrong.</span></h1>
+</div>
+<div class="hero-aside">
 <p class="lede">{BRAND} turns a product page into a complete, buildable ad campaign —
 strategy, audiences, exclusions, copy, test matrix, measurement plan — then attacks
 its own work before it shows you anything.</p>
@@ -441,6 +445,27 @@ its own work before it shows you anything.</p>
 </div>
 <p class="hero-sub">{VERSION_TAG} · {dmg_size} MB · Apple Silicon · notarised by Apple</p>
 </div>
+</div>
+
+<!-- The six stages of the run shown below it.
+     Figures are that SAME run, from docs/EVIDENCE.md in the app repo, so the
+     strip and the window are one campaign rather than two stitched together.
+     There is no live badge and no counter, because neither would be wired to
+     anything. -->
+<ol class="stages">
+<li><span class="stage-n">1</span><strong>Read</strong>
+    <span class="stage-d">6 pages · 116 spans · quality 1.00</span></li>
+<li><span class="stage-n">2</span><strong>Brief</strong>
+    <span class="stage-d">what is provably true about the product</span></li>
+<li><span class="stage-n">3</span><strong>Generate</strong>
+    <span class="stage-d">3 variants, one axis apart</span></li>
+<li><span class="stage-n">4</span><strong>Claim gate</strong>
+    <span class="stage-d">1 blocked — a price it could not trace</span></li>
+<li><span class="stage-n">5</span><strong>Review</strong>
+    <span class="stage-d">REJECT — 2 blockers</span></li>
+<li><span class="stage-n">6</span><strong>Guide</strong>
+    <span class="stage-d">15,884 bytes, in build order</span></li>
+</ol>
 
 <section class="showcase">
 <div class="win">

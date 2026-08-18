@@ -297,11 +297,45 @@ li{margin-bottom:.5rem}
 .btn.ghost:hover{border-color:var(--blue);box-shadow:none}
 
 .hero{position:relative}
-.hero::before{content:"";position:absolute;inset:-30% -50% auto;height:120%;pointer-events:none;
+/* inset was -30% -50%, which made this decorative box 2x the hero width and
+   pushed documentElement.scrollWidth to 1800 at a 1440 viewport — a real
+   360px horizontal overflow, hidden only because body carries
+   overflow-x:hidden. Suppressing a scrollbar is not the same as not
+   overflowing, and the masking is why it survived. Measured on the LIVE
+   site before this change, so it is pre-existing rather than introduced.
+   The gradient inside is 760px wide and the hero column is ~1180, so
+   spanning the hero exactly costs nothing visible. */
+.hero::before{content:"";position:absolute;inset:-30% 0 auto;height:120%;pointer-events:none;
   background:radial-gradient(760px 420px at 50% 0,var(--accent-wash),transparent 70%)}
 .hero>*{position:relative}
 .hero h1{font-size:clamp(2.2rem,4.8vw,3.25rem);margin:.9rem 0 1.2rem}
 .hero .lede{max-width:56ch}
+/* Split hero, after panxo.com: headline left, the pitch and the buttons in a
+   column beside it. Chosen over a centred stack because it lets the headline
+   stay at 52px and wrap as a column — the reference measures 56px left with a
+   553px wrap — instead of growing to fill the width, which is the shape that
+   reads as generated. Collapses to one column under 900. */
+.hero-split{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  gap:clamp(1.5rem,4vw,3.5rem);align-items:end}
+.hero-split .hero-lead h1{margin:0;max-width:15ch}
+.hero-split .hero-aside{padding-bottom:.35rem}
+.hero-split .lede{margin-top:0}
+@media(max-width:900px){.hero-split{grid-template-columns:1fr;align-items:start}
+  .hero-split .hero-lead h1{max-width:20ch}}
+/* The six stages of one real run. A numbered strip rather than tabs: tabs
+   imply the other five are one click away, and they are not on a static page.
+   Saying six things plainly beats implying an interaction that does not exist. */
+.stages{list-style:none;margin:2.2rem 0 0;padding:0;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.1rem;
+  border:1px solid var(--edge);border-radius:12px;overflow:hidden}
+.stages li{display:flex;flex-direction:column;gap:.28rem;padding:.9rem 1rem;
+  background:var(--panel);border-right:1px solid var(--edge)}
+.stages li:last-child{border-right:0}
+.stages .stage-n{font-family:var(--mono);font-size:.68rem;color:var(--grey-dim)}
+.stages strong{font-size:.94rem;letter-spacing:-.01em}
+.stages .stage-d{font-family:var(--mono);font-size:.7rem;line-height:1.45;
+  color:var(--grey-dim)}
+@media(max-width:900px){.stages li{border-right:0;border-bottom:1px solid var(--edge)}}
 .eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border-radius:999px;
   border:1px solid var(--hair-lit);background:var(--panel-2);color:var(--ice);
   font-size:.86rem;font-weight:520;white-space:nowrap}
@@ -435,8 +469,12 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 <button id="themeToggle" type="button" aria-label="Switch between light and dark">&#9686;</button>
 </div></nav>
 <div class="wide">
-<div class="hero">
+<div class="hero hero-split">
+<div class="hero-lead">
+<p class="kicker">AD CAMPAIGNS, WITH THE REASONING SHOWN</p>
 <h1>It writes the ad.<br><span class="grad">Then it tries to prove you wrong.</span></h1>
+</div>
+<div class="hero-aside">
 <p class="lede">AdPlaybook turns a product page into a complete, buildable ad campaign —
 strategy, audiences, exclusions, copy, test matrix, measurement plan — then attacks
 its own work before it shows you anything.</p>
@@ -446,6 +484,27 @@ its own work before it shows you anything.</p>
 </div>
 <p class="hero-sub">v0.2.46 · 134.4 MB · Apple Silicon · notarised by Apple</p>
 </div>
+</div>
+
+<!-- The six stages of the run shown below it.
+     Figures are that SAME run, from docs/EVIDENCE.md in the app repo, so the
+     strip and the window are one campaign rather than two stitched together.
+     There is no live badge and no counter, because neither would be wired to
+     anything. -->
+<ol class="stages">
+<li><span class="stage-n">1</span><strong>Read</strong>
+    <span class="stage-d">6 pages · 116 spans · quality 1.00</span></li>
+<li><span class="stage-n">2</span><strong>Brief</strong>
+    <span class="stage-d">what is provably true about the product</span></li>
+<li><span class="stage-n">3</span><strong>Generate</strong>
+    <span class="stage-d">3 variants, one axis apart</span></li>
+<li><span class="stage-n">4</span><strong>Claim gate</strong>
+    <span class="stage-d">1 blocked — a price it could not trace</span></li>
+<li><span class="stage-n">5</span><strong>Review</strong>
+    <span class="stage-d">REJECT — 2 blockers</span></li>
+<li><span class="stage-n">6</span><strong>Guide</strong>
+    <span class="stage-d">15,884 bytes, in build order</span></li>
+</ol>
 
 <section class="showcase">
 <div class="win">
