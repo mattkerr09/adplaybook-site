@@ -429,7 +429,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 <p class="lede">The terms for using AdPlaybook: who publishes it, what the licence is, who is responsible for the ads it drafts, and how refunds work.</p>
 
 <div class="box ok">
-<p style="margin:0"><span class="pill checked">last changed 2026-08-17</span>
+<p style="margin:0"><span class="pill checked">last changed 2026-08-18</span>
 These cover the desktop app and this website. They are short because the
 product is small: there is no account to close, no subscription to cancel and
 no data of yours for us to lose.</p>
@@ -452,16 +452,27 @@ thing worth being suspicious of.</p>
 
 <h2>What you get, and how you get it</h2>
 <p>A macOS application for Apple Silicon, delivered as a signed and notarised
-disk image from <a href="https://github.com/mattkerr09/adplaybook-site/releases">the releases page</a>. Downloading it is
-the entire delivery. There is no licence key to enter, no activation step, no
-account to create and no server to sign in to — if the app opens, you have
-everything there is.</p>
+disk image from <a href="https://github.com/mattkerr09/adplaybook-site/releases">the releases page</a>. The download is the
+whole application — there is no separate paid build, no account to create and
+no server to sign in to.</p>
+<p>If you buy a licence, Polar emails you a key. You paste it into the app once;
+the app asks Polar whether the key is valid and stores that answer at
+<code>~/.config/adkit/licence.json</code>. It re-asks at most once a day, and if
+your machine cannot reach Polar an already-valid licence keeps working for 14
+days before it stops. That is the only network call licensing makes, and it
+carries the key and nothing else.</p>
 
 <h2>What it costs</h2>
-<p><strong>Nothing, and it is not for sale.</strong> There is no price, no
-checkout, no trial, no subscription and no payment mechanism anywhere in this
-product or on this site. If any page anywhere asks you to pay for AdPlaybook, it is
-not us and you should not pay it.</p>
+<p><strong>Free on one website. $149 once for unlimited websites</strong> —
+paid once, not a subscription, with no renewal and no expiry. There is no trial
+to run out, because the free tier is not a trial.</p>
+<p>Payment is taken by <strong>Polar</strong>, who are the merchant of record:
+your card statement will show Polar rather than us, they issue the receipt and
+handle sales tax and VAT, and they are the only party who ever sees your card.
+The one place to buy is the checkout linked from this site
+(<code>buy.polar.sh</code>). We do not sell AdPlaybook through app stores, resellers
+or key marketplaces, so a key offered anywhere else did not come from us and we
+cannot support or honour it.</p>
 <p>Free is not the same as costless. The app calls a model on every generation
 and you pay that bill directly to your provider, never to us. Which provider that
 is depends on what your Mac can reach, not on what you pick — see the box below —

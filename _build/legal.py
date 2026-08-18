@@ -70,7 +70,10 @@ from __future__ import annotations
 
 # The version these documents describe is the build the Download button serves.
 # It was typed as v0.1.23 and went false the moment 0.1.89 was published.
-from content import VERSION_TAG  # noqa: E402
+# PRICE_USD, never a typed literal: the same $19 literal survived TWO price
+# changes on crispvideo.app because every sweep fixed the published pages and
+# not the generator that writes them.
+from content import PRICE_USD, VERSION_TAG  # noqa: E402
 
 import html
 from typing import Any, Callable
@@ -87,7 +90,7 @@ COMPANY_PLAIN = "Kerr & Company LLC"
 #: privacy did not. Bumping the shared value would have re-dated a page whose
 #: text had not moved — the same untruth this constant exists to prevent,
 #: pointed the other way.
-TERMS_EFFECTIVE = "2026-08-17"   # refunds section rewritten: real policy, was "nothing to refund"
+TERMS_EFFECTIVE = "2026-08-18"   # "not for sale" retired: the site has charged $149 since before this
 PRIVACY_EFFECTIVE = "2026-08-12"
 EFFECTIVE = PRIVACY_EFFECTIVE    # legacy alias; prefer the explicit names
 
@@ -429,16 +432,27 @@ thing worth being suspicious of.</p>
 
 <h2>What you get, and how you get it</h2>
 <p>A macOS application for Apple Silicon, delivered as a signed and notarised
-disk image from <a href="{RELEASES}">the releases page</a>. Downloading it is
-the entire delivery. There is no licence key to enter, no activation step, no
-account to create and no server to sign in to — if the app opens, you have
-everything there is.</p>
+disk image from <a href="{RELEASES}">the releases page</a>. The download is the
+whole application — there is no separate paid build, no account to create and
+no server to sign in to.</p>
+<p>If you buy a licence, Polar emails you a key. You paste it into the app once;
+the app asks Polar whether the key is valid and stores that answer at
+<code>~/.config/adkit/licence.json</code>. It re-asks at most once a day, and if
+your machine cannot reach Polar an already-valid licence keeps working for 14
+days before it stops. That is the only network call licensing makes, and it
+carries the key and nothing else.</p>
 
 <h2>What it costs</h2>
-<p><strong>Nothing, and it is not for sale.</strong> There is no price, no
-checkout, no trial, no subscription and no payment mechanism anywhere in this
-product or on this site. If any page anywhere asks you to pay for {BRAND}, it is
-not us and you should not pay it.</p>
+<p><strong>Free on one website. ${PRICE_USD} once for unlimited websites</strong> —
+paid once, not a subscription, with no renewal and no expiry. There is no trial
+to run out, because the free tier is not a trial.</p>
+<p>Payment is taken by <strong>Polar</strong>, who are the merchant of record:
+your card statement will show Polar rather than us, they issue the receipt and
+handle sales tax and VAT, and they are the only party who ever sees your card.
+The one place to buy is the checkout linked from this site
+(<code>buy.polar.sh</code>). We do not sell {BRAND} through app stores, resellers
+or key marketplaces, so a key offered anywhere else did not come from us and we
+cannot support or honour it.</p>
 <p>Free is not the same as costless. The app calls a model on every generation
 and you pay that bill directly to your provider, never to us. Which provider that
 is depends on what your Mac can reach, not on what you pick — see the box below —
@@ -649,9 +663,12 @@ your machine, it is gone.</li>
 <li><strong>Legal advice on your advertising.</strong> The app lists the
 obligations that commonly attach to what you sell, with a source for each, and
 that is the limit of it. Whoever signs your ads off should be qualified to.</li>
-<li><strong>Billing.</strong> There is no billing. {BRAND} is not for sale and
-takes no payments — <a href="/terms/">the terms</a> set that out. Model usage is
-billed to you by your provider directly.</li>
+<li><strong>Billing.</strong> We never see your card and cannot look up your
+payment. Polar is the merchant of record for every {BRAND} licence — receipts,
+invoices, tax and card problems are theirs, and a refund we approve is still
+paid out by them. Email us anyway if something has gone wrong and we will tell
+you exactly who to ask. Model usage is billed to you by your provider directly
+and never passes through us at all.</li>
 </ul>
 
 <h2>The rest of it</h2>
