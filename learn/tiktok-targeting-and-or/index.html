@@ -33,15 +33,23 @@ if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</s
    hairlines, same pill buttons — with this app's blue in place of Crisp's
    cyan. A family of tools that look unrelated reads as three hobby projects. */
 :root{
-  --black:#0f0d0b;--panel:#151210;--panel-2:#1b1714;--card:#211c18;
-  --hair:#2a2320;--hair-lit:#3a312c;
+  /* Neutral near-black, not the warm brown this used to be. Matthew: "change
+     the colour scheme, I hate it", with builtbykerr.com and outlier.host as
+     the reference. Measured from those two rather than picked: builtbykerr
+     ships --bg #0B0B0C with --line #232326, outlier.host #070510. Both are
+     neutral or cool; the brown was the outlier in its own family.
+     Contrast re-checked on every surface before committing — the smallest
+     text (--grey-dim on --card) is 4.97:1, up from the 4.60 this palette was
+     corrected to when it last failed WCAG. */
+  --black:#0B0B0D;--panel:#121214;--panel-2:#17171A;--card:#1C1C20;
+  --hair:#232326;--hair-lit:#33333A;
   /* --grey-dim was #61656e: 2.89:1 against --card #211c18, which fails even
      the 3.0 NON-TEXT floor, and it is used 13 times on real prose at
      0.83-0.88rem. The smallest text on the page had the least contrast, which
      is the same fault outlier.host had. Lifted to 4.60:1, hue and saturation
      unchanged. It now sits close to --grey (5.20) — if that flattens the
      hierarchy too far, lift --grey rather than dropping this back. */
-  --white:#f5f7fa;--grey:#8a8f98;--grey-dim:#818690;
+  --white:#FAFAF8;--grey:#9A9AA4;--grey-dim:#8A8A95;
   /* Four of the five sites in this portfolio were near-black with a blue
      accent and -apple-system, so they read as one company shipping four
      things. docketseo.app was the only escape and the strongest of the six;
@@ -63,7 +71,15 @@ if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</s
      sets display type in a monospace, and none ships a weight above 600.
      --blue is kept as an alias rather than renamed at 40+
 call sites; it no longer holds a blue and the name is legacy. */
-  --accent:#f0b429;--blue:var(--accent);--ice:#a8c8ff;--violet:#9d8cff;--green:#4ade80;--amber:#f0b429;
+  /* THE ACCENT IS THE INK. builtbykerr.com carries no chromatic accent at all
+     — its --accent IS #FAFAF8, and its call to action is white on black,
+     which is the most confident thing on any of these pages. Amber was
+     chosen here to look like a flag; it read as a brand colour instead, and
+     Matthew disliked it.
+     Colour now means something rather than decorating: --flag for a blocked
+     claim, --green for a passed one, and nothing else is coloured. */
+  --accent:#FAFAF8;--blue:var(--accent);--ice:#c9c9d4;--violet:#b9b4c9;
+  --green:#4ade80;--amber:#FAFAF8;--flag:#f4655f;
   /* Everything below used to be a literal somewhere in the stylesheet. They are
      tokens now because of a bug I shipped to kerrandcompanyholdings.com on
      2026-08-13: a light theme whose seven contrast ratios I had measured and
@@ -71,12 +87,17 @@ call sites; it no longer holds a blue and the name is legacy. */
      heading gradient and four glow rules were hard-coded and never read the
      palette. Measuring a token set is not the same as checking what reads it.
      A colour that only exists as a literal cannot follow a theme. */
-  --nav-bg:rgba(15,13,11,.72);--nav-hair:rgba(42,35,32,.9);
-  --on-accent:#1a1206;                      /* text ON the green button */
-  --accent-lift:#ffc94d;--accent-deep:#c2891a;
-  --accent-glow:rgba(240,180,41,.85);--accent-glow-2:rgba(240,180,41,1);
-  --accent-wash:rgba(240,180,41,.16);--accent-wash-2:rgba(240,180,41,.13);
-  --accent-edge:rgba(240,180,41,.5);--amber-edge:rgba(217,167,43,.5);
+  --nav-bg:rgba(11,11,13,.72);--nav-hair:rgba(35,35,38,.9);
+  /* Text ON the primary button. Was #1a1206, a warm brown left from the
+     amber scheme — the button went white and its label stayed brown, which
+     is the same 'a colour that only exists as a literal cannot follow a
+     theme' failure this file already documents, one token over. Neutral
+     near-black now, matching the page ground. 18.8:1 on white. */
+  --on-accent:#0B0B0D;
+  --accent-lift:#FFFFFF;--accent-deep:#E4E4DE;
+  --accent-glow:rgba(0,0,0,.55);--accent-glow-2:rgba(0,0,0,.7);
+  --accent-wash:rgba(250,250,248,.10);--accent-wash-2:rgba(250,250,248,.07);
+  --accent-edge:rgba(250,250,248,.45);--amber-edge:rgba(250,250,248,.35);
   --row-hover:rgba(255,255,255,.02);
   --window-shadow:rgba(0,0,0,.9);--window-edge:rgba(255,255,255,.02);
   --r:18px;--r-sm:12px;
@@ -105,7 +126,13 @@ call sites; it no longer holds a blue and the name is legacy. */
      hairline reads as a surface catching light from above; without it the
      shadow alone reads as a drop-shadow sticker rather than a raised plane. */
   --lift-edge:rgba(255,255,255,.06);
-  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Inter,system-ui,sans-serif;
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,system-ui,sans-serif;
+  /* Display face. Neither reference sets its headline in a system sans:
+     builtbykerr uses Didot/Bodoni at weight 400, outlier.host uses Clash
+     Display at 600. This is the free half of that — Didot and Bodoni 72 ship
+     with macOS, and this is a Mac product, so the face costs no webfont, no
+     external request and no CSP exception. */
+  --display:Didot,"Bodoni 72","Playfair Display","Times New Roman",Times,serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
   --w:1080px;--wr:820px;
 }
@@ -126,22 +153,30 @@ call sites; it no longer holds a blue and the name is legacy. */
    4.5:1 on this ground. Buttons then need light text rather than dark, which is
    what --on-accent flipping is for. */
 :root[data-theme="light"]{
-  --black:#faf8f5;--panel:#ffffff;--panel-2:#f2ede6;--card:#ffffff;
-  --hair:#e6ded3;--hair-lit:#cfc3b3;
+  /* The light half, moved off the warm browns with the dark half. Changing
+     one theme and leaving the other is the exact failure this file already
+     records — a light palette whose seven contrast ratios were measured and
+     which still rendered wrong. Verified: the CTA and the eyebrow were still
+     brown here after the dark side went neutral. */
+  --black:#FAFAF8;--panel:#ffffff;--panel-2:#F1F1EE;--card:#ffffff;
+  --hair:#E3E3DF;--hair-lit:#C6C6C0;
   /* --grey-dim was #7a7268: 4.07:1 against --panel-2 #f2ede6, below the 4.5
      AA needs for text this size. Darkened to 4.60:1. */
-  --white:#14100c;--grey:#5c554c;--grey-dim:#716a60;
-  --accent:#8a5a12;--ice:#1d4ed8;--violet:#6d28d9;--green:#147b3b;--amber:#8a5a12;
+  --white:#0B0B0D;--grey:#55555E;--grey-dim:#66666F;
+  /* Ink as accent, mirroring the dark side: the primary button is the page's
+     darkest value on its lightest surface. */
+  --accent:#0B0B0D;--ice:#3f3f46;--violet:#52525b;--green:#147b3b;
+  --amber:#0B0B0D;--flag:#b42318;
   /* --green was #15803d: 4.31:1 on --panel-2. Five of its six uses are icons
      and borders, where 3.0 is the bar and 4.31 passed. The sixth is
      .pill.checked, which is TEXT. Nudged to 4.60:1 — visually
      indistinguishable, and the one text use is now compliant. */
-  --nav-bg:rgba(250,248,245,.82);--nav-hair:rgba(207,195,179,.9);
-  --on-accent:#ffffff;
-  --accent-lift:#a86f1c;--accent-deep:#6b450d;
-  --accent-glow:rgba(138,90,18,.34);--accent-glow-2:rgba(138,90,18,.42);
-  --accent-wash:rgba(138,90,18,.10);--accent-wash-2:rgba(138,90,18,.08);
-  --accent-edge:rgba(138,90,18,.45);--amber-edge:rgba(138,90,18,.45);
+  --nav-bg:rgba(250,250,248,.82);--nav-hair:rgba(198,198,192,.9);
+  --on-accent:#FAFAF8;
+  --accent-lift:#26262B;--accent-deep:#000000;
+  --accent-glow:rgba(20,20,24,.22);--accent-glow-2:rgba(20,20,24,.30);
+  --accent-wash:rgba(20,20,24,.07);--accent-wash-2:rgba(20,20,24,.05);
+  --accent-edge:rgba(20,20,24,.35);--amber-edge:rgba(20,20,24,.30);
   --row-hover:rgba(20,16,12,.035);
   --window-shadow:rgba(20,16,12,.22);--window-edge:rgba(20,16,12,.06);
   /* Elevation, light. Not the dark values at lower opacity — on a light ground
@@ -210,15 +245,24 @@ nav{position:sticky;top:0;z-index:80;background:var(--nav-bg);
 .nav-links .btn:hover{color:var(--on-accent)}
 .nav-links .btn svg{flex:none}
 
-h1{font-family:var(--sans);font-optical-sizing:auto;text-wrap:balance;font-size:clamp(2.4rem,5.2vw,3.25rem);line-height:1.06;letter-spacing:-.028em;
-  font-weight:520;margin:.6rem 0 1rem}
+/* The display face, and weight 400 with it.
+   builtbykerr.com sets its headline in Didot at 54.4px weight 400; ours was a
+   system sans at weight 520. A serif at 400 is lighter on the page and reads
+   as more certain, which is the opposite of what adding weight does.
+   Letter-spacing goes back toward 0 because a serif does not want a sans's
+   negative tracking, and line-height tightens to 1.04 — builtbykerr runs
+   55.5/54.4, almost exactly 1.02. */
+h1{font-family:var(--display);font-optical-sizing:auto;text-wrap:balance;
+  font-size:clamp(2.5rem,5.4vw,3.4rem);line-height:1.04;letter-spacing:-.012em;
+  font-weight:400;margin:.6rem 0 1rem}
 /* 560, not 690, and 3.6rem, not 4.6rem.
    Measured against the four references at 1280x800: Cursor sets its h1 at 26px
    weight 400, Warp at 64px weight 400, Linear at 64px weight 510. Ours was
    73.6px at 690 — the largest and heaviest of the set by a clear margin, which
    is not confidence, it is volume. */
-h2{font-family:var(--sans);font-optical-sizing:auto;text-wrap:balance;font-size:clamp(1.6rem,3.1vw,2.4rem);line-height:1.12;letter-spacing:-.024em;
-  font-weight:520;margin:3.2rem 0 .9rem}
+h2{font-family:var(--display);font-optical-sizing:auto;text-wrap:balance;
+  font-size:clamp(1.7rem,3.2vw,2.45rem);line-height:1.1;letter-spacing:-.008em;
+  font-weight:400;margin:3.2rem 0 .9rem}
 h3{font-size:1.12rem;font-weight:550;letter-spacing:-.012em;margin:2rem 0 .5rem}
 p{margin:0 0 1.05rem}
 
@@ -666,7 +710,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 </head>
 <body>
 <nav><div class="wrap nav-inner">
-<a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#1b1714"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#f0b429"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#f0b429"/><circle cx="46" cy="70" r="9.5" fill="#1b1714"/><circle cx="46" cy="70" r="4.3" fill="#f0b429"/><circle cx="61" cy="53" r="5" fill="#1b1714"/><circle cx="75" cy="36" r="5" fill="#1b1714"/></svg>AdPlaybook</a>
+<a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="var(--panel-2)"/><rect x="14" y="14" width="14" height="72" rx="4" fill="var(--white)"/><rect x="33" y="14" width="53" height="72" rx="6" fill="var(--white)"/><circle cx="46" cy="70" r="9.5" fill="var(--panel-2)"/><circle cx="46" cy="70" r="4.3" fill="var(--white)"/><circle cx="61" cy="53" r="5" fill="var(--panel-2)"/><circle cx="75" cy="36" r="5" fill="var(--panel-2)"/></svg>AdPlaybook</a>
 <ul class="nav-links"><li><a href="/specs/">Ad specs</a></li><li><a href="/learn/">Learn</a></li><li><a href="/for/">By business</a></li><li><a href="/vs/">Compare</a></li><li><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.48/AdPlaybook-0.2.48-arm64.dmg"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>Download</a></li></ul>
 <button id="themeToggle" type="button" aria-label="Switch between light and dark">&#9686;</button>
 </div></nav>
@@ -692,7 +736,7 @@ recently. There's no job title here.</li>
 <p>See the <a href="/specs/tiktok/">TikTok ad specs</a>, quoted with sources.</p>
 </article></div>
 <footer><div class="wide">
-<div class="foot-brand"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="#1b1714"/><rect x="14" y="14" width="14" height="72" rx="4" fill="#f0b429"/><rect x="33" y="14" width="53" height="72" rx="6" fill="#f0b429"/><circle cx="46" cy="70" r="9.5" fill="#1b1714"/><circle cx="46" cy="70" r="4.3" fill="#f0b429"/><circle cx="61" cy="53" r="5" fill="#1b1714"/><circle cx="75" cy="36" r="5" fill="#1b1714"/></svg>AdPlaybook</div>
+<div class="foot-brand"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="var(--panel-2)"/><rect x="14" y="14" width="14" height="72" rx="4" fill="var(--white)"/><rect x="33" y="14" width="53" height="72" rx="6" fill="var(--white)"/><circle cx="46" cy="70" r="9.5" fill="var(--panel-2)"/><circle cx="46" cy="70" r="4.3" fill="var(--white)"/><circle cx="61" cy="53" r="5" fill="var(--panel-2)"/><circle cx="75" cy="36" r="5" fill="var(--panel-2)"/></svg>AdPlaybook</div>
 <p>The ad maker that knows which strategy fits — and proves every claim.</p>
 <p>Every figure on this site is quoted from the platform's own documentation with
 the date it was read. Where something could not be verified, the page says so
