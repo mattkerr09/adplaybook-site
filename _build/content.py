@@ -247,7 +247,7 @@ def _record() -> str:
         f'<div class="rec"><p class="rec-n">{a}</p>'
         f'<p class="rec-l">{b}</p><p class="rec-w">{c}</p></div>'
         for a, b, c in rows)
-    return (f'<section class="record"><p class="kicker">What it has actually done</p>'
+    return (f'<section class="record"><p class="kicker reveal">What it has actually done</p>'
             f'<h2>Three of these four are failure rates</h2>'
             f'<p class="rec-intro">Measured across {n} real businesses — every one a live '
             f'crawl through a real model, not a demo. Most tools publish the number that '
@@ -309,7 +309,7 @@ def _selfcheck() -> str:
     if failed:
         first = failed[0]
         rows.append(
-            f'<div class="vd bad"><span class="vd-ic">&times;</span><span>'
+            f'<div class="vd bad reveal"><span class="vd-ic">&times;</span><span>'
             f'<strong>{len(blocked)} of {len(d.get("variants", []))} variants blocked</strong>'
             f'{esc(gate_d.get("summary", ""))}'
             f'<span class="vd-quote">{esc(first["text"])} &mdash; '
@@ -318,7 +318,7 @@ def _selfcheck() -> str:
     undeclared = [c for c in failed if c.get("undeclared")]
     if undeclared:
         rows.append(
-            f'<div class="vd bad"><span class="vd-ic">&times;</span><span>'
+            f'<div class="vd bad reveal"><span class="vd-ic">&times;</span><span>'
             f'<strong>{len(undeclared)} it caught that the campaign never declared</strong>'
             f'The copy was scanned for claim-shaped language as well as checked '
             f'against the list it declared, because a generator that under-reports '
@@ -326,7 +326,7 @@ def _selfcheck() -> str:
 
     for i in feas.get("issues", [])[:2]:
         rows.append(
-            f'<div class="vd warn"><span class="vd-ic">!</span><span>'
+            f'<div class="vd warn reveal"><span class="vd-ic">!</span><span>'
             f'<strong>{esc(i["where"])}</strong>{esc(i["what"])}'
             + (f'<span class="vd-quote">{esc(i["quote"])}<br>'
                f'<strong style="display:inline">Fix:</strong> {esc(i["fix"])}</span>'
@@ -344,8 +344,8 @@ def _selfcheck() -> str:
         for v in d.get("variants", []))
 
     return f"""
-<section class="showcase reveal">
-<p class="kicker">Run against ourselves</p>
+<section class="showcase">
+<p class="kicker reveal">Run against ourselves</p>
 <h2>We pointed it at this website</h2>
 <p>Everything above describes what the gate does. This is it doing it &mdash; to
 an ad for {BRAND}, checked against {BRAND}&rsquo;s own site, which you are
@@ -464,7 +464,7 @@ def _home(page: Callable, specs: List[Dict[str, Any]]) -> None:
     # /privacy/ carries the destination list.
     body = f"""
 <div class="hero">
-<p class="kicker">AD CAMPAIGNS, WITH THE REASONING SHOWN</p>
+<p class="kicker reveal">AD CAMPAIGNS, WITH THE REASONING SHOWN</p>
 <div class="hero-split">
 <div class="hero-lead">
 <h1>It writes the ad.<br><span class="grad">Then it tries to prove you wrong.</span></h1>
@@ -502,7 +502,7 @@ its own work before it shows you anything.</p>
     <span class="stage-d">15,884 bytes, in build order</span></li>
 </ol>
 
-<section class="showcase reveal">
+<section class="showcase">
 <div class="win">
   <div class="win-bar">
     <span class="win-dot" style="background:#ff5f57"></span>
@@ -511,18 +511,18 @@ its own work before it shows you anything.</p>
     <span class="win-title">AdPlaybook — HoneyBook, Meta, Instagram Feed</span>
   </div>
   <div class="win-body">
-    <div class="vd bad"><span class="vd-ic">&times;</span><span>
+    <div class="vd bad reveal"><span class="vd-ic">&times;</span><span>
       <strong>It won't run as written</strong>2 things will stop this running</span></div>
-    <div class="vd bad"><span class="vd-ic">&times;</span><span>
+    <div class="vd bad reveal"><span class="vd-ic">&times;</span><span>
       <strong>Some claims could not be traced</strong>
       1 of 3 variants blocked — a price we could not trace.
       <span class="vd-quote">C — Price Axis: "Starting at $29/month" appears
       nowhere on your site. Remove it, or add the price to a page we can read.</span>
     </span></div>
-    <div class="vd bad"><span class="vd-ic">&times;</span><span>
+    <div class="vd bad reveal"><span class="vd-ic">&times;</span><span>
       <strong>We checked it again — do not build this</strong>
       REJECT — 2 blockers, 1 serious.</span></div>
-    <div class="vd warn"><span class="vd-ic">!</span><span>
+    <div class="vd warn reveal"><span class="vd-ic">!</span><span>
       <strong>The landing page was not checked</strong>
       No destination was given, so nothing looked at where the click lands.
       That is not the same as it being fine.</span></div>
@@ -566,7 +566,7 @@ independently. That is the whole design working, on a site we do not control.</p
 </section>
 
 <section>
-<p class="kicker">Before you spend anything</p>
+<p class="kicker reveal">Before you spend anything</p>
 <h2>It knows what will quietly fail</h2>
 <p>The expensive failures in paid media do not produce an error. These are
 checked by arithmetic against each platform's published limits, on every
@@ -591,7 +591,7 @@ not check, so an empty warning list never reads as a clean bill of health.</p>
 </section>
 
 <section>
-<p class="kicker">Strategy, not just words</p>
+<p class="kicker reveal">Strategy, not just words</p>
 <h2>Ten approaches, each with its failure mode stated first</h2>
 <p>Direct response burns your warmest audience first. Community-native gets read
 by people who will argue in the replies. Retargeting recovery pays you for sales
@@ -604,7 +604,7 @@ you.</p>
 </section>
 
 <section>
-<p class="kicker">{len(specs)} platforms</p>
+<p class="kicker reveal">{len(specs)} platforms</p>
 <h2>Held as dated facts, not folklore</h2>
 <p>{esc(names)}. Every character limit, aspect ratio and hard floor quoted from
 the platform's own documentation, with the date it was read — and an explicit
@@ -669,7 +669,7 @@ illustrative.</p>
 {_record()}
 
 <section>
-<p class="kicker">The part nobody else does</p>
+<p class="kicker reveal">The part nobody else does</p>
 <h2>It refuses to write things it cannot back up</h2>
 <p>An ad that says "60-minute callouts" has to point at the page that says it.
 {BRAND} harvests the exact words from your own site and blocks any figure that
@@ -821,7 +821,7 @@ from articles import ARTICLES as _ARTICLES  # noqa: E402
 #: Kept out of the f-string above because the script is full of braces that
 #: would each have to be doubled — the kind of edit that yields a page which
 #: renders and a script that silently never runs.
-LIVEGATE_SECTION = '\n<section class="livegate reveal" id="try">\n  <p class="eyebrow">Try the claim gate</p>\n  <h2>Paste an ad claim. Watch it get checked.</h2>\n  <p class="livegate-lede">This is the real gate — the same thirteen patterns\n  the app runs, exported from the engine, not a reproduction. Nothing is sent\n  anywhere; it runs in this page.</p>\n\n  <div class="lg-grid">\n    <label class="lg-field">\n      <span>Your ad copy</span>\n      <textarea id="lg-claim" rows="4" spellcheck="false">Trusted by 4,000 businesses. Get paid 10x faster. Starting at $29/month.</textarea>\n    </label>\n    <label class="lg-field">\n      <span>Text from your website</span>\n      <textarea id="lg-source" rows="4" spellcheck="false">HoneyBook helps independent businesses manage clients, projects and payments in one place. Plans from $19/month.</textarea>\n    </label>\n  </div>\n\n  <div class="lg-out" id="lg-out" aria-live="polite"></div>\n  <p class="lg-foot">A claim it cannot trace to your own page is blocked before\n  it reaches an ad account. That is the whole product; this is it running.</p>\n</section>\n'
+LIVEGATE_SECTION = '\n<section class="livegate" id="try">\n  <p class="eyebrow reveal">Try the claim gate</p>\n  <h2>Paste an ad claim. Watch it get checked.</h2>\n  <p class="livegate-lede">This is the real gate — the same thirteen patterns\n  the app runs, exported from the engine, not a reproduction. Nothing is sent\n  anywhere; it runs in this page.</p>\n\n  <div class="lg-grid">\n    <label class="lg-field">\n      <span>Your ad copy</span>\n      <textarea id="lg-claim" rows="4" spellcheck="false">Trusted by 4,000 businesses. Get paid 10x faster. Starting at $29/month.</textarea>\n    </label>\n    <label class="lg-field">\n      <span>Text from your website</span>\n      <textarea id="lg-source" rows="4" spellcheck="false">HoneyBook helps independent businesses manage clients, projects and payments in one place. Plans from $19/month.</textarea>\n    </label>\n  </div>\n\n  <div class="lg-out" id="lg-out" aria-live="polite"></div>\n  <p class="lg-foot">A claim it cannot trace to your own page is blocked before\n  it reaches an ad account. That is the whole product; this is it running.</p>\n</section>\n'
 
 LIVEGATE_SCRIPT = '\n<script id="lg-data" type="application/json">{"_note":"Generated by scripts/export_gate_patterns.py from backend/adkit/gate.py. Do not edit by hand \\u2014 tests/test_gate_export.py fails when this drifts from the engine.","figure_re":"[$\\u00a3\\u20ac]?\\\\d[\\\\d,.]*\\\\s*(?:k\\\\b|m\\\\b|bn\\\\b|b\\\\b|x\\\\b|%|\\\\+)?","claim_patterns":[{"pattern":"\\\\b\\\\d[\\\\d,.]*\\\\s?(?:k|m|\\\\+|million|thousand|%)?\\\\s+(?:customers?|clients?|users?|teams?|businesses|companies|reviews?|stars?|years?|countries|downloads?|installs?)\\\\b","label":"a quantity of people or time"},{"pattern":"\\\\btrusted by\\\\b|\\\\bloved by\\\\b|\\\\bused by\\\\b|\\\\bjoin \\\\d","label":"social proof"},{"pattern":"\\\\b(?:no\\\\.?\\\\s?1|#1|the (?:best|leading|top|only|fastest|largest))\\\\b","label":"a superlative"},{"pattern":"\\\\b(?:award[- ]winning|voted|rated|certified|accredited|licen[cs]ed)\\\\b","label":"a credential"},{"pattern":"\\\\b(?:guarantee[ds]?|money[- ]back|risk[- ]free|refund)\\\\b","label":"a guarantee"},{"pattern":"\\\\b(?:in|within|under)\\\\s+\\\\d+\\\\s?(?:min|minute|hour|day|week|second)","label":"a speed promise"},{"pattern":"\\\\b(?:free|save|from)\\\\s*[$\\u00a3\\u20ac]\\\\s?\\\\d|[$\\u00a3\\u20ac]\\\\s?\\\\d[\\\\d,.]*","label":"a price"},{"pattern":"\\\\b\\\\d[\\\\d,.]*\\\\s?%","label":"a percentage"},{"pattern":"\\\\b(?:save|cut|reduce|increase|grow|double|triple)\\\\s+(?:your\\\\s+)?\\\\w+\\\\s+by\\\\b","label":"a quantified outcome"},{"pattern":"\\\\b\\\\d+\\\\s?x\\\\s+(?:faster|quicker|more|less|better|cheaper|higher|bigger)","label":"a performance multiplier"},{"pattern":"\\\\b(?:twice|thrice|three times|four times|double|triple|half)\\\\s+(?:as\\\\s+)?(?:fast|quick|many|much|long|the)\\\\b","label":"a performance multiplier"},{"pattern":"\\\\b(?:faster|quicker|cheaper|better|easier|simpler|more)\\\\s+than\\\\b","label":"a comparison to something else"},{"pattern":"\\\\b(?:instantly|overnight|in seconds|same[- ]day|next[- ]day)\\\\b","label":"a speed promise"}]}</script>\n<script>\n/* The live claim gate.\n *\n * The patterns are EXPORTED from backend/adkit/gate.py and a test in the app\n * repo runs the same strings through Python\'s `re` and node\'s RegExp and fails\n * if the verdicts differ. So this is the engine\'s rule, not a reproduction of\n * it — which matters, because a page that fakes its own product\'s output is\n * the exact thing this product exists to catch.\n *\n * The figure trace is the gate\'s second half: a number in the ad must appear\n * in text the crawler actually read. Bounded so "20" is not satisfied by\n * "120", same as _figure_is_present.\n */\n(function(){\n  var el = document.getElementById(\'lg-out\');\n  if (!el) return;\n  var data = JSON.parse(document.getElementById(\'lg-data\').textContent);\n  var claimEl = document.getElementById(\'lg-claim\');\n  var srcEl = document.getElementById(\'lg-source\');\n  var FIG = new RegExp(data.figure_re, \'gi\');\n\n  function figures(text){\n    var out = [], m;\n    FIG.lastIndex = 0;\n    while ((m = FIG.exec(text)) !== null) {\n      var raw = m[0].trim().toLowerCase()\n        .replace(/^[$£€]/, \'\').replace(/[.,]+$/, \'\').replace(/,/g, \'\');\n      if (raw && /\\d/.test(raw)) out.push(raw);\n      if (m.index === FIG.lastIndex) FIG.lastIndex++;\n    }\n    return out;\n  }\n  function present(fig, source){\n    var bare = fig.replace(/[kmbx%+]+$/, \'\').replace(/\\.$/, \'\');\n    if (!bare) return false;\n    return new RegExp(\'(?<!\\\\d)\' + bare.replace(/[.*+?^${}()|[\\]\\\\]/g,\'\\\\$&\') + \'(?!\\\\d)\')\n      .test(source);\n  }\n  function esc(s){ return s.replace(/[&<>]/g, function(c){\n    return {\'&\':\'&amp;\',\'<\':\'&lt;\',\'>\':\'&gt;\'}[c]; }); }\n\n  function run(){\n    var claim = claimEl.value, source = srcEl.value;\n    var rows = [];\n    /* Widen each match to its surrounding sentence before tracing figures —\n       a faithful port of _find_undeclared in gate.py, including MAX_SPAN=160.\n       Using the bare regex match instead was a real bug caught by running\n       this: the price pattern matches only "from $1" of "from $19/month", so\n       the figure traced was "1" and a price that IS on the advertiser\'s page\n       came back BLOCKED. That is the page showing a verdict the engine does\n       not give, on the one product whose pitch is that it proves its claims. */\n    var MAX_SPAN = 160;\n    data.claim_patterns.forEach(function(p){\n      var re = new RegExp(p.pattern, \'gi\'), m;\n      while ((m = re.exec(claim)) !== null) {\n        var start = Math.max(\n          claim.lastIndexOf(\'.\', m.index - 1) + 1,\n          claim.lastIndexOf(\'!\', m.index - 1) + 1,\n          claim.lastIndexOf(\'?\', m.index - 1) + 1,\n          m.index - MAX_SPAN, 0);\n        var endsAt = [\'.\', \'!\', \'?\']\n          .map(function(ch){ return claim.indexOf(ch, m.index + m[0].length); })\n          .filter(function(i){ return i !== -1; });\n        var end = endsAt.length ? Math.min.apply(null, endsAt) : claim.length;\n        end = Math.min(end, m.index + m[0].length + MAX_SPAN);\n        var span = claim.slice(start, end).replace(/^[\\s.,!?]+|[\\s.,!?]+$/g, \'\');\n        if (span) rows.push({ text: span, why: p.label });\n        if (m.index === re.lastIndex) re.lastIndex++;\n      }\n    });\n    var seen = {}, uniq = [];\n    rows.forEach(function(r){ var k = r.text.toLowerCase();\n      if (!seen[k]) { seen[k] = 1; uniq.push(r); } });\n\n    var blocked = 0, html = \'\';\n    uniq.forEach(function(r){\n      var figs = figures(r.text);\n      var missing = figs.filter(function(f){ return !present(f, source); });\n      var ok = missing.length === 0;\n      if (!ok) blocked++;\n      html += \'<div class="lg-row \' + (ok ? \'ok\' : \'bad\') + \'">\' +\n        \'<span class="lg-ic">\' + (ok ? \'✓\' : \'×\') + \'</span><span>\' +\n        \'<strong>\' + esc(r.text) + \'</strong>\' +\n        \'<span class="lg-why">\' + esc(r.why) +\n        (ok ? (figs.length ? \' — traced to your page\'\n                           : \' — needs a source on your page\')\n            : \' — \' + esc(missing.join(\', \')) +\n              \' appears nowhere in the text you gave\') +\n        \'</span></span></div>\';\n    });\n\n    if (!uniq.length) {\n      html = \'<div class="lg-row ok"><span class="lg-ic">✓</span><span>\' +\n        \'<strong>Nothing here needs substantiating</strong>\' +\n        \'<span class="lg-why">No price, superlative, guarantee, statistic or \' +\n        \'performance promise found. That is a pass, not an endorsement.</span>\' +\n        \'</span></div>\';\n    }\n    var verdict = blocked\n      ? \'<p class="lg-verdict bad">BLOCKED — \' + blocked +\n        (blocked === 1 ? \' claim\' : \' claims\') + \' could not be traced.</p>\'\n      : \'<p class="lg-verdict ok">\' + uniq.length +\n        (uniq.length === 1 ? \' claim\' : \' claims\') + \' checked, all traced.</p>\';\n    el.innerHTML = verdict + html;\n  }\n\n  claimEl.addEventListener(\'input\', run);\n  srcEl.addEventListener(\'input\', run);\n  run();\n})();\n</script>\n'
 

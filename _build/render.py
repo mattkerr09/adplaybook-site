@@ -512,6 +512,18 @@ li{margin-bottom:.5rem}
    So the eye reads "two of these six are the app arguing with itself" before
    anyone has read a word of it. */
 .stages li{position:relative;--stage:var(--grad-mid)}
+/* WHY .reveal SITS ON SMALL COMPONENTS.
+   The observer always toggled, so the animation was two-way from the start —
+   the first version simply put .reveal on seven huge containers, one of them
+   a 1492px .showcase. A block that tall stays intersecting the whole time you
+   are inside it, so it reveals once on approach and then holds; you scroll for
+   a screen and a half and nothing moves. It does un-reveal eventually, when
+   you scroll clear of it — I nearly wrote that it "can only ever animate in",
+   which is wrong: intersection is overlap, not containment.
+   The real difference is how OFTEN you witness it. Outlier puts .reveal on 82
+   small components — headings, cards, stats, captions — so something is
+   entering or leaving almost continuously, in both directions. 21 here, and
+   every one measures under a 900px viewport. */
 .stages li:nth-child(4),.stages li:nth-child(5){--stage:var(--flag)}
 .stages li:nth-child(6){--stage:var(--green)}
 .stages li::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
