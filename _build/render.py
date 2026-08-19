@@ -116,8 +116,11 @@ call sites; it no longer holds a blue and the name is legacy. */
      document each pool covers far more area at lower density and the effect
      disappeared. Screenshotted at 1440 before and after rather than adjusted
      by eye in the file. */
-  --glow-1:rgba(143,217,242,.16);--glow-2:rgba(95,182,228,.13);
-  --glow-3:rgba(223,246,255,.085);
+  /* Back up to Outlier's own range (it runs .4/.28/.3). These were dropped to
+     .16/.13/.085 when the field covered the whole document; three blurred
+     circles need the density back or they vanish. */
+  --glow-1:rgba(143,217,242,.34);--glow-2:rgba(95,182,228,.26);
+  --glow-3:rgba(223,246,255,.20);
   /* Everything below used to be a literal somewhere in the stylesheet. They are
      tokens now because of a bug I shipped to kerrandcompanyholdings.com on
      2026-08-13: a light theme whose seven contrast ratios I had measured and
@@ -210,8 +213,8 @@ call sites; it no longer holds a blue and the name is legacy. */
      and not one shared value. Darkest stop 6.95:1 on the page. */
   --grad:linear-gradient(112deg,#1D6E8E 0%,#155E75 46%,#0E7490 100%);
   --grad-mid:#155E75;
-  --glow-1:rgba(21,94,117,.075);--glow-2:rgba(14,116,144,.06);
-  --glow-3:rgba(29,110,142,.045);
+  --glow-1:rgba(21,94,117,.16);--glow-2:rgba(14,116,144,.13);
+  --glow-3:rgba(29,110,142,.10);
   /* --green was #15803d: 4.31:1 on --panel-2. Five of its six uses are icons
      and borders, where 3.0 is the bar and 4.31 passed. The sixth is
      .pill.checked, which is TEXT. Nudged to 4.60:1 — visually
@@ -527,53 +530,42 @@ tbody tr:hover td{background:var(--glow-3)}
    caret is the pointer for a field. */
 .lg-field textarea:hover{border-color:var(--hair-lit)}
 
-/* Ambient light, on the WHOLE PAGE, behind every section.
-   Matthew: "gradient isn't taking up the whole section and it also needs to be
-   on the whole page, needs to feel like each section is being lit up from
-   behind".
+/* Ambient light — THREE BLURRED CIRCLES, IN THE HERO ONLY.
+   Matthew, on the previous version: "it looks worse and i can see 2 graidients
+   on top of eachother. too much graident, see how outlier does theirs."
 
-   The first attempt put three blobs on .hero::before and stopped there, so the
-   glow was a band across the top of one section and the other eight thousand
-   pixels were flat. What was missing is that outlier.host does not light a
-   hero — it lights the DOCUMENT, and its sections sit on top of that.
+   Both halves of that were right. I had built TWO systems — a fixed five-layer
+   field across the viewport AND a pool on every section — so they overlapped
+   into a wash with visible edges where they met.
 
-   So the field is fixed to the viewport and painted behind everything, and
-   each section adds its own small pool of light. Fixed rather than absolute
-   because a background that scrolls away stops being ambient after one
-   screenful; fixed means every section arrives already lit.
+   What outlier.host actually does, measured off the live page rather than
+   guessed at a second time:
 
-   z-index/pointer-events matter: this sits under the content and must never
-   eat a click. It is on body::before rather than a wrapper so nothing in the
-   markup has to know it exists. */
-body{position:relative}
-body::before{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
+       body background-image          NONE. The page itself is flat.
+       three <b> elements             m1 820px, m2 720px, m3 640px
+       each                           filter: blur(120px), opacity: 0.5
+       radial-gradient alpha          0.4 / 0.28 / 0.3
+       vertical positions             top -317, -86, +634
+       document height                12,441px
+
+   So roughly ninety per cent of their page has no ambient light at all. The
+   glow is three big soft circles at the top and then nothing — and the reason
+   it reads as light rather than as a gradient is blur(120px), which has no
+   edge to see. My version had no blur, which is exactly why the seams showed.
+
+   One element, three circles, blurred, scoped to the hero. Nothing on body,
+   nothing per section. */
+.hero{position:relative;isolation:isolate}
+.hero::before{content:"";position:absolute;z-index:-1;pointer-events:none;
+  inset:-40% -25% auto -25%;height:150%;
+  filter:blur(120px);opacity:.5;
   background:
-    radial-gradient(52% 38% at 14% 6%,var(--glow-1),transparent 62%),
-    radial-gradient(46% 34% at 86% 2%,var(--glow-2),transparent 60%),
-    radial-gradient(60% 46% at 50% 52%,var(--glow-3),transparent 68%),
-    radial-gradient(48% 40% at 8% 92%,var(--glow-2),transparent 62%),
-    radial-gradient(44% 36% at 92% 84%,var(--glow-1),transparent 60%)}
-/* The dot grid over the same field, faded out at the bottom of the viewport so
-   it reads as texture rather than as a pattern swatch. */
-body::after{content:"";position:fixed;inset:0;z-index:-2;pointer-events:none;
-  background:radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0);
-  background-size:30px 30px;opacity:.55;
-  -webkit-mask-image:radial-gradient(80% 60% at 50% 30%,#000,transparent 78%);
-  mask-image:radial-gradient(80% 60% at 50% 30%,#000,transparent 78%)}
-
-/* And every section gets its own pool, so the light tracks the content rather
-   than sitting behind it at fixed points. `section` covers the generated
-   pages; the hero and the two feature blocks are named because they are the
-   ones with enough height to show it. */
-section,.hero,.livegate,.showcase{position:relative}
-section::before,.hero::before{content:"";position:absolute;
-  inset:-14% -12% -18% -12%;z-index:-1;pointer-events:none;
-  background:radial-gradient(58% 52% at 50% 0%,var(--glow-3),transparent 72%)}
-.hero::before{inset:-22% -20% -10% -20%;
-  background:
-    radial-gradient(46% 42% at 16% 8%,var(--glow-1),transparent 66%),
-    radial-gradient(40% 38% at 84% 4%,var(--glow-2),transparent 64%),
-    radial-gradient(56% 50% at 50% 46%,var(--glow-3),transparent 70%)}
+    radial-gradient(circle at 18% 22%,var(--glow-1),transparent 62%),
+    radial-gradient(circle at 82% 12%,var(--glow-2),transparent 60%),
+    radial-gradient(circle at 52% 78%,var(--glow-3),transparent 60%)}
+/* blur(120px) is expensive to composite and pointless to anyone who has asked
+   for less motion and less GPU. */
+@media (prefers-reduced-motion:reduce){.hero::before{filter:blur(80px);opacity:.35}}
 /* Pay-in-4. The copy lives in _build/bnpl.py and is NOT published — the Buy
    button still points at Polar, which is card-only, so every instalment
    sentence would be false at the checkout it sends people to. check.py fails
