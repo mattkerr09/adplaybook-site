@@ -1028,6 +1028,42 @@ from content import DMG as DOWNLOAD  # noqa: E402
 # Cookieless and carries no personal data, but the privacy page discloses it by
 # name regardless — it previously claimed there was no script at all, which was
 # false the moment this went live.
+#: Meta pixel — SHIPPED DARK. Empty id means the loader does nothing at all.
+#:
+#: Matthew is running Meta ads for every business, so this site needs the
+#: pixel. Nobody has an id yet: Business Manager is behind a login, and when
+#: one arrives this is a one-line change.
+#:
+#: THE GUARD IS THE FIRST STATEMENT, deliberately. It is not wrapped around
+#: fbq('init') — the whole snippet including the script injection is skipped,
+#: so dark means ZERO requests to facebook.net rather than "loaded but
+#: uninitialised". A loaded-and-idle tracker still hands Meta the visit.
+#:
+#: The id is a top-level constant in the served HTML, not a build-time
+#: injection or a config object, because the test that proves the dark state
+#: reads the LIVE PAGE rather than this repo. Empty or 15-16 digits; no second
+#: `enabled` flag, because a second switch is a second thing to get wrong.
+#:
+#: The privacy page changed in the SAME COMMIT as this line. That ordering is
+#: not a nicety: a policy describing tracking that is not yet running is
+#: over-disclosure and costs nothing, while a pixel running under a policy that
+#: says "no pixel" is a false legal statement on a page that sells something.
+META_PIXEL_ID = ''
+
+META_PIXEL = (
+    '<script>(function(){'
+    "var META_PIXEL_ID='" + META_PIXEL_ID + "';"
+    'if(!META_PIXEL_ID)return;'
+    '!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){'
+    'n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};'
+    'if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];'
+    't=b.createElement(e);t.async=!0;t.src=v;'
+    's=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}'
+    "(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');"
+    "fbq('init',META_PIXEL_ID);fbq('track','PageView');"
+    '})();</script>')
+
+
 ANALYTICS = ('<script defer data-domain="adplaybook.app" '
              'src="https://plausible.io/js/script.js"></script>'
              # Sled affiliate attribution. It sets a ta_ref cookie only when a
@@ -1041,7 +1077,10 @@ ANALYTICS = ('<script defer data-domain="adplaybook.app" '
              # affiliate who sent someone to AdPlaybook, Docket or Outlier earned
              # nothing and had no way to know.
              '<script async src="https://usesled.com/kerr-and-company/t.js">'
-             '</script>')
+             '</script>'
+             + META_PIXEL)
+
+
 
 DL_ICON = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" '
            'width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/>'

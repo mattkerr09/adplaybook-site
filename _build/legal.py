@@ -322,13 +322,12 @@ web view the window is built from. The app stores nothing in it; macOS does.</li
 everything it put on the machine.</p>
 
 <h2>This website</h2>
-<p>These pages are static files served by GitHub Pages. There are no cookies, no
-tag manager, no pixel, no embedded fonts and no form to submit. We set nothing in
-your browser and we cannot see who you are.</p>
-<p>There are <strong>two</strong> scripts. This page once claimed there were
-none, then said one; each time it was corrected the same day the claim stopped
-being true, and this is the third such correction rather than a rewrite of
-history.</p>
+<p>These pages are static files served by GitHub Pages. There is no tag manager,
+no embedded font and no form to submit.</p>
+<p>There are <strong>three</strong> scripts. This page once claimed there were
+none, then said one, then two; each time it was corrected the same day the claim
+stopped being true, and this is the fourth such correction rather than a rewrite
+of history.</p>
 <p>The first is <a href="https://plausible.io/privacy" rel="nofollow">Plausible</a>,
 which counts page views without cookies and without collecting anything that
 identifies a visitor — no cookie, no device fingerprint, no cross-site profile,
@@ -340,8 +339,25 @@ that distinction is the whole point: it sets a single <code>ta_ref</code> cookie
 <strong>only</strong> if you arrived through an affiliate link. Arrive any other
 way — a search result, a bookmark, a link from us — and it sets nothing at all. It
 records which affiliate sent a visit, never who the visitor is.</p>
-<p>View the source of any page and those two scripts are what you will find; there
-is nothing else.</p>
+<p>The third is a <strong>Meta (Facebook) advertising pixel</strong>, and it is
+the one on this page that actually tracks you. When it is switched on it loads
+code from Facebook, sets Meta's cookies in your browser, and tells Meta that this
+browser visited this page — which Meta can match to a Facebook or Instagram
+account. That is a different kind of thing from the two above, and calling it
+analytics would be a dodge: it exists so we can advertise this app on Meta and
+see which ads led somewhere.</p>
+<p>Like the affiliate script it is conditional, and here the condition is
+visible to you rather than to us. The pixel has an id, and <strong>that id is
+currently empty</strong>, so the loader stops on its first line and no request
+is made to Facebook at all. Nothing is loaded, nothing is set, nothing is sent.
+When we put an id in — and we intend to — the paragraph above starts describing
+something that is running, and this sentence will say so on the same day.</p>
+<p>We are telling you now, while it is off, because the alternative is a policy
+that catches up afterwards. You can check rather than trust us: view the source
+of any page, find <code>META_PIXEL_ID</code>, and see for yourself whether it is
+empty. If it is, no pixel is running on the page you are reading.</p>
+<p>View the source of any page and those three scripts are what you will find;
+there is nothing else.</p>
 <p>Two things are true anyway and you should know them:</p>
 <ul>
 <li><strong>GitHub serves the site and the download.</strong> Fetching a page or
