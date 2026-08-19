@@ -173,7 +173,20 @@ call sites; it no longer holds a blue and the name is legacy. */
      Display at 600. This is the free half of that — Didot and Bodoni 72 ship
      with macOS, and this is a Mac product, so the face costs no webfont, no
      external request and no CSP exception. */
-  --display:Didot,"Bodoni 72","Playfair Display","Times New Roman",Times,serif;
+  /* New York, via ui-serif. Compared against Didot, Iowan Old Style and
+     Charter at the real 52px on the real #0B0B0D, screenshotted rather
+     than reasoned about.
+     Didot lost on a measurable fault, not on taste: it is a high-contrast
+     didone, and on a dark ground its thin strokes go spindly and start to
+     drop out. That contrast is exactly what makes it beautiful in print on
+     white and fragile in light-on-dark. New York is Apple's serif, drawn
+     for screens — even stroke weight, larger x-height, holds together at
+     display size on black — and it reads as editorial authority rather
+     than fashion, which is the right register for a product whose pitch is
+     evidence.
+     ui-serif resolves to it on every Apple device without a webfont, an
+     external request or a CSP exception, and this is a Mac product. */
+  --display:ui-serif,"New York",Charter,"Iowan Old Style",Palatino,serif;
   --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
   --w:1080px;--wr:820px;
 }

@@ -567,7 +567,7 @@ independently. That is the whole design working, on a site we do not control.</p
 
 <section>
 <p class="kicker reveal">Before you spend anything</p>
-<h2>It knows what will quietly fail</h2>
+<h2>It knows what will <span class="grad">quietly fail</span></h2>
 <p>The expensive failures in paid media do not produce an error. These are
 checked by arithmetic against each platform's published limits, on every
 campaign, for free:</p>
@@ -670,7 +670,7 @@ illustrative.</p>
 
 <section>
 <p class="kicker reveal">The part nobody else does</p>
-<h2>It refuses to write things it cannot back up</h2>
+<h2>It refuses to write things <span class="grad">it cannot back up</span></h2>
 <p>An ad that says "60-minute callouts" has to point at the page that says it.
 {BRAND} harvests the exact words from your own site and blocks any figure that
 is not there. Recombine two true statements into a third one nobody actually
@@ -684,7 +684,7 @@ off and carries the liability for it.</p>
 {_selfcheck()}
 
 <section>
-<h2>What it deliberately does not do</h2>
+<h2>What it <span class="grad">deliberately does not do</span></h2>
 <p>It does not make the image or the video. What it produces is a brief specific
 enough to hand to a designer or a creative generator — if the asset is what you
 need, buy one of those and feed it this.</p>
