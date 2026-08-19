@@ -498,6 +498,30 @@ li{margin-bottom:.5rem}
 .stages li{display:flex;flex-direction:column;gap:.28rem;padding:.9rem 1rem;
   background:var(--panel);border-right:1px solid var(--edge)}
 .stages li:last-child{border-right:0}
+/* ---------- colour on the six-step strip ----------
+   The strip is the part that explains what the product DOES, and it was
+   entirely monochrome — which is where "different colours to feel more
+   textured" earns the most.
+   The encoding is not decorative. Three steps MAKE the campaign, two steps
+   ATTACK it, one HANDS IT OVER, and that is the whole argument of the product
+   in six cells:
+     1-3 Read / Brief / Generate   the cool gradient — building
+     4-5 Claim gate / Review       the flag colour — refusing. Both cells
+                                   already say they blocked something.
+     6   Guide                     green — what survives
+   So the eye reads "two of these six are the app arguing with itself" before
+   anyone has read a word of it. */
+.stages li{position:relative;--stage:var(--grad-mid)}
+.stages li:nth-child(4),.stages li:nth-child(5){--stage:var(--flag)}
+.stages li:nth-child(6){--stage:var(--green)}
+.stages li::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+  background:var(--stage);opacity:.55;transform-origin:left}
+.stages li:hover{background:var(--glow-3)}
+.stages li:hover::after{opacity:1}
+/* The judging pair get a faint wash so they read as one movement rather than
+   two adjacent cells that happen to share a colour. */
+.stages li:nth-child(4),.stages li:nth-child(5){
+  background:linear-gradient(180deg,transparent,rgba(244,101,95,.045))}
 /* The product, photographed. builtbykerr.com frames its product shot in window
    chrome on a dark page and the contrast is the point: the app is a lit object
    sitting on the page rather than a picture pasted into it. Same here, which
@@ -729,8 +753,7 @@ tbody tr:hover td{background:var(--glow-3)}
    the same page with the timeline collapsed to zero. */
 @media (prefers-reduced-motion: no-preference){
   .stages li{position:relative}
-  .stages li::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
-    background:var(--accent);transform:scaleX(0);transform-origin:left;
+  .stages li::after{transform:scaleX(0);
     animation:stage-run .5s cubic-bezier(.2,.8,.2,1) forwards}
   .stages li:nth-child(1)::after{animation-delay:.15s}
   .stages li:nth-child(2)::after{animation-delay:.45s}
@@ -767,7 +790,14 @@ tbody tr:hover td{background:var(--glow-3)}
 @keyframes stage-lit{to{opacity:1}}
 @keyframes vd-land{to{opacity:1;transform:none}}
 @keyframes win-scan{0%{transform:translateX(-120%)}100%{transform:translateX(400%)}}
-.stages .stage-n{font-family:var(--mono);font-size:.7rem;color:var(--grey-dim)}
+/* The colour is set HERE, on the rule that already owns this selector.
+   My first version added a second `.stages .stage-n` earlier in the file
+   and this one won on source order, so the stylesheet said the numbers
+   were coloured and every one of them rendered grey. Third time today
+   that a duplicate rule silently lost — and all three were found with
+   getComputedStyle, never by reading the file. */
+.stages .stage-n{font-family:var(--mono);font-size:.7rem;
+  color:var(--stage,var(--grey-dim));opacity:.9}
 .stages strong{font-size:.95rem;letter-spacing:-.01em}
 .stages .stage-d{font-family:var(--mono);font-size:.7rem;line-height:1.45;
   color:var(--grey-dim)}
