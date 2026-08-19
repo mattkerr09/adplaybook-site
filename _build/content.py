@@ -640,6 +640,24 @@ running locally, or an OpenAI or Anthropic key</p>
   of it.</figcaption>
 </figure>
 
+<figure class="appshot reveal">
+  <div class="appshot-chrome" aria-hidden="true">
+    <span class="win-dot" style="background:#ff5f57"></span>
+    <span class="win-dot" style="background:#febc2e"></span>
+    <span class="win-dot" style="background:#28c840"></span>
+    <span class="appshot-title">AdPlaybook — the run that produced everything above</span>
+  </div>
+  <img src="/img/app-03-result.png" width="1600" height="1075" loading="lazy"
+       alt="AdPlaybook's result screen: every claim traced to your site, all 2
+            variants cleared the claim gate, 1 blocker and 2 serious findings
+            from the review pass, and the landing page not checked.">
+  <figcaption><span>The app, on the run above.</span> Not a mockup and not a
+  recording of a stub — AdPlaybook v0.2.48 pointed at HoneyBook, crawled and
+  generated through a real model, photographed at the moment it finished. The
+  verdicts in the window are the ones it produced that time, including the two
+  it could not check.</figcaption>
+</figure>
+
 <p class="win-cap"><span>A real run, not a mockup.</span> Verbatim output from
 pointing {BRAND} at HoneyBook's website. It wrote three ad variants, then a
 second model was asked to find the reason the campaign fails. Nothing here is

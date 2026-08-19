@@ -498,6 +498,23 @@ li{margin-bottom:.5rem}
 .stages li{display:flex;flex-direction:column;gap:.28rem;padding:.9rem 1rem;
   background:var(--panel);border-right:1px solid var(--edge)}
 .stages li:last-child{border-right:0}
+/* The product, photographed. builtbykerr.com frames its product shot in window
+   chrome on a dark page and the contrast is the point: the app is a lit object
+   sitting on the page rather than a picture pasted into it. Same here, which
+   also means a light-mode app screenshot works on a dark site instead of
+   fighting it. */
+.appshot{margin:2.4rem 0 0;border:1px solid var(--hair);border-radius:var(--r);
+  overflow:hidden;background:var(--panel-2);
+  box-shadow:var(--lift-3),inset 0 1px 0 var(--lift-edge)}
+.appshot-chrome{display:flex;align-items:center;gap:.45rem;
+  padding:.6rem .9rem;background:var(--panel);
+  border-bottom:1px solid var(--hair)}
+.appshot-title{margin-left:.5rem;font-family:var(--mono);font-size:.74rem;
+  color:var(--grey-dim);letter-spacing:.01em}
+.appshot img{display:block;width:100%;height:auto}
+.appshot figcaption{padding:1rem 1.2rem 1.2rem;color:var(--grey);
+  font-size:.92rem;line-height:1.6;max-width:70ch}
+.appshot figcaption span{color:var(--white);font-weight:550}
 /* ── The touches, taken from outlier.host and measured off it ───────────────
    Matthew: "look how outliers colors have gradient and how even the text is
    coloured and how their boxes look like they're hovering and it's interactive
