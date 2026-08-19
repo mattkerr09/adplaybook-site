@@ -852,6 +852,21 @@ section{padding:1rem 0}
    same value here and on .showcase gives every break the same gap without any
    pair doubling up. That is why this is a margin and not extra padding. */
 section+section{margin-top:clamp(1.6rem,3.4vw,2.8rem)}
+/* A heading that OPENS a section takes no top margin.
+   The rhythm above already provides the gap, and h2 was adding 3.2rem on top
+   of it — so every section break was section margin 44.8 + padding 16 + h2
+   margin 51.2 = 112px of compounded space from three rules that did not know
+   about each other. Measured at 1440: 1,260px of the 11,256px page was empty
+   bands of 80px or more, 11% of its height.
+   Scoped to the FIRST heading only. An h2 further down a section is separating
+   itself from the paragraph above it, and still needs its own space — zeroing
+   that everywhere would weld distinct topics together, which is the fault the
+   rhythm rule above was written to fix. Outlier reaches the same place from
+   the other side: its h2 is margin:0 0 1rem and all rhythm comes from
+   section padding. */
+section > h2:first-child,
+section > .kicker:first-child + h2,
+section > .eyebrow:first-child + h2{margin-top:0}
 .kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;
   color:var(--blue);margin-bottom:.5rem}
 .cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:1.6rem 0}
