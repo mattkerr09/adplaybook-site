@@ -530,42 +530,98 @@ tbody tr:hover td{background:var(--glow-3)}
    caret is the pointer for a field. */
 .lg-field textarea:hover{border-color:var(--hair-lit)}
 
-/* Ambient light — THREE BLURRED CIRCLES, IN THE HERO ONLY.
-   Matthew, on the previous version: "it looks worse and i can see 2 graidients
-   on top of eachother. too much graident, see how outlier does theirs."
+/* ---------- animated gradient mesh + grid (page-wide ambient) ----------
+   Ported from outlier-site/index.html rather than approximated. Matthew asked
+   for exactly that: "you can literally just copy how we did it".
 
-   Both halves of that were right. I had built TWO systems — a fixed five-layer
-   field across the viewport AND a pool on every section — so they overlapped
-   into a wash with visible edges where they met.
+   AND IT CORRECTS SOMETHING I GOT WRONG. I measured the three blobs' offsets
+   on the live page — top -317, -86, +634 against a 12,441px document — and
+   concluded that ninety per cent of their page carries no ambient light. That
+   was reading the numbers without reading the container. The blobs sit inside
+   `.mesh{position:fixed}`, so those offsets are viewport coordinates: the mesh
+   is pinned to the screen and the whole document scrolls through it. Every
+   section is lit, forever. My "hero only" version was built on that misreading.
 
-   What outlier.host actually does, measured off the live page rather than
-   guessed at a second time:
+   The other half I had missed is that they MOVE. Each blob drifts on a 26-38s
+   ease-in-out loop, translating a few vw and scaling 1.08-1.15. That is what
+   makes it feel alive rather than painted on, and it is why a static copy of
+   the same three circles never looked like the reference.
 
-       body background-image          NONE. The page itself is flat.
-       three <b> elements             m1 820px, m2 720px, m3 640px
-       each                           filter: blur(120px), opacity: 0.5
-       radial-gradient alpha          0.4 / 0.28 / 0.3
-       vertical positions             top -317, -86, +634
-       document height                12,441px
+   Sizes are viewport-relative with a px ceiling, so the mesh scales with the
+   window instead of leaving a small pool on a large screen. */
+.mesh{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.mesh b{position:absolute;border-radius:50%;filter:blur(120px);opacity:.5}
+.mesh .m1{width:60vw;height:60vw;max-width:820px;max-height:820px;
+  background:radial-gradient(circle,var(--glow-1),transparent 68%);
+  top:-22vw;left:-8vw;animation:drift1 26s ease-in-out infinite}
+.mesh .m2{width:52vw;height:52vw;max-width:720px;max-height:720px;
+  background:radial-gradient(circle,var(--glow-2),transparent 66%);
+  top:-6vw;right:-12vw;animation:drift2 32s ease-in-out infinite}
+.mesh .m3{width:46vw;height:46vw;max-width:640px;max-height:640px;
+  background:radial-gradient(circle,var(--glow-3),transparent 66%);
+  top:44vw;left:34vw;animation:drift3 38s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(6vw,4vw) scale(1.12)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-5vw,6vw) scale(1.08)}}
+@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-4vw,-5vw) scale(1.15)}}
+/* Faint dot grid over the mesh, masked so it fades out below the fold — it is
+   texture, not a pattern swatch. */
+.grid-ovl{position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background-image:radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0);
+  background-size:34px 34px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 0%,transparent 75%);
+  mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 0%,transparent 75%)}
 
-   So roughly ninety per cent of their page has no ambient light at all. The
-   glow is three big soft circles at the top and then nothing — and the reason
-   it reads as light rather than as a gradient is blur(120px), which has no
-   edge to see. My version had no blur, which is exactly why the seams showed.
+/* ---------- reveal on scroll ----------
+   Also theirs, including the two decisions worth keeping.
 
-   One element, three circles, blurred, scoped to the hero. Nothing on body,
-   nothing per section. */
-.hero{position:relative;isolation:isolate}
-.hero::before{content:"";position:absolute;z-index:-1;pointer-events:none;
-  inset:-40% -25% auto -25%;height:150%;
-  filter:blur(120px);opacity:.5;
-  background:
-    radial-gradient(circle at 18% 22%,var(--glow-1),transparent 62%),
-    radial-gradient(circle at 82% 12%,var(--glow-2),transparent 60%),
-    radial-gradient(circle at 52% 78%,var(--glow-3),transparent 60%)}
-/* blur(120px) is expensive to composite and pointless to anyone who has asked
-   for less motion and less GPU. */
-@media (prefers-reduced-motion:reduce){.hero::before{filter:blur(80px);opacity:.35}}
+   TWO-WAY. The observer TOGGLES rather than unobserving, so the page animates
+   on the way back up as well as down. Their own comment records that
+   unobserving is what had made it one-shot.
+
+   DIRECTIONAL. Items in a grid come in from alternating sides, tiles from
+   their own edges. A single upward fade on everything reads as a template;
+   offsets that follow the layout read as designed.
+
+   Small print does NOT move — provenance lines fade only. Drawing the eye to
+   the sentence that says where a number came from is the wrong emphasis. */
+/* VISIBLE BY DEFAULT. The hidden state is scoped to .js-reveal, which the
+   script adds to <html> only after it has confirmed it can actually drive the
+   animation. Outlier's own version sets .reveal{opacity:0} unconditionally,
+   and that is the one part not worth copying: any reader whose observer does
+   not fire — script blocked, an error earlier in the file, a browser that
+   throttles callbacks in a background tab — gets a page of invisible content
+   rather than a page without an animation.
+   Not hypothetical. Verifying this port, a hand-rolled IntersectionObserver
+   fired zero times in a hidden browser pane, and every .reveal block sat at
+   opacity 0. That was my tooling rather than a reader's browser, but it is
+   exactly what a reader would have seen. */
+.reveal{transform:none}
+.js-reveal .reveal{opacity:0;
+  transform:translate(var(--rx,0),var(--ry,26px)) scale(var(--rs,1));
+  transition:opacity .8s cubic-bezier(.16,1,.3,1),
+             transform .8s cubic-bezier(.16,1,.3,1)}
+.js-reveal .reveal.in{opacity:1;transform:none}
+.js-reveal .reveal.d1{transition-delay:.08s}
+.js-reveal .reveal.d2{transition-delay:.16s}
+.js-reveal .reveal.d3{transition-delay:.24s}
+.recs > .reveal:nth-child(odd){--rx:-38px;--ry:8px}
+.recs > .reveal:nth-child(even){--rx:38px;--ry:8px}
+.cards > .reveal:nth-child(odd){--rx:-28px;--ry:6px}
+.cards > .reveal:nth-child(even){--rx:28px;--ry:6px}
+.showcase.reveal{--ry:38px;--rs:.985}
+.livegate.reveal{--ry:30px;--rs:.99}
+.box.reveal{--ry:22px;--rs:.985}
+.src.reveal,.win-cap.reveal{--ry:0}
+
+@media (prefers-reduced-motion:reduce){
+  /* No drift, no travel, and nothing left invisible: .reveal is pinned to
+     visible here regardless of whether the observer ever runs. */
+  .mesh b{animation:none;filter:blur(90px)}
+  .js-reveal .reveal{opacity:1;transform:none;transition:none}
+}
 /* Pay-in-4. The copy lives in _build/bnpl.py and is NOT published — the Buy
    button still points at Polar, which is card-only, so every instalment
    sentence would be false at the checkout it sends people to. check.py fails
@@ -959,6 +1015,8 @@ if(t){{document.documentElement.setAttribute("data-theme",t);}}}}catch(e){{}}}})
 {ANALYTICS}
 </head>
 <body>
+<div class="mesh" aria-hidden="true"><b class="m1"></b><b class="m2"></b><b class="m3"></b></div>
+<div class="grid-ovl" aria-hidden="true"></div>
 <nav><div class="wrap nav-inner">
 <a class="nav-brand" href="/">{LOGO_SVG}{BRAND}</a>
 <ul class="nav-links">{nav}</ul>
@@ -996,6 +1054,47 @@ checks this position specifically. */
     try{{localStorage.setItem("adplaybook-theme",n);}}catch(e){{}}
   }});
 }})();</script>
+<script>
+/* Reveal on scroll. Ported from outlier-site.
+ *
+ * TWO-WAY on purpose: the observer TOGGLES and is never unobserved, so the
+ * page animates on the way back up as well as down. Their own source records
+ * that unobserving is exactly what had made the effect one-shot.
+ *
+ * Reduced motion takes the early return and never constructs an observer at
+ * all — and the media block pins .reveal to visible regardless, so there is no
+ * path where content is left invisible because an observer did not run. That
+ * is the failure mode worth guarding: opacity:0 waiting on JS that never fires
+ * is a blank page, not a missing animation.
+ */
+(function(){{
+  var els = document.querySelectorAll('.reveal');
+  if (!els.length) return;
+  var reduce = window.matchMedia &&
+               window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;   // stays visible
+  // CONSTRUCTING an observer is not proof it DELIVERS. Verifying this port, the
+  // observer was created without error and then fired zero callbacks, because
+  // the tab was hidden — and every block sat at opacity 0 with the stylesheet
+  // insisting it was mid-animation. A browser that throttles callbacks in a
+  // background tab does the same thing to a real reader.
+  //
+  // So the page only commits to hiding once a callback has actually arrived,
+  // and a timer takes it back if none does. The failure mode this removes is
+  // the expensive one: content invisible forever, waiting on a promise nothing
+  // kept.
+  var root = document.documentElement, armed = false;
+  var giveUp = setTimeout(function(){{
+    if (!armed) root.classList.remove('js-reveal');
+  }}, 1200);
+  root.classList.add('js-reveal');
+  var io = new IntersectionObserver(function(entries){{
+    if (!armed) {{ armed = true; clearTimeout(giveUp); }}
+    entries.forEach(function(e){{ e.target.classList.toggle('in', e.isIntersecting); }});
+  }}, {{ rootMargin: '0px 0px -8% 0px', threshold: 0.08 }});
+  els.forEach(function(el){{ io.observe(el); }});
+}})();
+</script>
 </body>
 </html>
 """
