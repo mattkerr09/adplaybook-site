@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thank you — AdPlaybook</title>
+<meta name="robots" content="noindex">
+<meta name="description" content="Your AdPlaybook purchase is complete.">
+<meta name="theme-color" content="#0d1017">
+<meta name="last-modified" content="2026-08-12">
+<link rel="canonical" href="https://adplaybook.app/thank-you/">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<script>/* Before first paint, or the page flashes the wrong theme and the flash
+tells every visitor the site is cheap. Must stay INLINE and stay in <head>.
+Braces are doubled because this template is an f-string. */
+(function(){try{var t=localStorage.getItem("adplaybook-theme");
+if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</script>
+<meta property="og:type" content="article">
+<meta property="og:title" content="Contact and publisher details | AdPlaybook">
+<meta property="og:description" content="Who publishes AdPlaybook, where they are, and how to reach a person about a bug, a security problem or a question about the terms.">
+<meta property="og:url" content="https://adplaybook.app/contact/">
+<meta property="og:site_name" content="AdPlaybook">
+<meta property="og:image" content="https://adplaybook.app/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="AdPlaybook - it writes the ad, then it tries to prove you wrong.">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://adplaybook.app/og.png">
+<meta name="twitter:title" content="Contact and publisher details | AdPlaybook">
+<meta name="twitter:description" content="Who publishes AdPlaybook, where they are, and how to reach a person about a bug, a security problem or a question about the terms.">
+<style>
+/* Design tokens match the sibling products on purpose — same black, same
+   hairlines, same pill buttons — with this app's blue in place of Crisp's
+   cyan. A family of tools that look unrelated reads as three hobby projects. */
+:root{
+  /* Neutral near-black, not the warm brown this used to be. Matthew: "change
+     the colour scheme, I hate it", with builtbykerr.com and outlier.host as
+     the reference. Measured from those two rather than picked: builtbykerr
+     ships --bg #0B0B0C with --line #232326, outlier.host #070510. Both are
+     neutral or cool; the brown was the outlier in its own family.
+     Contrast re-checked on every surface before committing — the smallest
+     text (--grey-dim on --card) is 4.97:1, up from the 4.60 this palette was
+     corrected to when it last failed WCAG. */
+  --black:#0B0B0D;--panel:#121214;--panel-2:#17171A;--card:#1C1C20;
+  --hair:#232326;--hair-lit:#33333A;
+  /* --grey-dim was #61656e: 2.89:1 against --card #211c18, which fails even
+     the 3.0 NON-TEXT floor, and it is used 13 times on real prose at
+     0.83-0.88rem. The smallest text on the page had the least contrast, which
+     is the same fault outlier.host had. Lifted to 4.60:1, hue and saturation
+     unchanged. It now sits close to --grey (5.20) — if that flattens the
+     hierarchy too far, lift --grey rather than dropping this back. */
+  --white:#FAFAF8;--grey:#9A9AA4;--grey-dim:#8A8A95;
+  /* Four of the five sites in this portfolio were near-black with a blue
+     accent and -apple-system, so they read as one company shipping four
+     things. docketseo.app was the only escape and the strongest of the six;
+     its recipe is three things together — ground colour, typeface, structure.
+     AdPlaybook's is evidence: the product exists to refuse claims it cannot
+     trace back to the advertiser's own page.
+
+     The accent was that green until 2026-08-13, when four reference sites were
+     measured at 1440px: Linear #08090A / 64px w510, Raycast #07080A / 64px
+     w600, Cursor #14120B / 26px w400, Warp light / 72px w400. Three of the
+     four carry no chromatic accent at all, and #4ade80 had become the most
+     common accent in the category — so it was the default rather than a
+     choice, and it says "pass", which is backwards for a product whose value
+     is refusing. Amber is what a flag looks like. --green keeps the old value
+     and is now used only for the PASS chips in the product mock, where it
+     means something because it is not the brand colour.
+
+     Display type moved off the mono at the same time: not one of the four
+     sets display type in a monospace, and none ships a weight above 600.
+     --blue is kept as an alias rather than renamed at 40+
+call sites; it no longer holds a blue and the name is legacy. */
+  /* THE ACCENT IS THE INK. builtbykerr.com carries no chromatic accent at all
+     — its --accent IS #FAFAF8, and its call to action is white on black,
+     which is the most confident thing on any of these pages. Amber was
+     chosen here to look like a flag; it read as a brand colour instead, and
+     Matthew disliked it.
+     Colour now means something rather than decorating: --flag for a blocked
+     claim, --green for a passed one, and nothing else is coloured. */
+  --accent:#FAFAF8;--blue:var(--accent);--ice:#c9c9d4;--violet:#b9b4c9;
+  --green:#4ade80;--amber:#FAFAF8;--flag:#f4655f;
+  /* The gradient, and where it is allowed to go.
+     outlier.host runs linear-gradient(112deg,#d8a5ff,#a855f7 46%,#7b6cf6) and
+     paints it onto the SECOND half of a sentence — "that never leaves your
+     Mac.", "you actually own.", "Pro is $249." The setup stays white and the
+     payoff is coloured. That is the trick, and it is a sentence-level idea
+     rather than a decoration.
+     Same angle, our own colour: cool and clinical rather than violet, so the
+     portfolio does not read as one company shipping four things. All three
+     stops clear 8.7:1 on the ground; Outlier's own mid-stops sit at 5.1. */
+  --grad:linear-gradient(112deg,#DFF6FF 0%,#8FD9F2 46%,#5FB6E4 100%);
+  --grad-mid:#8FD9F2;
+  /* Raised from .30/.22/.16 once the field went page-wide. Those values were
+     tuned for three blobs stacked in one hero band; spread across a whole
+     document each pool covers far more area at lower density and the effect
+     disappeared. Screenshotted at 1440 before and after rather than adjusted
+     by eye in the file. */
+  /* Back up to Outlier's own range (it runs .4/.28/.3). These were dropped to
+     .16/.13/.085 when the field covered the whole document; three blurred
+     circles need the density back or they vanish. */
+  --glow-1:rgba(143,217,242,.34);--glow-2:rgba(95,182,228,.26);
+  --glow-3:rgba(223,246,255,.20);
+  /* Everything below used to be a literal somewhere in the stylesheet. They are
+     tokens now because of a bug I shipped to kerrandcompanyholdings.com on
+     2026-08-13: a light theme whose seven contrast ratios I had measured and
+     confirmed, which still rendered wrong, because the nav background, a
+     heading gradient and four glow rules were hard-coded and never read the
+     palette. Measuring a token set is not the same as checking what reads it.
+     A colour that only exists as a literal cannot follow a theme. */
+  --nav-bg:rgba(11,11,13,.72);--nav-hair:rgba(35,35,38,.9);
+  /* Text ON the primary button. Was #1a1206, a warm brown left from the
+     amber scheme — the button went white and its label stayed brown, which
+     is the same 'a colour that only exists as a literal cannot follow a
+     theme' failure this file already documents, one token over. Neutral
+     near-black now, matching the page ground. 18.8:1 on white. */
+  --on-accent:#0B0B0D;
+  --accent-lift:#FFFFFF;--accent-deep:#E4E4DE;
+  --accent-glow:rgba(0,0,0,.55);--accent-glow-2:rgba(0,0,0,.7);
+  --accent-wash:rgba(250,250,248,.10);--accent-wash-2:rgba(250,250,248,.07);
+  --accent-edge:rgba(250,250,248,.45);--amber-edge:rgba(250,250,248,.35);
+  --row-hover:rgba(255,255,255,.02);--dot:rgba(255,255,255,.05);
+  --window-shadow:rgba(0,0,0,.9);--window-edge:rgba(255,255,255,.02);
+  --r:18px;--r-sm:12px;
+  /* Elevation. Asked for as: make the content feel like it is floating just
+     above the page, the way Outlier's desktop app does.
+
+     Read out of Outlier's own stylesheet
+     (Projects/Outlier/desktop/outlier-desktop/src/styles.css) rather than
+     eyeballed from a screenshot, so these are its actual values and not my
+     impression of them. Its recipe is three things at once and only the first
+     was here already:
+
+       1. a ramp of surfaces, page darker than the things on it
+       2. a soft downward shadow, large blur, negative spread — never a glow
+       3. a hairline of LIGHT along the top edge, which is what sells the lift
+
+     Its comment on its own shadows is "restrained; no glowy purple halos", and
+     that is the trap on this site specifically: the only shadows here were the
+     amber glow on the CTA, so copying that shape would have lit every card
+     with the brand colour. These are neutral black, exactly as Outlier has
+     them — the accent stays the one thing that glows. */
+  --lift-1:0 1px 2px rgba(0,0,0,.30);
+  --lift-2:0 4px 14px -2px rgba(0,0,0,.40);
+  --lift-3:0 12px 32px -4px rgba(0,0,0,.50);
+  /* The top-edge highlight. Outlier's --border-soft, same value. An inset
+     hairline reads as a surface catching light from above; without it the
+     shadow alone reads as a drop-shadow sticker rather than a raised plane. */
+  --lift-edge:rgba(255,255,255,.06);
+  --sans:-apple-system,BlinkMacSystemFont,"SF Pro Text","Segoe UI",Inter,system-ui,sans-serif;
+  /* Display face. Neither reference sets its headline in a system sans:
+     builtbykerr uses Didot/Bodoni at weight 400, outlier.host uses Clash
+     Display at 600. This is the free half of that — Didot and Bodoni 72 ship
+     with macOS, and this is a Mac product, so the face costs no webfont, no
+     external request and no CSP exception. */
+  /* New York, via ui-serif. Compared against Didot, Iowan Old Style and
+     Charter at the real 52px on the real #0B0B0D, screenshotted rather
+     than reasoned about.
+     Didot lost on a measurable fault, not on taste: it is a high-contrast
+     didone, and on a dark ground its thin strokes go spindly and start to
+     drop out. That contrast is exactly what makes it beautiful in print on
+     white and fragile in light-on-dark. New York is Apple's serif, drawn
+     for screens — even stroke weight, larger x-height, holds together at
+     display size on black — and it reads as editorial authority rather
+     than fashion, which is the right register for a product whose pitch is
+     evidence.
+     ui-serif resolves to it on every Apple device without a webfont, an
+     external request or a CSP exception, and this is a Mac product. */
+  --display:ui-serif,"New York",Charter,"Iowan Old Style",Palatino,serif;
+  --mono:ui-monospace,SFMono-Regular,"SF Mono",Menlo,monospace;
+  --w:1080px;--wr:820px;
+}
+/* The light palette. This site is dark-first on purpose — the product window in
+   the hero is a real interface, not a screenshot, and it was designed against a
+   near-black ground. So dark stays the default and light is the deliberate
+   alternative, rather than the other way round.
+
+   The token NAMES are wrong in light mode and I am keeping them. --black holds a
+   near-white and --white holds a near-black, which reads badly here and reads
+   correctly at all forty-plus call sites. Renaming them would touch every rule
+   in the file to fix a comment; this way the risk stays in one block that is
+   easy to read in full.
+
+   The accent could not simply carry over. #4ade80 is a bright green built for a
+   near-black ground; on white it measures about 1.7:1 and is unreadable as text.
+   Light mode uses #15803D, which is the same hue several stops down and clears
+   4.5:1 on this ground. Buttons then need light text rather than dark, which is
+   what --on-accent flipping is for. */
+:root[data-theme="light"]{
+  /* The light half, moved off the warm browns with the dark half. Changing
+     one theme and leaving the other is the exact failure this file already
+     records — a light palette whose seven contrast ratios were measured and
+     which still rendered wrong. Verified: the CTA and the eyebrow were still
+     brown here after the dark side went neutral. */
+  --black:#FAFAF8;--panel:#ffffff;--panel-2:#F1F1EE;--card:#ffffff;
+  --hair:#E3E3DF;--hair-lit:#C6C6C0;
+  /* --grey-dim was #7a7268: 4.07:1 against --panel-2 #f2ede6, below the 4.5
+     AA needs for text this size. Darkened to 4.60:1. */
+  --white:#0B0B0D;--grey:#55555E;--grey-dim:#66666F;
+  /* Ink as accent, mirroring the dark side: the primary button is the page's
+     darkest value on its lightest surface. */
+  --accent:#0B0B0D;--ice:#3f3f46;--violet:#52525b;--green:#147b3b;
+  --amber:#0B0B0D;--flag:#b42318;
+  /* Darkened for a light ground — the dark theme's stops are 17:1 there and
+     about 1.5:1 here, which is the whole reason this is a token per theme
+     and not one shared value. Darkest stop 6.95:1 on the page. */
+  --grad:linear-gradient(112deg,#1D6E8E 0%,#155E75 46%,#0E7490 100%);
+  --grad-mid:#155E75;
+  --glow-1:rgba(21,94,117,.16);--glow-2:rgba(14,116,144,.13);
+  --glow-3:rgba(29,110,142,.10);
+  /* --green was #15803d: 4.31:1 on --panel-2. Five of its six uses are icons
+     and borders, where 3.0 is the bar and 4.31 passed. The sixth is
+     .pill.checked, which is TEXT. Nudged to 4.60:1 — visually
+     indistinguishable, and the one text use is now compliant. */
+  --dot:rgba(11,11,13,.07);
+  --nav-bg:rgba(250,250,248,.82);--nav-hair:rgba(198,198,192,.9);
+  --on-accent:#FAFAF8;
+  --accent-lift:#26262B;--accent-deep:#000000;
+  --accent-glow:rgba(20,20,24,.22);--accent-glow-2:rgba(20,20,24,.30);
+  --accent-wash:rgba(20,20,24,.07);--accent-wash-2:rgba(20,20,24,.05);
+  --accent-edge:rgba(20,20,24,.35);--amber-edge:rgba(20,20,24,.30);
+  --row-hover:rgba(20,16,12,.035);
+  --window-shadow:rgba(20,16,12,.22);--window-edge:rgba(20,16,12,.06);
+  /* Elevation, light. Not the dark values at lower opacity — on a light ground
+     a black shadow at .4 reads as dirt. Warm-tinted from the ink colour,
+     shallower, and the top edge becomes white rather than a white film that
+     would be invisible. This file already records the bug of a value that
+     exists in only one theme; these are here so the ramp follows the theme. */
+  --lift-1:0 1px 2px rgba(20,16,12,.06);
+  --lift-2:0 4px 14px -2px rgba(20,16,12,.10);
+  --lift-3:0 12px 32px -4px rgba(20,16,12,.14);
+  --lift-edge:rgba(255,255,255,.9);
+}
+
+/* The toggle. Top corner on every site, per Matthew 2026-08-13 — but inside the
+   sticky nav rather than position:fixed, and that distinction cost an evening.
+   
+   As `position:fixed;right:.85rem` it sat 132px off the right edge of a 375px
+   screen: invisible and unreachable. `right` resolves against the initial
+   containing block, which is as wide as the DOCUMENT when the document
+   overflows — and the button's own overflow was what widened it. The button
+   pushed the page wider, the wider page pushed the button further out, and the
+   loop sustained itself at 521px on a 375px screen.
+   
+   Living in the nav removes the dependency entirely: the nav is sticky, so the
+   control still sits in the top corner and still follows the reader, but it is
+   laid out in normal flow and cannot position itself off the screen. */
+#themeToggle{
+  flex:none;margin-left:auto;
+  width:2.1rem;height:2.1rem;border-radius:999px;
+  border:1px solid var(--hair-lit);background:var(--panel);color:var(--grey);
+  cursor:pointer;font-size:.9rem;line-height:1;
+  display:flex;align-items:center;justify-content:center;
+}
+#themeToggle:hover{color:var(--white);border-color:var(--grey-dim)}
+#themeToggle:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+@media (prefers-reduced-motion:no-preference){
+  #themeToggle{transition:color .15s,border-color .15s}
+}
+
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+body{margin:0;background:var(--black);color:var(--white);font-family:var(--sans);
+  font-size:17px;line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+img,svg{max-width:100%}
+a{color:var(--ice);text-decoration:none}
+a:hover{text-decoration:underline;text-underline-offset:3px}
+.wrap{width:min(var(--wr),calc(100% - 2.6rem));margin:0 auto}
+.wide{width:min(var(--w),calc(100% - 2.6rem));margin:0 auto}
+
+nav{position:sticky;top:0;z-index:80;background:var(--nav-bg);
+  backdrop-filter:saturate(180%) blur(20px);-webkit-backdrop-filter:saturate(180%) blur(20px);
+  border-bottom:1px solid var(--nav-hair)}
+.nav-inner{display:flex;align-items:center;gap:1.5rem;height:58px;
+  width:min(var(--w),calc(100% - 2.6rem));margin:0 auto}
+.nav-brand{display:flex;align-items:center;gap:.55rem;color:var(--white);font-weight:550;
+  font-size:1.02rem;letter-spacing:-.015em}
+.nav-brand:hover{text-decoration:none}
+.nav-logo{width:22px;height:22px;display:block}
+.nav-links{display:flex;gap:1.35rem;list-style:none;margin:0;padding:0;font-size:.9rem;
+  margin-left:auto;align-items:center}
+.nav-links a{color:var(--grey)}
+.nav-links a:hover{color:var(--white);text-decoration:none}
+.nav-links .btn{padding:.48rem 1.05rem;font-size:.87rem;color:var(--on-accent)}
+/* .nav-links a sets grey; the button needs its own colour back or the label
+   disappears into the gradient it sits on. */
+.nav-links .btn:hover{color:var(--on-accent)}
+.nav-links .btn svg{flex:none}
+
+/* The display face, and weight 400 with it.
+   builtbykerr.com sets its headline in Didot at 54.4px weight 400; ours was a
+   system sans at weight 520. A serif at 400 is lighter on the page and reads
+   as more certain, which is the opposite of what adding weight does.
+   Letter-spacing goes back toward 0 because a serif does not want a sans's
+   negative tracking, and line-height tightens to 1.04 — builtbykerr runs
+   55.5/54.4, almost exactly 1.02. */
+h1{font-family:var(--display);font-optical-sizing:auto;text-wrap:balance;
+  font-size:clamp(2.5rem,5.4vw,3.4rem);line-height:1.04;letter-spacing:-.012em;
+  font-weight:400;margin:.6rem 0 1rem}
+/* 560, not 690, and 3.6rem, not 4.6rem.
+   Measured against the four references at 1280x800: Cursor sets its h1 at 26px
+   weight 400, Warp at 64px weight 400, Linear at 64px weight 510. Ours was
+   73.6px at 690 — the largest and heaviest of the set by a clear margin, which
+   is not confidence, it is volume. */
+h2{font-family:var(--display);font-optical-sizing:auto;text-wrap:balance;
+  font-size:clamp(1.7rem,3.2vw,2.45rem);line-height:1.1;letter-spacing:-.008em;
+  font-weight:400;margin:3.2rem 0 .9rem}
+h3{font-size:1.12rem;font-weight:550;letter-spacing:-.012em;margin:2rem 0 .5rem}
+p{margin:0 0 1.05rem}
+
+/* Measure.
+   Measured in the browser, not eyeballed: section paragraphs were running 127
+   characters per line at 1280px. The readable band is 45–75 and the usual
+   target is about 66, so this was near double the upper bound — which is why
+   the page felt tiring without anything looking obviously wrong. The hero lede
+   was already at 70ch and the record intro at 76ch; only the sections were
+   unbounded, because they had no max-width at all and inherited the 1080px
+   container.
+   Headings are left alone. A wide heading is fine — you do not read it in
+   lines, you read it in one glance.
+
+   The number is 52ch, not 68ch, and the difference matters: the CSS ch unit is
+   the advance width of "0", which in this face is noticeably wider than the
+   average letter. 68ch measured out at 95 REAL characters per line via canvas
+   metrics — still deep into the unreadable range while looking, in the
+   stylesheet, like a sensible value. Set by measuring rendered text rather
+   than by trusting the unit's name. */
+section > p, section > ul, section > ol{max-width:52ch}
+.record .rec-intro{max-width:48ch}
+ul,ol{margin:0 0 1.15rem 1.2rem;padding:0}
+li{margin-bottom:.5rem}
+/* .grad was a three-stop gradient, then it was NOT, and now it is again. The
+   reversal is deliberate and the old reasoning is worth keeping visible.
+
+   It was removed with this argument: screenshotted beside Linear and Raycast,
+   the gradient was "the one element that dates the page", and it "fights
+   --blue, which is the only colour on this site allowed to mean do this next".
+
+   Both halves have since stopped holding. Matthew asked for it back by name,
+   pointing at outlier.host — "look how outliers colors have gradient and how
+   even the text is coloured" — and the reference set moved with him: the
+   comparison is no longer Linear and Raycast. The --blue conflict is simply
+   gone, because --accent is the ink now and the call to action is white on
+   black; there is no second colour for a gradient to fight.
+
+   The definition lives here, once. My first attempt added a second .grad rule
+   further down the file and let source order win, which would have left this
+   comment asserting the opposite of what the page does — the sort of thing
+   that reads as a documented decision to whoever finds it next. */
+.grad{background:var(--grad);-webkit-background-clip:text;background-clip:text;
+  -webkit-text-fill-color:transparent;color:transparent}
+/* A gradient is not readable by forced-colours mode or by print: transparent
+   text over a background that neither renders is invisible, not merely plain. */
+@media (forced-colors:active){.grad{-webkit-text-fill-color:currentColor;color:CanvasText}}
+@media print{.grad{-webkit-text-fill-color:currentColor;color:#000}}
+/* A lede must be a real step or not a step at all.
+   clamp(1rem,1.25vw,1.075rem) rendered 17.2px against a 17px body — 0.2px,
+   which nobody can see and which the type-scale count pays for as a whole
+   extra size. Widened so the difference is legible and intentional; the
+   distinct-size count is unchanged because 17.2 leaves as 18.4 arrives. */
+.lede{font-size:clamp(1rem,1.3vw,1.15rem);line-height:1.55;color:var(--grey);margin:0 0 1.6rem}
+
+/* --- hero -----------------------------------------------------------------
+   Measured against Raycast and Linear at 1280x800 rather than guessed at.
+   Ours stacked five things — pill eyebrow, gradient headline, lede, two
+   buttons, a version line, three tick chips — and began 25% down the viewport.
+   Theirs carry two or three and begin near 50%. The difference does not read
+   as "more minimal", it reads as more certain: a page that needs three rows of
+   reassurance under the button is arguing with itself.
+
+   So the eyebrow and the tick row are gone, and what is left gets the space
+   they were using. */
+.hero{padding:clamp(2.6rem,6vh,4rem) 0 clamp(.6rem,1.5vh,1.2rem);text-align:left}
+.hero h1{margin:0 0 1.5rem;max-width:22ch}
+.hero-sub{margin-top:1.4rem;font-family:var(--mono);font-size:.8rem;
+  color:var(--grey-dim);letter-spacing:-.01em}
+
+/* One axis for the whole page.
+   Screenshotted at 1280x1500, the hero was centred and every section under it
+   was left-aligned. That mismatch is the actual generic tell — it is what a
+   template hero looks like with hand-written content below it. Linear is left
+   throughout, Raycast is centred throughout; both are internally consistent
+   and that is what reads as designed rather than assembled.
+   Left, because the rest of the page is already left and because a left-set
+   headline over a dense evidence table reads as an instrument. Centring is for
+   pages whose hero is the whole argument. */
+
+/* --- the measured record ------------------------------------------------
+   Docket's instrument vocabulary rather than a marketing stat row: mono
+   numerals, a denominator that stays visible, and a caveat under every figure.
+   The numbers are large because they are the argument, not decoration — and
+   three of the four are failure rates, which is the whole point of showing
+   them at this size.
+
+   tabular-nums so the columns line up; a proportional 1 next to a 7 in a
+   headline number reads as sloppy at this scale. */
+/* The product, then the caption.
+   Measured at 1280x800: Cursor puts its screenshot at y=351, Linear 550, Warp
+   593 — all inside the first screen. Ours was at 2005, three screens down,
+   behind a kicker, an h2 and an intro paragraph. None of the three references
+   puts a heading before the product; they go headline, buttons, product, and
+   explain underneath. */
+/* margin-bottom only. The shorthand set margin-top:0 explicitly, which beat
+   `section+section` on specificity and left "We pointed it at this website"
+   butted against the section above it at 0 while every other break was 45.
+   The stages->showcase pair keeps its 0 deliberately: the strip names the six
+   stages of the run the window below is showing, so they are one unit and a
+   rhythm gap between them would read as two unrelated things. */
+.showcase{margin-bottom:clamp(1.6rem,3.4vw,2.8rem)}
+.win-cap{max-width:64ch;margin:1.1rem 0 0;font-size:.9rem;line-height:1.6;
+  color:var(--grey-dim)}
+.win-cap span{color:var(--grey);font-weight:520}
+
+.record{border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);
+  padding:clamp(2.4rem,4.5vw,3.4rem) 0;margin:clamp(1.6rem,3.4vw,2.8rem) 0}
+.rec-intro{max-width:60ch;color:var(--grey);margin:.4rem 0 2.2rem}
+.recs{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));
+  gap:1px;background:var(--hair);border:1px solid var(--hair);border-radius:var(--r-sm);
+  overflow:hidden;box-shadow:var(--lift-2),inset 0 1px 0 var(--lift-edge)}
+.rec{background:var(--panel);padding:1.5rem 1.35rem}
+.rec-n{font-family:var(--sans);font-size:clamp(2rem,4.4vw,3rem);line-height:1;letter-spacing:-.03em;
+  font-weight:540;letter-spacing:-.045em;color:var(--white);
+  font-variant-numeric:tabular-nums;margin:0 0 .55rem}
+.rec-n span{color:var(--grey-dim);font-size:.44em;letter-spacing:-.02em}
+.rec-l{margin:0 0 .5rem;font-size:.95rem;font-weight:520;letter-spacing:-.011em;
+  color:var(--white);line-height:1.35}
+.rec-w{margin:0;font-size:.84rem;line-height:1.5;color:var(--grey-dim)}
+.rec-src{margin:1.4rem 0 0;font-size:.84rem;color:var(--grey-dim)}
+.rec-src code{font-family:var(--mono);font-size:.95em;color:var(--grey)}
+@media (max-width:560px){.recs{grid-template-columns:1fr}}
+.note{font-size:.9rem;line-height:1.6;color:var(--grey);border-left:2px solid var(--line);padding:.1rem 0 .1rem 1rem;margin:1.2rem 0}
+.muted{color:var(--grey)}
+.crumb{font-size:.84rem;color:var(--grey-dim);margin:2.2rem 0 .4rem;font-family:var(--mono)}
+.crumb a{color:var(--grey)}
+
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:.55rem;
+  padding:.78rem 1.4rem;border-radius:999px;font-weight:600;font-size:.95rem;
+  background:linear-gradient(180deg,var(--accent-lift),var(--accent-deep));color:var(--on-accent);border:1px solid transparent;
+  box-shadow:0 10px 34px -12px var(--accent-glow);
+  transition:transform .2s cubic-bezier(.2,.8,.2,1),box-shadow .25s}
+.btn:hover{transform:translateY(-2px);box-shadow:0 16px 44px -12px var(--accent-glow-2);
+  text-decoration:none}
+.btn.ghost{background:transparent;color:var(--white);border:1px solid var(--hair-lit);
+  box-shadow:none}
+.btn.ghost:hover{border-color:var(--blue);box-shadow:none}
+
+.hero{position:relative}
+/* inset was -30% -50%, which made this decorative box 2x the hero width and
+   pushed documentElement.scrollWidth to 1800 at a 1440 viewport — a real
+   360px horizontal overflow, hidden only because body carries
+   overflow-x:hidden. Suppressing a scrollbar is not the same as not
+   overflowing, and the masking is why it survived. Measured on the LIVE
+   site before this change, so it is pre-existing rather than introduced.
+   The gradient inside is 760px wide and the hero column is ~1180, so
+   spanning the hero exactly costs nothing visible. */
+.hero::before{content:"";position:absolute;inset:-30% 0 auto;height:120%;pointer-events:none;
+  background:radial-gradient(760px 420px at 50% 0,var(--accent-wash),transparent 70%)}
+.hero>*{position:relative}
+.hero h1{font-size:clamp(2.2rem,4.8vw,3.25rem);margin:.9rem 0 1.2rem}
+.hero .lede{max-width:56ch}
+/* Split hero, after panxo.com: headline left, the pitch and the buttons in a
+   column beside it. Chosen over a centred stack because it lets the headline
+   stay at 52px and wrap as a column — the reference measures 56px left with a
+   553px wrap — instead of growing to fill the width, which is the shape that
+   reads as generated. Collapses to one column under 900. */
+/* align-items:START, and the kicker sits ABOVE the split rather than inside
+   its left column.
+   With the kicker inside and align-items:end, the two columns were
+   bottom-aligned — so the taller right column (260px against the headline's
+   194px) rose 66px ABOVE the kicker and the hero read as two things that had
+   slipped past each other. Measured, not eyeballed: aside top 113, kicker top
+   179.
+   Lifting the kicker out gives both columns the same starting line, which is
+   what the reference does. */
+.hero-split{display:grid;grid-template-columns:minmax(0,1.05fr) minmax(0,.95fr);
+  gap:clamp(1.5rem,4vw,3.5rem);align-items:start}
+.hero-split .hero-lead h1{margin:0;max-width:15ch}
+/* Optical, not mechanical: the lede's x-height sits a little below the
+   headline's cap-height at these sizes, so a shared grid line still reads as
+   the paragraph starting high. */
+.hero-split .hero-aside{padding-top:.35rem}
+.hero-split .lede{margin-top:0}
+@media(max-width:900px){.hero-split{grid-template-columns:1fr;align-items:start}
+  .hero-split .hero-lead h1{max-width:20ch}}
+/* The six stages of one real run. A numbered strip rather than tabs: tabs
+   imply the other five are one click away, and they are not on a static page.
+   Saying six things plainly beats implying an interaction that does not exist. */
+.stages{list-style:none;margin:2.2rem 0 0;padding:0;display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:.1rem;
+  border:1px solid var(--edge);border-radius:12px;overflow:hidden}
+.stages li{display:flex;flex-direction:column;gap:.28rem;padding:.9rem 1rem;
+  background:var(--panel);border-right:1px solid var(--edge)}
+.stages li:last-child{border-right:0}
+/* ---------- colour on the six-step strip ----------
+   The strip is the part that explains what the product DOES, and it was
+   entirely monochrome — which is where "different colours to feel more
+   textured" earns the most.
+   The encoding is not decorative. Three steps MAKE the campaign, two steps
+   ATTACK it, one HANDS IT OVER, and that is the whole argument of the product
+   in six cells:
+     1-3 Read / Brief / Generate   the cool gradient — building
+     4-5 Claim gate / Review       the flag colour — refusing. Both cells
+                                   already say they blocked something.
+     6   Guide                     green — what survives
+   So the eye reads "two of these six are the app arguing with itself" before
+   anyone has read a word of it. */
+.stages li{position:relative;--stage:var(--grad-mid)}
+/* WHY .reveal SITS ON SMALL COMPONENTS.
+   The observer always toggled, so the animation was two-way from the start —
+   the first version simply put .reveal on seven huge containers, one of them
+   a 1492px .showcase. A block that tall stays intersecting the whole time you
+   are inside it, so it reveals once on approach and then holds; you scroll for
+   a screen and a half and nothing moves. It does un-reveal eventually, when
+   you scroll clear of it — I nearly wrote that it "can only ever animate in",
+   which is wrong: intersection is overlap, not containment.
+   The real difference is how OFTEN you witness it. Outlier puts .reveal on 82
+   small components — headings, cards, stats, captions — so something is
+   entering or leaving almost continuously, in both directions. 21 here, and
+   every one measures under a 900px viewport. */
+.stages li:nth-child(4),.stages li:nth-child(5){--stage:var(--flag)}
+.stages li:nth-child(6){--stage:var(--green)}
+.stages li::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;
+  background:var(--stage);opacity:.55;transform-origin:left}
+.stages li:hover{background:var(--glow-3)}
+.stages li:hover::after{opacity:1}
+/* The judging pair get a faint wash so they read as one movement rather than
+   two adjacent cells that happen to share a colour. */
+.stages li:nth-child(4),.stages li:nth-child(5){
+  background:linear-gradient(180deg,transparent,rgba(244,101,95,.045))}
+/* The product, photographed. builtbykerr.com frames its product shot in window
+   chrome on a dark page and the contrast is the point: the app is a lit object
+   sitting on the page rather than a picture pasted into it. Same here, which
+   also means a light-mode app screenshot works on a dark site instead of
+   fighting it. */
+.appshot{margin:2.4rem 0 0;border:1px solid var(--hair);border-radius:var(--r);
+  overflow:hidden;background:var(--panel-2);
+  box-shadow:var(--lift-3),inset 0 1px 0 var(--lift-edge)}
+.appshot-chrome{display:flex;align-items:center;gap:.45rem;
+  padding:.6rem .9rem;background:var(--panel);
+  border-bottom:1px solid var(--hair)}
+.appshot-title{margin-left:.5rem;font-family:var(--mono);font-size:.74rem;
+  color:var(--grey-dim);letter-spacing:.01em}
+.appshot img{display:block;width:100%;height:auto}
+.appshot figcaption{padding:1rem 1.2rem 1.2rem;color:var(--grey);
+  font-size:.92rem;line-height:1.6;max-width:70ch}
+.appshot figcaption span{color:var(--white);font-weight:550}
+/* ── The touches, taken from outlier.host and measured off it ───────────────
+   Matthew: "look how outliers colors have gradient and how even the text is
+   coloured and how their boxes look like they're hovering and it's interactive
+   when you put the mouse over some text boxes it puts a border around it".
+
+   Its own rules, read from the live stylesheet rather than guessed:
+
+     .card:hover  { border-color: var(--border-lit); transform: translateY(-4px);
+                    box-shadow: rgba(168,85,247,.4) 0 24px 50px -28px }
+     .btn:hover   { transform: translateY(-2px) }
+     tbody tr:hover td { background: rgba(168,85,247,.03) }
+     gradient text via background-clip on the PAYOFF half of a sentence
+
+   Two things carried over deliberately. The hover shadow is TINTED with the
+   accent, which is what makes a card look lit from its own colour rather than
+   merely raised. And the border only appears on hover — the resting state is a
+   hairline, so the page is quiet until you point at it. */
+
+/* Boxes that lift, and show their edge when you point at them. */
+.recs,.box,.card,.livegate,.adshot img,.rec{
+  transition:border-color .18s var(--ease,cubic-bezier(.2,.8,.2,1)),
+             transform .18s cubic-bezier(.2,.8,.2,1),box-shadow .22s}
+.box:hover,.livegate:hover{border-color:var(--hair-lit);transform:translateY(-3px);
+  box-shadow:var(--lift-3),0 24px 50px -28px var(--glow-1),
+             inset 0 1px 0 var(--lift-edge)}
+.rec:hover{background:var(--panel-2)}
+tbody tr:hover{background:var(--row-hover)}
+tbody tr:hover td{background:var(--glow-3)}
+/* The text boxes in the live gate get the same treatment on focus, because a
+   caret is the pointer for a field. */
+.lg-field textarea:hover{border-color:var(--hair-lit)}
+
+/* ---------- animated gradient mesh + grid (page-wide ambient) ----------
+   Ported from outlier-site/index.html rather than approximated. Matthew asked
+   for exactly that: "you can literally just copy how we did it".
+
+   AND IT CORRECTS SOMETHING I GOT WRONG. I measured the three blobs' offsets
+   on the live page — top -317, -86, +634 against a 12,441px document — and
+   concluded that ninety per cent of their page carries no ambient light. That
+   was reading the numbers without reading the container. The blobs sit inside
+   `.mesh{position:fixed}`, so those offsets are viewport coordinates: the mesh
+   is pinned to the screen and the whole document scrolls through it. Every
+   section is lit, forever. My "hero only" version was built on that misreading.
+
+   The other half I had missed is that they MOVE. Each blob drifts on a 26-38s
+   ease-in-out loop, translating a few vw and scaling 1.08-1.15. That is what
+   makes it feel alive rather than painted on, and it is why a static copy of
+   the same three circles never looked like the reference.
+
+   Sizes are viewport-relative with a px ceiling, so the mesh scales with the
+   window instead of leaving a small pool on a large screen. */
+.mesh{position:fixed;inset:0;z-index:-2;pointer-events:none;overflow:hidden}
+.mesh b{position:absolute;border-radius:50%;filter:blur(120px);opacity:.5}
+.mesh .m1{width:60vw;height:60vw;max-width:820px;max-height:820px;
+  background:radial-gradient(circle,var(--glow-1),transparent 68%);
+  top:-22vw;left:-8vw;animation:drift1 26s ease-in-out infinite}
+.mesh .m2{width:52vw;height:52vw;max-width:720px;max-height:720px;
+  background:radial-gradient(circle,var(--glow-2),transparent 66%);
+  top:-6vw;right:-12vw;animation:drift2 32s ease-in-out infinite}
+.mesh .m3{width:46vw;height:46vw;max-width:640px;max-height:640px;
+  background:radial-gradient(circle,var(--glow-3),transparent 66%);
+  top:44vw;left:34vw;animation:drift3 38s ease-in-out infinite}
+@keyframes drift1{0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(6vw,4vw) scale(1.12)}}
+@keyframes drift2{0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-5vw,6vw) scale(1.08)}}
+@keyframes drift3{0%,100%{transform:translate(0,0) scale(1)}
+  50%{transform:translate(-4vw,-5vw) scale(1.15)}}
+/* Faint dot grid over the mesh, masked so it fades out below the fold — it is
+   texture, not a pattern swatch. */
+.grid-ovl{position:fixed;inset:0;z-index:-2;pointer-events:none;
+  background-image:radial-gradient(circle at 1px 1px,var(--dot) 1px,transparent 0);
+  background-size:34px 34px;
+  -webkit-mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 0%,transparent 75%);
+  mask-image:radial-gradient(ellipse 90% 60% at 50% 0%,#000 0%,transparent 75%)}
+
+/* ---------- reveal on scroll ----------
+   Also theirs, including the two decisions worth keeping.
+
+   TWO-WAY. The observer TOGGLES rather than unobserving, so the page animates
+   on the way back up as well as down. Their own comment records that
+   unobserving is what had made it one-shot.
+
+   DIRECTIONAL. Items in a grid come in from alternating sides, tiles from
+   their own edges. A single upward fade on everything reads as a template;
+   offsets that follow the layout read as designed.
+
+   Small print does NOT move — provenance lines fade only. Drawing the eye to
+   the sentence that says where a number came from is the wrong emphasis. */
+/* VISIBLE BY DEFAULT. The hidden state is scoped to .js-reveal, which the
+   script adds to <html> only after it has confirmed it can actually drive the
+   animation. Outlier's own version sets .reveal{opacity:0} unconditionally,
+   and that is the one part not worth copying: any reader whose observer does
+   not fire — script blocked, an error earlier in the file, a browser that
+   throttles callbacks in a background tab — gets a page of invisible content
+   rather than a page without an animation.
+   Not hypothetical. Verifying this port, a hand-rolled IntersectionObserver
+   fired zero times in a hidden browser pane, and every .reveal block sat at
+   opacity 0. That was my tooling rather than a reader's browser, but it is
+   exactly what a reader would have seen. */
+.reveal{transform:none}
+.js-reveal .reveal{opacity:0;
+  transform:translate(var(--rx,0),var(--ry,26px)) scale(var(--rs,1));
+  transition:opacity .8s cubic-bezier(.16,1,.3,1),
+             transform .8s cubic-bezier(.16,1,.3,1)}
+.js-reveal .reveal.in{opacity:1;transform:none}
+.js-reveal .reveal.d1{transition-delay:.08s}
+.js-reveal .reveal.d2{transition-delay:.16s}
+.js-reveal .reveal.d3{transition-delay:.24s}
+.recs > .reveal:nth-child(odd){--rx:-38px;--ry:8px}
+.recs > .reveal:nth-child(even){--rx:38px;--ry:8px}
+.cards > .reveal:nth-child(odd){--rx:-28px;--ry:6px}
+.cards > .reveal:nth-child(even){--rx:28px;--ry:6px}
+.showcase.reveal{--ry:38px;--rs:.985}
+.livegate.reveal{--ry:30px;--rs:.99}
+.box.reveal{--ry:22px;--rs:.985}
+.src.reveal,.win-cap.reveal{--ry:0}
+
+@media (prefers-reduced-motion:reduce){
+  /* No drift, no travel, and nothing left invisible: .reveal is pinned to
+     visible here regardless of whether the observer ever runs. */
+  .mesh b{animation:none;filter:blur(90px)}
+  .js-reveal .reveal{opacity:1;transform:none;transition:none}
+}
+/* Pay-in-4. The copy lives in _build/bnpl.py and is NOT published — the Buy
+   button still points at Polar, which is card-only, so every instalment
+   sentence would be false at the checkout it sends people to. check.py fails
+   the build if the copy reaches a page before the button moves to Dodo.
+   The styles are here so that turning it on is one flag rather than a flag
+   and a design pass. */
+.paylater{margin:4rem 0 2rem;padding:2rem 1.9rem;border:1px solid var(--hair);
+  border-radius:var(--r);background:linear-gradient(180deg,var(--card),var(--panel-2));
+  box-shadow:var(--lift-2),inset 0 1px 0 var(--lift-edge)}
+.paylater h2{margin:.2rem 0 .9rem;letter-spacing:-.02em}
+.paylater p{max-width:62ch;color:var(--grey)}
+.paylater p:first-of-type{color:var(--white)}
+.paylater .src{margin-top:1.2rem;font-size:.86rem;color:var(--grey-dim)}
+/* The first real image on this site. Everything else here is type in a box —
+   measured 2026-08-18: 0 img, 0 video, 0 canvas across 8,938px, against
+   langchain.com's 99 images. This one is drawn by the product itself, exported
+   from a real run, so it is evidence rather than decoration. */
+.adshot{margin:2.4rem 0 0;display:grid;grid-template-columns:auto 1fr;gap:1.6rem;
+  align-items:start}
+@media(max-width:760px){.adshot{grid-template-columns:1fr}}
+.adshot img{display:block;width:300px;max-width:100%;height:auto;
+  border-radius:var(--r-sm);border:1px solid var(--hair);
+  box-shadow:var(--lift-3),inset 0 1px 0 var(--lift-edge)}
+.adshot figcaption{color:var(--grey);font-size:.92rem;line-height:1.6;max-width:52ch}
+.adshot figcaption span{color:var(--white);font-weight:550}
+.adshot code{font-size:.86em}
+/* ── The live claim gate ────────────────────────────────────────────────────
+   avo.bet puts a working arbitrage calculator on its homepage. We owned real
+   engines and published pictures of them. The gate is deterministic — regex
+   plus a figure trace, no model on the path — so it can actually run here.
+   The patterns are exported from the engine and a test runs the same strings
+   through Python and node and fails if the verdicts differ. */
+.livegate{margin:4rem 0 2rem;padding:2rem 1.9rem;border:1px solid var(--hair);
+  border-radius:var(--r);background:linear-gradient(180deg,var(--card),var(--panel-2));
+  box-shadow:var(--lift-3),inset 0 1px 0 var(--lift-edge)}
+.livegate h2{margin:.2rem 0 .5rem}
+.livegate-lede{color:var(--grey);max-width:64ch;margin:0 0 1.5rem}
+.lg-grid{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
+@media(max-width:760px){.lg-grid{grid-template-columns:1fr}}
+.lg-field{display:flex;flex-direction:column;gap:.4rem}
+.lg-field>span{font-family:var(--mono);font-size:.72rem;letter-spacing:.04em;
+  text-transform:uppercase;color:var(--grey-dim)}
+.lg-field textarea{width:100%;box-sizing:border-box;resize:vertical;
+  font-family:var(--mono);font-size:.82rem;line-height:1.55;
+  padding:.8rem .9rem;border-radius:var(--r-sm);
+  border:1px solid var(--hair-lit);background:var(--black);color:var(--white);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.35)}
+.lg-field textarea:focus{outline:none;border-color:var(--accent-edge);
+  box-shadow:inset 0 1px 3px rgba(0,0,0,.35),0 0 0 3px var(--accent-wash-2)}
+.lg-out{margin-top:1.4rem;display:flex;flex-direction:column;gap:1px;
+  background:var(--hair);border:1px solid var(--hair);border-radius:var(--r-sm);
+  overflow:hidden}
+.lg-verdict{margin:0;padding:.75rem .95rem;background:var(--panel-2);
+  font-family:var(--mono);font-size:.78rem;letter-spacing:.03em}
+.lg-verdict.bad{color:var(--accent)}
+.lg-verdict.ok{color:var(--green)}
+.lg-row{display:flex;gap:.7rem;padding:.8rem .95rem;background:var(--panel);
+  align-items:flex-start}
+.lg-row .lg-ic{flex:0 0 auto;width:1.1rem;text-align:center;font-weight:600}
+.lg-row.bad .lg-ic{color:var(--accent)}
+.lg-row.ok .lg-ic{color:var(--green)}
+.lg-row strong{display:block;font-weight:550;letter-spacing:-.01em}
+.lg-why{display:block;color:var(--grey);font-size:.86rem;margin-top:.15rem}
+.lg-foot{color:var(--grey-dim);font-size:.88rem;margin:1.1rem 0 0;max-width:70ch}
+/* ── The hero runs, rather than describing a run ─────────────────────────────
+   Measured 2026-08-18 against the six reference sites: adplaybook.app carried
+   0 img, 0 video, 0 canvas and no media above 100x100 across 8,938px, and 18
+   elements with any transition. langchain.com: 99 images, 267 animated
+   elements, a hero subhead that cycles, a rotating word wheel. framer.com puts
+   a live, glowing product surface directly under a left-aligned headline.
+   cofounder.co floats the product's own output inside the artwork.
+
+   Three passes of type scale and spacing did not touch that, because the page
+   is a stack of text boxes and no amount of leading changes what it IS.
+
+   So the strip and the window play as ONE sequence: the six stages light in
+   the order the engine runs them, and then the verdicts land in the order they
+   were produced. content.py already insists these are one campaign rather than
+   two stitched together — this makes that visible instead of asserted.
+
+   NOTHING HERE INVENTS CONTENT. Every row is the same verbatim output from the
+   same real HoneyBook run that was already on the page; the animation only
+   reveals it in the order the app produced it. A demo that fabricates a
+   smoother story than the product delivers is the exact failure this product
+   sells against.
+
+   Reduced motion gets the finished state immediately — not a degraded version,
+   the same page with the timeline collapsed to zero. */
+@media (prefers-reduced-motion: no-preference){
+  .stages li{position:relative}
+  .stages li::after{transform:scaleX(0);
+    animation:stage-run .5s cubic-bezier(.2,.8,.2,1) forwards}
+  .stages li:nth-child(1)::after{animation-delay:.15s}
+  .stages li:nth-child(2)::after{animation-delay:.45s}
+  .stages li:nth-child(3)::after{animation-delay:.75s}
+  .stages li:nth-child(4)::after{animation-delay:1.05s}
+  .stages li:nth-child(5)::after{animation-delay:1.35s}
+  .stages li:nth-child(6)::after{animation-delay:1.65s}
+  .stages li strong{opacity:.45;animation:stage-lit .4s ease forwards}
+  .stages li:nth-child(1) strong{animation-delay:.15s}
+  .stages li:nth-child(2) strong{animation-delay:.45s}
+  .stages li:nth-child(3) strong{animation-delay:.75s}
+  .stages li:nth-child(4) strong{animation-delay:1.05s}
+  .stages li:nth-child(5) strong{animation-delay:1.35s}
+  .stages li:nth-child(6) strong{animation-delay:1.65s}
+
+  /* The window fills in after the strip reaches the claim gate, because that
+     is the stage that produces these lines. */
+  .win .vd{opacity:0;transform:translateY(8px);
+    animation:vd-land .55s cubic-bezier(.2,.8,.2,1) forwards}
+  .win .vd:nth-child(1){animation-delay:1.9s}
+  .win .vd:nth-child(2){animation-delay:2.5s}
+  .win .vd:nth-child(3){animation-delay:3.2s}
+  .win .vd:nth-child(4){animation-delay:3.8s}
+
+  /* A scan line across the title bar for as long as the run is going. It stops
+     when the last verdict lands — a spinner that never stops is a lie about
+     whether anything finished. */
+  .win-bar{position:relative;overflow:hidden}
+  .win-bar::after{content:"";position:absolute;left:0;top:0;bottom:0;width:34%;
+    background:linear-gradient(90deg,transparent,var(--accent-wash),transparent);
+    animation:win-scan 1.5s ease-in-out 3 forwards}
+}
+@keyframes stage-run{to{transform:scaleX(1)}}
+@keyframes stage-lit{to{opacity:1}}
+@keyframes vd-land{to{opacity:1;transform:none}}
+@keyframes win-scan{0%{transform:translateX(-120%)}100%{transform:translateX(400%)}}
+/* The colour is set HERE, on the rule that already owns this selector.
+   My first version added a second `.stages .stage-n` earlier in the file
+   and this one won on source order, so the stylesheet said the numbers
+   were coloured and every one of them rendered grey. Third time today
+   that a duplicate rule silently lost — and all three were found with
+   getComputedStyle, never by reading the file. */
+.stages .stage-n{font-family:var(--mono);font-size:.7rem;
+  color:var(--stage,var(--grey-dim));opacity:.9}
+.stages strong{font-size:.95rem;letter-spacing:-.01em}
+.stages .stage-d{font-family:var(--mono);font-size:.7rem;line-height:1.45;
+  color:var(--grey-dim)}
+@media(max-width:900px){.stages li{border-right:0;border-bottom:1px solid var(--edge)}}
+.eyebrow{display:inline-flex;align-items:center;gap:.5rem;padding:.4rem 1rem;border-radius:999px;
+  border:1px solid var(--hair-lit);background:var(--panel-2);color:var(--ice);
+  font-size:.87rem;font-weight:520;white-space:nowrap}
+/* An inline SVG with no intrinsic size fills its flex line. Without this the
+   eyebrow tick rendered about 120px tall and pushed the label onto three
+   lines. Every icon in this stylesheet gets an explicit box. */
+.eyebrow svg{width:14px;height:14px;flex:none;color:var(--green)}
+.hero-actions{display:flex;gap:.8rem;justify-content:flex-start;flex-wrap:wrap;margin:2rem 0 1rem}
+.hero-sub{font-size:.87rem;color:var(--grey-dim);font-family:var(--mono)}
+.trust{display:flex;gap:1.6rem;justify-content:center;flex-wrap:wrap;margin-top:2.4rem;
+  font-size:.9rem;color:var(--grey)}
+.trust span{display:inline-flex;align-items:center;gap:.45rem}
+.trust svg{width:15px;height:15px;color:var(--green);flex:none}
+
+section{padding:1rem 0}
+/* ONE rhythm between major sections, instead of three.
+   Measured down the homepage before this: hero->stages 35, showcase->section
+   48, record->section 42, and FOUR consecutive sections at 0 — "It knows what
+   will quietly fail", "Ten approaches", "Held as dated facts" and "Get it" ran
+   straight into each other with nothing but 2x1rem of padding between a
+   paragraph and the next h2. Distinct topics reading as one wall.
+   Adjacent-sibling margins collapse to the larger of the two, so setting the
+   same value here and on .showcase gives every break the same gap without any
+   pair doubling up. That is why this is a margin and not extra padding. */
+section+section{margin-top:clamp(1.6rem,3.4vw,2.8rem)}
+/* A heading that OPENS a section takes no top margin.
+   The rhythm above already provides the gap, and h2 was adding 3.2rem on top
+   of it — so every section break was section margin 44.8 + padding 16 + h2
+   margin 51.2 = 112px of compounded space from three rules that did not know
+   about each other. Measured at 1440: 1,260px of the 11,256px page was empty
+   bands of 80px or more, 11% of its height.
+   Scoped to the FIRST heading only. An h2 further down a section is separating
+   itself from the paragraph above it, and still needs its own space — zeroing
+   that everywhere would weld distinct topics together, which is the fault the
+   rhythm rule above was written to fix. Outlier reaches the same place from
+   the other side: its h2 is margin:0 0 1rem and all rhythm comes from
+   section padding. */
+section > h2:first-child,
+section > .kicker:first-child + h2,
+section > .eyebrow:first-child + h2{margin-top:0}
+.kicker{font-family:var(--mono);font-size:.74rem;letter-spacing:.1em;text-transform:uppercase;
+  color:var(--blue);margin-bottom:.5rem}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:1rem;margin:1.6rem 0}
+.card{display:block;padding:1.3rem 1.4rem;border:1px solid var(--hair);border-radius:var(--r);
+  background:linear-gradient(180deg,var(--card),var(--panel-2));color:var(--white);
+  box-shadow:var(--lift-2),inset 0 1px 0 var(--lift-edge);
+  transition:border-color .2s,transform .2s,box-shadow .2s}
+/* It already rose 2px on hover with nothing under it, which reads as the card
+   sliding rather than lifting. The shadow deepening with the movement is the
+   whole difference. */
+/* The tinted glow is on THIS rule rather than in a second .card:hover further
+   down the file. I wrote the second one first and source order silently kept
+   this one, so the page had the old shadow while the stylesheet appeared to
+   say otherwise — the same shadowing that had just been fixed for .grad, two
+   edits earlier, in the same pass. Checked with getComputedStyle rather than
+   by reading, which is the only reason it was noticed. */
+.card:hover{border-color:var(--hair-lit);transform:translateY(-4px);text-decoration:none;
+  box-shadow:var(--lift-3),0 24px 50px -28px var(--glow-1),
+             inset 0 1px 0 var(--lift-edge)}
+.card strong{display:block;margin-bottom:.3rem;font-weight:550;letter-spacing:-.01em}
+.card span{font-size:.9rem;color:var(--grey);line-height:1.55}
+.card .num{font-family:var(--mono);font-size:2rem;font-weight:600;color:var(--blue);
+  line-height:1;display:block;margin-bottom:.5rem}
+
+.box{margin:2rem 0;padding:1.35rem 1.5rem;border:1px solid var(--hair);border-radius:var(--r-sm);
+  background:var(--panel-2);color:var(--grey);
+  box-shadow:var(--lift-1),inset 0 1px 0 var(--lift-edge)}
+.box strong{color:var(--white)}
+.box p:last-child{margin-bottom:0}
+.box.warn{border-left:3px solid var(--amber)}
+.box.ok{border-left:3px solid var(--green)}
+
+.cta-block{margin:3.4rem 0 1rem;padding:2.4rem 2rem;border:1px solid var(--hair);
+  border-radius:var(--r);text-align:center;
+  box-shadow:var(--lift-3),inset 0 1px 0 var(--lift-edge);
+  background:radial-gradient(600px 300px at 20% -20%,var(--accent-wash-2),transparent 70%),
+    linear-gradient(180deg,var(--card),var(--panel-2))}
+.cta-block p{color:var(--grey)}
+
+table{width:100%;border-collapse:collapse;margin:1.4rem 0;font-size:.95rem;display:block;
+  overflow-x:auto;white-space:nowrap}
+th,td{text-align:left;padding:.72rem .8rem;border-bottom:1px solid var(--hair);vertical-align:top;
+  white-space:normal}
+th{font-size:.74rem;text-transform:uppercase;letter-spacing:.07em;color:var(--grey-dim);
+  font-weight:600}
+td strong{font-weight:550}
+tbody tr:hover{background:var(--row-hover)}
+blockquote{border-left:2px solid var(--blue);padding:.1rem 0 .1rem 1.1rem;margin:1.1rem 0;
+  color:var(--grey);font-style:normal}
+code{font-family:var(--mono);font-size:.88em;background:var(--panel-2);padding:.14em .4em;
+  border-radius:6px;border:1px solid var(--hair)}
+.src{font-size:.84rem;color:var(--grey-dim);font-family:var(--mono);word-break:break-all}
+.pill{display:inline-block;font-family:var(--mono);font-size:.74rem;padding:.18rem .6rem;
+  border-radius:999px;border:1px solid var(--hair-lit);color:var(--grey-dim);margin-right:.35rem}
+.pill.checked{border-color:var(--accent-edge);color:var(--green)}
+.pill.unchecked{border-color:var(--amber-edge);color:var(--amber)}
+
+/* The product window. A screenshot would be a flat PNG that blurs on a
+   retina display and cannot follow the reader's theme; this is the real
+   interface rebuilt in markup, so it stays sharp and stays honest — the
+   content is verbatim from a run against HoneyBook. */
+.win{border:1px solid var(--hair);border-radius:14px;overflow:hidden;
+  background:linear-gradient(180deg,var(--card),var(--panel));
+  box-shadow:0 40px 80px -40px var(--window-shadow),0 0 0 1px var(--window-edge);
+  margin:2.4rem 0}
+.win-bar{display:flex;align-items:center;gap:.5rem;padding:.7rem .9rem;
+  border-bottom:1px solid var(--hair);background:var(--panel-2)}
+.win-dot{width:11px;height:11px;border-radius:50%;flex:none}
+.win-title{margin-left:.5rem;font-size:.84rem;color:var(--grey-dim);
+  font-weight:520;letter-spacing:-.01em}
+.win-body{padding:1.1rem}
+.vd{display:flex;gap:.75rem;align-items:flex-start;padding:.85rem 1rem;
+  border:1px solid var(--hair);border-radius:10px;margin-bottom:.7rem;
+  background:var(--panel-2)}
+.vd.bad{border-left:3px solid var(--bad)}
+.vd.warn{border-left:3px solid var(--amber)}
+.vd.ok{border-left:3px solid var(--green)}
+.vd-ic{font-family:var(--mono);font-weight:600;flex:none;line-height:1.5}
+.vd.bad .vd-ic{color:var(--bad)} .vd.warn .vd-ic{color:var(--amber)}
+.vd.ok .vd-ic{color:var(--green)}
+.vd-quote a{color:var(--ice)}
+.vd strong{display:block;font-weight:550;letter-spacing:-.01em;margin-bottom:.15rem}
+.vd span{font-size:.9rem;color:var(--grey);line-height:1.5}
+/* display:block because this sits inside a <span>; without it the quote runs
+   on from the sentence above and reads as one run-on line. */
+.vd-quote{display:block;margin:.5rem 0 0;padding-left:.8rem;border-left:2px solid var(--hair-lit);
+  font-size:.87rem;color:var(--grey)}
+@media(max-width:640px){.win-body{padding:.7rem}.vd{padding:.7rem .8rem}}
+
+footer{border-top:1px solid var(--hair);margin-top:4rem;padding:2.6rem 0 3.4rem;
+  color:var(--grey-dim);font-size:.9rem}
+footer a{color:var(--grey)}
+footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
+  font-weight:550;margin-bottom:.7rem}
+@media(max-width:640px){
+  body{font-size:16px}
+  .hero{padding:3.2rem 0 2.4rem}
+  .nav-links{gap:.9rem;font-size:.84rem}
+  .nav-links li:nth-child(3){display:none}
+
+  /* At 375px this nav was 442px wide — six links plus the Download button, with
+     nowhere to go. Shrinking the gap and hiding one item was not enough, and the
+     consequence was not merely a clipped nav: the document became 521px wide, so
+     the LAYOUT VIEWPORT widened, and `position:fixed; right:.85rem` on the theme
+     toggle resolved against that instead of the screen. The toggle rendered
+     132px off the right edge — invisible and unreachable on a phone, a control I
+     added the same evening and would not have found by looking at a desktop.
+     A horizontal overflow does not stay a local problem. */
+  .nav-links{
+    flex:1 1 auto; min-width:0;
+    overflow-x:auto; -webkit-overflow-scrolling:touch;
+    scrollbar-width:none;
+  }
+  .nav-links::-webkit-scrollbar{display:none}
+  .nav-links li{flex:none}
+
+  /* WCAG 2.2 Target Size (Minimum). Measured on the live page at 375px: nav
+     links were 16-17px tall and footer links 15px, all with the hit box exactly
+     the height of the text. */
+  .nav-links a, footer a, .src a{display:inline-flex;align-items:center;min-height:24px}
+}
+</style>
+
+<script defer data-domain="adplaybook.app" src="https://plausible.io/js/script.js"></script><script async src="https://usesled.com/kerr-and-company/t.js"></script><script>(function(){var META_PIXEL_ID='';if(!META_PIXEL_ID)return;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',META_PIXEL_ID);fbq('track','PageView');})();</script>
+</head>
+<body>
+<div class="mesh" aria-hidden="true"><b class="m1"></b><b class="m2"></b><b class="m3"></b></div>
+<div class="grid-ovl" aria-hidden="true"></div>
+<nav><div class="wrap nav-inner">
+<a class="nav-brand" href="/"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="var(--panel-2)"/><rect x="14" y="14" width="14" height="72" rx="4" fill="var(--white)"/><rect x="33" y="14" width="53" height="72" rx="6" fill="var(--white)"/><circle cx="46" cy="70" r="9.5" fill="var(--panel-2)"/><circle cx="46" cy="70" r="4.3" fill="var(--white)"/><circle cx="61" cy="53" r="5" fill="var(--panel-2)"/><circle cx="75" cy="36" r="5" fill="var(--panel-2)"/></svg>AdPlaybook</a>
+<ul class="nav-links"><li><a href="/specs/">Ad specs</a></li><li><a href="/learn/">Learn</a></li><li><a href="/for/">By business</a></li><li><a href="/vs/">Compare</a></li><li><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.48/AdPlaybook-0.2.48-arm64.dmg"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" width="15" height="15" aria-hidden="true"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg>Download</a></li></ul>
+<button id="themeToggle" type="button" aria-label="Switch between light and dark">&#9686;</button>
+</div></nav>
+<div class="wrap">
+<article>
+<p class="crumb">Thank you</p>
+<h1>Your licence is active</h1>
+<p class="lede">The payment went through. What you bought, where the app is, and
+what to do if something is wrong.</p>
+
+<h2>What you bought</h2>
+<p>$149 once, for a licence covering unlimited commercial use across every site
+you work on. It does not expire and there is nothing to renew.</p>
+<p>The receipt arrives by email from <strong>Polar</strong>, who handle the
+checkout — it may show up under their name rather than AdPlaybook's.</p>
+
+<h2>The app</h2>
+<p>AdPlaybook runs entirely on your Mac. If you were already using the free
+tier, that is the same application — the licence widens what you may use it for,
+so there is nothing to install again and no key to enter.</p>
+<p><a class="btn" href="/">Get the app</a></p>
+
+<h2>If something is wrong</h2>
+<div class="box">
+<p style="margin-bottom:0">Email
+<a href="mailto:matthew@kerrandcompanyholdings.com">matthew@kerrandcompanyholdings.com</a>.
+AdPlaybook is built by one person, so mail is read and answered by a human —
+usually within a few days, and there is no promise beyond that.</p>
+</div>
+<p>If the purchase was a mistake, the <a href="/terms/">terms</a> set out how
+refunds work: a full refund, and you do not need to give a reason.</p>
+</article>
+</div>
+<footer><div class="wide">
+<div class="foot-brand"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="var(--panel-2)"/><rect x="14" y="14" width="14" height="72" rx="4" fill="var(--white)"/><rect x="33" y="14" width="53" height="72" rx="6" fill="var(--white)"/><circle cx="46" cy="70" r="9.5" fill="var(--panel-2)"/><circle cx="46" cy="70" r="4.3" fill="var(--white)"/><circle cx="61" cy="53" r="5" fill="var(--panel-2)"/><circle cx="75" cy="36" r="5" fill="var(--panel-2)"/></svg>AdPlaybook</div>
+<p>The ad maker that knows which strategy fits — and proves every claim.</p>
+<p>Every figure on this site is quoted from the platform's own documentation with
+the date it was read. Where something could not be verified, the page says so
+rather than leaving a gap you cannot see.</p>
+<p><a href="/specs/">Ad specs</a> · <a href="/learn/">Learn</a> ·
+<a href="/vs/">Compare</a> · <a href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.48/AdPlaybook-0.2.48-arm64.dmg">Download</a> ·
+<a href="/llms.txt">llms.txt</a></p>
+<p><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> ·
+<a href="/contact/">Contact</a></p>
+<p>Published by Kerr &amp; Company LLC, Grand Rapids, Michigan. Free to
+download and free forever on one website. $149 once for unlimited websites.</p>
+</div></footer>
+<script>/* THIS MUST STAY IN THE BODY. On 2026-08-13 the identical handler was
+placed inside the pre-paint <head> script on kerrandcompanyholdings.com, where it
+ran before <body> existed, so getElementById returned null and no listener was
+ever attached. The button rendered perfectly and did nothing — and a dead toggle
+is indistinguishable from a live one in a screenshot. ~/ops/bin/theme-toggle-gate.py
+checks this position specifically. */
+(function(){
+  var b=document.getElementById("themeToggle");
+  if(!b)return;
+  b.addEventListener("click",function(){
+    var c=document.documentElement.getAttribute("data-theme");
+    if(!c){c="dark";}  /* dark is this site's default, not the OS preference */
+    var n=c==="dark"?"light":"dark";
+    document.documentElement.setAttribute("data-theme",n);
+    try{localStorage.setItem("adplaybook-theme",n);}catch(e){}
+  });
+})();</script>
+<script>
+/* Reveal on scroll. Ported from outlier-site.
+ *
+ * TWO-WAY on purpose: the observer TOGGLES and is never unobserved, so the
+ * page animates on the way back up as well as down. Their own source records
+ * that unobserving is exactly what had made the effect one-shot.
+ *
+ * Reduced motion takes the early return and never constructs an observer at
+ * all — and the media block pins .reveal to visible regardless, so there is no
+ * path where content is left invisible because an observer did not run. That
+ * is the failure mode worth guarding: opacity:0 waiting on JS that never fires
+ * is a blank page, not a missing animation.
+ */
+(function(){
+  var els = document.querySelectorAll('.reveal');
+  if (!els.length) return;
+  var reduce = window.matchMedia &&
+               window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if (reduce || !('IntersectionObserver' in window)) return;   // stays visible
+  // CONSTRUCTING an observer is not proof it DELIVERS. Verifying this port, the
+  // observer was created without error and then fired zero callbacks, because
+  // the tab was hidden — and every block sat at opacity 0 with the stylesheet
+  // insisting it was mid-animation. A browser that throttles callbacks in a
+  // background tab does the same thing to a real reader.
+  //
+  // So the page only commits to hiding once a callback has actually arrived,
+  // and a timer takes it back if none does. The failure mode this removes is
+  // the expensive one: content invisible forever, waiting on a promise nothing
+  // kept.
+  var root = document.documentElement, armed = false;
+  var giveUp = setTimeout(function(){
+    if (!armed) root.classList.remove('js-reveal');
+  }, 1200);
+  root.classList.add('js-reveal');
+  var io = new IntersectionObserver(function(entries){
+    if (!armed) { armed = true; clearTimeout(giveUp); }
+    entries.forEach(function(e){ e.target.classList.toggle('in', e.isIntersecting); });
+  }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
+  els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+</body>
+</html>
