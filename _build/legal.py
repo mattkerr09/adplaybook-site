@@ -346,16 +346,18 @@ browser visited this page — which Meta can match to a Facebook or Instagram
 account. That is a different kind of thing from the two above, and calling it
 analytics would be a dodge: it exists so we can advertise this app on Meta and
 see which ads led somewhere.</p>
-<p>Like the affiliate script it is conditional, and here the condition is
-visible to you rather than to us. The pixel has an id, and <strong>that id is
-currently empty</strong>, so the loader stops on its first line and no request
-is made to Facebook at all. Nothing is loaded, nothing is set, nothing is sent.
-When we put an id in — and we intend to — the paragraph above starts describing
-something that is running, and this sentence will say so on the same day.</p>
-<p>We are telling you now, while it is off, because the alternative is a policy
-that catches up afterwards. You can check rather than trust us: view the source
-of any page, find <code>META_PIXEL_ID</code>, and see for yourself whether it is
-empty. If it is, no pixel is running on the page you are reading.</p>
+<p><strong>That id is now set, and the pixel is running.</strong> The
+paragraph above has stopped describing something hypothetical: on every page of
+this site, code loads from Facebook, Meta sets its own cookies in your browser,
+and Meta is told that this browser visited this page. This page said the id was
+empty until the day it wasn't, and this sentence changed in the same commit that
+filled it in — which is the only version of this promise worth making.</p>
+<p>You can still check rather than trust us, and the check is better now than it
+was: view the source of any page and find <code>META_PIXEL_ID</code>. It reads
+<code>1983109892356693</code>. If you would rather it did not run, any content
+blocker stops it, and <strong>nothing on this site needs it</strong> — every page,
+every tool and the download all work identically with Facebook blocked. We would
+rather you block it than not know it was there.</p>
 <p>View the source of any page and those three scripts are what you will find;
 there is nothing else.</p>
 <p>Two things are true anyway and you should know them:</p>

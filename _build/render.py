@@ -1048,7 +1048,7 @@ from content import DMG as DOWNLOAD  # noqa: E402
 #: not a nicety: a policy describing tracking that is not yet running is
 #: over-disclosure and costs nothing, while a pixel running under a policy that
 #: says "no pixel" is a false legal statement on a page that sells something.
-META_PIXEL_ID = ''
+META_PIXEL_ID = '1983109892356693'
 
 META_PIXEL = (
     '<script>(function(){'

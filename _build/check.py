@@ -659,10 +659,22 @@ def main() -> int:
         if not (SITE / f).exists():
             fails.append(f"missing {f}")
 
-    # 7. Every built page must be in the sitemap, or it does not exist.
+    # 7. Every INDEXABLE page must be in the sitemap, or it does not exist.
+    #
+    # ⚠️ NOINDEX PAGES ARE EXEMPT, and the exemption is not a loophole. A sitemap
+    # entry asks a crawler to index a URL; `noindex` tells it not to. Listing both
+    # is a contradiction we would be publishing on purpose, and Search Console
+    # reports it as an error against the whole sitemap rather than one page.
+    #
+    # This fired on /thank-you/ — a purchase confirmation, deliberately noindex so
+    # it cannot compete in search with pages that sell. The rule was right for
+    # every page that existed when it was written and wrong for the first one that
+    # was not meant to rank.
     smap = (SITE / "sitemap.xml").read_text() if (SITE / "sitemap.xml").exists() else ""
     for p in pages:
         rel = "/" + str(p.relative_to(SITE)).replace("index.html", "")
+        if "noindex" in p.read_text():
+            continue
         if f"<loc>https://adplaybook.app{rel}</loc>" not in smap:
             fails.append(f"{rel}: not in sitemap.xml")
 
