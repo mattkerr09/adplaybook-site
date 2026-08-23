@@ -72,8 +72,9 @@ def checkout_provider() -> str:
         return "polar"
     return "unknown"
 
-#: Flip when the button moves. check.py enforces the pairing.
-BNPL_LIVE = False
+#: Flipped 2026-08-21 when the button moved to Dodo. check.py enforces the
+#: pairing in both directions, so this cannot be true while CHECKOUT is Polar.
+BNPL_LIVE = True
 
 PRICE = 149.00
 INSTALMENTS = 4

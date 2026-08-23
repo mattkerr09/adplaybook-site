@@ -123,8 +123,26 @@ VERSION_TAG = _latest_tag()
 # framing can come back — and not before.
 PRICE_USD = 149
 PRICE_STR = f"${PRICE_USD}"
-CHECKOUT = ("https://buy.polar.sh/"
-            "polar_cl_Vw79ZAM9WNpBpTNN7EajE6wtdSxcIdVyIvGVy4Bp6Hp")
+
+def _bnpl_section() -> str:
+    """The pay-in-4 block, or nothing at all.
+
+    TWO CONDITIONS, NOT ONE. `BNPL_LIVE` is a human's intent; `checkout_provider()`
+    is what the Buy button actually does. Publishing on intent alone is how a page
+    ends up promising instalments at a card-only checkout — which on THIS product,
+    whose pitch is that it refuses claims it cannot trace, would be the worst
+    possible sentence to get wrong.
+
+    Returns "" rather than raising, because a missing section is a quiet nothing
+    and check.py fails the build if the flag is set and the copy is absent. The
+    gate catches it; the page never lies while we wait.
+    """
+    import bnpl
+    if bnpl.BNPL_LIVE and bnpl.checkout_provider() == "dodo":
+        return bnpl.SECTION
+    return ""
+
+CHECKOUT = "https://checkout.dodopayments.com/buy/pdt_0NlgduBtaHbj0V2WvTCqG"
 
 
 def dmg_mb(url: str = DMG) -> str:
@@ -620,6 +638,7 @@ Gatekeeper warning because Apple's notary service cleared it, not because you
 right-clicked past one.</p>
 <p><a class="btn" href="{{DMG}}">{dl} Download free for Mac{size_suffix}</a>
 <a class="btn ghost" href="{{CHECKOUT}}" style="margin-left:.6rem">Buy a licence · {{PRICE_STR}} once</a></p>
+{{BNPL}}
 <p class="src"><strong>30 days to change your mind.</strong> If it does not do what
 you need, email within 30 days of purchase and we refund in full — no reason
 required, back to the original payment method. One refund per customer, and the
@@ -693,7 +712,7 @@ run is a guess in the typography of a metric, and this tool does not publish
 numbers it did not measure. In a demo that looks like a missing feature. It is
 the reason to believe everything else it tells you.</p>
 </section>
-""".replace("{DMG}", DMG).replace("{RELEASES}", RELEASES).replace("{CHECKOUT}", CHECKOUT).replace("{PRICE_STR}", PRICE_STR)
+""".replace("{DMG}", DMG).replace("{RELEASES}", RELEASES).replace("{CHECKOUT}", CHECKOUT).replace("{BNPL}", _bnpl_section()).replace("{PRICE_STR}", PRICE_STR)
     page(path="/", title=f"{BRAND} — the ad maker that proves its own claims",
          description=("Turns a product page into a complete ad campaign — strategy, "
                       "audiences, exclusions, copy and measurement — then traces every "
