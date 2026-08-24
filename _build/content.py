@@ -657,6 +657,16 @@ full policy is in the <a href="/terms/">terms</a>.</p>
 <p class="src">Free to download and use — the whole app, no credits, no watermark, no account. {{PRICE_STR}} once buys a licence for unlimited commercial use across every site you work on. No subscription and no renewal.</p>
 <p class="src">{VERSION_TAG} · <a href="{{RELEASES}}">All releases</a> · bring your own
 OpenAI or Anthropic key, or run every generation locally with Outlier</p>
+<form class="sub" method="post" action="https://kerr-subscribe.kerrco.workers.dev">
+<input type="hidden" name="source" value="adplaybook-homepage">
+<label for="sub-email">Ad specs change without announcement, and a limit that moved
+last week is the kind of thing that fails quietly. We email when one does.</label>
+<input id="sub-email" name="email" type="email" required
+       autocomplete="email" placeholder="you@example.com">
+<div class="hp" aria-hidden="true"><label>Leave this empty
+<input name="website" tabindex="-1" autocomplete="off"></label></div>
+<button class="btn ghost" type="submit">Email me spec changes</button>
+</form>
 </div>
 <figure class="adshot reveal">
   <img src="/img/honeybook-a-control-preview.svg" width="460" height="808"

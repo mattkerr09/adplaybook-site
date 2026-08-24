@@ -444,6 +444,21 @@ li{margin-bottom:.5rem}
   box-shadow:none}
 .btn.ghost:hover{border-color:var(--blue);box-shadow:none}
 
+/* First-party email capture. Nothing loads on page view — this is a plain form
+   that posts once, on submit, to our own worker. A marketing SaaS script here
+   would undo the "no account, nothing uploaded" claim the page is built on, in
+   order to collect an email address. */
+.sub{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1.4rem 0 0}
+.sub label{font-size:.86rem;color:var(--grey-dim);flex:1 1 100%;margin:0 0 .1rem}
+.sub input[type=email]{flex:1 1 15rem;min-width:0;padding:.72rem 1rem;
+  border-radius:999px;border:1px solid var(--hair-lit);background:transparent;
+  color:var(--white);font:inherit;font-size:.93rem}
+.sub input[type=email]::placeholder{color:var(--grey-dim)}
+.sub input[type=email]:focus{outline:2px solid var(--blue);outline-offset:1px;
+  border-color:var(--blue)}
+.sub button{flex:0 0 auto}
+.sub .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
 .hero{position:relative}
 /* inset was -30% -50%, which made this decorative box 2x the hero width and
    pushed documentElement.scrollWidth to 1800 at a 1440 viewport — a real
@@ -1205,10 +1220,17 @@ anyone and we cannot use it to.</li>
 
 <h2>Your rights, stated honestly</h2>
 <p>Access, correction, deletion and portability all assume someone is holding
-your data. We are not. There is no database, no mailing list, no customer
-record, and no copy of anything the app produced — so a request to see, correct
-or delete what we hold has the same answer every time, which is that there is
-nothing there.</p>
+your data. Almost none of it is here. There is no customer record and no copy of
+anything the app produced, so for those a request has the same answer every
+time, which is that there is nothing there.</p>
+<p><strong>One exception, and it only exists if you typed it in.</strong> If you
+gave us an email address in the form on the home page, we hold that address, the
+name of the site it came from, and the time it arrived. That is the entire row.
+No IP address, no user agent, no referer, no fingerprint, and nothing that would
+let us build a profile — storing that "just in case" would make the sentence
+above false. Nothing loads on page view to collect it; the form posts once when
+you submit it. Consent is per product, so subscribing here does not subscribe
+you anywhere else. Ask and it is deleted.</p>
 <p>Where your data may exist — if the run reached a cloud provider rather than
 Outlier on your own Mac — is with that provider, under your own account with
 them, and with GitHub as the host of this site. Those requests go to them. If it

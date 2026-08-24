@@ -372,10 +372,17 @@ anyone and we cannot use it to.</li>
 
 <h2>Your rights, stated honestly</h2>
 <p>Access, correction, deletion and portability all assume someone is holding
-your data. We are not. There is no database, no mailing list, no customer
-record, and no copy of anything the app produced — so a request to see, correct
-or delete what we hold has the same answer every time, which is that there is
-nothing there.</p>
+your data. Almost none of it is here. There is no customer record and no copy of
+anything the app produced, so for those a request has the same answer every
+time, which is that there is nothing there.</p>
+<p><strong>One exception, and it only exists if you typed it in.</strong> If you
+gave us an email address in the form on the home page, we hold that address, the
+name of the site it came from, and the time it arrived. That is the entire row.
+No IP address, no user agent, no referer, no fingerprint, and nothing that would
+let us build a profile — storing that "just in case" would make the sentence
+above false. Nothing loads on page view to collect it; the form posts once when
+you submit it. Consent is per product, so subscribing here does not subscribe
+you anywhere else. Ask and it is deleted.</p>
 <p>Where your data may exist — if the run reached a cloud provider rather than
 Outlier on your own Mac — is with that provider, under your own account with
 them, and with GitHub as the host of this site. Those requests go to them. If it

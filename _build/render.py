@@ -464,6 +464,21 @@ li{margin-bottom:.5rem}
   box-shadow:none}
 .btn.ghost:hover{border-color:var(--blue);box-shadow:none}
 
+/* First-party email capture. Nothing loads on page view — this is a plain form
+   that posts once, on submit, to our own worker. A marketing SaaS script here
+   would undo the "no account, nothing uploaded" claim the page is built on, in
+   order to collect an email address. */
+.sub{display:flex;flex-wrap:wrap;gap:.6rem;align-items:center;margin:1.4rem 0 0}
+.sub label{font-size:.86rem;color:var(--grey-dim);flex:1 1 100%;margin:0 0 .1rem}
+.sub input[type=email]{flex:1 1 15rem;min-width:0;padding:.72rem 1rem;
+  border-radius:999px;border:1px solid var(--hair-lit);background:transparent;
+  color:var(--white);font:inherit;font-size:.93rem}
+.sub input[type=email]::placeholder{color:var(--grey-dim)}
+.sub input[type=email]:focus{outline:2px solid var(--blue);outline-offset:1px;
+  border-color:var(--blue)}
+.sub button{flex:0 0 auto}
+.sub .hp{position:absolute;left:-9999px;width:1px;height:1px;overflow:hidden}
+
 .hero{position:relative}
 /* inset was -30% -50%, which made this decorative box 2x the hero width and
    pushed documentElement.scrollWidth to 1800 at a 1440 viewport — a real
