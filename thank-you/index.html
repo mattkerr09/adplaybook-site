@@ -983,16 +983,25 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 </div></nav>
 <div class="wrap">
 <article>
-<p class="crumb">Thank you</p>
-<h1>Your licence is active</h1>
-<p class="lede">The payment went through. What you bought, where the app is, and
+<p class="crumb" id="ty-crumb">Thank you</p>
+<h1 id="ty-title">Your licence is active</h1>
+<p class="lede" id="ty-lede">The payment went through. What you bought, where the app is, and
 what to do if something is wrong.</p>
+
+<!-- THE LICENCE KEY, straight off the URL Dodo redirects to. Hidden until there
+     is one, because an empty box under "your licence is active" reads as a
+     failure. Filled with textContent and never innerHTML: the value arrives in
+     a query string, so it is attacker-controllable and this URL is the kind of
+     thing people forward. -->
+<p id="ty-key-wrap" hidden><strong>Your licence key:</strong>
+  <code id="ty-key" style="user-select:all"></code></p>
 
 <h2>What you bought</h2>
 <p>$149 once, for a licence covering unlimited commercial use across every site
 you work on. It does not expire and there is nothing to renew.</p>
-<p>The receipt arrives by email from <strong>Polar</strong>, who handle the
-checkout — it may show up under their name rather than AdPlaybook's.</p>
+<p>The receipt arrives by email from <strong>Dodo Payments</strong>, our merchant
+of record, who handle the checkout — it may show up under their name rather than
+AdPlaybook's.</p>
 
 <h2>The app</h2>
 <p>AdPlaybook runs entirely on your Mac. If you were already using the free
@@ -1081,6 +1090,62 @@ checks this position specifically. */
     entries.forEach(function(e){ e.target.classList.toggle('in', e.isIntersecting); });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
   els.forEach(function(el){ io.observe(el); });
+})();
+</script>
+
+<script>
+/* THE RETURN PATH. Dodo redirects here with payment_id, status, license_key and
+   email once the buy link carries ?redirect_url=.
+
+   ⚠️ THIS PAGE USED TO SAY "Your licence is active / The payment went through"
+   UNCONDITIONALLY, and that was safe only while nothing could reach it — there
+   was no redirect, so the only visitors were people who typed the URL. Adding
+   the redirect starts sending DECLINED customers here too, so shipping it
+   without this branch would have told people their payment succeeded when their
+   card was refused. The defect is created by the fix, which is why it ships in
+   the same change.
+
+   ⚠️ Purchase fires ONLY on status=succeeded. Firing it on a failure teaches the
+   ad account to optimise for people who could not pay. Deduped through
+   sessionStorage keyed on payment_id, so a reload or a shared link does not
+   count a second sale; eventID is payment_id so a future CAPI event dedupes
+   against this one rather than doubling it. */
+(function () {
+  var q = new URLSearchParams(location.search);
+  var status = (q.get('status') || '').toLowerCase();
+  var key = q.get('license_key');
+  var pid = q.get('payment_id');
+
+  if (status && status !== 'succeeded') {
+    var t = document.getElementById('ty-title');
+    var l = document.getElementById('ty-lede');
+    var c = document.getElementById('ty-crumb');
+    if (c) c.textContent = 'Payment';
+    if (t) t.textContent = 'That payment did not go through';
+    if (l) l.textContent = 'Your card was not charged. You can try again from the '
+      + 'pricing section, or email support@adplaybook.app and we will sort it out.';
+    return;                       // no key, no Purchase, nothing else on this path
+  }
+
+  if (key) {
+    var el = document.getElementById('ty-key');
+    var wrap = document.getElementById('ty-key-wrap');
+    if (el && wrap) { el.textContent = key; wrap.hidden = false; }
+  }
+
+  if (status === 'succeeded' && typeof fbq === 'function') {
+    var once = 'ap_purchase_' + (pid || 'nopid');
+    try {
+      if (!sessionStorage.getItem(once)) {
+        sessionStorage.setItem(once, '1');
+        fbq('track', 'Purchase', { value: 149, currency: 'USD' },
+            pid ? { eventID: pid } : undefined);
+      }
+    } catch (e) { /* private mode: firing once beats not firing */
+      fbq('track', 'Purchase', { value: 149, currency: 'USD' },
+          pid ? { eventID: pid } : undefined);
+    }
+  }
 })();
 </script>
 </body>
