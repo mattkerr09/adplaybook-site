@@ -668,10 +668,14 @@ tbody tr:hover td{background:var(--glow-3)}
   .mesh b{animation:none;filter:blur(90px)}
   .js-reveal .reveal{opacity:1;transform:none;transition:none}
 }
-/* Pay-in-4. The copy lives in _build/bnpl.py and is NOT published — the Buy
-   button still points at Polar, which is card-only, so every instalment
-   sentence would be false at the checkout it sends people to. check.py fails
-   the build if the copy reaches a page before the button moves to Dodo.
+/* Pay-in-4, LIVE since 23 August 2026. ⚠️ THIS COMMENT IS THE SOURCE — it is
+   inlined into all 57 pages, which is why fixing it in index.html did nothing.
+   It used to say the copy was "NOT published" because the Buy
+   button still pointed at Polar, which is card-only, so every instalment
+   sentence would have been false at the checkout it sent people to. That was
+   true when written and ended at the Dodo cutover. check.py still fails the
+   build if instalment copy reaches a page whose checkout is Polar — satisfied
+   now rather than obsolete.
    The styles are here so that turning it on is one flag rather than a flag
    and a design pass. */
 .paylater{margin:4rem 0 2rem;padding:2rem 1.9rem;border:1px solid var(--hair);
@@ -1013,10 +1017,10 @@ thing worth being suspicious of.</p>
 disk image from <a href="https://github.com/mattkerr09/adplaybook-site/releases">the releases page</a>. The download is the
 whole application — there is no separate paid build, no account to create and
 no server to sign in to.</p>
-<p>If you buy a licence, Polar emails you a key. You paste it into the app once;
-the app asks Polar whether the key is valid and stores that answer at
+<p>If you buy a licence, our merchant of record emails you a key. You paste it into the app once;
+the app asks the issuer whether the key is valid and stores that answer at
 <code>~/.config/adkit/licence.json</code>. It re-asks at most once a day, and if
-your machine cannot reach Polar an already-valid licence keeps working for 14
+your machine cannot reach the issuer an already-valid licence keeps working for 14
 days before it stops. That is the only network call licensing makes, and it
 carries the key and nothing else.</p>
 
@@ -1024,11 +1028,13 @@ carries the key and nothing else.</p>
 <p><strong>Free on one website. $149 once for unlimited websites</strong> —
 paid once, not a subscription, with no renewal and no expiry. There is no trial
 to run out, because the free tier is not a trial.</p>
-<p>Payment is taken by <strong>Polar</strong>, who are the merchant of record:
-your card statement will show Polar rather than us, they issue the receipt and
-handle sales tax and VAT, and they are the only party who ever sees your card.
-The one place to buy is the checkout linked from this site
-(<code>buy.polar.sh</code>). We do not sell AdPlaybook through app stores, resellers
+<p>Payment is taken by a <strong>merchant of record</strong>: your card statement
+will show them rather than us, they issue the receipt and handle sales tax and
+VAT, and they are the only party who ever sees your card. Since 23 August 2026
+that is <strong>Dodo Payments</strong>; purchases made before then went through
+<strong>Polar</strong>, and a Polar receipt is still theirs to refund. The one
+place to buy is the checkout linked from this site
+(<code>checkout.dodopayments.com</code>). We do not sell AdPlaybook through app stores, resellers
 or key marketplaces, so a key offered anywhere else did not come from us and we
 cannot support or honour it.</p>
 <p>Free is not the same as costless. The app calls a model on every generation

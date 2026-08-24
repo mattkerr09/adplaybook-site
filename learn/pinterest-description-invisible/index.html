@@ -6,7 +6,7 @@
 <title>Nobody reads your Pinterest description | AdPlaybook</title>
 <meta name="description" content="Pinterest states descriptions don&#x27;t appear in the feed, in search, or when a Pin is viewed up close. They feed the ranking algorithm.">
 <meta name="theme-color" content="#0d1017">
-<meta name="last-modified" content="2026-08-23">
+<meta name="last-modified" content="2026-08-24">
 <link rel="canonical" href="https://adplaybook.app/learn/pinterest-description-invisible/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -668,10 +668,14 @@ tbody tr:hover td{background:var(--glow-3)}
   .mesh b{animation:none;filter:blur(90px)}
   .js-reveal .reveal{opacity:1;transform:none;transition:none}
 }
-/* Pay-in-4. The copy lives in _build/bnpl.py and is NOT published — the Buy
-   button still points at Polar, which is card-only, so every instalment
-   sentence would be false at the checkout it sends people to. check.py fails
-   the build if the copy reaches a page before the button moves to Dodo.
+/* Pay-in-4, LIVE since 23 August 2026. ⚠️ THIS COMMENT IS THE SOURCE — it is
+   inlined into all 57 pages, which is why fixing it in index.html did nothing.
+   It used to say the copy was "NOT published" because the Buy
+   button still pointed at Polar, which is card-only, so every instalment
+   sentence would have been false at the checkout it sent people to. That was
+   true when written and ended at the Dodo cutover. check.py still fails the
+   build if instalment copy reaches a page whose checkout is Polar — satisfied
+   now rather than obsolete.
    The styles are here so that turning it on is one flag rather than a flag
    and a design pass. */
 .paylater{margin:4rem 0 2rem;padding:2rem 1.9rem;border:1px solid var(--hair);

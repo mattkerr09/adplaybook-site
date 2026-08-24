@@ -6,7 +6,7 @@
 <title>AdPlaybook — the ad maker that proves its own claims</title>
 <meta name="description" content="Turns a product page into a complete ad campaign — strategy, audiences, exclusions, copy and measurement — then traces every claim to your site and checks it against each platform&#x27;s real limits before you spend anything.">
 <meta name="theme-color" content="#0d1017">
-<meta name="last-modified" content="2026-08-23">
+<meta name="last-modified" content="2026-08-24">
 <link rel="canonical" href="https://adplaybook.app/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -668,12 +668,16 @@ tbody tr:hover td{background:var(--glow-3)}
   .mesh b{animation:none;filter:blur(90px)}
   .js-reveal .reveal{opacity:1;transform:none;transition:none}
 }
-/* Pay-in-4, LIVE since 2026-08-23. This comment used to say the copy was "NOT
-   published" because the Buy button "still points at Polar" — true when
-   written, false since the checkout moved to Dodo, and it sat here describing
-   an off state while the copy served on the page below it. check.py still
-   fails the build if instalment copy reaches a page whose checkout is Polar;
-   that guard is satisfied now rather than obsolete. */
+/* Pay-in-4, LIVE since 23 August 2026. ⚠️ THIS COMMENT IS THE SOURCE — it is
+   inlined into all 57 pages, which is why fixing it in index.html did nothing.
+   It used to say the copy was "NOT published" because the Buy
+   button still pointed at Polar, which is card-only, so every instalment
+   sentence would have been false at the checkout it sent people to. That was
+   true when written and ended at the Dodo cutover. check.py still fails the
+   build if instalment copy reaches a page whose checkout is Polar — satisfied
+   now rather than obsolete.
+   The styles are here so that turning it on is one flag rather than a flag
+   and a design pass. */
 .paylater{margin:4rem 0 2rem;padding:2rem 1.9rem;border:1px solid var(--hair);
   border-radius:var(--r);background:linear-gradient(180deg,var(--card),var(--panel-2));
   box-shadow:var(--lift-2),inset 0 1px 0 var(--lift-edge)}
@@ -1137,7 +1141,7 @@ list of what could not be verified.</p>
 Gatekeeper warning because Apple's notary service cleared it, not because you
 right-clicked past one.</p>
 <p><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.48/AdPlaybook-0.2.48-arm64.dmg"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" width="15" height="15"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg> Download free for Mac · 134.6 MB</a>
-<a class="btn ghost" href="https://checkout.dodopayments.com/buy/pdt_0NlgduBtaHbj0V2WvTCqG?redirect_url=https%3A%2F%2Fadplaybook.app%2Fthank-you%2F" style="margin-left:.6rem">Buy a licence · $149 once</a></p>
+<a class="btn ghost" href="https://checkout.dodopayments.com/buy/pdt_0NlgduBtaHbj0V2WvTCqG" style="margin-left:.6rem">Buy a licence · $149 once</a></p>
 
 <section class="paylater">
   <p class="eyebrow">Paying for it</p>

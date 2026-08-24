@@ -4,9 +4,9 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Pinterest ad specs and character limits (2026) | AdPlaybook</title>
-<meta name="description" content="Pinterest ad character limits, image sizes and hard floors. Every figure quoted from Pinterest&#x27;s own documentation with the date it was read, 2026-08-10.">
+<meta name="description" content="Pinterest ad character limits, image sizes and hard floors. Every figure quoted from Pinterest&#x27;s own documentation with the date it was read, 2026-08-23.">
 <meta name="theme-color" content="#0d1017">
-<meta name="last-modified" content="2026-08-10">
+<meta name="last-modified" content="2026-08-23">
 <link rel="canonical" href="https://adplaybook.app/specs/pinterest/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -17,7 +17,7 @@ Braces are doubled because this template is an f-string. */
 if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</script>
 <meta property="og:type" content="article">
 <meta property="og:title" content="Pinterest ad specs and character limits (2026) | AdPlaybook">
-<meta property="og:description" content="Pinterest ad character limits, image sizes and hard floors. Every figure quoted from Pinterest&#x27;s own documentation with the date it was read, 2026-08-10.">
+<meta property="og:description" content="Pinterest ad character limits, image sizes and hard floors. Every figure quoted from Pinterest&#x27;s own documentation with the date it was read, 2026-08-23.">
 <meta property="og:url" content="https://adplaybook.app/specs/pinterest/">
 <meta property="og:site_name" content="AdPlaybook">
 <meta property="og:image" content="https://adplaybook.app/og.png">
@@ -27,7 +27,7 @@ if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</s
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://adplaybook.app/og.png">
 <meta name="twitter:title" content="Pinterest ad specs and character limits (2026) | AdPlaybook">
-<meta name="twitter:description" content="Pinterest ad character limits, image sizes and hard floors. Every figure quoted from Pinterest&#x27;s own documentation with the date it was read, 2026-08-10.">
+<meta name="twitter:description" content="Pinterest ad character limits, image sizes and hard floors. Every figure quoted from Pinterest&#x27;s own documentation with the date it was read, 2026-08-23.">
 <style>
 /* Design tokens match the sibling products on purpose — same black, same
    hairlines, same pill buttons — with this app's blue in place of Crisp's
@@ -668,10 +668,14 @@ tbody tr:hover td{background:var(--glow-3)}
   .mesh b{animation:none;filter:blur(90px)}
   .js-reveal .reveal{opacity:1;transform:none;transition:none}
 }
-/* Pay-in-4. The copy lives in _build/bnpl.py and is NOT published — the Buy
-   button still points at Polar, which is card-only, so every instalment
-   sentence would be false at the checkout it sends people to. check.py fails
-   the build if the copy reaches a page before the button moves to Dodo.
+/* Pay-in-4, LIVE since 23 August 2026. ⚠️ THIS COMMENT IS THE SOURCE — it is
+   inlined into all 57 pages, which is why fixing it in index.html did nothing.
+   It used to say the copy was "NOT published" because the Buy
+   button still pointed at Polar, which is card-only, so every instalment
+   sentence would have been false at the checkout it sent people to. That was
+   true when written and ended at the Dodo cutover. check.py still fails the
+   build if instalment copy reaches a page whose checkout is Polar — satisfied
+   now rather than obsolete.
    The styles are here so that turning it on is one flag rather than a flag
    and a design pass. */
 .paylater{margin:4rem 0 2rem;padding:2rem 1.9rem;border:1px solid var(--hair);
@@ -969,7 +973,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
   .nav-links a, footer a, .src a{display:inline-flex;align-items:center;min-height:24px}
 }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Pinterest ad specs and character limits","description":"Pinterest ad character limits, image sizes and hard floors. Every figure quoted from Pinterest's own documentation with the date it was read, 2026-08-10.","datePublished":"2026-08-10","dateModified":"2026-08-10","publisher":{"@type":"Organization","name":"AdPlaybook"},"isBasedOn":"https://help.pinterest.com/en/business/article/pinterest-product-specs"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Pinterest ad specs and character limits","description":"Pinterest ad character limits, image sizes and hard floors. Every figure quoted from Pinterest's own documentation with the date it was read, 2026-08-23.","datePublished":"2026-08-23","dateModified":"2026-08-23","publisher":{"@type":"Organization","name":"AdPlaybook"},"isBasedOn":"https://help.pinterest.com/en/business/article/pinterest-product-specs"}</script>
 <script defer data-domain="adplaybook.app" src="https://plausible.io/js/script.js"></script><script async src="https://usesled.com/kerr-and-company/t.js"></script><script>(function(){var META_PIXEL_ID='1983109892356693';if(!META_PIXEL_ID)return;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',META_PIXEL_ID);fbq('track','PageView');})();</script>
 </head>
 <body>
@@ -984,16 +988,16 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 <article>
 <p class="crumb"><a href="/specs/">Ad specs</a> / Pinterest</p>
 <h1>Pinterest ad specs and character limits</h1>
-<p class="lede">Pinterest ad character limits, image sizes and hard floors. Every figure quoted from Pinterest&#x27;s own documentation with the date it was read, 2026-08-10.</p>
+<p class="lede">Pinterest ad character limits, image sizes and hard floors. Every figure quoted from Pinterest&#x27;s own documentation with the date it was read, 2026-08-23.</p>
 
 <div class="box ok">
-<p style="margin:0"><span class="pill checked">read 2026-08-10</span>
+<p style="margin:0"><span class="pill checked">read 2026-08-23</span>
 Source: <a class="src" href="https://help.pinterest.com/en/business/article/pinterest-product-specs" rel="nofollow noopener">https://help.pinterest.com/en/business/article/pinterest-product-specs</a></p>
 </div>
 
 <h2>Character limits and sizes</h2>
 <table><thead><tr><th>Placement</th><th>Headline</th><th>Body text</th><th>Max file</th></tr></thead>
-<tbody><tr><td><strong>Feed: standard Pin ad (image)</strong><br><span class='src'>2:3 1000 x 1500</span></td><td><strong>40</strong> to stay visible · 100 hard cap</td><td><strong>800</strong></td><td>20 MB</td></tr><tr><td><strong>Feed: video Pin ad</strong><br><span class='src'>2:3 </span></td><td><strong>40</strong> to stay visible · 100 hard cap</td><td><strong>800</strong></td><td>2048 MB</td></tr><tr><td><strong>Feed: collections ad</strong><br><span class='src'>1:1 or 2:3 </span></td><td><strong>40</strong> to stay visible · 100 hard cap</td><td><strong>800</strong></td><td>20 MB</td></tr></tbody></table>
+<tbody><tr><td><strong>Feed: standard Pin ad (image)</strong><br><span class='src'>2:3 1000 x 1500</span></td><td><strong>40</strong> to stay visible · 100 hard cap</td><td><strong>800</strong></td><td>20 MB</td></tr><tr><td><strong>Feed: video Pin ad</strong><br><span class='src'>2:3 </span></td><td><strong>40</strong> to stay visible · 100 hard cap</td><td><strong>800</strong></td><td>2048 MB</td></tr><tr><td><strong>Feed: collections ad</strong><br><span class='src'>1:1 or 2:3 </span></td><td><strong>40</strong> to stay visible · 100 hard cap</td><td><strong>800</strong></td><td>10 MB</td></tr></tbody></table>
 <p>Where two numbers are given, the first is what stays visible and the second
 is what the field accepts. They're different questions. Copy over the cap gets
 rejected at upload. Copy over the visible limit runs, and gets cut off. Most

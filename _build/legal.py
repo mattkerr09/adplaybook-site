@@ -453,10 +453,10 @@ thing worth being suspicious of.</p>
 disk image from <a href="{RELEASES}">the releases page</a>. The download is the
 whole application — there is no separate paid build, no account to create and
 no server to sign in to.</p>
-<p>If you buy a licence, Polar emails you a key. You paste it into the app once;
-the app asks Polar whether the key is valid and stores that answer at
+<p>If you buy a licence, our merchant of record emails you a key. You paste it into the app once;
+the app asks the issuer whether the key is valid and stores that answer at
 <code>~/.config/adkit/licence.json</code>. It re-asks at most once a day, and if
-your machine cannot reach Polar an already-valid licence keeps working for 14
+your machine cannot reach the issuer an already-valid licence keeps working for 14
 days before it stops. That is the only network call licensing makes, and it
 carries the key and nothing else.</p>
 
@@ -464,11 +464,13 @@ carries the key and nothing else.</p>
 <p><strong>Free on one website. ${PRICE_USD} once for unlimited websites</strong> —
 paid once, not a subscription, with no renewal and no expiry. There is no trial
 to run out, because the free tier is not a trial.</p>
-<p>Payment is taken by <strong>Polar</strong>, who are the merchant of record:
-your card statement will show Polar rather than us, they issue the receipt and
-handle sales tax and VAT, and they are the only party who ever sees your card.
-The one place to buy is the checkout linked from this site
-(<code>buy.polar.sh</code>). We do not sell {BRAND} through app stores, resellers
+<p>Payment is taken by a <strong>merchant of record</strong>: your card statement
+will show them rather than us, they issue the receipt and handle sales tax and
+VAT, and they are the only party who ever sees your card. Since 23 August 2026
+that is <strong>Dodo Payments</strong>; purchases made before then went through
+<strong>Polar</strong>, and a Polar receipt is still theirs to refund. The one
+place to buy is the checkout linked from this site
+(<code>checkout.dodopayments.com</code>). We do not sell {BRAND} through app stores, resellers
 or key marketplaces, so a key offered anywhere else did not come from us and we
 cannot support or honour it.</p>
 <p>Free is not the same as costless. The app calls a model on every generation
@@ -682,9 +684,9 @@ your machine, it is gone.</li>
 obligations that commonly attach to what you sell, with a source for each, and
 that is the limit of it. Whoever signs your ads off should be qualified to.</li>
 <li><strong>Billing.</strong> We never see your card and cannot look up your
-payment. Polar is the merchant of record for every {BRAND} licence — receipts,
-invoices, tax and card problems are theirs, and a refund we approve is still
-paid out by them. Email us anyway if something has gone wrong and we will tell
+payment. A merchant of record handles every {BRAND} licence — Dodo Payments
+since 23 August 2026, Polar before that — so receipts, invoices, tax and card
+problems are theirs, and a refund we approve is still paid out by them. Email us anyway if something has gone wrong and we will tell
 you exactly who to ask. Model usage is billed to you by your provider directly
 and never passes through us at all.</li>
 </ul>
