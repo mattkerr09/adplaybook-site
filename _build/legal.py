@@ -384,7 +384,7 @@ will get it.</p>
 
 <div class="box">
 <strong>What this page does not cover</strong>
-<p>It describes {VERSION_TAG}, dated {EFFECTIVE}. It does not describe any future build,
+<p>It describes {VERSION_TAG}; this policy was last changed {EFFECTIVE}. It does not describe any future build,
 and it does not describe a paid version, because there is not one — see
 <a href="/terms/">the terms</a>. If a payment mechanism, an account, a licence
 key or a server ever exists, this page changes before that ships, not after.</p>

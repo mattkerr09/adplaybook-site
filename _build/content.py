@@ -655,8 +655,8 @@ you need, email within 30 days of purchase and we refund in full — no reason
 required, back to the original payment method. One refund per customer, and the
 full policy is in the <a href="/terms/">terms</a>.</p>
 <p class="src">Free to download and use — the whole app, no credits, no watermark, no account. {{PRICE_STR}} once buys a licence for unlimited commercial use across every site you work on. No subscription and no renewal.</p>
-<p class="src">{VERSION_TAG} · <a href="{{RELEASES}}">All releases</a> · needs Outlier
-running locally, or an OpenAI or Anthropic key</p>
+<p class="src">{VERSION_TAG} · <a href="{{RELEASES}}">All releases</a> · bring your own
+OpenAI or Anthropic key, or run every generation locally with Outlier</p>
 </div>
 <figure class="adshot reveal">
   <img src="/img/honeybook-a-control-preview.svg" width="460" height="808"
