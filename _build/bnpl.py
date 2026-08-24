@@ -1,14 +1,22 @@
-"""Pay-in-4 copy for adplaybook.app. WRITTEN, NOT PUBLISHED.
+"""Pay-in-4 copy for adplaybook.app. LIVE since 2026-08-23.
 
-WHY IT IS OFF. The Buy button points at buy.polar.sh — verified on the live
-page, not assumed — and Polar is card-only through Stripe. There is no Klarna,
-no Afterpay, no instalment option of any kind behind that link. So every
-sentence in this file would be FALSE the moment a visitor clicked, on the page
-of a product whose entire pitch is that it refuses claims it cannot trace.
+⚠️ THIS DOCSTRING SAID "WRITTEN, NOT PUBLISHED" AND "WHY IT IS OFF" FOR DAYS
+AFTER IT WENT ON. The condition it described — Buy pointing at buy.polar.sh,
+card-only, so every sentence here would be false the moment a visitor clicked —
+was true when written and ended when the checkout moved to Dodo. Five instalment
+mentions have been serving on the live page since. Corrected 2026-08-23.
 
-It becomes true when the Buy button moves to Dodo. `check.py` fails the build
-if this copy ever reaches a served page while the checkout is still Polar, so
-turning it on early is not a thing anyone can do by forgetting.
+The mechanism was never wrong, and that is the part worth keeping: `processor()`
+below derives the answer from the CHECKOUT url rather than from a belief written
+down anywhere, so BNPL_LIVE could not be true while the button still pointed at
+Polar. The gate stayed honest while the prose describing it rotted — which is
+the failure mode, because the prose is what the next person reads. The same
+mistake was found the same day in ops/bin/bnpl-claim-gate.py, whose docstring
+still required "a Stripe checkout, because Polar cannot" long after every
+checkout was Dodo.
+
+`check.py` still fails the build if this copy reaches a served page while the
+checkout is Polar. That guard is not obsolete — it is simply satisfied now.
 
 THE ARITHMETIC IS DERIVED, NOT TYPED. 149.00 / 4 = 37.25 exactly, four payments
 summing to 149.00, final payment six weeks after the first. Checked here rather
