@@ -1587,6 +1587,37 @@ def main() -> int:
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">'
         f"{urls}</urlset>\n")
 
+    # ---- hand-maintained pages must not rot on a release --------------------
+    #
+    # /thank-you/ is 1,156 lines of hand-written HTML that nothing in _build
+    # generates, and it hardcodes the DMG URL. On 2026-08-24 it still pointed at
+    # v0.2.48 — the build WITHOUT the cross-product licence guard — after v0.2.49
+    # had published. So the page a buyer lands on IMMEDIATELY AFTER PAYING was the
+    # last place still handing out the defective build. Everywhere else had moved.
+    #
+    # The publish gate did catch it, and refused. But catching it at publish means
+    # a human edits this page by hand every single release, which is the same rot
+    # with an alarm attached. This rewrites the link instead.
+    #
+    # Deliberately a whole-site sweep rather than a list of hand-maintained files:
+    # a list is one more thing to update when the next such page appears, and the
+    # generated pages already hold the current URL, so it is a no-op for them.
+    # Only the version-bearing DMG URL is touched — nothing else is rewritten.
+    stale = re.compile(
+        r"https://github\.com/[^\"\s]+/releases/download/"
+        r"v\d+\.\d+\.\d+/AdPlaybook-\d+\.\d+\.\d+-arm64\.dmg")
+    refreshed = []
+    for html in SITE.rglob("*.html"):
+        if ".git" in html.parts:
+            continue
+        before = html.read_text()
+        after = stale.sub(DOWNLOAD, before)
+        if after != before:
+            html.write_text(after)
+            refreshed.append(str(html.relative_to(SITE)))
+    for r in sorted(refreshed):
+        print(f"  refreshed stale download link in {r}")
+
     print(f"built {len(PAGES)} pages")
     for p, _ in sorted(set(PAGES)):
         print(f"  {p}")
