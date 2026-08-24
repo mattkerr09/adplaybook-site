@@ -1268,6 +1268,69 @@ checks this position specifically. */
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.08 });
   els.forEach(function(el){ io.observe(el); });
 })();
+
+/* THE SUBSCRIBE FORM NAVIGATED PEOPLE OFF THE SITE.
+ *
+ * Shipped earlier today as the bare snippet from the worker's README, which is
+ * a plain <form action="…"> with no handler. It works — the row is written —
+ * and the visitor is thrown from adplaybook.app to a page reading {"ok":true}
+ * in the browser's default font. They lose the page they were reading and are
+ * shown developer output as the reward for subscribing.
+ *
+ * ⚠️ THE NO-JS PATH MUST KEEP WORKING. This enhances the form; it does not
+ * replace it. If this script never runs, the plain POST still subscribes them.
+ *
+ * ⚠️ NEVER CLAIM A SUCCESS THAT DID NOT HAPPEN. A handler written as
+ * `fetch(...).then(showSuccess)` reports success for a 500, for a 200 carrying
+ * {"ok":false}, and for anything else that merely SETTLES. Telling someone
+ * they are on a list they are not on is worse than the raw JSON page, because
+ * the raw JSON at least happened after a real write. So: only ok===true, and
+ * every other outcome leaves the form on screen and retryable.
+ */
+(function(){
+  var f = document.querySelector('form.sub');
+  if (!f) return;
+  var btn = f.querySelector('button[type=submit]');
+  var note = document.createElement('p');
+  note.className = 'src';
+  note.setAttribute('role', 'status');
+  note.setAttribute('aria-live', 'polite');
+  note.style.margin = '.6rem 0 0';
+  f.parentNode.insertBefore(note, f.nextSibling);
+
+  f.addEventListener('submit', function(ev){
+    ev.preventDefault();
+    var email = (f.querySelector('input[type=email]') || {}).value || '';
+    var was = btn ? btn.textContent : '';
+    if (btn) { btn.disabled = true; btn.textContent = 'Sending…'; }
+    note.textContent = '';
+    fetch(f.action, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({
+        email: email,
+        source: (f.querySelector('[name=source]') || {}).value || 'adplaybook',
+        website: (f.querySelector('[name=website]') || {}).value || ''
+      })
+    }).then(function(r){
+      return r.json().catch(function(){ return {}; })
+              .then(function(b){ return { ok: r.ok && b && b.ok === true, body: b }; });
+    }).then(function(res){
+      if (res.ok) {
+        f.style.display = 'none';
+        note.textContent = "You're on the list. We'll email when a spec actually changes.";
+      } else {
+        note.textContent = (res.body && res.body.error)
+          ? res.body.error + ' — try again?'
+          : "That did not go through. Try again in a moment.";
+        if (btn) { btn.disabled = false; btn.textContent = was; }
+      }
+    }).catch(function(){
+      note.textContent = "That did not go through — check your connection and try again.";
+      if (btn) { btn.disabled = false; btn.textContent = was; }
+    });
+  });
+})();
 </script>
 </body>
 </html>
