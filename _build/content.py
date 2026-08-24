@@ -142,7 +142,18 @@ def _bnpl_section() -> str:
         return bnpl.SECTION
     return ""
 
-CHECKOUT = "https://checkout.dodopayments.com/buy/pdt_0NlgduBtaHbj0V2WvTCqG"
+#: ⚠️ THE redirect_url BELONGS HERE, NOT IN THE BUILT PAGE. It was added to
+#: index.html directly on 2026-08-23 (97759d4) and the next rebuild silently
+#: removed it, taking the conversion path with it — buyers stopped being
+#: returned to /thank-you/, so no Purchase could fire and no sale could be
+#: attributed. Nothing failed loudly; a gate caught it.
+#:
+#: The query param is `redirect_url`. Dodo's docs say `return_url`, which on a
+#: STATIC buy link does nothing at all — measured with a baseline on this very
+#: product: bare 0 mentions / return_url 0 / redirect_url 1, and the session
+#: field reads back as "return_url":"https://adplaybook.app/thank-you/".
+CHECKOUT = ("https://checkout.dodopayments.com/buy/pdt_0NlgduBtaHbj0V2WvTCqG"
+            "?redirect_url=https%3A%2F%2Fadplaybook.app%2Fthank-you%2F")
 
 
 def dmg_mb(url: str = DMG) -> str:
