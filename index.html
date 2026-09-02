@@ -6,7 +6,7 @@
 <title>AdPlaybook — the ad maker that proves its own claims</title>
 <meta name="description" content="Turns a product page into a complete ad campaign — strategy, audiences, exclusions, copy and measurement — then traces every claim to your site and checks it against each platform&#x27;s real limits before you spend anything.">
 <meta name="theme-color" content="#0d1017">
-<meta name="last-modified" content="2026-08-24">
+<meta name="last-modified" content="2026-09-02">
 <link rel="canonical" href="https://adplaybook.app/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -987,17 +987,6 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
      the height of the text. */
   .nav-links a, footer a, .src a{display:inline-flex;align-items:center;min-height:24px}
 }
-
-  /* ⚠️ HOW YOU CAN PAY, BESIDE THE PRICE. The instalment terms already existed
-     on this page — in a <section class="paylater"> further down, which is a
-     screen away from the button someone is deciding whether to press. A price
-     answers "how much"; it does not answer "can I do this right now", and that
-     second question is the one that stops people.
-     Matthew confirmed instalments are offered at step two of the Dodo checkout —
-     the step three separate checks could not reach, since the page names no
-     method and six checkout API responses carry no payment-method field. */
-  .payline { margin:.5rem 0 0; font-size:.95rem; font-weight:600; }
-  .payline strong { font-weight:750; }
 </style>
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"SoftwareApplication","name":"AdPlaybook","applicationCategory":"BusinessApplication","operatingSystem":"macOS","offers":{"@type":"Offer","price":"149","priceCurrency":"USD","description":"One-time licence for unlimited websites. Free forever on one site."},"description":"Ad campaign generator with claim substantiation and platform feasibility checking."}</script>
 <script defer data-domain="adplaybook.app" src="https://plausible.io/js/script.js"></script><script async src="https://usesled.com/kerr-and-company/t.js"></script><script>(function(){var META_PIXEL_ID='1983109892356693';if(!META_PIXEL_ID)return;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',META_PIXEL_ID);fbq('track','PageView');})();</script>
@@ -1168,7 +1157,6 @@ Gatekeeper warning because Apple's notary service cleared it, not because you
 right-clicked past one.</p>
 <p><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.49/AdPlaybook-0.2.49-arm64.dmg"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" width="15" height="15"><path d="M8 1.5v9m0 0L4.5 7M8 10.5 11.5 7"/><path d="M2 11.5v2A1.5 1.5 0 0 0 3.5 15h9a1.5 1.5 0 0 0 1.5-1.5v-2"/></svg> Download free for Mac · 134.6 MB</a>
 <a class="btn ghost" href="https://checkout.dodopayments.com/buy/pdt_0NlgduBtaHbj0V2WvTCqG?redirect_url=https%3A%2F%2Fadplaybook.app%2Fthank-you%2F" style="margin-left:.6rem">Buy a licence · $149 once</a></p>
-<p class="payline">$149 once, or <strong>4 payments of $37.25</strong> with Klarna or Afterpay &mdash; two weeks apart, at no extra cost.</p>
 
 <section class="paylater">
   <p class="eyebrow">Paying for it</p>
@@ -1586,15 +1574,5 @@ checks this position specifically. */
   });
 })();
 </script>
-<!-- Assistant. Served from the worker so every site shares one widget and one
-     factbase; nothing about prices or terms is duplicated here. -->
-<script src="https://kerr-lead-agent.kerrco.workers.dev/embed.js" defer></script>
-
-<!-- Windows waiting list. Renders into this div; the script does nothing if it
-     is absent, so placement is a decision made here rather than guessed. -->
-<div data-founding data-was="$149" data-now="$74.50" style="max-width:520px;margin:1.25rem auto 0"></div>
-<script src="https://kerr-lead-agent.kerrco.workers.dev/founding.js" defer></script>
-<div data-win-notify style="max-width:520px;margin:1.25rem auto 0"></div>
-<script src="https://kerr-subscribe.kerrco.workers.dev/notify.js" defer></script>
 </body>
 </html>

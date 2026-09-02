@@ -96,6 +96,53 @@ def _is_live(html: str) -> bool:
     return bool(m.group(1)) and "connect.facebook.net" in html
 
 
+def check_conversion_events_carry_value(fails: list) -> None:
+    """A conversion event without `value` and `currency` cannot produce ROAS.
+
+    Reported across the portfolio as "AdPlaybook fires Purchase bare". Measured
+    here: AdPlaybook fires NO Purchase event at all — only PageView — so the
+    report does not apply to this repo. There is nowhere for it to fire yet
+    either; checkout is hosted by the payment vendor and there is no return
+    page.
+
+    This is therefore a guard against a bug that does not exist, which is the
+    cheapest moment to write one. When the event is added, Meta needs `value`
+    and `currency` to compute return on ad spend. Without them the account
+    shows "3 purchases" and no revenue, permanently — and every optimisation
+    decision after that is made on missing data. The damage is silent and
+    retroactive: the numbers cannot be backfilled once the ads have run.
+
+    `eventID` is required too. It costs nothing now and adding the Conversions
+    API later without it means a stretch of double-counted conversions in
+    exactly the figures used to judge the ads.
+    """
+    import glob
+
+    # Events that represent money changing hands. PageView, ViewContent and
+    # Lead legitimately carry no value.
+    MONETARY = ("Purchase", "Subscribe", "StartTrial", "AddPaymentInfo")
+
+    for path in glob.glob(str(SITE / "**/*.html"), recursive=True):
+        html = pathlib.Path(path).read_text(errors="replace")
+        for event in MONETARY:
+            for m in re.finditer(
+                    r"fbq\(\s*['\"]track['\"]\s*,\s*['\"]" + event + r"['\"]([^;]*)",
+                    html):
+                args = m.group(1)
+                rel = pathlib.Path(path).relative_to(SITE)
+                if "value" not in args or "currency" not in args:
+                    fails.append(
+                        f"{rel}: fbq track {event} carries no value/currency. "
+                        f"Meta cannot compute ROAS from it — the account will "
+                        f"show a purchase count and no revenue, and the figures "
+                        f"cannot be backfilled once ads have run.")
+                if "eventID" not in args:
+                    fails.append(
+                        f"{rel}: fbq track {event} has no eventID. Adding the "
+                        f"Conversions API later without one double-counts "
+                        f"conversions in the numbers used to judge the ads.")
+
+
 def check_policy_mentions_it(fails: list) -> None:
     priv = _plain((SITE / "privacy/index.html").read_text(errors="replace"))
     if "connect.facebook.net" in (SITE / "index.html").read_text(errors="replace"):
@@ -128,6 +175,7 @@ def check_policy_mentions_it(fails: list) -> None:
 def main() -> None:
     fails: list = []
     check_pixel(fails)
+    check_conversion_events_carry_value(fails)
     check_policy_mentions_it(fails)
     for f in fails:
         print(f"  FAIL  {f}")

@@ -559,6 +559,7 @@ def main() -> int:
     # half that notices when they come apart.
     import check_pixel
     check_pixel.check_pixel(fails)
+    check_pixel.check_conversion_events_carry_value(fails)
     check_pixel.check_policy_mentions_it(fails)
     check_the_demo_figures_are_disclaimed(fails)
 
