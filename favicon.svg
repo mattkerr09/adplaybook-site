@@ -1,7 +1,14 @@
+<!-- Ground and mark track the CURRENT brand. The amber #f0b429 on #151210 this
+     replaces was the pre-2026-08-13 palette; index.html records the accent moving
+     off green that day and the warm browns going neutral after. The tab was two
+     brand changes behind and shared no colour with the page it labels — and
+     apple-touch-icon.png was a THIRD palette again, #4ade80 on #0c110e, so the
+     two icons did not even match each other. The PNG is now rendered FROM this
+     file rather than drawn separately, so they cannot diverge again. -->
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
-<rect width="100" height="100" rx="22" fill="#151210"/>
-<rect x="14" y="14" width="14" height="72" rx="4" fill="#f0b429"/>
-<rect x="33" y="14" width="53" height="72" rx="6" fill="#f0b429"/>
-<circle cx="46" cy="70" r="9.5" fill="#151210"/><circle cx="46" cy="70" r="4.3" fill="#f0b429"/>
-<circle cx="61" cy="53" r="5" fill="#151210"/><circle cx="75" cy="36" r="5" fill="#151210"/>
+<rect width="100" height="100" rx="22" fill="#0B0B0D"/>
+<rect x="14" y="14" width="14" height="72" rx="4" fill="#FAFAF8"/>
+<rect x="33" y="14" width="53" height="72" rx="6" fill="#FAFAF8"/>
+<circle cx="46" cy="70" r="9.5" fill="#0B0B0D"/><circle cx="46" cy="70" r="4.3" fill="#FAFAF8"/>
+<circle cx="61" cy="53" r="5" fill="#0B0B0D"/><circle cx="75" cy="36" r="5" fill="#0B0B0D"/>
 </svg>
