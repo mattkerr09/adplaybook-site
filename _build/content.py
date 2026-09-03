@@ -735,10 +735,13 @@ the reason to believe everything else it tells you.</p>
 </section>
 """.replace("{DMG}", DMG).replace("{RELEASES}", RELEASES).replace("{CHECKOUT}", CHECKOUT).replace("{BNPL}", _bnpl_section()).replace("{PRICE_STR}", PRICE_STR)
     page(path="/", title=f"{BRAND} — the ad maker that proves its own claims",
-         description=("Turns a product page into a complete ad campaign — strategy, "
-                      "audiences, exclusions, copy and measurement — then traces every "
-                      "claim to your site and checks it against each platform's real "
-                      "limits before you spend anything."),
+         # 220 characters; Google shows about 155. Trimmed 2026-09-02 to 142.
+         # The feature roll-call was the half being cut off, so it cost the
+         # snippet without ever being read. What survives is the claim only
+         # this product makes.
+         description=("Turns a product page into a full ad campaign — then checks "
+                      "every claim against your own site and each platform's real "
+                      "limits before you spend."),
          body=body, wide=True,
          schema={"@context": "https://schema.org", "@type": "SoftwareApplication",
                  "name": BRAND, "applicationCategory": "BusinessApplication",
