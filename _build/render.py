@@ -1696,6 +1696,33 @@ def main() -> int:
     for r in sorted(refreshed):
         print(f"  refreshed stale download link in {r}")
 
+    # ---- and the pixel id, for exactly the same reason ----------------------
+    #
+    # 2026-09-02: /thank-you/ served `var META_PIXEL_ID=''`. Every generated
+    # page carried the real id. The snippet opens `if(!META_PIXEL_ID)return;`
+    # so an empty id loads nothing, defines no fbq, and fires nothing — while
+    # the page still CONTAINS four fbq() calls, so every check that greps the
+    # HTML for fbq('track','Purchase') passed it.
+    #
+    # AdPlaybook therefore recorded PageViews across the whole site and ZERO
+    # purchases, because the only page that fires Purchase was the only page
+    # with no pixel. Found by loading the page in a browser and watching for a
+    # beacon that never came.
+    #
+    # Same shape as the DMG link above, same remedy: a whole-site sweep rather
+    # than a list of hand-maintained files, and a no-op on generated pages.
+    fixed = []
+    for html in SITE.rglob("*.html"):
+        if ".git" in html.parts:
+            continue
+        before = html.read_text()
+        after = before.replace("var META_PIXEL_ID=''", f"var META_PIXEL_ID='{META_PIXEL_ID}'")
+        if after != before:
+            html.write_text(after)
+            fixed.append(str(html.relative_to(SITE)))
+    for f in sorted(fixed):
+        print(f"  filled an EMPTY META_PIXEL_ID in {f}")
+
     print(f"built {len(PAGES)} pages")
     for p, _ in sorted(set(PAGES)):
         print(f"  {p}")
