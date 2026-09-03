@@ -162,7 +162,16 @@ def build(page: Callable, app_repo: Path) -> None:
 </article>
 """
         page(path=f"/strategies/{key.replace('_', '-')}/",
-             title=f"{name}: what it is, what it is judged on, how it fails | {BRAND}",
+             # 2026-09-02: this suffix was 58 characters BEFORE the strategy
+             # name, so every one of these pages ran past the ~60 Google
+             # shows — the longest hit 90. Sized against the longest name in
+             # the set ("Retargeting and Cart Recovery", 29) so the template
+             # cannot overflow for any member: 29 + 30 = 59.
+             #
+             # "what it is judged on" and the brand suffix went. Google
+             # appends the site name itself, and a descriptor nobody reads
+             # because it is cut off is not a descriptor.
+             title=f"{name} — what it is and how it fails",
              description=meta,
              body=body,
              schema={
