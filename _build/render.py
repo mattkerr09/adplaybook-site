@@ -29,6 +29,7 @@ from __future__ import annotations
 import argparse
 import html
 import json
+import subprocess
 import re
 import shutil
 import sys
@@ -39,6 +40,60 @@ from typing import Any, Dict, List
 SITE = Path(__file__).resolve().parents[1]
 BASE_URL = "https://adplaybook.app"
 BUILT = date.today().isoformat()
+
+# Dates a page can stand behind. Docket's audit of this site (2026-09-06) found
+# 35 articles publishing no date at all, while every page's last-modified meta
+# said "today" on every build — the build clock, not the page. AI answer engines
+# and Google both weight dated content, and a date that is always today is
+# indistinguishable from no date, except that it is also untrue.
+#
+#   datePublished  the first commit that added the page's file; today for a new page.
+#   dateModified   the previous render's date, unless the page's CONTENT changed
+#                  since — then today. "Content" is the page minus the parts that
+#                  carry dates, so a rebuild that changes nothing changes nothing,
+#                  and the sitemap's lastmod (from PAGES) stops moving on its own.
+# A caller that knows better — a spec read from a platform's docs on a date, a
+# legal page with an effective date — still passes `modified=` and wins.
+_ARTICLE_TYPES = {"Article", "TechArticle", "BlogPosting", "NewsArticle"}
+_VOLATILE = re.compile(
+    r'<meta name="last-modified" content="[^"]*">'
+    r'|<script type="application/ld\+json">.*?</script>'
+    r'|<p class="dateline">.*?</p>', re.S)
+
+
+def _git_first_date(rel: str) -> str:
+    try:
+        out = subprocess.run(["git", "log", "--diff-filter=A", "--format=%ad", "--date=short", "--", rel],
+                             capture_output=True, text=True, cwd=SITE, timeout=30).stdout.split()
+        return out[-1] if out else ""
+    except Exception:  # noqa: BLE001 — no git, no history: today is the honest answer
+        return ""
+
+
+def _human(iso: str) -> str:
+    try:
+        return date.fromisoformat(iso).strftime("%-d %b %Y")
+    except ValueError:
+        return iso
+
+
+def _page_dates(out: Path, doc_with_placeholders: str, caller_modified: str | None) -> tuple[str, str]:
+    """(published, modified) for the page about to be written at `out`."""
+    existing = out.read_text() if out.is_file() else ""
+    m = re.search(r'"datePublished":"(\d{4}-\d{2}-\d{2})"', existing)
+    published = (m.group(1) if m else "") or _git_first_date(str(out.relative_to(SITE))) or BUILT
+    if caller_modified:
+        modified = caller_modified
+    elif not existing:
+        modified = BUILT
+    elif _VOLATILE.sub("", doc_with_placeholders) != _VOLATILE.sub("", existing):
+        modified = BUILT
+    else:
+        m = re.search(r'<meta name="last-modified" content="([^"]*)">', existing)
+        modified = (m.group(1) if m else "") or BUILT
+    if published > modified:
+        published = modified
+    return published, modified
 
 BRAND = "AdPlaybook"
 TAGLINE = "The ad maker that knows which strategy fits — and proves every claim."
@@ -379,6 +434,7 @@ li{margin-bottom:.5rem}
    extra size. Widened so the difference is legible and intentional; the
    distinct-size count is unchanged because 17.2 leaves as 18.4 arrives. */
 .lede{font-size:clamp(1rem,1.3vw,1.15rem);line-height:1.55;color:var(--grey);margin:0 0 1.6rem}
+.dateline{font-size:.85rem;color:var(--grey);margin:-.6rem 0 1.2rem}
 
 /* --- hero -----------------------------------------------------------------
    Measured against Raycast and Linear at 1280x800 rather than guessed at.
@@ -1117,6 +1173,16 @@ def page(*, path: str, title: str, description: str, body: str,
          wide: bool = False) -> None:
     """Write one page. `path` is the URL path, e.g. /specs/linkedin/."""
     url = BASE_URL + path
+    out = SITE / path.strip("/") / "index.html" if path != "/" else SITE / "index.html"
+    caller_modified = modified if modified != BUILT else None
+    is_article = bool(schema) and schema.get("@type") in _ARTICLE_TYPES
+    if is_article:
+        schema = dict(schema)
+        schema.setdefault("datePublished", "@@PUB@@")
+        schema.setdefault("dateModified", "@@MOD@@")
+        if "</h1>" in body and 'class="dateline"' not in body:
+            body = body.replace("</h1>", '</h1><p class="dateline">@@DATELINE@@</p>', 1)
+    modified = "@@MOD@@"
     wrapcls = "wide" if wide else "wrap"
     nav = "".join(f'<li><a href="{h}">{esc(t)}</a></li>' for h, t in NAV)
     nav += f'<li><a class="btn" href="{DOWNLOAD}">{DL_ICON}Download</a></li>'
@@ -1306,7 +1372,11 @@ checks this position specifically. */
 </body>
 </html>
 """
-    out = SITE / path.strip("/") / "index.html" if path != "/" else SITE / "index.html"
+    published, modified = _page_dates(out, doc, caller_modified)
+    dateline = f"Published {_human(published)}" + (
+        f" · Updated {_human(modified)}" if modified != published else "")
+    doc = (doc.replace("@@DATELINE@@", dateline)
+              .replace("@@PUB@@", published).replace("@@MOD@@", modified))
     out.parent.mkdir(parents=True, exist_ok=True)
     out.write_text(doc)
     PAGES.append((path, modified))
