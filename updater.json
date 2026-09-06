@@ -1,11 +1,11 @@
 {
-  "version": "0.2.49",
-  "notes": "Any Dodo key unlocked AdPlaybook; the reply named the product and we binned it",
-  "pub_date": "2026-08-24T17:48:20Z",
+  "version": "0.2.53",
+  "notes": "Fixes licence activation on Macs without Homebrew. Earlier versions could not verify the licence server's security certificate on a standard Mac, so entering a valid key produced a 'could not reach the licence service' message. This build carries its own certificate bundle and activation works on any Mac. Also: a temporary licence-server outage is now retried automatically instead of being reported as a bad key.",
+  "pub_date": "2026-09-06T19:37:18Z",
   "platforms": {
     "darwin-aarch64": {
-      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRY2orVUpOUUQ2ZFlSM3ZQV05UaUNsT2lxbXlNalJ4akpxYzNkY3dMUEQxVWRmVnp3V1A3YmFPVXI5cTZrYUJxK2UrY05YWDNJS05uMENDc3gvK1h1R0t5WVdLcHhqRVE4PQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg3NTkzNDU4CWZpbGU6QWRQbGF5Ym9vay5hcHAudGFyLmd6Cm1vanZYcW9ZSms3cndFaHkzODZzOUxMb3FOVTg0c25saVlsUnNEUTNCSlJNRGZLYlVLOStNSVZNWnhpcDJlVFI5SzBzOWFzS3RzaGsvZG1sdEpLZUJBPT0K",
-      "url": "https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.49/AdPlaybook.app.tar.gz"
+      "signature": "dW50cnVzdGVkIGNvbW1lbnQ6IHNpZ25hdHVyZSBmcm9tIHRhdXJpIHNlY3JldCBrZXkKUlVRY2orVUpOUUQ2ZFMzdGJ2ZjJKZ21TbkM2SEYvSHNMZ3dQcFdRL2lMMzcrbUJ6QmtnTFhhZTI2Tnd2VVJLcXEzd0FSS1Job1FEaXF2dFNFYXdPU3RmUmhaaldiVGpVeGdFPQp0cnVzdGVkIGNvbW1lbnQ6IHRpbWVzdGFtcDoxNzg4NzIyOTM4CWZpbGU6QWRQbGF5Ym9vay5hcHAudGFyLmd6CmRCZlJsUGpCdVhodmNBa3o4dFE1WWVQNjRDV0hORXJZdWN6Z0RRMCtzVCtWOFlVYzMvQ1dKOWpvckVYSkY1bGtuNUpEMTQ2V2czamduU3hqTkNHRkFRPT0K",
+      "url": "https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.53/AdPlaybook.app.tar.gz"
     }
   }
 }
