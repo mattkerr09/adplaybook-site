@@ -341,8 +341,12 @@ rather than reaching for a number that sounds right.</p>
             "@type": "CollectionPage",
             "name": "How to fix common ad problems",
             "url": BASE_URL + "/how-to/",
+            # Each guide's full HowTo — with its steps — is on the guide's own page. A
+            # HowTo here with only a name and a URL is an incomplete HowTo, and Google
+            # reads it as one ("HowTo: missing step" — Docket, 2026-09-06). The index
+            # lists pages; it does not restate them.
             "hasPart": [
-                {"@type": "HowTo", "name": t, "url": BASE_URL + h}
+                {"@type": "WebPage", "name": t, "url": BASE_URL + h}
                 for h, t, _ in cards
             ],
         },

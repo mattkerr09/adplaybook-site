@@ -1026,7 +1026,7 @@ LOGO_SVG = (
     "</svg>"
 )
 
-NAV = [("/specs/", "Ad specs"), ("/learn/", "Learn"),
+NAV = [("/specs/", "Ad specs"), ("/learn/", "Learn"), ("/how-to/", "How-to"),
        ("/for/", "By business"), ("/vs/", "Compare")]
 # The nav and footer Download links. Derived, not typed — this was the FOURTH
 # hardcoded copy of the release URL in this repo, after the one in content.py and
@@ -1174,8 +1174,8 @@ if(t){{document.documentElement.setAttribute("data-theme",t);}}}}catch(e){{}}}})
 <p>Every figure on this site is quoted from the platform's own documentation with
 the date it was read. Where something could not be verified, the page says so
 rather than leaving a gap you cannot see.</p>
-<p><a href="/specs/">Ad specs</a> · <a href="/learn/">Learn</a> ·
-<a href="/vs/">Compare</a> · <a href="{DOWNLOAD}">Download</a> ·
+<p><a href="/specs/">Ad specs</a> · <a href="/learn/">Learn</a> · <a href="/how-to/">How-to</a> ·
+<a href="/vs/">Compare</a> · <a href="/offline/">Offline</a> · <a href="{DOWNLOAD}">Download</a> ·
 <a href="/llms.txt">llms.txt</a></p>
 <p><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> ·
 <a href="/contact/">Contact</a></p>
