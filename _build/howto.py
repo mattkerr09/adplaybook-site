@@ -32,6 +32,12 @@ from typing import Dict, List
 # content.py already takes them as arguments for this reason — the signature
 # build_rest(page, specs, PAGES) is the fix, written down before I hit it.
 from render import BASE_URL, esc
+from render import neighbours
+
+#: The guides, in the order the index lists them; each links the others.
+GUIDES = [('/how-to/split-test-ads-that-actually-say-something/', 'How to run an ad split test that actually says something'),
+          ('/how-to/fix-an-ad-that-is-not-delivering/', 'How to fix an ad that is not delivering'),
+          ('/how-to/stop-ad-copy-reading-like-ai/', 'How to stop your ad copy reading like AI wrote it')]
 
 APP = Path.home() / "ad maker app"
 PLATFORMS = APP / "backend" / "adkit" / "platforms"
@@ -98,6 +104,7 @@ test can produce an answer at all. A campaign can clear every point here and sti
 </article>
 """
     page(
+        related=neighbours(GUIDES, "/how-to/split-test-ads-that-actually-say-something/"),
         path="/how-to/split-test-ads-that-actually-say-something/",
         title="How to run an ad split test that actually says something",
         description=("Two cells with the same copy cannot produce a result. How to "
@@ -194,6 +201,7 @@ manager can see your forecast panel, and any tool that claims otherwise is guess
 </article>
 """
     page(
+        related=neighbours(GUIDES, "/how-to/fix-an-ad-that-is-not-delivering/"),
         path="/how-to/fix-an-ad-that-is-not-delivering/",
         title="How to fix an ad that is not delivering",
         description=("Only one of eight ad platforms publishes a minimum audience "
@@ -263,6 +271,7 @@ quarter needed a rewrite before they were worth paying to show anyone. We publis
 </article>
 """
     page(
+        related=neighbours(GUIDES, "/how-to/stop-ad-copy-reading-like-ai/"),
         path="/how-to/stop-ad-copy-reading-like-ai/",
         title="How to stop your ad copy reading like AI wrote it",
         description=("The specific phrases and constructions readers have learned "

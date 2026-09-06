@@ -424,13 +424,15 @@ def build_rest(page: Callable, specs: List[Dict[str, Any]], pages: List,
                app_repo=None) -> None:
     _home(page, specs)
     _learn_hub(page)
+    learn_paths = [(f"/learn/{s}/", t) for s, t, _, _ in _ARTICLES]
     for slug, title, desc, body in _ARTICLES:
         page(path=f"/learn/{slug}/", title=f"{title} | {BRAND}", description=desc,
              body=f'<article><p class="crumb"><a href="/learn/">Learn</a></p>'
                   f"<h1>{esc(title)}</h1><p class=\"lede\">{esc(desc)}</p>{body}</article>",
              schema={"@context": "https://schema.org", "@type": "TechArticle",
                      "headline": title, "description": desc,
-                     "publisher": {"@type": "Organization", "name": BRAND}})
+                     "publisher": {"@type": "Organization", "name": BRAND}},
+             related=neighbours(learn_paths, f"/learn/{slug}/"))
     _vs(page)
 
     from foraudience import build as build_for  # noqa: E402
@@ -851,6 +853,7 @@ someone who is liable for it — that is this. They compose well: the brief
 # ---------------------------------------------------------------------------
 
 from articles import ARTICLES as _ARTICLES  # noqa: E402
+from render import neighbours  # noqa: E402
 
 #: The live claim gate — markup and script, as module constants.
 #:

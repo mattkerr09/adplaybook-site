@@ -435,6 +435,10 @@ li{margin-bottom:.5rem}
    distinct-size count is unchanged because 17.2 leaves as 18.4 arrives. */
 .lede{font-size:clamp(1rem,1.3vw,1.15rem);line-height:1.55;color:var(--grey);margin:0 0 1.6rem}
 .dateline{font-size:.85rem;color:var(--grey);margin:-.6rem 0 1.2rem}
+.related{margin:2.4rem 0 0;padding-top:1.2rem;border-top:1px solid var(--line,rgba(128,128,128,.25))}
+.related h2{font-size:1rem;margin:0 0 .5rem}
+.related ul{margin:0;padding-left:1.1rem}
+.related li{margin:.25rem 0}
 
 /* --- hero -----------------------------------------------------------------
    Measured against Raycast and Linear at 1280x800 rather than guessed at.
@@ -1170,9 +1174,21 @@ def esc(s: Any) -> str:
 
 def page(*, path: str, title: str, description: str, body: str,
          schema: Dict[str, Any] | None = None, modified: str = BUILT,
-         wide: bool = False) -> None:
-    """Write one page. `path` is the URL path, e.g. /specs/linkedin/."""
+         wide: bool = False, related: List[tuple] | None = None) -> None:
+    """Write one page. `path` is the URL path, e.g. /specs/linkedin/.
+
+    `related` — (path, title) siblings to link at the foot of the article. Docket's
+    audit of this site (2026-09-06) found 33 pages reachable from exactly one place,
+    their hub; a page linked from one place reads as unimportant however good it is.
+    Each section passes neighbours() over its own list, so every page is linked from
+    the three siblings before it as well as from the hub."""
     url = BASE_URL + path
+    if related:
+        block = ('<nav class="related" aria-label="Related pages"><h2>Related</h2><ul>'
+                 + "".join(f'<li><a href="{h}">{esc(t)}</a></li>' for h, t in related)
+                 + "</ul></nav>")
+        body = (body[:body.rfind("</article>")] + block + body[body.rfind("</article>"):]
+                if "</article>" in body else body + block)
     out = SITE / path.strip("/") / "index.html" if path != "/" else SITE / "index.html"
     caller_modified = modified if modified != BUILT else None
     is_article = bool(schema) and schema.get("@type") in _ARTICLE_TYPES
@@ -1383,6 +1399,24 @@ checks this position specifically. */
 
 
 PAGES: List[tuple] = []
+
+
+def neighbours(items: List[tuple], path: str, n: int = 3) -> List[tuple]:
+    """The `n` (path, title) entries after `path` in `items`, wrapping round, never itself.
+
+    Deterministic, so a rebuild changes nothing: the same list, the same order,
+    the same three links. Every page therefore receives links from the three
+    pages before it, and the section's hub is no longer the only way in."""
+    paths = [h for h, _ in items]
+    if path not in paths or len(items) < 2:
+        return []
+    i = paths.index(path)
+    out = []
+    for k in range(1, len(items)):
+        out.append(items[(i + k) % len(items)])
+        if len(out) == n:
+            break
+    return out
 
 
 # ---------------------------------------------------------------------------

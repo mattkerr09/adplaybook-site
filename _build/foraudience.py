@@ -26,6 +26,7 @@ import html
 import json
 import pathlib
 from typing import Any, Callable, Dict, List
+from render import neighbours  # noqa: E402
 
 BRAND = "AdPlaybook"
 
@@ -309,6 +310,7 @@ def build(page: Callable) -> None:
               "long your buyer takes to decide.</p>"
               f'<div class="cards">{cards}</div></article>')
 
+    audience_paths = [(f"/for/{s}/", f"Advertising for {n}") for s, n, *_ in AUDIENCES]
     for slug, noun, opener, cats, (plat, why), floor, strategy in AUDIENCES:
         title_noun = noun[0].upper() + noun[1:]
 
@@ -450,7 +452,8 @@ it could not check.</p>
 <a class="btn ghost" href="/specs/">See the ad specs</a></p>
 </article>
 """
-        page(path=f"/for/{slug}/",
+        page(related=neighbours(audience_paths, f"/for/{slug}/"),
+             path=f"/for/{slug}/",
              title=f"Advertising for {noun} ({BRAND})",
              description=(f"What changes about running ads for {noun}: the legal "
                           f"category that applies, the {plat} numbers that matter, "

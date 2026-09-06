@@ -30,6 +30,7 @@ from __future__ import annotations
 import json
 from pathlib import Path
 from typing import Any, Callable, Dict, List
+from render import neighbours  # noqa: E402
 
 BRAND = "AdPlaybook"
 
@@ -82,6 +83,8 @@ def build(page: Callable, app_repo: Path) -> None:
     if not loadouts:
         return
 
+    strategy_paths = [(f"/strategies/{lo['key'].replace('_', '-')}/", lo.get("name") or lo["key"])
+                      for lo in loadouts]
     for lo in loadouts:
         key = lo["key"]
         name = lo.get("name") or key
@@ -161,7 +164,8 @@ def build(page: Callable, app_repo: Path) -> None:
 {body_secs}
 </article>
 """
-        page(path=f"/strategies/{key.replace('_', '-')}/",
+        page(related=neighbours(strategy_paths, f"/strategies/{key.replace('_', '-')}/"),
+             path=f"/strategies/{key.replace('_', '-')}/",
              # 2026-09-02: this suffix was 58 characters BEFORE the strategy
              # name, so every one of these pages ran past the ~60 Google
              # shows — the longest hit 90. Sized against the longest name in
