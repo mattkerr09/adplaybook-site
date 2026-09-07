@@ -54,7 +54,21 @@ BUILT = date.today().isoformat()
 #                  and the sitemap's lastmod (from PAGES) stops moving on its own.
 # A caller that knows better — a spec read from a platform's docs on a date, a
 # legal page with an effective date — still passes `modified=` and wins.
-_ARTICLE_TYPES = {"Article", "TechArticle", "BlogPosting", "NewsArticle"}
+#: Types that get a dateline, <time datetime> and Open Graph article times.
+#:
+#: FAQPage joined on 2026-09-07. The three how-to guides carry it, and they are
+#: articles by every measure that matters — written prose, revised over time,
+#: the kind of page a reader wants a date on. They were the only substantial
+#: pages on the site with no date anywhere, purely because their schema names
+#: the shape of their headings rather than the kind of thing they are.
+#:
+#: CollectionPage and SoftwareApplication are deliberately NOT here. /how-to/,
+#: /strategies/ and the homepage are indexes; "Published 10 Aug · Updated 6 Sep"
+#: under a list of links describes the list, not the work, and a date that
+#: means nothing is worse than none. The freshness check counts them as
+#: undated and that is the correct answer for them.
+_ARTICLE_TYPES = {"Article", "TechArticle", "BlogPosting", "NewsArticle",
+                  "FAQPage"}
 #: Markup that says WHEN, stripped before asking whether a page CHANGED.
 #:
 #: article:published_time and article:modified_time joined this list the moment
