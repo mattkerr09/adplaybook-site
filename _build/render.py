@@ -1747,6 +1747,10 @@ def specs_hub(specs: List[Dict[str, Any]]) -> None:
 <h1>Ad specs and character limits, with sources</h1>
 <p class="lede">Eight platforms. Every number quoted from the platform's own
 documentation, with the URL it came from and the date it was read.</p>
+<p class="note">Looking for <a href="/specs/microsoft-advertising/">Microsoft
+Advertising (Bing) character limits</a>? They are documented here too, though
+AdPlaybook does not build Bing campaigns — the page says so plainly rather than
+implying support.</p>
 
 <div class="box warn">
 <strong>Why this page exists</strong>
@@ -1800,6 +1804,13 @@ def main() -> int:
     # pages that no crawler is told about, which the gate caught.
     from howto import build as build_howto  # noqa: E402
     build_howto(page)
+
+    # Microsoft Advertising, written from a search query rather than from the
+    # app's platform data — see _build/microsoft.py for why it is not a
+    # generated /specs/ page.
+    from howto import GUIDES as _GUIDES  # noqa: E402
+    from microsoft import build as build_microsoft  # noqa: E402
+    build_microsoft(page, neighbours, _GUIDES)
 
     # sitemap
     urls = "".join(

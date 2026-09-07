@@ -84,7 +84,10 @@ be at least 12 seconds before you decide anything else.</p>
         "sentence cut in half. Most guides publish only one of them.",
         """
 <p>Every ad field has two limits, and conflating them is why copy that "fit"
-still reads as a fragment in the feed.</p>
+still reads as a fragment in the feed. On
+<a href="/specs/microsoft-advertising/">Microsoft Advertising (Bing)</a> the
+second limit is unusually harsh — an over-length headline does not truncate,
+the ad fails to display.</p>
 <ul>
 <li>The <strong>hard cap</strong>. Past this, the upload is refused.</li>
 <li>The <strong>visible limit</strong>. Past this it runs, and gets truncated
