@@ -118,4 +118,14 @@ rather than an ellipsis.</p>
                      "90-character descriptions, and the after-substitution rule "
                      "that makes an over-length ad fail rather than truncate."),
         body=body,
+        # TechArticle, so this page gets the dates every other article gets.
+        #
+        # Shipped once without it and caught it on the live page: no schema
+        # means `is_article` is False in render.py, which means no dateline, no
+        # <time datetime> and no Open Graph article times — the exact gap
+        # closed one commit earlier, reopened by a new page that did not opt in.
+        # A fix that only covers the pages existing on the day it lands is not
+        # a fix, it is a sweep.
+        schema={"@context": "https://schema.org", "@type": "TechArticle",
+                "headline": "Microsoft Advertising (Bing) ad character limits"},
     )
