@@ -29,7 +29,8 @@ ARTICLES = [
         "LinkedIn needs 300 member accounts per ad set. Split an audience across "
         "two ad sets and you need 600. Below that it simply doesn't run.",
         """
-<p>LinkedIn states the minimum audience size required to run an ad set is
+<p>According to LinkedIn's own advertising help documentation, read on 10
+August 2026, the minimum audience size required to run an ad set is
 <strong>300 member accounts</strong>. That's per ad set, which is the part that
 catches people out.</p>
 <p>Split a 500-person audience into a two-cell test and you've just created two
@@ -176,6 +177,11 @@ recently. There's no job title here.</li>
 <p>If your ad is about housing, employment, or credit, the rules aren't the
 platform's preferences. They're law, and the platform's category declaration is
 how you comply with part of it, not the whole of it.</p>
+<p>According to Meta's own special ad category documentation, read on 10 August
+2026, declaring the category is mandatory and it removes targeting options you
+would otherwise be entitled to use — age, gender and postcode among them. That
+removal is the platform complying with the law on its own behalf, not on
+yours.</p>
 <h2>What is a special ad category and when must I declare one?</h2>
 <p>It is the declaration housing, employment and credit ads require, and it removes targeting on purpose. Meta calls this a Special Ad Category. Declaring it removes targeting options
 that would otherwise be available, which is the point. Age and gender targeting
@@ -231,11 +237,12 @@ importing your Meta habits.</p>
     ),
     (
         "meta-lookalike-minimum-source",
-        "Your Meta lookalike needs 100 people from one country",
+        "Meta lookalike audience minimum size: 100 people from one country",
         "Meta requires at least 100 people from a single country in the source "
         "audience. A list spread across five markets can fail while looking big enough.",
         """
-<p>Meta states that a lookalike source audience needs <strong>at least 100
+<p>According to Meta's own ads guide, read on 10 August 2026, a lookalike
+source audience needs <strong>at least 100
 people from one country</strong>. The country part is what surprises people.</p>
 <p>A 300-person customer list sounds comfortably over the line. Spread it across
 the UK, Ireland, Germany, France and Spain at 60 apiece and no single country
