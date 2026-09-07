@@ -1656,7 +1656,23 @@ def spec_page(spec: Dict[str, Any]) -> None:
     check_head = ("Count these before you paste" if placements and any(
         p.get("headline_chars") or p.get("primary_text_chars") for p in placements)
         else "Check a campaign against this spec")
-    title = f"{name} ad specs and character limits ({BUILT[:4]}) | {BRAND}"
+    # "<Platform> ad character limits" leads, because that is the phrase people
+    # type. Search Console 2026-09-07: "bing ads character limits" 50,
+    # "bing ad character limit" 32, "meta headline character limit" 5, "meta ad
+    # copy character limit" 5, "linkedin ad copy character limits" 4, "tiktok
+    # character limit ads" 3. Every one of them is <platform> + character
+    # limit(s); not one contains the word "specs".
+    #
+    # It was "<Platform> ad specs and character limits", which buries the
+    # searched phrase four words in and splits it with a word nobody searches.
+    # "specs" stays — the pages carry aspect ratios and file sizes too — but
+    # after the phrase that brings people here rather than in front of it.
+    # "Google Ads ad character limits" — a platform whose name already ends in
+    # "Ads" does not need another one. Pre-existing ("Google Ads ad specs...")
+    # and only visible once the phrase moved to the front.
+    noun = "character limits and specs" if name.rstrip().endswith("Ads") \
+        else "ad character limits and specs"
+    title = f"{name} {noun} ({BUILT[:4]}) | {BRAND}"
     desc = (f"{name} ad character limits, image sizes and hard floors. Every "
             f"figure quoted from {name}'s own documentation with the date it was read"
             + (f", {read_on}." if read_on else "."))
@@ -1664,7 +1680,7 @@ def spec_page(spec: Dict[str, Any]) -> None:
     body = f"""
 <article>
 <p class="crumb"><a href="/specs/">Ad specs</a> / {esc(name)}</p>
-<h1>{esc(name)} ad specs and character limits</h1>
+<h1>{esc(name)} {noun}</h1>
 <p class="lede">{esc(desc)}</p>
 
 <div class="box ok">
@@ -1699,7 +1715,7 @@ on every campaign and costs nothing.</p>
          modified=read_on or BUILT,
          schema={
              "@context": "https://schema.org", "@type": "TechArticle",
-             "headline": f"{name} ad specs and character limits",
+             "headline": f"{name} {noun}",
              "description": desc, "datePublished": read_on or BUILT,
              "dateModified": read_on or BUILT,
              "publisher": {"@type": "Organization", "name": BRAND},

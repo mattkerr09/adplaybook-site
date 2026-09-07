@@ -252,7 +252,11 @@ is the effect and not the intent. Our note on
     ),
     (
         "audience-floors-by-platform",
-        "The minimum audience size on every major ad platform",
+        # Retitled to the query. "minimum audience size for linkedin ads"
+        # is 15 impressions in Search Console and the only platform with a
+        # published floor is LinkedIn, so naming it is both what is
+        # searched and what the page is actually about.
+        "Minimum audience size for LinkedIn ads (and every platform)",
         "Four platforms publish a hard floor. Below it, campaigns are accepted, "
         "go live, and deliver nothing. Here's each one with its source.",
         """

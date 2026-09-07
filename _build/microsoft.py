@@ -113,7 +113,7 @@ rather than an ellipsis.</p>
     page(
         related=neighbours(guides, "/specs/microsoft-advertising/"),
         path="/specs/microsoft-advertising/",
-        title="Microsoft Advertising (Bing) ad character limits",
+        title="Microsoft Advertising (Bing) ad character limits (2026) | AdPlaybook",
         description=("Bing responsive search ad limits: 30-character headlines, "
                      "90-character descriptions, and the after-substitution rule "
                      "that makes an over-length ad fail rather than truncate."),
