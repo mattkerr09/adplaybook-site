@@ -55,8 +55,18 @@ BUILT = date.today().isoformat()
 # A caller that knows better — a spec read from a platform's docs on a date, a
 # legal page with an effective date — still passes `modified=` and wins.
 _ARTICLE_TYPES = {"Article", "TechArticle", "BlogPosting", "NewsArticle"}
+#: Markup that says WHEN, stripped before asking whether a page CHANGED.
+#:
+#: article:published_time and article:modified_time joined this list the moment
+#: they were added, and the reason is measurable: without them, adding the two
+#: tags to every page made 36 of 43 pages report "modified today" — because a
+#: change-detector that counts its own date output as content will say every
+#: page changed every time a date does. That is the exact bug a999f0d fixed
+#: ("Every article said it was modified today"), reintroduced through a new
+#: door.
 _VOLATILE = re.compile(
     r'<meta name="last-modified" content="[^"]*">'
+    r'|\n?<meta property="article:(?:published|modified)_time" content="[^"]*">'
     r'|<script type="application/ld\+json">.*?</script>'
     r'|<p class="dateline">.*?</p>', re.S)
 
@@ -1192,6 +1202,21 @@ def page(*, path: str, title: str, description: str, body: str,
     out = SITE / path.strip("/") / "index.html" if path != "/" else SITE / "index.html"
     caller_modified = modified if modified != BUILT else None
     is_article = bool(schema) and schema.get("@type") in _ARTICLE_TYPES
+    # Open Graph article times, beside the dateline that says the same thing.
+    #
+    # The dates were already correct in JSON-LD and already visible in the
+    # body; what nothing emitted was the machine-readable pair most consumers
+    # actually read. article:published_time and article:modified_time are the
+    # standard Open Graph properties for a dated article — LinkedIn, Facebook
+    # and a good number of crawlers read them and read nothing else.
+    #
+    # Placeholders, substituted with the real dates further down alongside
+    # @@DATELINE@@, so there is ONE source for a page's dates rather than a
+    # second one that can drift from the first.
+    og_times = (
+        '\n<meta property="article:published_time" content="@@PUB@@">'
+        '\n<meta property="article:modified_time" content="@@MOD@@">'
+        if is_article else "")
     if is_article:
         schema = dict(schema)
         schema.setdefault("datePublished", "@@PUB@@")
@@ -1228,7 +1253,7 @@ if(t){{document.documentElement.setAttribute("data-theme",t);}}}}catch(e){{}}}})
 <meta property="og:title" content="{esc(title)}">
 <meta property="og:description" content="{esc(description)}">
 <meta property="og:url" content="{url}">
-<meta property="og:site_name" content="{BRAND}">
+<meta property="og:site_name" content="{BRAND}">{og_times}
 <meta property="og:image" content="{BASE_URL}/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
