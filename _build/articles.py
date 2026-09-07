@@ -62,14 +62,14 @@ then retarget everyone who saw one. It can't work, and nothing tells you.</p>
 <p>Google states that YouTube view counts aren't incremented unless the video ad
 is <strong>10 seconds or longer</strong>, and that building remarketing lists or
 using YouTube Analytics needs <strong>12+ seconds</strong>.</p>
-<h2>Two separate consequences</h2>
+<h2>Why does my YouTube bumper campaign report zero views?</h2>
 <ul>
 <li><strong>Zero views.</strong> A bumper campaign reporting no views isn't
 broken. It's working exactly as documented.</li>
 <li><strong>No second stage.</strong> The audience you planned to retarget was
 never created, so the rest of the funnel has nothing to run against.</li>
 </ul>
-<h2>Decide the length first</h2>
+<h2>Should I choose the video length before building the campaign?</h2>
 <p>This is why video duration belongs at the top of a YouTube build rather than
 the end. Everything else can be edited afterwards. Length can't be fixed without
 reshooting.</p>
@@ -125,7 +125,7 @@ viewing the Pin in the home feed or search feed" and "do not appear for ads when
 viewed up close". Separately, that "descriptions are used by our algorithm to
 determine relevance for delivery".</p>
 <p>It's a retrieval field wearing the clothes of a copy field.</p>
-<h2>What follows from that</h2>
+<h2>Where should the persuasion go on a Pinterest ad?</h2>
 <ul>
 <li>Persuasion belongs in the image and in the <strong>first 40 characters</strong>
 of the title. The title field takes 100, but only about 40 show in feed, and 30
@@ -134,7 +134,7 @@ for Chinese, Japanese, Korean and Arabic.</li>
 <li>A test that varies the description is testing something no user will see.
 Write it to be <em>found</em>, not to be read.</li>
 </ul>
-<h2>And 2:3, not square</h2>
+<h2>What aspect ratio should a Pinterest Pin be?</h2>
 <p>Pinterest warns that Pins with an aspect ratio greater than 2:3 "might get cut
 off in people's feeds". That's the opposite of the square-is-safe habit every
 other platform trains into you.</p>
@@ -153,12 +153,12 @@ and "selections across dimensions operate with AND logic".</p>
 dimension <em>narrows</em> it. People arriving from Meta usually assume the
 reverse, stack four dimensions to be precise, and build an ad group too thin to
 spend.</p>
-<h2>The custom audience floor</h2>
+<h2>What is TikTok's minimum custom audience size?</h2>
 <p>TikTok requires <strong>1,000 total matched users</strong> in a custom
 audience before it can be used in an ad group. A small business's customer list
 frequently won't qualify after matching, and TikTok notes the matched list is
 always smaller than what you uploaded.</p>
-<h2>Two things that follow</h2>
+<h2>Why is my TikTok custom audience smaller than my upload?</h2>
 <ul>
 <li>Don't quote your upload count as your audience size. It isn't.</li>
 <li>If the list is small, use interest or behaviour targeting instead. TikTok's
@@ -218,15 +218,15 @@ copy.)"</p>
 <p>Every ad this side of a brand-awareness buy has a destination. So 257 is the
 number, and a variant written to 280 gets rejected or truncated at the point you
 least want to find out.</p>
-<h2>Hashtags come out of the same budget</h2>
+<h2>Do hashtags count against the X character limit?</h2>
 <p>X specifies a hashtag at "21 characters, including the hashtag character".
 That's counted against your 257 too. Two hashtags and a link leave you about 215
 characters of actual sentence.</p>
-<h2>The headline is a separate, tighter field</h2>
+<h2>How long can an X website card headline be?</h2>
 <p>The website card title takes 70 characters. X notes that "up to two lines of
 text are rendered on the card title", with anything beyond truncated by an
 ellipsis, and suggests keeping it to 50 to be safe across devices.</p>
-<h2>What this changes about testing</h2>
+<h2>How many X creatives should I run at once?</h2>
 <p>X advises keeping 3 to 5 creative options in rotation rather than one tightly
 isolated variable. Combined with no minimum campaign spend, the cheap move here
 is more creative variety rather than a precisely controlled matrix. That's a
@@ -319,18 +319,18 @@ publishes.</p>
 <tr><td><a href="/specs/youtube/">YouTube</a></td><td>15 to 20s for awareness, 2 to 3 min for consideration</td><td>Varies by format</td></tr>
 </tbody>
 </table>
-<h2>Two YouTube thresholds that aren't about attention</h2>
+<h2>How long does a YouTube ad need to be to count as a view?</h2>
 <p>Google states that view counts aren't incremented below <strong>10
 seconds</strong>, and that remarketing lists and YouTube Analytics need
 <strong>12+ seconds</strong>. These aren't performance guidance. They decide
 whether you get any data at all, so a 6-second bumper builds no audience for
 whatever you planned to run next.</p>
-<h2>The first five seconds are the only ones you're guaranteed</h2>
+<h2>How much of a skippable YouTube ad will people actually see?</h2>
 <p>A skippable in-stream ad can be skipped after 5 seconds. Whatever the total
 length, everything the ad must communicate has to survive being abandoned at
 five. X reaches a similar conclusion from a different direction: it advises 6 to
 15 second videos with captions and prominent branding.</p>
-<h2>File size is a separate trap</h2>
+<h2>What is the maximum video file size for ads?</h2>
 <p>X allows 1GB and then says to keep files under 30MB for performance.
 Pinterest allows 2GB. Those aren't invitations. Upload the ceiling and you'll
 watch delivery suffer for a reason that never appears in any report.</p>
@@ -344,21 +344,21 @@ watch delivery suffer for a reason that never appears in any report.</p>
         """
 <p>Square is the habit because it's the safest single answer on Meta. Carry it
 everywhere and you'll waste most of the screen on half the platforms you buy.</p>
-<h2>Pinterest inverts it</h2>
+<h2>What aspect ratio does Pinterest want?</h2>
 <p>Pinterest recommends <strong>2:3</strong>, or 1000 x 1500 pixels, and warns
 that "Pins with an aspect ratio greater than 2:3 might get cut off in people's
 feeds". Taller isn't better here, it's cropped. Square is allowed and gives away
 the vertical space the feed is built around.</p>
-<h2>X says square and vertical take the same space</h2>
+<h2>Should X ads be square or vertical?</h2>
 <p>X's guidance is unusually direct: "1:1 is recommended as it will always render
 as square on desktop and mobile, timeline and profile. This and 9:16 (vertical)
 will take up the same amount of real estate, which is more than 16:9." So 16:9
 is the one costing you.</p>
-<h2>TikTok is vertical or nothing</h2>
+<h2>Does TikTok accept square or horizontal ads?</h2>
 <p>TikTok recommends 9:16 at 540 x 960 or larger. Horizontal and square are
 accepted, and both look like an import from somewhere else, which is the one
 thing the platform reliably punishes.</p>
-<h2>LinkedIn's numbers are per-format</h2>
+<h2>What image size does LinkedIn recommend?</h2>
 <p>The single image ad recommends 1.91:1 at 1200 x 628, with square and 4:5 also
 supported. The carousel is 1:1 at 1080 x 1080, and LinkedIn notes those images
 get "scaled to 312 x 312px", so anything that has to be legible needs to survive
@@ -379,14 +379,14 @@ links, symbols (@), or hashtags".</p>
 <p>That rules out a lot of copy patterns people bring from organic. A caption
 built around a branded hashtag, or one that @mentions a creator, doesn't
 degrade gracefully. It just reads as broken.</p>
-<h2>There's no published character count</h2>
+<h2>What is TikTok's ad caption character limit?</h2>
 <p>Worth stating plainly, because everyone else publishes one: TikTok's own
 in-feed specification page states <strong>no character limit for ad text</strong>.
 We checked it twice. The 100-character figure that appears in most guides
 doesn't appear in TikTok's documentation, so we don't assert it either.</p>
 <p>Write the caption short because it sits over video and truncates behind a
 "See more", not because a specific number has been published.</p>
-<h2>Spark Ads take the caption from the post</h2>
+<h2>Do Spark Ads use the original post's caption?</h2>
 <p>A Spark Ad promotes an organic post that already exists, and TikTok states its
 captions are "extracted directly from the organic video captions", with a maximum
 of four lines displayed. So the copy decision happens when the post is written,
@@ -404,12 +404,12 @@ away, which is why that decision belongs near the top of a TikTok build.</p>
 <p>Responsive search ads take up to 15 headlines and 4 descriptions and assemble
 combinations at auction time. That's the feature. It's also why the testing habit
 people bring from Meta produces numbers that can't be read.</p>
-<h2>The problem with a one-axis matrix</h2>
+<h2>Why can't I A/B test inside a responsive search ad?</h2>
 <p>On Meta you can hold everything constant and change one line, because the ad
 that serves is the ad you built. In an RSA, the headline you're testing appears
 alongside a different second headline each time. When performance moves, you
 can't attribute it to the line you changed.</p>
-<h2>What to do instead</h2>
+<h2>How do I test ad copy on Google Search properly?</h2>
 <ul>
 <li>Test at the <strong>ad</strong> level, not the asset level. Two RSAs with
 genuinely different angles beat fifteen headlines in one.</li>
@@ -418,7 +418,7 @@ are being chosen, not a controlled result.</li>
 <li>Pin sparingly. Pinning restores control and gives up most of the reason to
 use the format.</li>
 </ul>
-<h2>Negative keywords are the other half</h2>
+<h2>Do negative keywords matter as much as targeting?</h2>
 <p>Search is the one place where deciding who <em>not</em> to reach matters as
 much as the targeting. Negatives don't close-match, so plurals, misspellings and
 variants each need their own entry. A negative for "free" won't block "freely".</p>
@@ -439,18 +439,18 @@ actually said.</p>
 <p>Your site says callouts are answered within 60 minutes. Another page says
 you're Gas Safe registered. The ad says "Gas Safe engineers at your door in 60
 minutes". Both halves are true. The sentence is new, and nobody verified it.</p>
-<h2>Why this is the expensive kind</h2>
+<h2>What happens if an ad claim can't be substantiated?</h2>
 <p>A rejected ad is cheap, because you find out immediately. A claim that runs
 for six weeks and then gets challenged is expensive, because by then it's in
 your creative library, your landing page and your sales calls.</p>
 <p>In regulated categories it's worse than expensive. Under FSMA section 21,
 communicating an unapproved financial promotion is a criminal offence rather than
 a compliance ticket, and the person who approved it is the person on the hook.</p>
-<h2>The question a reviewer actually asks</h2>
+<h2>What does an ad reviewer actually ask for?</h2>
 <p>Not "is this good copy". It's "show me where this sentence comes from". That's
 answerable in about a minute if you kept the trail, and it's a research project
 if you didn't.</p>
-<h2>What {BRAND} does about it</h2>
+<h2>How does {BRAND} check a claim before it runs?</h2>
 <p>Every factual claim has to resolve to a verbatim quote at a URL on your own
 site. Figures that appear nowhere in your copy get blocked outright. Sentences
 that recombine two true statements get flagged for your sign-off rather than
