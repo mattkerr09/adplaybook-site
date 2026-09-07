@@ -1389,8 +1389,25 @@ checks this position specifically. */
 </html>
 """
     published, modified = _page_dates(out, doc, caller_modified)
-    dateline = f"Published {_human(published)}" + (
-        f" · Updated {_human(modified)}" if modified != published else "")
+    # <time datetime="…">, not a bare string.
+    #
+    # The JSON-LD already carried correct ISO dates — the audit's "41 of 41
+    # substantial pages publish no ISO 8601 date in their markup" looked wrong
+    # at first read, and checking a TechArticle leaf showed datePublished
+    # 2026-08-10 sitting there exactly as intended.
+    #
+    # What was missing was in the MARKUP, which is what the finding says: the
+    # visible dateline read "Published 10 Aug 2026 · Updated 6 Sep 2026" with
+    # no machine-readable form anywhere, and the page carried zero <time>
+    # elements. A human date in a <p> is not a date to anything that is not a
+    # human.
+    #
+    # This is worth doing whatever any one auditor scores it: <time datetime>
+    # is the standard way to publish both readings of the same date, and every
+    # consumer benefits — not only the tool that noticed.
+    dateline = (f'Published <time datetime="{published}">{_human(published)}</time>'
+                + (f' · Updated <time datetime="{modified}">{_human(modified)}</time>'
+                   if modified != published else ""))
     doc = (doc.replace("@@DATELINE@@", dateline)
               .replace("@@PUB@@", published).replace("@@MOD@@", modified))
     out.parent.mkdir(parents=True, exist_ok=True)
