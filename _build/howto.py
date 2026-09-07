@@ -239,7 +239,9 @@ them one in six words.</p>
 <p>This matters more in an ad than almost anywhere else. A blog post that reads as generated is just dull. An ad that reads as generated is skipped before it
 is read, and you are charged for the impression either way.</p>
 
-<h2>The tells, in order of how badly they cost you</h2>
+<h2>What makes ad copy sound like AI wrote it?</h2>
+<p>Five things, in the order they cost you most. Each is a pattern a reader
+recognises before they finish the line.</p>
 <ol>
 <li><strong>Opener phrases.</strong> "Elevate your", "Unlock the", "Look no
 further", "In today's fast-paced". That isn't weak writing, it's a signature — and readers have learned it.</li>
@@ -255,19 +257,23 @@ corporate rather than authoritative.</li>
 generated even when no single line does.</li>
 </ol>
 
-<h2>Why you cannot ask a model to check this</h2>
-<p>Asking a language model whether text sounds like a language model is asking
+<h2>Can I just ask ChatGPT whether my copy sounds like AI?</h2>
+<p>No, and the reason is structural. Asking a language model whether text
+sounds like a language model is asking
 the defendant to sit on the jury. It'll agree the copy is excellent, because agreeing is what it does. Every check worth running here is a count:
 does this phrase appear, are there contractions, do all four headlines start
 with the same word. Counts don't flatter.</p>
 
-<h2>What we found in our own output</h2>
-<p>Running that check across 38 generated campaigns: <strong>27 came back
+<h2>How often does AdPlaybook's own copy read as generated?</h2>
+<p>About a quarter of the time, and we publish the count rather than the claim.
+Running that check across 38 generated campaigns: <strong>27 came back
 clean, 7 read stiffly, and 4 were recognisably generated</strong>. Roughly a
 quarter needed a rewrite before they were worth paying to show anyone. We publish it because a tool claiming a perfect record on its own output isn't telling you about its checking — it's telling you about its marketing.</p>
 
-<h2>What this does not tell you</h2>
-<p>Whether the copy is any good. It finds machine register, not weak positioning, and a page of plain human sentences can still be a bad ad.</p>
+<h2>Does passing this check mean the ad is good?</h2>
+<p>No. It tells you the copy does not read as machine-written, which is a
+different question from whether it sells anything.
+Whether the copy is any good. It finds machine register, not weak positioning, and a page of plain human sentences can still be a bad ad.</p>
 </article>
 """
     page(
