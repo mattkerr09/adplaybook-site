@@ -1691,9 +1691,9 @@ def spec_page(spec: Dict[str, Any]) -> None:
                   "cross it.</p></div>" if floors else "")
 
     src = spec.get("source_url", "")
-    check_head = ("Count these before you paste" if placements and any(
+    check_head = ("Which of these does a campaign have to satisfy?" if placements and any(
         p.get("headline_chars") or p.get("primary_text_chars") for p in placements)
-        else "Check a campaign against this spec")
+        else "How do I check a campaign against this spec?")
     # "<Platform> ad character limits" leads, because that is the phrase people
     # type. Search Console 2026-09-07: "bing ads character limits" 50,
     # "bing ad character limit" 32, "meta headline character limit" 5, "meta ad
@@ -1726,7 +1726,7 @@ def spec_page(spec: Dict[str, Any]) -> None:
 Source: <a class="src" href="{esc(src)}" rel="nofollow noopener">{esc(src)}</a></p>
 </div>
 
-<h2>Character limits and sizes</h2>
+<h2>What are {esc(name)}'s ad character limits?</h2>
 <table><thead><tr><th>Placement</th><th>Headline</th><th>Body text</th><th>Max file</th></tr></thead>
 <tbody>{''.join(rows)}</tbody></table>
 <p>Where two numbers are given, the first is what stays visible and the second
@@ -1827,7 +1827,7 @@ than quietly skipped.</p>
 
 <div class="cards">{cards}</div>
 
-<h2>Where these come from</h2>
+<h2>Where do these numbers come from?</h2>
 <p>These pages are generated from the same files {BRAND} itself reads when it
 builds a campaign, so the site cannot drift from the product. When a platform
 changes a limit and the spec is re-checked, the page changes with it.</p>
