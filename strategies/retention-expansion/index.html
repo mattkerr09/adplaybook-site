@@ -6,7 +6,7 @@
 <title>Retention and Expansion — what it is and how it fails</title>
 <meta name="description" content="Advertising to people who already pay you: to keep them, to bring them back, or to sell them the next thing. What it is judged on, where it works, and the documented ways it goes wrong.">
 <meta name="theme-color" content="#0d1017">
-<meta name="last-modified" content="2026-09-06">
+<meta name="last-modified" content="2026-09-07">
 <link rel="canonical" href="https://adplaybook.app/strategies/retention-expansion/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -21,7 +21,7 @@ if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</s
 <meta property="og:url" content="https://adplaybook.app/strategies/retention-expansion/">
 <meta property="og:site_name" content="AdPlaybook">
 <meta property="article:published_time" content="2026-08-14">
-<meta property="article:modified_time" content="2026-09-06">
+<meta property="article:modified_time" content="2026-09-07">
 <meta property="og:image" content="https://adplaybook.app/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
@@ -526,6 +526,19 @@ li{margin-bottom:.5rem}
      6   Guide                     green — what survives
    So the eye reads "two of these six are the app arguing with itself" before
    anyone has read a word of it. */
+/* Every table gets its own scroll container.
+   body carries overflow-x:hidden, so a table wider than the screen does not
+   become awkward on a phone — its right-hand columns become UNREACHABLE, because
+   nothing in the chain scrolls and the page itself is clipped. Measured before
+   fixing: 15 tables across 14 pages had no wrapper, including both tables on
+   /specs/microsoft-advertising/, a page whose entire value is a limits table
+   and which exists to answer the site's biggest search query.
+   The one overflow-x:auto already in the sheet is on .nav-links. Having the
+   technique somewhere is not the same as every table using it — which is
+   exactly what Crisp measured on its own site: the fix present on 47 of 73
+   tables and absent on 26. */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.tbl-wrap table{min-width:max-content}
 .stages li{position:relative;--stage:var(--grad-mid)}
 /* WHY .reveal SITS ON SMALL COMPONENTS.
    The observer always toggled, so the animation was two-way from the start —
@@ -995,7 +1008,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
   .nav-links a, footer a, .src a{display:inline-flex;align-items:center;min-height:24px}
 }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Retention and Expansion advertising strategy","description":"Advertising to people who already pay you: to keep them, to bring them back, or to sell them the next thing. What it is judged on, where it works, and the documented ways it goes wrong.","publisher":{"@type":"Organization","name":"AdPlaybook"},"datePublished":"2026-08-14","dateModified":"2026-09-06"}</script>
+<script type="application/ld+json">{"@context":"https://schema.org","@type":"TechArticle","headline":"Retention and Expansion advertising strategy","description":"Advertising to people who already pay you: to keep them, to bring them back, or to sell them the next thing. What it is judged on, where it works, and the documented ways it goes wrong.","publisher":{"@type":"Organization","name":"AdPlaybook"},"datePublished":"2026-08-14","dateModified":"2026-09-07"}</script>
 <script defer data-domain="adplaybook.app" src="https://plausible.io/js/script.js"></script><script async src="https://usesled.com/kerr-and-company/t.js"></script><script>(function(){var META_PIXEL_ID='1983109892356693';if(!META_PIXEL_ID)return;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',META_PIXEL_ID);fbq('track','PageView');})();</script>
 </head>
 <body>
@@ -1009,7 +1022,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 <div class="wrap">
 <article>
 <p class="crumb"><a href="/strategies/">Strategies</a></p>
-<h1>Retention and Expansion</h1><p class="dateline">Published <time datetime="2026-08-14">14 Aug 2026</time> · Updated <time datetime="2026-09-06">6 Sep 2026</time></p>
+<h1>Retention and Expansion</h1><p class="dateline">Published <time datetime="2026-08-14">14 Aug 2026</time> · Updated <time datetime="2026-09-07">7 Sep 2026</time></p>
 <p class="lede">Advertising to people who already pay you: to keep them, to bring them back, or to sell them the next thing. Almost always the cheapest revenue in the account and almost always the last thing anyone builds, because it does not feel like marketing. The audience is small, known and reachable by email for free — so the honest position is that paid should only cover what email cannot: people who stopped opening, people mid-decision about renewing, people who would buy the second product if they knew it existed. If your email list reaches them fine, do not pay to reach them again.</p>
 <h2>What retention and expansion is judged on</h2><p>Cost per expansion event (upgrade, renewal, or win-back). The landing page has to ask for <strong>An in-account action — upgrade, renew, enable the feature — behind their existing login. Never a marketing page that makes an existing customer re-enter details you already hold.</strong> — if it asks for something else, the campaign underperforms for a reason that never appears in the ad account, because people arrive expecting one thing and are shown another.</p><p>The offer that fits: upgrade, add-on, renewal, referral, or win-back.</p><h2>It usually fails by paying to reach people email already reaches for nothing</h2><p>That is the first entry on the list AdPlaybook checks a generated campaign against. The rest:</p><ul><li>Paying to reach people email already reaches for nothing. Check the email path first; if it works, this loadout is not the answer.</li><li>No holdout, so natural renewals are counted as ad-driven — the most inflated number in the whole account.</li><li>Advertising an upgrade to customers who are unhappy with what they already bought, which accelerates churn.</li><li>Customer list not refreshed, so recent churners keep seeing upgrade ads and recent upgraders keep seeing the same offer.</li><li>Frequency unbounded against a tiny audience, turning a paying customer into someone who hides your ads.</li></ul><h2>Surfaces it suits, and one it contradicts</h2><p>Rated highest for meta, linkedin. Rated <strong>0.25 or below</strong> for reddit — the app will not offer it there, because the surface contradicts the approach rather than merely suiting it poorly.</p><h2>What the creative has to do for retention and expansion</h2><p>Speak to someone who already knows you — no re-introduction, no explaining what the product is. Show the part they are not using, the outcome they have not reached, or the next tier. For win-back, name the gap honestly rather than pretending they never left. Feature-in-use footage beats aspiration here, because the audience can already tell the difference.</p>
 <nav class="related" aria-label="Related pages"><h2>Related</h2><ul><li><a href="/strategies/direct-response/">Direct Response</a></li><li><a href="/strategies/category-education/">Category Education</a></li><li><a href="/strategies/problem-aware/">Problem-Aware Capture</a></li></ul></nav></article>

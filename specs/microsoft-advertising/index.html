@@ -526,6 +526,19 @@ li{margin-bottom:.5rem}
      6   Guide                     green — what survives
    So the eye reads "two of these six are the app arguing with itself" before
    anyone has read a word of it. */
+/* Every table gets its own scroll container.
+   body carries overflow-x:hidden, so a table wider than the screen does not
+   become awkward on a phone — its right-hand columns become UNREACHABLE, because
+   nothing in the chain scrolls and the page itself is clipped. Measured before
+   fixing: 15 tables across 14 pages had no wrapper, including both tables on
+   /specs/microsoft-advertising/, a page whose entire value is a limits table
+   and which exists to answer the site's biggest search query.
+   The one overflow-x:auto already in the sheet is on .nav-links. Having the
+   technique somewhere is not the same as every table using it — which is
+   exactly what Crisp measured on its own site: the fix present on 47 of 73
+   tables and absent on 26. */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.tbl-wrap table{min-width:max-content}
 .stages li{position:relative;--stage:var(--grad-mid)}
 /* WHY .reveal SITS ON SMALL COMPONENTS.
    The observer always toggled, so the animation was two-way from the start —
@@ -1019,14 +1032,14 @@ not truncate — it fails to display.</p>
 <p>Three to fifteen headlines at 30 characters each, and two to four
 descriptions at 90. Those are the limits that apply after any dynamic text is
 resolved.</p>
-<table><thead><tr><th>Field</th><th>How many</th><th>Limit you type</th>
+<div class="tbl-wrap"><table><thead><tr><th>Field</th><th>How many</th><th>Limit you type</th>
 <th>Limit after substitution</th></tr></thead><tbody>
 <tr><td>Headline</td><td>3–15</td><td>1,000</td><td><strong>30</strong></td></tr>
 <tr><td>Description</td><td>2–4</td><td>1,000</td><td><strong>90</strong></td></tr>
 <tr><td>Path 1</td><td>0–1</td><td>1,000</td><td><strong>15</strong></td></tr>
 <tr><td>Path 2</td><td>0–1, needs Path 1</td><td>1,000</td><td><strong>15</strong></td></tr>
 <tr><td>Final URL</td><td>up to 10, first used</td><td colspan="2">2,048, protocol counted</td></tr>
-</tbody></table>
+</tbody></table></div>
 <p class="note">According to <a href="https://learn.microsoft.com/en-us/advertising/campaign-management-service/responsivesearchad" rel="nofollow">Microsoft's
 ResponsiveSearchAd reference</a>, read on 2026-09-07. The 1,000-character figure is
 the input allowance when the field contains dynamic text strings such as
@@ -1062,13 +1075,13 @@ allowed at all.</p>
 <h2>What are the limits for Microsoft Audience and multimedia ads?</h2>
 <p>A different object with different numbers, which is why a single "Bing
 character limit" answer is usually wrong.</p>
-<table><thead><tr><th>Field</th><th>How many</th><th>Limit</th></tr></thead><tbody>
+<div class="tbl-wrap"><table><thead><tr><th>Field</th><th>How many</th><th>Limit</th></tr></thead><tbody>
 <tr><td>Business name</td><td>1</td><td>25</td></tr>
 <tr><td>Headline</td><td>1–15</td><td>30 after substitution</td></tr>
 <tr><td>Long headline</td><td>1–5</td><td>90</td></tr>
 <tr><td>Description</td><td>1–5</td><td>90 after substitution</td></tr>
 <tr><td>Text (video ads)</td><td>1</td><td>90</td></tr>
-</tbody></table>
+</tbody></table></div>
 <p class="note">According to <a href="https://learn.microsoft.com/en-us/advertising/campaign-management-service/responsivead" rel="nofollow">Microsoft's
 ResponsiveAd reference</a>, read on 2026-09-07.</p>
 

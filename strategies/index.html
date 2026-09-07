@@ -6,7 +6,7 @@
 <title>The ten ad strategies AdPlaybook chooses between | AdPlaybook</title>
 <meta name="description" content="Ten advertising approaches, each with the KPI it is judged on and the documented ways it fails. Read from the same data the app decides with.">
 <meta name="theme-color" content="#0d1017">
-<meta name="last-modified" content="2026-09-06">
+<meta name="last-modified" content="2026-09-07">
 <link rel="canonical" href="https://adplaybook.app/strategies/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -524,6 +524,19 @@ li{margin-bottom:.5rem}
      6   Guide                     green — what survives
    So the eye reads "two of these six are the app arguing with itself" before
    anyone has read a word of it. */
+/* Every table gets its own scroll container.
+   body carries overflow-x:hidden, so a table wider than the screen does not
+   become awkward on a phone — its right-hand columns become UNREACHABLE, because
+   nothing in the chain scrolls and the page itself is clipped. Measured before
+   fixing: 15 tables across 14 pages had no wrapper, including both tables on
+   /specs/microsoft-advertising/, a page whose entire value is a limits table
+   and which exists to answer the site's biggest search query.
+   The one overflow-x:auto already in the sheet is on .nav-links. Having the
+   technique somewhere is not the same as every table using it — which is
+   exactly what Crisp measured on its own site: the fix present on 47 of 73
+   tables and absent on 26. */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.tbl-wrap table{min-width:max-content}
 .stages li{position:relative;--stage:var(--grad-mid)}
 /* WHY .reveal SITS ON SMALL COMPONENTS.
    The observer always toggled, so the animation was two-way from the start —

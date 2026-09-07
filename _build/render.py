@@ -609,6 +609,19 @@ li{margin-bottom:.5rem}
      6   Guide                     green — what survives
    So the eye reads "two of these six are the app arguing with itself" before
    anyone has read a word of it. */
+/* Every table gets its own scroll container.
+   body carries overflow-x:hidden, so a table wider than the screen does not
+   become awkward on a phone — its right-hand columns become UNREACHABLE, because
+   nothing in the chain scrolls and the page itself is clipped. Measured before
+   fixing: 15 tables across 14 pages had no wrapper, including both tables on
+   /specs/microsoft-advertising/, a page whose entire value is a limits table
+   and which exists to answer the site's biggest search query.
+   The one overflow-x:auto already in the sheet is on .nav-links. Having the
+   technique somewhere is not the same as every table using it — which is
+   exactly what Crisp measured on its own site: the fix present on 47 of 73
+   tables and absent on 26. */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.tbl-wrap table{min-width:max-content}
 .stages li{position:relative;--stage:var(--grad-mid)}
 /* WHY .reveal SITS ON SMALL COMPONENTS.
    The observer always toggled, so the animation was two-way from the start —
@@ -1199,6 +1212,17 @@ def page(*, path: str, title: str, description: str, body: str,
                  + "</ul></nav>")
         body = (body[:body.rfind("</article>")] + block + body[body.rfind("</article>"):]
                 if "</article>" in body else body + block)
+    # Wrap bare tables HERE rather than at each call site.
+    #
+    # Fifteen tables were written across nine modules and none was wrapped. A
+    # fix applied by hand covers the tables that exist today and misses the one
+    # somebody adds next week — the same "a sweep is not a fix" mistake as the
+    # page that shipped without dates hours after dates were added site-wide.
+    # Doing it in one place makes it structural.
+    if "<table" in body and "tbl-wrap" not in body:
+        body = body.replace("<table", '<div class="tbl-wrap"><table')
+        body = body.replace("</table>", "</table></div>")
+
     out = SITE / path.strip("/") / "index.html" if path != "/" else SITE / "index.html"
     caller_modified = modified if modified != BUILT else None
     is_article = bool(schema) and schema.get("@type") in _ARTICLE_TYPES

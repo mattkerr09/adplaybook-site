@@ -526,6 +526,19 @@ li{margin-bottom:.5rem}
      6   Guide                     green — what survives
    So the eye reads "two of these six are the app arguing with itself" before
    anyone has read a word of it. */
+/* Every table gets its own scroll container.
+   body carries overflow-x:hidden, so a table wider than the screen does not
+   become awkward on a phone — its right-hand columns become UNREACHABLE, because
+   nothing in the chain scrolls and the page itself is clipped. Measured before
+   fixing: 15 tables across 14 pages had no wrapper, including both tables on
+   /specs/microsoft-advertising/, a page whose entire value is a limits table
+   and which exists to answer the site's biggest search query.
+   The one overflow-x:auto already in the sheet is on .nav-links. Having the
+   technique somewhere is not the same as every table using it — which is
+   exactly what Crisp measured on its own site: the fix present on 47 of 73
+   tables and absent on 26. */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.tbl-wrap table{min-width:max-content}
 .stages li{position:relative;--stage:var(--grad-mid)}
 /* WHY .reveal SITS ON SMALL COMPONENTS.
    The observer always toggled, so the animation was two-way from the start —
@@ -1011,7 +1024,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 None of them raise an error at setup. The campaign is created, the status looks
 healthy, and there's no delivery.</p>
 <h2>What is the minimum audience size on each ad platform?</h2>
-<table>
+<div class="tbl-wrap"><table>
 <thead><tr><th>Platform</th><th>Floor</th><th>Applies to</th></tr></thead>
 <tbody>
 <tr><td><a href="/specs/linkedin/">LinkedIn</a></td><td><strong>300</strong> member accounts</td>
@@ -1023,7 +1036,7 @@ healthy, and there's no delivery.</p>
 <tr><td><a href="/specs/x/">X</a></td><td>No minimum spend stated</td>
 <td>X states there's no minimum campaign spend, so small tests are genuinely possible.</td></tr>
 </tbody>
-</table>
+</table></div>
 <h2>Does the minimum apply per campaign or per ad set?</h2>
 <p>A floor that applies per ad set multiplies by the number of cells in your
 test. This is the single most common way a well-designed experiment produces

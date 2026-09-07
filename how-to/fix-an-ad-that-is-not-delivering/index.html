@@ -524,6 +524,19 @@ li{margin-bottom:.5rem}
      6   Guide                     green — what survives
    So the eye reads "two of these six are the app arguing with itself" before
    anyone has read a word of it. */
+/* Every table gets its own scroll container.
+   body carries overflow-x:hidden, so a table wider than the screen does not
+   become awkward on a phone — its right-hand columns become UNREACHABLE, because
+   nothing in the chain scrolls and the page itself is clipped. Measured before
+   fixing: 15 tables across 14 pages had no wrapper, including both tables on
+   /specs/microsoft-advertising/, a page whose entire value is a limits table
+   and which exists to answer the site's biggest search query.
+   The one overflow-x:auto already in the sheet is on .nav-links. Having the
+   technique somewhere is not the same as every table using it — which is
+   exactly what Crisp measured on its own site: the fix present on 47 of 73
+   tables and absent on 26. */
+.tbl-wrap{overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+.tbl-wrap table{min-width:max-content}
 .stages li{position:relative;--stage:var(--grad-mid)}
 /* WHY .reveal SITS ON SMALL COMPONENTS.
    The observer always toggled, so the animation was two-way from the start —
@@ -1015,8 +1028,8 @@ the eight platforms we track there is no published number behind that advice.</p
 <h2>Which ad platforms publish a minimum audience size?</h2>
 <p>Only one of the eight we track states a number. On the rest, "your audience
 is too small" is advice with nothing published behind it.</p>
-<table><thead><tr><th>Platform</th><th>Minimum audience</th>
-<th>Spec verified</th></tr></thead><tbody><tr><td>Meta (Facebook and Instagram)</td><td>not published</td><td>not verified</td></tr><tr><td>LinkedIn</td><td>300</td><td>2026-08-10</td></tr><tr><td>TikTok</td><td>not published</td><td>2026-08-10</td></tr><tr><td>Google Ads</td><td>not published</td><td>not verified</td></tr><tr><td>YouTube</td><td>not published</td><td>2026-08-10</td></tr><tr><td>Pinterest</td><td>not published</td><td>2026-08-10</td></tr><tr><td>X</td><td>not published</td><td>2026-08-10</td></tr><tr><td>Reddit</td><td>not published</td><td>not verified</td></tr></tbody></table>
+<div class="tbl-wrap"><table><thead><tr><th>Platform</th><th>Minimum audience</th>
+<th>Spec verified</th></tr></thead><tbody><tr><td>Meta (Facebook and Instagram)</td><td>not published</td><td>not verified</td></tr><tr><td>LinkedIn</td><td>300</td><td>2026-08-10</td></tr><tr><td>TikTok</td><td>not published</td><td>2026-08-10</td></tr><tr><td>Google Ads</td><td>not published</td><td>not verified</td></tr><tr><td>YouTube</td><td>not published</td><td>2026-08-10</td></tr><tr><td>Pinterest</td><td>not published</td><td>2026-08-10</td></tr><tr><td>X</td><td>not published</td><td>2026-08-10</td></tr><tr><td>Reddit</td><td>not published</td><td>not verified</td></tr></tbody></table></div>
 <p class="note">Read from the same platform data our app checks against at
 runtime. <strong>1 of 8</strong> platforms publish a
 minimum audience size. Where this says "not published", it means we looked and the platform doesn't state one — not that the number is zero, and not that we
