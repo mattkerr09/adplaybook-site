@@ -53,8 +53,8 @@ resolved.</p>
 <tr><td>Path 2</td><td>0–1, needs Path 1</td><td>1,000</td><td><strong>15</strong></td></tr>
 <tr><td>Final URL</td><td>up to 10, first used</td><td colspan="2">2,048, protocol counted</td></tr>
 </tbody></table>
-<p class="note">Read from <a href="{RSA_URL}" rel="nofollow">Microsoft's
-ResponsiveSearchAd reference</a> on {READ_ON}. The 1,000-character figure is
+<p class="note">According to <a href="{RSA_URL}" rel="nofollow">Microsoft's
+ResponsiveSearchAd reference</a>, read on {READ_ON}. The 1,000-character figure is
 the input allowance when the field contains dynamic text strings such as
 <code>{{keyword}}</code>; the bold number is what survives.</p>
 
@@ -95,8 +95,8 @@ character limit" answer is usually wrong.</p>
 <tr><td>Description</td><td>1–5</td><td>90 after substitution</td></tr>
 <tr><td>Text (video ads)</td><td>1</td><td>90</td></tr>
 </tbody></table>
-<p class="note">Read from <a href="{RA_URL}" rel="nofollow">Microsoft's
-ResponsiveAd reference</a> on {READ_ON}.</p>
+<p class="note">According to <a href="{RA_URL}" rel="nofollow">Microsoft's
+ResponsiveAd reference</a>, read on {READ_ON}.</p>
 
 <h2>Does AdPlaybook build Microsoft Advertising campaigns?</h2>
 <p>No. It builds for Google Ads, LinkedIn, Meta, Pinterest, Reddit, TikTok, X

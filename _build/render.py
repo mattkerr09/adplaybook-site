@@ -1761,8 +1761,9 @@ def specs_hub(specs: List[Dict[str, Any]]) -> None:
 <article>
 <p class="crumb">Ad specs</p>
 <h1>Ad specs and character limits, with sources</h1>
-<p class="lede">Eight platforms. Every number quoted from the platform's own
-documentation, with the URL it came from and the date it was read.</p>
+<p class="lede">Eight platforms. Every number here is quoted according to the
+platform's own documentation, with the URL it came from and the date it was
+read — 10 August 2026 for the eight below.</p>
 <p class="note">Looking for <a href="/specs/microsoft-advertising/">Microsoft
 Advertising (Bing) character limits</a>? They are documented here too, though
 AdPlaybook does not build Bing campaigns — the page says so plainly rather than
