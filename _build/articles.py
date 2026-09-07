@@ -35,11 +35,11 @@ catches people out.</p>
 <p>Split a 500-person audience into a two-cell test and you've just created two
 ad sets of roughly 250. Both are under the floor. Both were accepted at setup.
 The campaign is live, the status is green, and nothing delivers.</p>
-<h2>Why it's silent</h2>
-<p>None of this is an error. You built a valid campaign and asked for an
+<h2>Why is my LinkedIn ad set not delivering?</h2>
+<p>Because your audience is under the platform's floor, and LinkedIn does not report that as a problem. None of this is an error. You built a valid campaign and asked for an
 audience the platform can't serve. On Meta, narrowing hurts delivery gradually.
 On LinkedIn you cross a line and it stops.</p>
-<h2>What to do</h2>
+<h2>How do I fix an ad set that is not delivering?</h2>
 <ul>
 <li>Multiply the floor by the number of cells before you design the test. Two
 cells means 600. Four means 1,200.</li>
@@ -93,17 +93,17 @@ the ad fails to display.</p>
 <li>The <strong>visible limit</strong>. Past this it runs, and gets truncated
 behind a "see more" or an ellipsis.</li>
 </ul>
-<h2>They can sit a long way apart</h2>
-<p>LinkedIn's single image ad takes a headline of up to 200 characters and cuts
+<h2>How far apart are the hard limit and the visible limit?</h2>
+<p>Far enough that writing to the wrong one wastes most of the line. LinkedIn's single image ad takes a headline of up to 200 characters and cuts
 it at 70. Its introductory text takes 3,000 and cuts at 150. YouTube's in-feed
 headline takes 100 but anything past 25 "may be shortened on some devices".</p>
 <p>So a 120-character headline is a <em>truncation</em> on LinkedIn and a flat
 <em>rejection</em> on X, where the cap is 70. Same copy, different failure.</p>
-<h2>The link tax on X</h2>
-<p>X states that each link used reduces the character count by 23, "electing 257
+<h2>How many characters do I actually get on X with a link?</h2>
+<p>257, not 280. X states that each link used reduces the character count by 23, "electing 257
 characters for X copy". Every ad has a destination, so 257 is your real budget
 and anything written to 280 won't fit.</p>
-<h2>Write to the visible number</h2>
+<h2>Which limit should I write to?</h2>
 <p>A headline that fits the cap but gets cut off mid-word is a worse ad than a
 shorter one. Write to the visible limit and treat the cap as headroom.</p>
 <p><a href="/specs/">All eight platforms, both numbers, with sources.</a></p>
@@ -172,18 +172,18 @@ recently. There's no job title here.</li>
 <p>If your ad is about housing, employment, or credit, the rules aren't the
 platform's preferences. They're law, and the platform's category declaration is
 how you comply with part of it, not the whole of it.</p>
-<h2>Declare the category</h2>
-<p>Meta calls this a Special Ad Category. Declaring it removes targeting options
+<h2>What is a special ad category and when must I declare one?</h2>
+<p>It is the declaration housing, employment and credit ads require, and it removes targeting on purpose. Meta calls this a Special Ad Category. Declaring it removes targeting options
 that would otherwise be available, which is the point. Age and gender targeting
 on job ads is unlawful under the ADEA and Title VII. Targeting housing ads by
 age, gender or postcode runs into the Fair Housing Act. Credit discrimination is
 prohibited by the Equal Credit Opportunity Act.</p>
-<h2>Proxies count</h2>
+<h2>Can I target by postcode or interest instead?</h2>
 <p>The mistake that survives the declaration is the proxy exclusion. An interest,
 a postcode, a language, a lookalike seeded on a skewed list: each can produce the
 same outcome as excluding a protected characteristic directly.
 <strong>Intent isn't the test.</strong> The effect is.</p>
-<h2>In the UK and EU</h2>
+<h2>Do special ad categories apply outside the US?</h2>
 <p>The Equality Act 2010 and equivalent EU directives land in the same place by a
 different route. Financial promotions carry their own regime on top: under FSMA
 section 21, communicating an unapproved financial promotion is a criminal
@@ -236,12 +236,12 @@ people from one country</strong>. The country part is what surprises people.</p>
 <p>A 300-person customer list sounds comfortably over the line. Spread it across
 the UK, Ireland, Germany, France and Spain at 60 apiece and no single country
 clears 100, so there's nothing to build from.</p>
-<h2>Bigger seeds aren't automatically better</h2>
-<p>A lookalike is only as good as what it's modelled on. Seeding from everyone
+<h2>Is a bigger lookalike source audience better?</h2>
+<p>No — past the minimum, quality beats size. A lookalike is only as good as what it's modelled on. Seeding from everyone
 who ever bought gives you a model of your average customer, including the ones
 who refunded. Seeding from your best 200 customers usually beats seeding from all
 5,000, and it's the version most people never try.</p>
-<h2>The proxy-discrimination trap</h2>
+<h2>Can a lookalike audience be discriminatory?</h2>
 <p>If the campaign is about housing, employment or credit, a lookalike seeded on
 a skewed customer list can reproduce a protected-characteristic exclusion without
 anyone choosing one. The declaration doesn't save you from that, because the test
@@ -263,7 +263,7 @@ is the effect and not the intent. Our note on
 <p>Several platforms enforce a minimum below which an ad set simply won't run.
 None of them raise an error at setup. The campaign is created, the status looks
 healthy, and there's no delivery.</p>
-<h2>What each platform publishes</h2>
+<h2>What is the minimum audience size on each ad platform?</h2>
 <table>
 <thead><tr><th>Platform</th><th>Floor</th><th>Applies to</th></tr></thead>
 <tbody>
@@ -277,13 +277,13 @@ healthy, and there's no delivery.</p>
 <td>X states there's no minimum campaign spend, so small tests are genuinely possible.</td></tr>
 </tbody>
 </table>
-<h2>The arithmetic people skip</h2>
+<h2>Does the minimum apply per campaign or per ad set?</h2>
 <p>A floor that applies per ad set multiplies by the number of cells in your
 test. This is the single most common way a well-designed experiment produces
 nothing: the audience was fine, the split wasn't.</p>
 <p>Work it out before you write creative, not after. On LinkedIn especially, the
 forecast panel is the step that most often sends you back to the start.</p>
-<h2>What isn't on this list</h2>
+<h2>What if my platform publishes no minimum?</h2>
 <p>Google, Pinterest, Reddit and YouTube either don't publish a comparable floor
 or didn't state one on the pages we read. Absence here means we couldn't verify
 one, not that none exists. Each <a href="/specs/">spec page</a> lists what we
