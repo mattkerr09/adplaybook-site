@@ -6,7 +6,7 @@
 <title>How to run an ad split test that actually says something</title>
 <meta name="description" content="Two cells with the same copy cannot produce a result. How to spot a null test, why generated campaigns produce them, and what to vary instead.">
 <meta name="theme-color" content="#0d1017">
-<meta name="last-modified" content="2026-09-06">
+<meta name="last-modified" content="2026-09-07">
 <link rel="canonical" href="https://adplaybook.app/how-to/split-test-ads-that-actually-say-something/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -1013,14 +1013,16 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 <p>It's the most common way a first campaign wastes its budget, and it's almost invisible: the ads manager accepts it, both cells deliver, and the report
 shows a winner. The winner is variance.</p>
 
-<h2>How to tell</h2>
-<p>Put the two cells side by side and read only the words a person would see —
+<h2>How do I know if my two ad variants are actually different?</h2>
+<p>Read only the words a person sees, and ignore every label you gave them.
+Put the two cells side by side and read only the words a person would see —
 headline, body, button. Ignore the labels. A test matrix that says
 <em>"Variant A: control / Variant B: emotional hook"</em> is describing an
 intention, not a difference. If the visible copy's identical, so is the ad.</p>
 
-<h2>Why generated campaigns are prone to it</h2>
-<p>We measured this in our own output. Across 48 generated campaigns carrying two
+<h2>Why do AI-generated split tests end up identical?</h2>
+<p>Because "write me variations" describes paraphrase, and paraphrase is what
+you get. We measured this in our own output. Across 48 generated campaigns carrying two
 or more cells, <strong>35 shared one headline across every cell</strong> and
 <strong>15 were identical in both headline and body</strong>. The model filled in
 the axis labels correctly every time and then wrote the same ad twice.</p>
@@ -1028,7 +1030,9 @@ the axis labels correctly every time and then wrote the same ad twice.</p>
 because paraphrase is what the request literally describes. A test needs a
 different <em>idea</em>, not different adjectives.</p>
 
-<h2>How to fix it</h2>
+<h2>How do I write a split test that can actually produce an answer?</h2>
+<p>Change the angle rather than the wording, vary exactly one thing, and check
+the audience still clears the platform's floor after you halve it.</p>
 <ol>
 <li><strong>Change the angle, not the wording.</strong> If cell A leads on price,
 cell B should lead on the objection that stops people buying, not on the same price in warmer language.</li>
@@ -1039,8 +1043,9 @@ split in two is two cells of 250, and LinkedIn will not deliver below 300 per
 cell. The campaign goes live and nothing happens — you won't be told why.</li>
 </ol>
 
-<h2>What this page does not tell you</h2>
-<p>Whether your two distinct cells are any <em>good</em>. This is about whether a
+<h2>Does a valid split test mean the ads are good?</h2>
+<p>No — those are separate questions.
+Whether your two distinct cells are any <em>good</em>. This is about whether a
 test can produce an answer at all. A campaign can clear every point here and still be two weak ads.</p>
 <nav class="related" aria-label="Related pages"><h2>Related</h2><ul><li><a href="/how-to/fix-an-ad-that-is-not-delivering/">How to fix an ad that is not delivering</a></li><li><a href="/how-to/stop-ad-copy-reading-like-ai/">How to stop your ad copy reading like AI wrote it</a></li></ul></nav></article>
 </div>

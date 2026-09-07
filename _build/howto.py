@@ -72,14 +72,16 @@ def _split_test(page) -> None:
 <p>It's the most common way a first campaign wastes its budget, and it's almost invisible: the ads manager accepts it, both cells deliver, and the report
 shows a winner. The winner is variance.</p>
 
-<h2>How to tell</h2>
-<p>Put the two cells side by side and read only the words a person would see —
+<h2>How do I know if my two ad variants are actually different?</h2>
+<p>Read only the words a person sees, and ignore every label you gave them.
+Put the two cells side by side and read only the words a person would see —
 headline, body, button. Ignore the labels. A test matrix that says
 <em>"Variant A: control / Variant B: emotional hook"</em> is describing an
 intention, not a difference. If the visible copy's identical, so is the ad.</p>
 
-<h2>Why generated campaigns are prone to it</h2>
-<p>We measured this in our own output. Across 48 generated campaigns carrying two
+<h2>Why do AI-generated split tests end up identical?</h2>
+<p>Because "write me variations" describes paraphrase, and paraphrase is what
+you get. We measured this in our own output. Across 48 generated campaigns carrying two
 or more cells, <strong>35 shared one headline across every cell</strong> and
 <strong>15 were identical in both headline and body</strong>. The model filled in
 the axis labels correctly every time and then wrote the same ad twice.</p>
@@ -87,7 +89,9 @@ the axis labels correctly every time and then wrote the same ad twice.</p>
 because paraphrase is what the request literally describes. A test needs a
 different <em>idea</em>, not different adjectives.</p>
 
-<h2>How to fix it</h2>
+<h2>How do I write a split test that can actually produce an answer?</h2>
+<p>Change the angle rather than the wording, vary exactly one thing, and check
+the audience still clears the platform's floor after you halve it.</p>
 <ol>
 <li><strong>Change the angle, not the wording.</strong> If cell A leads on price,
 cell B should lead on the objection that stops people buying, not on the same price in warmer language.</li>
@@ -98,8 +102,9 @@ split in two is two cells of 250, and LinkedIn will not deliver below 300 per
 cell. The campaign goes live and nothing happens — you won't be told why.</li>
 </ol>
 
-<h2>What this page does not tell you</h2>
-<p>Whether your two distinct cells are any <em>good</em>. This is about whether a
+<h2>Does a valid split test mean the ads are good?</h2>
+<p>No — those are separate questions.
+Whether your two distinct cells are any <em>good</em>. This is about whether a
 test can produce an answer at all. A campaign can clear every point here and still be two weak ads.</p>
 </article>
 """
@@ -166,7 +171,9 @@ def _not_delivering(page) -> None:
 "your audience is too small" is the first thing anyone is told, and on seven of
 the eight platforms we track there is no published number behind that advice.</p>
 
-<h2>Who actually publishes a floor</h2>
+<h2>Which ad platforms publish a minimum audience size?</h2>
+<p>Only one of the eight we track states a number. On the rest, "your audience
+is too small" is advice with nothing published behind it.</p>
 <table><thead><tr><th>Platform</th><th>Minimum audience</th>
 <th>Spec verified</th></tr></thead><tbody>{table}</tbody></table>
 <p class="note">Read from the same platform data our app checks against at
@@ -174,15 +181,20 @@ runtime. <strong>{len(published)} of {len(rows)}</strong> platforms publish a
 minimum audience size. Where this says "not published", it means we looked and the platform doesn't state one — not that the number is zero, and not that we
 failed to find it.</p>
 
-<h2>The arithmetic that catches people</h2>
-<p>Where a floor does exist it applies <strong>per cell</strong>, not per
+<h2>Why is my campaign not delivering when the audience looks big enough?</h2>
+<p>Because the floor applies per cell, not per campaign, so splitting a test
+halves the number you were checking against.
+Where a floor does exist it applies <strong>per cell</strong>, not per
 campaign, and that is the trap. A 500-person LinkedIn audience clears the 300
 floor comfortably. Split it into two test cells and each holds 250. Both are
 under. The campaign's live, the status says Active, and neither cell delivers.</p>
 <p>So the number to check is <strong>floor × cells</strong>.</p>
 
-<h2>When no floor is published</h2>
-<p>On the other seven, delivery is governed by the auction rather than by a
+<h2>What stops an ad delivering when there is no published minimum?</h2>
+<p>Three things, none of which reports an error: a learning phase that never
+exits, a special ad category stripping your targeting, or a bid under the
+auction floor.
+On the other seven, delivery is governed by the auction rather than by a
 stated threshold, and a stalled campaign is more likely to be one of these:</p>
 <ul>
 <li><strong>The learning phase never exits.</strong> Under roughly 50
@@ -195,8 +207,9 @@ audience is not the one you selected.</li>
 <li><strong>The bid is below the auction floor.</strong> Nothing errors. The ad just never wins an impression.</li>
 </ul>
 
-<h2>What we could not check for you</h2>
-<p>Whether your specific audience clears anything. No tool outside your ads
+<h2>Can any tool tell me if my own audience is big enough?</h2>
+<p>No, and one that says it can is guessing.
+Whether your specific audience clears anything. No tool outside your ads
 manager can see your forecast panel, and any tool that claims otherwise is guessing. Read the number there before launching.</p>
 </article>
 """

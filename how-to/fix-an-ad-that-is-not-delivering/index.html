@@ -6,7 +6,7 @@
 <title>How to fix an ad that is not delivering</title>
 <meta name="description" content="Only one of eight ad platforms publishes a minimum audience size. What the floors actually are, why they apply per test cell, and what stalls delivery when no floor exists.">
 <meta name="theme-color" content="#0d1017">
-<meta name="last-modified" content="2026-09-06">
+<meta name="last-modified" content="2026-09-07">
 <link rel="canonical" href="https://adplaybook.app/how-to/fix-an-ad-that-is-not-delivering/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -1012,7 +1012,9 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 "your audience is too small" is the first thing anyone is told, and on seven of
 the eight platforms we track there is no published number behind that advice.</p>
 
-<h2>Who actually publishes a floor</h2>
+<h2>Which ad platforms publish a minimum audience size?</h2>
+<p>Only one of the eight we track states a number. On the rest, "your audience
+is too small" is advice with nothing published behind it.</p>
 <table><thead><tr><th>Platform</th><th>Minimum audience</th>
 <th>Spec verified</th></tr></thead><tbody><tr><td>Meta (Facebook and Instagram)</td><td>not published</td><td>not verified</td></tr><tr><td>LinkedIn</td><td>300</td><td>2026-08-10</td></tr><tr><td>TikTok</td><td>not published</td><td>2026-08-10</td></tr><tr><td>Google Ads</td><td>not published</td><td>not verified</td></tr><tr><td>YouTube</td><td>not published</td><td>2026-08-10</td></tr><tr><td>Pinterest</td><td>not published</td><td>2026-08-10</td></tr><tr><td>X</td><td>not published</td><td>2026-08-10</td></tr><tr><td>Reddit</td><td>not published</td><td>not verified</td></tr></tbody></table>
 <p class="note">Read from the same platform data our app checks against at
@@ -1020,15 +1022,20 @@ runtime. <strong>1 of 8</strong> platforms publish a
 minimum audience size. Where this says "not published", it means we looked and the platform doesn't state one — not that the number is zero, and not that we
 failed to find it.</p>
 
-<h2>The arithmetic that catches people</h2>
-<p>Where a floor does exist it applies <strong>per cell</strong>, not per
+<h2>Why is my campaign not delivering when the audience looks big enough?</h2>
+<p>Because the floor applies per cell, not per campaign, so splitting a test
+halves the number you were checking against.
+Where a floor does exist it applies <strong>per cell</strong>, not per
 campaign, and that is the trap. A 500-person LinkedIn audience clears the 300
 floor comfortably. Split it into two test cells and each holds 250. Both are
 under. The campaign's live, the status says Active, and neither cell delivers.</p>
 <p>So the number to check is <strong>floor × cells</strong>.</p>
 
-<h2>When no floor is published</h2>
-<p>On the other seven, delivery is governed by the auction rather than by a
+<h2>What stops an ad delivering when there is no published minimum?</h2>
+<p>Three things, none of which reports an error: a learning phase that never
+exits, a special ad category stripping your targeting, or a bid under the
+auction floor.
+On the other seven, delivery is governed by the auction rather than by a
 stated threshold, and a stalled campaign is more likely to be one of these:</p>
 <ul>
 <li><strong>The learning phase never exits.</strong> Under roughly 50
@@ -1041,8 +1048,9 @@ audience is not the one you selected.</li>
 <li><strong>The bid is below the auction floor.</strong> Nothing errors. The ad just never wins an impression.</li>
 </ul>
 
-<h2>What we could not check for you</h2>
-<p>Whether your specific audience clears anything. No tool outside your ads
+<h2>Can any tool tell me if my own audience is big enough?</h2>
+<p>No, and one that says it can is guessing.
+Whether your specific audience clears anything. No tool outside your ads
 manager can see your forecast panel, and any tool that claims otherwise is guessing. Read the number there before launching.</p>
 <nav class="related" aria-label="Related pages"><h2>Related</h2><ul><li><a href="/how-to/stop-ad-copy-reading-like-ai/">How to stop your ad copy reading like AI wrote it</a></li><li><a href="/how-to/split-test-ads-that-actually-say-something/">How to run an ad split test that actually says something</a></li></ul></nav></article>
 </div>
