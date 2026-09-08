@@ -39,6 +39,7 @@ import sys
 UA = ("Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 "
       "(KHTML, like Gecko) Chrome/120.0.0.0 Safari/537.36")
 BASELINE = os.path.join(os.path.dirname(os.path.abspath(__file__)), "source_freshness_baseline.json")
+SELF_PROBE = "this sentence appears in no platform documentation anywhere"
 MIN_PAGES = 3
 MIN_QUOTES = 10
 
@@ -109,6 +110,25 @@ def main() -> int:
     baseline = json.load(open(BASELINE)) if os.path.exists(BASELINE) else {}
     cache, missing = {}, []
 
+    #: SELF-CHECK, PLANTED BEFORE THE LOOP SO IT RUNS THE REAL DETECTION PATH.
+    #:
+    #: ⚠️ The previous self-check asserted only that a probe string was ABSENT from the
+    #: fetched corpus, and then printed "a phrase absent from every fetched source is
+    #: DETECTED as absent. OK". It never ran the detection. Proved 2026-09-08 by
+    #: mutation: replacing `if nq and nq not in corpus:` with `if nq and False:` —
+    #: disabling detection ENTIRELY — left the self-check exiting 0 and still printing
+    #: that line. It asserted a precondition and claimed a capability.
+    #:
+    #: This plants a page whose quote cannot appear in any real documentation, lets the
+    #: ordinary loop run over it, and afterwards demands the loop REPORTED it. The
+    #: assertion is on the observable outcome, not on a re-statement of the loop's own
+    #: comparison, so it cannot agree with the implementation by construction.
+    SELF_PAGE = "__self_check_planted__"
+    if self_check and pages:
+        _first_urls = next(iter(sorted(pages.items())))[1][1]
+        pages = dict(pages)
+        pages[SELF_PAGE] = ([SELF_PROBE], _first_urls)
+
     for page, (quotes, urls) in sorted(pages.items()):
         corpus = ""
         for u in urls:
@@ -126,9 +146,17 @@ def main() -> int:
                     missing.append((page, nq, "not found in any cited source"))
 
     if self_check:
-        probe = "this sentence appears in no platform documentation anywhere"
-        assert probe not in "".join(cache.values()), "self-check probe is not absent"
-        print(f"self-check: a phrase absent from every fetched source is detected as absent. OK")
+        # Precondition: the probe really is absent, so a report about it means something.
+        assert SELF_PROBE not in "".join(cache.values()), \
+            "self-check: the probe is NOT absent from the corpus — it proves nothing"
+        # The property, on the observable outcome: the loop must have REPORTED it.
+        planted = [m for m in missing if m[0] == SELF_PAGE]
+        assert planted, \
+            "self-check: DETECTION IS DEAD — a planted phrase absent from every source " \
+            "was not reported. The gate would pass a page quoting text no source contains."
+        missing = [m for m in missing if m[0] != SELF_PAGE]
+        print("self-check: a planted phrase absent from every fetched source was reported "
+              "by the real detection path, and removed from the result. OK")
 
     print(f"source_freshness_gate: {len(pages)} spec page(s), {total_quotes} quoted phrase(s), "
           f"{len(cache)} source(s) fetched")
