@@ -31,19 +31,44 @@ I had just generated said otherwise. Ten pages, and fewer than four in ten of th
 are questions — despite `/specs/` itself being an impression-earning page (46). It is the
 highest-value gap on this list precisely because it already earns impressions.
 
-## The gap, in priority order
+## The metric was wrong for /specs/, and reading the headings is what showed it
 
-**1. `/specs/` — 10 pages at 0.37, and already earning.** Highest value: the traffic exists and
-the shape does not. Its specifics are the site's strongest (median 26 numbers), so this is
-headings only.
+Before acting on "fix `/specs/` headings" I read them. Most of its non-question headings are
+**field labels in a reference table**, not prose:
 
-**2. `/strategies/` — 11 pages, 0.00 question-ratio, median 5 numbers.** Below on both axes,
-uniformly. Cheapest to fix because the family shares a template, but it earns nothing today, so
-it is a bet rather than a repair.
+    Feed: single image — Headline
+    Timeline: promoted post with image — Body text
+    For You feed: in-feed video (non-Spark) — Body text
 
-**2. `/for/` — audience pages, 1-4 numbers each.** These are the thinnest pages on the site for
-specifics. A page for plumbers that names no limit, no floor and no cost is a page an AI engine
-has nothing to quote from.
+Turning those into questions would vandalise a specification. The metric counted spec fields as
+prose headings and produced a number that pointed at the wrong family. Excluding the 16 field
+labels, `/specs/` is **0.50**, not 0.37 — borderline rather than a gap.
+
+And its remaining statement-form headings are deliberate and good: *"A link costs you 23
+characters"*, *"The description nobody reads"*, *"The comment thread is part of the ad"*. Those
+are specific and quotable as they stand. **Recommendation for `/specs/` withdrawn.**
+
+## The gap, in priority order (corrected)
+
+Question-ratio over PROSE headings only:
+
+| family | pages | question-ratio |
+|---|---|---|
+| `/strategies/` | 11 | 0.00 |
+| `/for/` | 10 | 0.00 |
+| `/specs/` | 10 | 0.50 |
+| `/learn/` | 14 | 1.00 |
+| `/how-to/` | 4 | 1.00 |
+
+**1. `/strategies/` — 11 pages, 0.00, median 5 numbers.** Below on both axes, uniformly, and
+sharing a template. Earns nothing today, so it is a bet rather than a repair.
+
+**2. `/for/` — 10 pages, 0.00, median 6 numbers.** The thinnest pages on the site for specifics.
+A page for plumbers naming no limit, no floor and no cost gives an AI engine nothing to quote.
+
+Neither is a winner, so **order 4's "winners first" instruction is already satisfied** by
+`/learn/` and `/how-to/` at 1.00. What remains is not a repair to earning pages; it is new work
+on pages that earn nothing, and should be judged as such.
 
 ## What this audit does NOT claim
 
