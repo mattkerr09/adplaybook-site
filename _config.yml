@@ -39,6 +39,7 @@ exclude:
   - _data/
   - .claude/
   - docs/        # audits and analysis written for us, not for readers
+  - scripts/     # gates, not content
   - DEPLOY.md
   - README.md
   - .gitignore

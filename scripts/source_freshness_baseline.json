@@ -1,0 +1,6 @@
+{
+ "specs/linkedin|Ad headline: Use up to 25 characters, including spaces": "not in either cited LinkedIn source \u2014 needs a human read: paraphrase, or an uncited page",
+ "specs/microsoft-advertising|Bing character limit": "our own page heading, not a quote from Microsoft \u2014 the extractor takes any quoted text",
+ "specs/tiktok|There is a requirement to have 1,000 total matched users in ": "cited TikTok source returns 0 chars to curl (JS-rendered) \u2014 unverifiable, not disproven",
+ "specs/youtube|doesn't appear on desktop watch page or on TV": "not in the cited Google source \u2014 needs a human read"
+}
