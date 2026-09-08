@@ -59,6 +59,17 @@ sets. If that list becomes available the weight comparison is worth running, sin
 weight was the factor that correlated on crispvideo.app. What the distribution already rules
 out is the linking remedy: a floor of 2 leaves no room for "under-linked" to be the cause.
 
-Notably `/specs/microsoft-advertising/` sits at 2 inbound while being the page built for the
-site's two highest-impression queries. That is worth a link from the truncation article's body
-on its own merits — as a reader path, not as an indexing fix.
+## A recommendation I withdrew, and why it is worth recording
+
+I first wrote that `/specs/microsoft-advertising/` — 2 inbound, and the page built for this
+site's two highest-impression queries — deserved a link from the truncation article on its own
+merits. Then I checked which two anchors those were:
+
+    learn/ad-copy-truncation-vs-hard-limits/index.html   "Microsoft Advertising (Bing)"
+    specs/index.html                                     "Microsoft Advertising (Bing) character limit"
+
+It already has exactly that link, plus the hub. The orders said so and I proposed the work
+anyway without looking. **A count of 2 is not evidence of under-linking when 2 is every page
+that should link to it.** That is the same failure as recommending a fix without reading the
+rule it applies to, and it is why "verify the claim before acting on it" applies to my own
+recommendations and not only to other people's.
