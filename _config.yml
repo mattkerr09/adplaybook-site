@@ -38,6 +38,7 @@ exclude:
   - _build/
   - _data/
   - .claude/
+  - docs/        # audits and analysis written for us, not for readers
   - DEPLOY.md
   - README.md
   - .gitignore
