@@ -94,6 +94,16 @@ def survey(site_root: str = "."):
     return pages
 
 
+def _in_any_source(needle: str, sources: list) -> bool:
+    """True if `needle` occurs inside ONE source, never across a join of them.
+
+    Named so the self-check can exercise the real decision on a case derived from the
+    problem (a quote spanning a seam must be rejected) rather than re-stating the loop's
+    expression. The seam case is not hypothetical -- see the comment at the call site.
+    """
+    return any(needle in src for src in sources)
+
+
 def main() -> int:
     args = [a for a in sys.argv[1:] if not a.startswith("-")]
     site_root = args[0] if args else "."
@@ -138,9 +148,28 @@ def main() -> int:
         if not corpus.strip():
             missing.append((page, "ALL SOURCES UNREADABLE", urls[0] if urls else "-"))
             continue
+        #: ⚠️ TEST EACH SOURCE SEPARATELY, NEVER THE CONCATENATION.
+        #:
+        #: This read `if nq and nq not in corpus:` where `corpus` is every cited source
+        #: joined end to end. The property is "the quote appears in at least one cited
+        #: source", and union-membership is ALMOST equivalent — except at the seam. A
+        #: quote spanning the boundary between two joined documents matches the corpus
+        #: while appearing in NEITHER, so the gate passes it. Demonstrated 2026-09-08:
+        #:     A = "Headlines are limited to 30 characters."
+        #:     B = "Descriptions may use 90 characters."
+        #:     quote = "30 characters.Descriptions may"   -> in A: False, in B: False,
+        #:                                                   in A+B: True
+        #: That is a false negative in the one check this gate exists to perform.
+        #:
+        #: Found by the installed Outlier app (1.11.821, lite) reading this file for the
+        #: adplaybook-gate-read bench task, an hour after I edited it and did not see it.
+        #: My own task note asserted "no gate joins sources; every join( hit is
+        #: os.path.join" — true of the TOKEN and false of the BEHAVIOUR, because the
+        #: concatenation is `+=`. I searched for the word; it searched for the effect.
+        _sources = [cache[u] for u in urls if cache.get(u)]
         for q in quotes:
             nq = norm(q).rstrip(".,")
-            if nq and nq not in corpus:
+            if nq and not _in_any_source(nq, _sources):
                 key = f"{page}|{nq[:60]}"
                 if key not in baseline:
                     missing.append((page, nq, "not found in any cited source"))
@@ -155,8 +184,20 @@ def main() -> int:
             "self-check: DETECTION IS DEAD — a planted phrase absent from every source " \
             "was not reported. The gate would pass a page quoting text no source contains."
         missing = [m for m in missing if m[0] != SELF_PAGE]
+        # SEAM REGRESSION — the real decision, on a case derived from the problem.
+        _a = "Headlines are limited to 30 characters."
+        _b = "Descriptions may use 90 characters."
+        _seam = "30 characters.Descriptions may"     # in NEITHER source, in the join
+        assert _seam in (_a + _b), "self-check: the seam probe does not span the join"
+        assert not _in_any_source(_seam, [_a, _b]), \
+            "self-check: A QUOTE SPANNING TWO JOINED SOURCES IS BEING ACCEPTED — the " \
+            "gate is testing the concatenation again, and would pass a quote that " \
+            "appears in no cited source."
+        assert _in_any_source("limited to 30", [_a, _b]), \
+            "self-check: a quote genuinely inside one source is being rejected"
         print("self-check: a planted phrase absent from every fetched source was reported "
-              "by the real detection path, and removed from the result. OK")
+              "by the real detection path; a seam-spanning quote is rejected and a "
+              "genuine one accepted. OK")
 
     print(f"source_freshness_gate: {len(pages)} spec page(s), {total_quotes} quoted phrase(s), "
           f"{len(cache)} source(s) fetched")
