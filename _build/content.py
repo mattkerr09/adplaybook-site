@@ -509,7 +509,7 @@ its own work before it shows you anything.</p>
 <a class="btn ghost" href="/specs/">See the ad specs</a>
 </div>
 <p class="hero-sub">{VERSION_TAG} ·{size_bit} Apple Silicon · macOS 26 or later · notarised by Apple</p>
-<!-- macOS 26: the sidecar is built from Homebrew python@3.11 on a macOS 26 box (minos 26.0); dyld refuses it on anything older. Measured 2026-09-21 (vtool), same finding as Outlier; drops when the sidecar is built from python.org Python. -->
+<!-- macOS 26: what a Mac enforces on open is LSMinimumSystemVersion, plus any strong import of a symbol older macOS lacks (which fails at load). minos (26.0, from Homebrew python@3.11) is metadata only: dyld does NOT refuse a newer-minos image (measured 2026-09-23 with vtool + a load test; corrects the earlier "dyld refuses" note, same correction Outlier and Docket reached). The floor drops when the sidecar is built from python.org Python. -->
 </div>
 </div>
 </div>
