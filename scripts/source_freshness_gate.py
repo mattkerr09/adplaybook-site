@@ -75,7 +75,45 @@ def fetch(url: str) -> str:
     return visible(r.stdout) if r.returncode == 0 else ""
 
 
+_FIG_RE = re.compile(r"\d{2,4}\s?[x×]\s?\d{2,4}|\d+\s?MB\b|\d+:\d+")
+PAGE_FIGS: dict = {}
+
+
+def fignorm(s: str) -> str:
+    return re.sub(r"[\s,]", "", s or "").replace("×", "x").lower()
+
+
+def table_figures(raw_html: str) -> list:
+    figs = []
+    for cell in re.findall(r"<td[^>]*>(.*?)</td>", raw_html, re.S):
+        figs += _FIG_RE.findall(html.unescape(re.sub(r"<[^>]+>", " ", cell)))
+    return sorted(set(f.strip() for f in figs if f.strip()))
+
+
+def _fig_ok(fg: str, sources: list) -> bool:
+    """True if the figure is confirmed on a source: verbatim, or a MB<->GB unit conversion, or a
+    dimension whose two numbers both appear. Avoids false-flagging unit-converted/paraphrased figures."""
+    s = fignorm(fg)
+    if not s:
+        return True
+    corpus = " ".join(fignorm(x) for x in sources)
+    if s in corpus:
+        return True
+    m = re.match(r"(\d+)(mb|gb)$", s)
+    if m:
+        n, u = int(m.group(1)), m.group(2)
+        if u == "mb" and n % 1024 == 0 and f"{n // 1024}gb" in corpus:
+            return True
+        if u == "gb" and f"{n * 1024}mb" in corpus:
+            return True
+    m = re.match(r"(\d+)x(\d+)$", s)
+    if m and m.group(1) in corpus and m.group(2) in corpus:
+        return True
+    return False
+
+
 def survey(site_root: str = "."):
+    PAGE_FIGS.clear()
     pages = {}
     specs = os.path.join(site_root, "specs")
     for root, dirs, files in os.walk(specs):
@@ -91,6 +129,7 @@ def survey(site_root: str = "."):
             if quotes and urls:
                 rel = os.path.relpath(p, site_root).replace("/index.html", "")
                 pages[rel] = (sorted(set(quotes)), sorted(set(urls)))
+                PAGE_FIGS[rel] = table_figures(raw)
     return pages
 
 
@@ -118,7 +157,7 @@ def main() -> int:
         return 1
 
     baseline = json.load(open(BASELINE)) if os.path.exists(BASELINE) else {}
-    cache, missing = {}, []
+    cache, missing, unverifiable = {}, [], []
 
     #: SELF-CHECK, PLANTED BEFORE THE LOOP SO IT RUNS THE REAL DETECTION PATH.
     #:
@@ -138,6 +177,7 @@ def main() -> int:
         _first_urls = next(iter(sorted(pages.items())))[1][1]
         pages = dict(pages)
         pages[SELF_PAGE] = ([SELF_PROBE], _first_urls)
+        PAGE_FIGS[SELF_PAGE] = ["9999x9999"]
 
     for page, (quotes, urls) in sorted(pages.items()):
         corpus = ""
@@ -173,6 +213,16 @@ def main() -> int:
                 key = f"{page}|{nq[:60]}"
                 if key not in baseline:
                     missing.append((page, nq, "not found in any cited source"))
+        _fb_only = bool(urls) and all(("facebook.com" in u) for u in urls)
+        for fg in PAGE_FIGS.get(page, []):
+            if _fig_ok(fg, _sources):
+                continue
+            if _fb_only:
+                unverifiable.append((page, fg))
+            else:
+                key = f"{page}|FIG|{fignorm(fg)[:40]}"
+                if key not in baseline:
+                    missing.append((page, fg, "table figure not in any cited source"))
 
     if self_check:
         # Precondition: the probe really is absent, so a report about it means something.
@@ -180,6 +230,8 @@ def main() -> int:
             "self-check: the probe is NOT absent from the corpus — it proves nothing"
         # The property, on the observable outcome: the loop must have REPORTED it.
         planted = [m for m in missing if m[0] == SELF_PAGE]
+        assert any("table figure" in m[2] for m in planted), \
+            "self-check: TABLE-FIGURE DETECTION IS DEAD - a planted 9999x9999 absent from every source was not reported"
         assert planted, \
             "self-check: DETECTION IS DEAD — a planted phrase absent from every source " \
             "was not reported. The gate would pass a page quoting text no source contains."
@@ -210,6 +262,11 @@ def main() -> int:
             print(f"       \"{q[:88]}\"  ({why})")
             print("       Either the platform changed the rule, or the page never quoted it exactly.")
         return 1
+    if unverifiable:
+        print(f"\nMACHINE-UNVERIFIABLE ({len(unverifiable)}) - cited source blocks automated readers "
+              f"(e.g. Facebook); verify by hand at the read date shown on the page:")
+        for page, fg in unverifiable[:10]:
+            print(f"  {page}: {fg}")
     print("\nPASS — every quoted phrase still appears in the source the page cites.")
     return 0
 
