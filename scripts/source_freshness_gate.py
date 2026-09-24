@@ -122,6 +122,15 @@ def _fig_ok(fg: str, sources: list) -> bool:
 #: header that names a text field (Headline, Body text, Description, ...) is a character count.
 _TEXTCOL_RE = re.compile(
     r"headline|body|description|primary|caption|title|tagline|subtitle|heading|char|text", re.I)
+#: v1 2026-09-24 (CEO): ROW-oriented tables. Microsoft Advertising lists limits as
+#: `Field | How many | Limit you type | Limit after substitution` — the field NAME is in the
+#: first cell and the count is in a `Limit`/`Limit you type` column, so the column-header rule
+#: saw zero on the most-searched page. A column whose header says limit/character holds char
+#: counts; a field-ish first column means the row's first cell names the field. "How many" is a
+#: COUNT column (no limit/char in its header), so it is never read as a character limit.
+_FIELDCOL_RE = re.compile(
+    r"\b(field|element|asset|placement|component|item|attribute|property|control|part)\b", re.I)
+_LIMITCOL_RE = re.compile(r"limit|charact|\bchars?\b", re.I)
 
 
 def _cells(row_html: str, tag: str) -> list:
@@ -142,23 +151,42 @@ def char_limit_figures(raw_html: str) -> list:
             continue
         headers = _cells(hdr, "th")
         textcol = {i for i, h in enumerate(headers) if _TEXTCOL_RE.search(h)}
-        if not textcol:
-            continue
-        for r in rows:
-            if "<td" not in r.lower():
-                continue
-            for i, c in enumerate(_cells(r, "td")):
-                if i not in textcol:
+        if textcol:
+            #: COLUMN-oriented — the field names ARE the column headers (Placement | Headline | Body text).
+            for r in rows:
+                if "<td" not in r.lower():
                     continue
-                low = c.lower()
-                for m in re.finditer(r"\d{1,4}", c.replace(",", "")):
-                    n = int(m.group())
-                    tail = low[m.end():m.end() + 12]
-                    if re.match(r"\s*lines?\b", tail) and "per" not in tail:
-                        continue  # a LINE count ("2 lines"), not a character count
-                    kind = ("per_line" if re.search(r"per\s*line|each\s*line|/\s*line|per\s*each",
-                                                    low[m.start():m.start() + 40]) else "total")
-                    out.append((n, headers[i], kind))
+                for i, c in enumerate(_cells(r, "td")):
+                    if i not in textcol:
+                        continue
+                    low = c.lower()
+                    for m in re.finditer(r"\d{1,4}", c.replace(",", "")):
+                        n = int(m.group())
+                        tail = low[m.end():m.end() + 12]
+                        if re.match(r"\s*lines?\b", tail) and "per" not in tail:
+                            continue  # a LINE count ("2 lines"), not a character count
+                        kind = ("per_line" if re.search(r"per\s*line|each\s*line|/\s*line|per\s*each",
+                                                        low[m.start():m.start() + 40]) else "total")
+                        out.append((n, headers[i], kind))
+        elif headers and _FIELDCOL_RE.search(headers[0] or ""):
+            #: ROW-oriented — Field | How many | Limit. Limit columns hold char counts; the row's first
+            #: cell names the field. "How many" has no limit/char header, so it is ignored. Comma forms
+            #: (1,000; 2,048) survive the `,`-strip; a rich limit cell ("30 after substitution") yields 30.
+            limitcols = [i for i, h in enumerate(headers) if _LIMITCOL_RE.search(h or "")]
+            if limitcols:
+                for r in rows:
+                    if "<td" not in r.lower():
+                        continue
+                    cells = _cells(r, "td")
+                    if not cells:
+                        continue
+                    field = cells[0].strip()
+                    if not field or not re.search(r"[A-Za-z]", field):
+                        continue
+                    for i in limitcols:
+                        if i < len(cells):
+                            for m in re.finditer(r"\d{1,4}", cells[i].replace(",", "")):
+                                out.append((int(m.group()), field, "total"))
     seen, uniq = set(), []
     for n, col, k in out:
         key = (n, col.lower(), k)
