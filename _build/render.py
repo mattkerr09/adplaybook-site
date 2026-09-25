@@ -1295,7 +1295,7 @@ if(t){{document.documentElement.setAttribute("data-theme",t);}}}}catch(e){{}}}})
 <meta property="og:image" content="{BASE_URL}/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="AdPlaybook - it writes the ad, then it tries to prove you wrong.">
+<meta property="og:image:alt" content="AdPlaybook - ad copy written within every platform's real limits.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="{BASE_URL}/og.png">
 <meta name="twitter:title" content="{esc(title)}">

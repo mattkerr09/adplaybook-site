@@ -498,7 +498,7 @@ def _home(page: Callable, specs: List[Dict[str, Any]]) -> None:
 <p class="kicker reveal">AD CAMPAIGNS, WITH THE REASONING SHOWN</p>
 <div class="hero-split">
 <div class="hero-lead">
-<h1>It writes the ad.<br><span class="grad">Then it tries to prove you wrong.</span></h1>
+<h1>Ad copy written within every platform&rsquo;s real limits.<br><span class="grad">Every claim checked against your own site.</span></h1>
 </div>
 <div class="hero-aside">
 <p class="lede">{BRAND} turns a product page into a complete, buildable ad campaign —
@@ -508,31 +508,13 @@ its own work before it shows you anything.</p>
 <a class="btn" href="{{DMG}}">{dl} Download for Mac</a>
 <a class="btn ghost" href="/specs/">See the ad specs</a>
 </div>
+<p class="hero-sub"><strong>Free:</strong> one website, forever, commercial use included &middot; <strong>{PRICE_STR} once:</strong> every client site, up to 3 Macs, no renewal. A website is one domain you make campaigns for.</p>
+<p class="hero-sub">It writes with Outlier on the same Mac, with a built-in model it downloads once and runs offline, or with your own OpenAI or Anthropic key.</p>
 <p class="hero-sub">{VERSION_TAG} ·{size_bit} Apple Silicon · macOS 26 or later · notarised by Apple</p>
 <!-- macOS 26: what a Mac enforces on open is LSMinimumSystemVersion, plus any strong import of a symbol older macOS lacks (which fails at load). minos (26.0, from Homebrew python@3.11) is metadata only: dyld does NOT refuse a newer-minos image (measured 2026-09-23 with vtool + a load test; corrects the earlier "dyld refuses" note, same correction Outlier and Docket reached). The floor drops when the sidecar is built from python.org Python. -->
 </div>
 </div>
 </div>
-
-<!-- The six stages of the run shown below it.
-     Figures are that SAME run, from docs/EVIDENCE.md in the app repo, so the
-     strip and the window are one campaign rather than two stitched together.
-     There is no live badge and no counter, because neither would be wired to
-     anything. -->
-<ol class="stages">
-<li><span class="stage-n">1</span><strong>Read</strong>
-    <span class="stage-d">6 pages · 116 spans · quality 1.00</span></li>
-<li><span class="stage-n">2</span><strong>Brief</strong>
-    <span class="stage-d">what is provably true about the product</span></li>
-<li><span class="stage-n">3</span><strong>Generate</strong>
-    <span class="stage-d">3 variants, one axis apart</span></li>
-<li><span class="stage-n">4</span><strong>Claim gate</strong>
-    <span class="stage-d">1 blocked — a price it could not trace</span></li>
-<li><span class="stage-n">5</span><strong>Review</strong>
-    <span class="stage-d">REJECT — 2 blockers</span></li>
-<li><span class="stage-n">6</span><strong>Guide</strong>
-    <span class="stage-d">15,884 bytes, in build order</span></li>
-</ol>
 
 <section class="showcase">
 <div class="win">

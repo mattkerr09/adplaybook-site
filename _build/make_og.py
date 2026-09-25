@@ -86,9 +86,12 @@ def main() -> int:
     # The headline is the site's actual proposition, not a tagline invented for
     # the card - a card that promises something the page does not is its own
     # small false claim.
-    d.text((M, 214), "It writes the ad.", font=font("bold", 82, index=1), fill=rgb(t["white"]))
-    d.text((M, 306), "Then it tries to", font=font("bold", 82, index=1), fill=rgb(t["white"]))
-    d.text((M, 398), "prove you wrong.", font=font("bold", 82, index=1), fill=rgb(t["blue"]))
+    # 2026-09-24: the homepage H1 changed from "It writes the ad. Then it tries to
+    # prove you wrong." (what the app attacks is its own draft, not the reader) to
+    # "Ad copy written within every platform's real limits." The card follows.
+    d.text((M, 214), "Ad copy written", font=font("bold", 82, index=1), fill=rgb(t["white"]))
+    d.text((M, 306), "within every platform\u2019s", font=font("bold", 82, index=1), fill=rgb(t["white"]))
+    d.text((M, 398), "real limits.", font=font("bold", 82, index=1), fill=rgb(t["blue"]))
 
     d.line([(M, 520), (W - M, 520)], fill=rgb(t["hair"]), width=1)
     d.text((M, 548), "Every claim traced to a source  ·  8 platforms  ·  Mac",
