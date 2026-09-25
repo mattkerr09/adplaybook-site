@@ -1529,10 +1529,10 @@ def neighbours(items: List[tuple], path: str, n: int = 3) -> List[tuple]:
 # Platform spec pages — the reason this site can win
 # ---------------------------------------------------------------------------
 
-def _fmt_limit(pl: Dict[str, Any], stem: str) -> str:
+def _fmt_limit(pl: Dict[str, Any], stem: str, first: str = "to stay visible") -> str:
     safe, hard = pl.get(f"{stem}_chars"), pl.get(f"{stem}_max_chars")
     if safe and hard and safe != hard:
-        return f"<strong>{safe}</strong> to stay visible · {hard} hard cap"
+        return f"<strong>{safe}</strong> {first} · {hard} hard cap"
     if safe:
         return f"<strong>{safe}</strong>"
     if hard:
@@ -1627,9 +1627,13 @@ def _conversion_section(spec: Dict[str, Any]) -> str:
                 f'rel="nofollow noopener">their documentation</a> on {esc(bseen)}'
                 if bseen and bsrc.startswith("http") else
                 " — no source recorded against this list, so check the dropdown")
+        lead = (f"{esc(name)} offers {len(buttons)} button labels{cite}."
+                if bseen and bsrc.startswith("http") else
+                f"Common {esc(name)} button labels. This list was not read from "
+                f"{esc(name)}&rsquo;s documentation, so check the dropdown before "
+                "you plan around one.")
         out.append(
-            f"<h3>Call-to-action buttons</h3><p>{esc(name)} offers "
-            f"{len(buttons)} button labels{cite}.</p>"
+            f"<h3>Call-to-action buttons</h3><p>{lead}</p>"
             "<ul class='cols'>"
             + "".join(f"<li>{esc(b)}</li>" for b in buttons) + "</ul>")
     elif key == "google":
@@ -1640,6 +1644,18 @@ def _conversion_section(spec: Dict[str, Any]) -> str:
             "Tools that leave a button field empty here are right to.</p>")
 
     return "".join(out)
+
+
+def _limits_legend(key: str) -> str:
+    if key == "x":
+        return ("<p>Where two numbers are given, the first is what your copy can use "
+                "once the ad&rsquo;s link has taken its 23 characters (X counts every "
+                "link as 23, however long it is) and the second is what the field "
+                "accepts. Every ad links somewhere, so write to the first.</p>")
+    return ("<p>Where two numbers are given, the first is what stays visible and the second\n"
+            "is what the field accepts. They're different questions. Copy over the cap gets\n"
+            "rejected at upload. Copy over the visible limit runs, and gets cut off. Most\n"
+            "guides publish only one of the two.</p>")
 
 
 def spec_page(spec: Dict[str, Any]) -> None:
@@ -1656,7 +1672,7 @@ def spec_page(spec: Dict[str, Any]) -> None:
             f"<span class='src'>{esc(p.get('aspect_ratio', ''))} "
             f"{esc(p.get('recommended_resolution', ''))}</span></td>"
             f"<td>{_fmt_limit(p, 'headline')}</td>"
-            f"<td>{_fmt_limit(p, 'primary_text')}</td>"
+            f"<td>{_fmt_limit(p, 'primary_text', 'with its link' if key == 'x' else 'to stay visible')}</td>"
             f"<td>{esc(p.get('max_file_size_mb', '—'))}"
             f"{' MB' if p.get('max_file_size_mb') else ''}</td></tr>"
         )
@@ -1755,10 +1771,7 @@ Source: <a class="src" href="{esc(src)}" rel="nofollow noopener">{esc(src)}</a><
 <h2>What are {esc(name)}'s ad character limits?</h2>
 <table><thead><tr><th>Placement</th><th>Headline</th><th>Body text</th><th>Max file</th></tr></thead>
 <tbody>{''.join(rows)}</tbody></table>
-<p>Where two numbers are given, the first is what stays visible and the second
-is what the field accepts. They're different questions. Copy over the cap gets
-rejected at upload. Copy over the visible limit runs, and gets cut off. Most
-guides publish only one of the two.</p>
+{_limits_legend(key)}
 
 {floor_html}
 {''.join(notes[:6])}
