@@ -1209,6 +1209,27 @@ def esc(s: Any) -> str:
     return html.escape(str(s), quote=True)
 
 
+from content import PRICE_STR  # noqa: E402
+
+#: The end of every content page (CEO order 2026-09-24). Rival prices are the
+#: vendors' own month-to-month figures, dated and linked so they can be checked.
+PRODUCT_BOX = (
+    '<aside class="box ok" aria-label="AdPlaybook">'
+    '<p><strong>AdPlaybook writes the whole campaign</strong> &mdash; ad copy '
+    'within every platform&rsquo;s real limits, and every claim checked against '
+    'your own site. Free on one website, forever, commercial use included. '
+    f'{PRICE_STR} once for every client site, on up to 3 Macs, with no renewal.</p>'
+    '<p>For comparison, month to month as of 2026-09-24: '
+    '<a class="src" href="https://www.jasper.ai/pricing" rel="nofollow noopener">Jasper Pro $69</a>, '
+    '<a class="src" href="https://www.copy.ai/prices" rel="nofollow noopener">Copy.ai $29</a> and '
+    '<a class="src" href="https://www.adcreative.ai/#new-pricing-section" rel="nofollow noopener">AdCreative.ai $39</a>, '
+    'every month.</p>'
+    f'<p><a class="btn" href="{DOWNLOAD}">Download free for Mac</a></p>'
+    '</aside>')
+PRODUCT_BOX_PATHS = ("/specs/", "/learn/", "/how-to/", "/for/", "/strategies/",
+                     "/vs/", "/offline/")
+
+
 def page(*, path: str, title: str, description: str, body: str,
          schema: Dict[str, Any] | None = None, modified: str = BUILT,
          wide: bool = False, related: List[tuple] | None = None) -> None:
@@ -1220,6 +1241,11 @@ def page(*, path: str, title: str, description: str, body: str,
     Each section passes neighbours() over its own list, so every page is linked from
     the three siblings before it as well as from the hub."""
     url = BASE_URL + path
+    if path.startswith(PRODUCT_BOX_PATHS):
+        # Before the related links, which page() adds next, so the box reads as
+        # the end of the piece and the links stay last.
+        body = (body[:body.rfind("</article>")] + PRODUCT_BOX + body[body.rfind("</article>"):]
+                if "</article>" in body else body + PRODUCT_BOX)
     if related:
         block = ('<nav class="related" aria-label="Related pages"><h2>Related</h2><ul>'
                  + "".join(f'<li><a href="{h}">{esc(t)}</a></li>' for h, t in related)
