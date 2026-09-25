@@ -40,10 +40,10 @@ WHAT MUST NOT BE SAID:
     I cannot check does not belong on the page of a product that refuses claims
     it cannot trace. Removed rather than hedged.
 
-  * Anything implying coverage we do not have. Klarna is US + 19 European
-    countries; Afterpay is US and UK only. A UK visitor reading "Klarna" and
-    finding Afterpay is a smaller problem than an Australian visitor reading
-    either and finding neither.
+  * Anything implying coverage we do not have. The checkout is in US dollars,
+    and Dodo's payment-methods docs (read 2026-09-24) say a USD transaction
+    shows buy-now-pay-later to customers in the US only, so the copy says
+    "buyers in the US" and does not list the providers' wider coverage.
 """
 
 import pathlib
@@ -97,16 +97,17 @@ SECTION = f"""
 <section class="paylater">
   <p class="eyebrow">Paying for it</p>
   <h2>${PER_INSTALMENT:.2f} × {INSTALMENTS}, then it stops, and it is yours</h2>
-  <p>AdPlaybook is ${PRICE:.0f} once. If that is easier as four payments, Klarna
-  and Afterpay split it into ${PER_INSTALMENT:.2f} every two weeks — the last one
-  {WEEKS_TO_FINAL} weeks after the first, at no extra cost.</p>
+  <p>AdPlaybook is ${PRICE:.0f} once. If that is easier as four payments, buyers
+  in the US can split it with Klarna or Afterpay into ${PER_INSTALMENT:.2f} every
+  two weeks — the last one {WEEKS_TO_FINAL} weeks after the first, at no extra
+  cost from us.</p>
   <p>It is the opposite of how this category bills. Every other ad tool charges
   you monthly for as long as you use it, and the day you stop paying you stop
   having it. Here the payments end and the licence does not: unlimited
   commercial use, on every site you work on, with no renewal to forget and
   nothing to cancel.</p>
-  <p class="src">Availability depends on where you are and is decided by the
-  provider at checkout, not by us. Klarna covers the US and 19 European
-  countries; Afterpay covers the US and UK.</p>
+  <p class="src">Our checkout is in US dollars, and the payment provider shows
+  Klarna and Afterpay on a US-dollar checkout to buyers in the US only. Klarna or
+  Afterpay decides who qualifies, not us.</p>
 </section>
 """
