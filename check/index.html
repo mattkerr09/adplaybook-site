@@ -3,11 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>How to run an ad split test that actually says something</title>
-<meta name="description" content="Two cells with the same copy cannot produce a result. How to spot a null test, why generated campaigns produce them, and what to vary instead.">
+<title>Ad copy character limit checker, 7 platforms | AdPlaybook</title>
+<meta name="description" content="Paste ad copy and check it against every placement&#x27;s published character limit on 7 ad platforms at once. Free, and nothing leaves your browser.">
 <meta name="theme-color" content="#0d1017">
 <meta name="last-modified" content="2026-09-24">
-<link rel="canonical" href="https://adplaybook.app/how-to/split-test-ads-that-actually-say-something/">
+<link rel="canonical" href="https://adplaybook.app/check/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
 <script>/* Before first paint, or the page flashes the wrong theme and the flash
@@ -16,20 +16,18 @@ Braces are doubled because this template is an f-string. */
 (function(){try{var t=localStorage.getItem("adplaybook-theme");
 if(t){document.documentElement.setAttribute("data-theme",t);}}catch(e){}})();</script>
 <meta property="og:type" content="article">
-<meta property="og:title" content="How to run an ad split test that actually says something">
-<meta property="og:description" content="Two cells with the same copy cannot produce a result. How to spot a null test, why generated campaigns produce them, and what to vary instead.">
-<meta property="og:url" content="https://adplaybook.app/how-to/split-test-ads-that-actually-say-something/">
+<meta property="og:title" content="Ad copy character limit checker, 7 platforms | AdPlaybook">
+<meta property="og:description" content="Paste ad copy and check it against every placement&#x27;s published character limit on 7 ad platforms at once. Free, and nothing leaves your browser.">
+<meta property="og:url" content="https://adplaybook.app/check/">
 <meta property="og:site_name" content="AdPlaybook">
-<meta property="article:published_time" content="2026-08-12">
-<meta property="article:modified_time" content="2026-09-24">
 <meta property="og:image" content="https://adplaybook.app/og.png">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="AdPlaybook - ad copy written within every platform's real limits.">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://adplaybook.app/og.png">
-<meta name="twitter:title" content="How to run an ad split test that actually says something">
-<meta name="twitter:description" content="Two cells with the same copy cannot produce a result. How to spot a null test, why generated campaigns produce them, and what to vary instead.">
+<meta name="twitter:title" content="Ad copy character limit checker, 7 platforms | AdPlaybook">
+<meta name="twitter:description" content="Paste ad copy and check it against every placement&#x27;s published character limit on 7 ad platforms at once. Free, and nothing leaves your browser.">
 <style>
 /* Design tokens match the sibling products on purpose — same black, same
    hairlines, same pill buttons — with this app's blue in place of Crisp's
@@ -1015,7 +1013,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
   .nav-links a, footer a, .src a{display:inline-flex;align-items:center;min-height:24px}
 }
 </style>
-<script type="application/ld+json">{"@context":"https://schema.org","@type":"FAQPage","mainEntity":[{"@type":"Question","name":"Why does my A/B test show no difference?","acceptedAnswer":{"@type":"Answer","text":"If both cells carry the same headline and body text, there is no variable to measure. Whichever cell wins, the difference is variance rather than a result."}},{"@type":"Question","name":"How different do ad variants need to be?","acceptedAnswer":{"@type":"Answer","text":"Different on one named axis, and different in the words a reader actually sees. Changing adjectives produces paraphrase, not a test."}}],"datePublished":"2026-08-12","dateModified":"2026-09-24"}</script>
+
 <script defer data-domain="adplaybook.app" src="https://plausible.io/js/script.js"></script><script async src="https://usesled.com/kerr-and-company/t.js"></script><script>(function(){var META_PIXEL_ID='1983109892356693';if(!META_PIXEL_ID)return;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',META_PIXEL_ID);fbq('track','PageView');})();</script>
 </head>
 <body>
@@ -1028,48 +1026,91 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 </div></nav>
 <div class="wrap">
 <article>
-<p class="crumb">How to</p>
-<h1>How to run an ad split test that actually says something</h1><p class="dateline">Published <time datetime="2026-08-12">12 Aug 2026</time> · Updated <time datetime="2026-09-24">24 Sep 2026</time></p>
-<p class="lede">If both cells contain the same words, the test can't give you a result. Whichever wins, the number is noise — and you paid twice for one ad.</p>
+<p class="crumb"><a href="/specs/">Ad specs</a> / Checker</p>
+<h1>Ad copy character limit checker</h1>
+<p class="lede">Paste a headline, body text or description and see it counted
+against every placement's published limit on 7 platforms at once:
+Google Ads, LinkedIn, Meta (Facebook and Instagram), Pinterest, Reddit, X and YouTube. It runs in your browser; nothing you type is sent anywhere.</p>
 
-<p>It's the most common way a first campaign wastes its budget, and it's almost invisible: the ads manager accepts it, both cells deliver, and the report
-shows a winner. The winner is variance.</p>
+<div class="box">
+<label class="lim-in"><strong>Headline</strong> <span id="cnt-headline" class="note"></span>
+<textarea id="in-headline" rows="2" spellcheck="true"></textarea></label>
+<label class="lim-in"><strong>Body text</strong> (primary text, post copy) <span id="cnt-primary_text" class="note"></span>
+<textarea id="in-body" rows="5" spellcheck="true"></textarea></label>
+<label class="lim-in"><strong>Description</strong> <span id="cnt-description" class="note"></span>
+<textarea id="in-desc" rows="3" spellcheck="true"></textarea></label>
+</div>
 
-<h2>How do I know if my two ad variants are actually different?</h2>
-<p>Read only the words a person sees, and ignore every label you gave them.
-Put the two cells side by side and read only the words a person would see —
-headline, body, button. Ignore the labels. A test matrix that says
-<em>"Variant A: control / Variant B: emotional hook"</em> is describing an
-intention, not a difference. If the visible copy's identical, so is the ad.</p>
+<div id="lim-out" aria-live="polite"></div>
 
-<h2>Why do AI-generated split tests end up identical?</h2>
-<p>Because "write me variations" describes paraphrase, and paraphrase is what
-you get. We measured this in our own output. Across 48 generated campaigns carrying two
-or more cells, <strong>35 shared one headline across every cell</strong> and
-<strong>15 were identical in both headline and body</strong>. The model filled in
-the axis labels correctly every time and then wrote the same ad twice.</p>
-<p>That isn't a quirk of one tool. Asking for "variations" gets you paraphrase,
-because paraphrase is what the request literally describes. A test needs a
-different <em>idea</em>, not different adjectives.</p>
+<h2>How does the checker count?</h2>
+<p>Characters as you typed them, the way most platforms count. Two rules are
+stated here rather than modelled: X counts every link as 23 characters however
+long it is, and Google counts some wide characters, such as Chinese, Japanese
+and Korean, as two. Where a platform gives two numbers, the first is where the
+copy is cut off or, on X, what fits beside a link, and the second is the hard
+cap that refuses the upload.</p>
+<p>The limits come from each platform's own documentation, read between 2026-08-09 and 2026-08-23, the
+same files the <a href="/specs/">ad specs pages</a> and the app itself use.
+Each platform's heading links to its page, with the source and the date for
+every number.</p>
+<aside class="box ok" aria-label="AdPlaybook"><p><strong>AdPlaybook writes the whole campaign</strong> &mdash; ad copy within every platform&rsquo;s real limits, and every claim checked against your own site. Free on one website, forever, commercial use included. $149 once for every client site, on up to 3 Macs, with no renewal.</p><p>For comparison, month to month as of 2026-09-24: <a class="src" href="https://www.jasper.ai/pricing" rel="nofollow noopener">Jasper Pro $69</a>, <a class="src" href="https://www.copy.ai/prices" rel="nofollow noopener">Copy.ai $29</a> and <a class="src" href="https://www.adcreative.ai/#new-pricing-section" rel="nofollow noopener">AdCreative.ai $39</a>, every month.</p><p><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.53/AdPlaybook-0.2.53-arm64.dmg">Download free for Mac</a></p></aside></article>
+<script type="application/json" id="lim-data">[{"key":"google","name":"Google Ads","rows":[{"name":"Search: responsive search ad","fields":{"headline":{"work":30,"hard":null},"description":{"work":90,"hard":null}},"read":"2026-08-09"}],"single_is_hard":true,"x_link":false},{"key":"linkedin","name":"LinkedIn","rows":[{"name":"Feed: single image","fields":{"headline":{"work":70,"hard":200},"primary_text":{"work":150,"hard":3000},"description":{"work":100,"hard":300}},"read":"2026-08-10"},{"name":"Feed: carousel","fields":{"primary_text":{"work":150,"hard":255}},"read":"2026-08-10"},{"name":"Right rail: text ad","fields":{"headline":{"work":25,"hard":null},"primary_text":{"work":75,"hard":null}},"read":"2026-08-10"}],"single_is_hard":false,"x_link":false},{"key":"meta","name":"Meta (Facebook and Instagram)","rows":[{"name":"Facebook Feed: image","fields":{"headline":{"work":27,"hard":null},"primary_text":{"work":150,"hard":null}},"read":"2026-08-09"},{"name":"Instagram Feed: image","fields":{"headline":{"work":40,"hard":null},"primary_text":{"work":125,"hard":null}},"read":"2026-08-09"}],"single_is_hard":false,"x_link":false},{"key":"pinterest","name":"Pinterest","rows":[{"name":"Feed: standard Pin ad (image)","fields":{"headline":{"work":40,"hard":100},"primary_text":{"work":800,"hard":800}},"read":"2026-08-10"},{"name":"Feed: video Pin ad","fields":{"headline":{"work":40,"hard":100},"primary_text":{"work":800,"hard":800}},"read":"2026-08-10"},{"name":"Feed: collections ad","fields":{"headline":{"work":40,"hard":100},"primary_text":{"work":800,"hard":800}},"read":"2026-08-23"}],"single_is_hard":false,"x_link":false},{"key":"reddit","name":"Reddit","rows":[{"name":"Feed: image","fields":{"headline":{"work":300,"hard":null}},"read":""}],"single_is_hard":false,"x_link":false},{"key":"x","name":"X","rows":[{"name":"Timeline: promoted post with image","fields":{"headline":{"work":70,"hard":70},"primary_text":{"work":257,"hard":280}},"read":"2026-08-10"},{"name":"Timeline: promoted post with video","fields":{"headline":{"work":70,"hard":70},"primary_text":{"work":257,"hard":280}},"read":"2026-08-10"},{"name":"Timeline: promoted text post","fields":{"primary_text":{"work":257,"hard":280}},"read":"2026-08-10"}],"single_is_hard":false,"x_link":true},{"key":"youtube","name":"YouTube","rows":[{"name":"In-feed video ad (search results, watch next, Home feed)","fields":{"headline":{"work":25,"hard":100},"primary_text":{"work":70,"hard":70}},"read":"2026-08-10"}],"single_is_hard":false,"x_link":false}]</script>
 
-<h2>How do I write a split test that can actually produce an answer?</h2>
-<p>Change the angle rather than the wording, vary exactly one thing, and check
-the audience still clears the platform's floor after you halve it.</p>
-<ol>
-<li><strong>Change the angle, not the wording.</strong> If cell A leads on price,
-cell B should lead on the objection that stops people buying, not on the same price in warmer language.</li>
-<li><strong>Vary one thing.</strong> Two cells differing on everything tell you
-which one won and nothing about why. One axis per cell, named.</li>
-<li><strong>Check the audience survives the split.</strong> A 500-person audience
-split in two is two cells of 250, and LinkedIn will not deliver below 300 per
-cell. The campaign goes live and nothing happens — you won't be told why.</li>
-</ol>
+<script>
+(function () {
+  var data = JSON.parse(document.getElementById('lim-data').textContent);
+  var boxes = {headline: document.getElementById('in-headline'),
+               primary_text: document.getElementById('in-body'),
+               description: document.getElementById('in-desc')};
+  var out = document.getElementById('lim-out');
+  var LABEL = {headline: 'Headline', primary_text: 'Body text', description: 'Description'};
+  function len(s) { return Array.from(s || '').length; }
+  function esc(s) { return String(s).replace(/[&<>"]/g, function (c) {
+    return {'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;'}[c]; }); }
+  function verdict(n, f, plat) {
+    if (!n) return ['', ''];
+    if (f.hard && n > f.hard) return ['bad', 'Over the ' + f.hard + ' cap: refused at upload'];
+    if (!f.hard && plat.single_is_hard && n > f.work) return ['bad', 'Over the ' + f.work + ' limit: refused at upload'];
+    if (n > f.work) {
+      if (plat.x_link) return ['warn', 'Fits only with no link: a link takes 23 of the 280'];
+      if (f.hard) return ['warn', 'Accepted, but cut off after ' + f.work];
+      return ['warn', 'Over the stated ' + f.work];
+    }
+    return ['ok', 'Fits'];
+  }
+  function draw() {
+    var counts = {};
+    Object.keys(boxes).forEach(function (k) {
+      counts[k] = len(boxes[k].value);
+      var c = document.getElementById('cnt-' + k);
+      if (c) c.textContent = counts[k] + ' characters';
+    });
+    var any = counts.headline || counts.primary_text || counts.description;
+    if (!any) { out.innerHTML = '<p class="note">Type or paste copy above and every placement below is checked as you go.</p>'; return; }
+    var html = '';
+    data.forEach(function (plat) {
+      html += '<h3><a href="/specs/' + plat.key + '/">' + esc(plat.name) + '</a></h3>';
+      html += '<div class="tbl-wrap"><table><thead><tr><th>Placement</th><th>Field</th><th>Yours</th><th>Limit</th><th>Result</th></tr></thead><tbody>';
+      plat.rows.forEach(function (row) {
+        Object.keys(row.fields).forEach(function (k) {
+          var f = row.fields[k], n = counts[k];
+          if (!n) return;
+          var v = verdict(n, f, plat);
+          var lim = f.hard && f.hard !== f.work ? f.work + ' / ' + f.hard : String(f.work);
+          html += '<tr><td>' + esc(row.name) + '</td><td>' + LABEL[k] + '</td><td>' + n +
+                  '</td><td>' + lim + '</td><td class="lim-' + v[0] + '">' + v[1] + '</td></tr>';
+        });
+      });
+      html += '</tbody></table></div>';
+    });
+    out.innerHTML = html;
+  }
+  Object.keys(boxes).forEach(function (k) { boxes[k].addEventListener('input', draw); });
+  draw();
+})();
+</script>
 
-<h2>Does a valid split test mean the ads are good?</h2>
-<p>No — those are separate questions.
-Whether your two distinct cells are any <em>good</em>. This is about whether a
-test can produce an answer at all. A campaign can clear every point here and still be two weak ads.</p>
-<aside class="box ok" aria-label="AdPlaybook"><p><strong>AdPlaybook writes the whole campaign</strong> &mdash; ad copy within every platform&rsquo;s real limits, and every claim checked against your own site. Free on one website, forever, commercial use included. $149 once for every client site, on up to 3 Macs, with no renewal.</p><p>For comparison, month to month as of 2026-09-24: <a class="src" href="https://www.jasper.ai/pricing" rel="nofollow noopener">Jasper Pro $69</a>, <a class="src" href="https://www.copy.ai/prices" rel="nofollow noopener">Copy.ai $29</a> and <a class="src" href="https://www.adcreative.ai/#new-pricing-section" rel="nofollow noopener">AdCreative.ai $39</a>, every month.</p><p><a class="btn" href="https://github.com/mattkerr09/adplaybook-site/releases/download/v0.2.53/AdPlaybook-0.2.53-arm64.dmg">Download free for Mac</a></p></aside><nav class="related" aria-label="Related pages"><h2>Related</h2><ul><li><a href="/how-to/fix-an-ad-that-is-not-delivering/">How to fix an ad that is not delivering</a></li><li><a href="/how-to/stop-ad-copy-reading-like-ai/">How to stop your ad copy reading like AI wrote it</a></li></ul></nav></article>
 </div>
 <footer><div class="wide">
 <div class="foot-brand"><svg class="nav-logo" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><rect width="100" height="100" rx="22" fill="var(--panel-2)"/><rect x="14" y="14" width="14" height="72" rx="4" fill="var(--white)"/><rect x="33" y="14" width="53" height="72" rx="6" fill="var(--white)"/><circle cx="46" cy="70" r="9.5" fill="var(--panel-2)"/><circle cx="46" cy="70" r="4.3" fill="var(--white)"/><circle cx="61" cy="53" r="5" fill="var(--panel-2)"/><circle cx="75" cy="36" r="5" fill="var(--panel-2)"/></svg>AdPlaybook</div>

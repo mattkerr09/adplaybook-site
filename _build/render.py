@@ -1014,6 +1014,13 @@ section > .eyebrow:first-child + h2{margin-top:0}
 .box p:last-child{margin-bottom:0}
 .box.warn{border-left:3px solid var(--amber)}
 .box.ok{border-left:3px solid var(--green)}
+.lim-in{display:block;margin:0 0 1rem}
+.lim-in textarea{display:block;width:100%;margin-top:.35rem;padding:.6rem .7rem;
+  border:1px solid var(--hair);border-radius:var(--r-sm);background:var(--panel);
+  color:var(--white);font:inherit;font-size:.95rem;resize:vertical}
+.lim-ok{color:var(--green)}
+.lim-warn{color:var(--white);font-weight:600}
+.lim-bad{color:var(--flag)}
 
 .cta-block{margin:3.4rem 0 1rem;padding:2.4rem 2rem;border:1px solid var(--hair);
   border-radius:var(--r);text-align:center;
@@ -1227,7 +1234,7 @@ PRODUCT_BOX = (
     f'<p><a class="btn" href="{DOWNLOAD}">Download free for Mac</a></p>'
     '</aside>')
 PRODUCT_BOX_PATHS = ("/specs/", "/learn/", "/how-to/", "/for/", "/strategies/",
-                     "/vs/", "/offline/")
+                     "/vs/", "/offline/", "/check/")
 
 
 def page(*, path: str, title: str, description: str, body: str,
@@ -1845,6 +1852,9 @@ read — 10 August 2026 for the eight below.</p>
 Advertising (Bing) character limits</a>? They are documented here too, though
 AdPlaybook does not build Bing campaigns — the page says so plainly rather than
 implying support.</p>
+<p class="note">Want to test your own copy against all of them at once? Use the
+free <a href="/check/">ad copy limit checker</a>: paste it in and every
+placement below is counted as you type.</p>
 
 <div class="box warn">
 <strong>Why this page exists</strong>
@@ -1905,6 +1915,11 @@ def main() -> int:
     from howto import GUIDES as _GUIDES  # noqa: E402
     from microsoft import build as build_microsoft  # noqa: E402
     build_microsoft(page, neighbours, _GUIDES)
+
+    # The free ad copy limit checker, rendered from the same platform files as
+    # /specs/ (CEO order 2026-09-24: the plan's link magnet). _build/checker.py.
+    from checker import build as build_checker  # noqa: E402
+    build_checker(page, specs)
 
     # sitemap
     urls = "".join(
