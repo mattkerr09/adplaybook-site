@@ -6,7 +6,7 @@
 <title>Terms of use | AdPlaybook</title>
 <meta name="description" content="The terms for using AdPlaybook: who publishes it, what the licence is, who is responsible for the ads it drafts, and how refunds work.">
 <meta name="theme-color" content="#0d1017">
-<meta name="last-modified" content="2026-08-12">
+<meta name="last-modified" content="2026-09-24">
 <link rel="canonical" href="https://adplaybook.app/terms/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -1024,7 +1024,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 <p class="lede">The terms for using AdPlaybook: who publishes it, what the licence is, who is responsible for the ads it drafts, and how refunds work.</p>
 
 <div class="box ok">
-<p style="margin:0"><span class="pill checked">last changed 2026-08-18</span>
+<p style="margin:0"><span class="pill checked">last changed 2026-09-24</span>
 These cover the desktop app and this website. They are short because the
 product is small: there is no account to close, no subscription to cancel and
 no data of yours for us to lose.</p>
@@ -1050,12 +1050,14 @@ thing worth being suspicious of.</p>
 disk image from <a href="https://github.com/mattkerr09/adplaybook-site/releases">the releases page</a>. The download is the
 whole application — there is no separate paid build, no account to create and
 no server to sign in to.</p>
-<p>If you buy a licence, our merchant of record emails you a key. You paste it into the app once;
-the app asks the issuer whether the key is valid and stores that answer at
-<code>~/.config/adkit/licence.json</code>. It re-asks at most once a day, and if
-your machine cannot reach the issuer an already-valid licence keeps working for 14
-days before it stops. That is the only network call licensing makes, and it
-carries the key and nothing else.</p>
+<p>If you buy a licence, our merchant of record emails you a key. Keep it. The
+current build does not ask for the key or check it: the licence is your
+permission to use AdPlaybook on every site you work on, and the app works the same
+with or without it. If a later build checks licences, it will ask for the key
+once, ask the issuer whether it is valid, and store that answer at
+<code>~/.config/adkit/licence.json</code>; it will re-ask at most once a day, and
+that call will carry the key and nothing else. This page will say so before
+that build ships.</p>
 
 <h2>What it costs</h2>
 <p><strong>Free on one website. $149 once for unlimited websites</strong> —
@@ -1093,8 +1095,8 @@ very likely will not either.</p>
 If you buy again after a refund, that purchase is final. This is not aimed at
 anyone acting in good faith; it exists because a policy with no limit is a policy
 that gets automated against.</p>
-<p><strong>After a refund</strong> your licence is deactivated and paid features
-stop working. Anything you have already produced with AdPlaybook remains yours to
+<p><strong>After a refund</strong> your licence ends, and with it the permission
+to use AdPlaybook on more than one website. Anything you have already produced with AdPlaybook remains yours to
 keep and to use commercially. We do not ask you to delete work.</p>
 <p><strong>Purchases made through an affiliate link.</strong> Affiliates earn
 commission on sales they refer, and commission is held until the refund window
@@ -1116,8 +1118,9 @@ paid build ships, not after.</p>
 
 <h2>The licence</h2>
 <p>You get a non-exclusive, non-transferable, revocable licence to install and
-run AdPlaybook on Macs you control, for your own advertising or your clients'. It
-costs nothing and it is not exclusive to you.</p>
+run AdPlaybook on Macs you control, for your own advertising or your clients'. On
+one website it is free; the paid licence, $149 once, covers every site
+you work on, on up to 3 Macs. Neither is exclusive to you.</p>
 <p>What it does not include: redistributing a modified build under the AdPlaybook
 name, presenting the app as your own product, or removing the notices that let
 someone verify where the build came from. The name and the site's contents stay

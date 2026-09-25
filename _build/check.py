@@ -296,7 +296,14 @@ def _jekyll_excluded() -> list:
         if in_exclude:
             stripped = line.lstrip()
             if stripped.startswith("- "):
-                out.append(stripped[2:].strip())
+                # YAML allows a trailing comment after the value. `docs/   # audits
+                # and analysis ...` was read as that whole string, so docs/ and
+                # scripts/ stopped matching and seven files Jekyll excludes (they
+                # return 404) were reported as NEW public internals (2026-09-24).
+                item = stripped[2:]
+                if " #" in item:
+                    item = item.split(" #", 1)[0]
+                out.append(item.strip())
                 continue
             in_exclude = False          # a new top-level key ends the list
     return out

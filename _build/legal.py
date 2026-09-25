@@ -44,7 +44,8 @@ So each claim below is sourced, the same way a spec page is:
                        every call site — `brief.py:181`, `strategy.py:222`,
                        `generate.py:292`, `critique.py:260`, `coherence.py:285`
 * signing identity     `codesign -dvvv` on `dist/AdPlaybook-0.1.23-arm64.dmg`
-* zero MX records      `dig +short MX adplaybook.app` -> empty, 2026-08-12
+* MX records           `dig +short MX adplaybook.app` -> empty, 2026-08-12;
+                       fwd1/fwd2.porkbun.com (forwarding, no address confirmed), 2026-09-24
 
 Citations are pinned to `2636bed`, the commit v0.1.23 was built from, not to the
 working tree. The tree is already on 0.1.24 and will move again; a page that
@@ -90,14 +91,15 @@ COMPANY_PLAIN = "Kerr & Company LLC"
 #: privacy did not. Bumping the shared value would have re-dated a page whose
 #: text had not moved — the same untruth this constant exists to prevent,
 #: pointed the other way.
-TERMS_EFFECTIVE = "2026-08-18"   # "not for sale" retired: the site has charged $149 since before this
-PRIVACY_EFFECTIVE = "2026-08-12"
+TERMS_EFFECTIVE = "2026-09-24"   # licence key: 0.2.53 does not ask for or check one; the free/paid split stated
+PRIVACY_EFFECTIVE = "2026-09-24"   # the paid licence is the same application; licensing sends nothing in 0.2.53
 EFFECTIVE = PRIVACY_EFFECTIVE    # legacy alias; prefer the explicit names
 
 #: The only mailbox that has been confirmed to receive mail.
 #:
-#: `dig +short MX adplaybook.app` returns nothing — the domain has zero MX
-#: records, so `support@adplaybook.app` would hard-bounce at the sending
+#: 2026-09-24: `dig +short MX adplaybook.app` now returns fwd1/fwd2.porkbun.com,
+#: but which addresses forward is not visible in DNS and none has been tested,
+#: so `support@adplaybook.app` is still not offered. Before MX existed it would hard-bounce at the sending
 #: server. An address that bounces is worse than no address: a payment
 #: processor emails it during onboarding, it fails, and the application is
 #: flagged. When MX records exist at Porkbun and a mailbox is live, change this
@@ -392,9 +394,11 @@ will get it.</p>
 <div class="box">
 <strong>What this page does not cover</strong>
 <p>It describes {VERSION_TAG}; this policy was last changed {EFFECTIVE}. It does not describe any future build,
-and it does not describe a paid version, because there is not one — see
-<a href="/terms/">the terms</a>. If a payment mechanism, an account, a licence
-key or a server ever exists, this page changes before that ships, not after.</p>
+and the paid licence is the same application as the free one, so this page
+covers it too: this build does not ask for a licence key or check one, so
+licensing sends nothing (see <a href="/terms/">the terms</a>). If a build ever
+checks licences, or adds an account or a server, this page changes before that
+build ships, not after.</p>
 <p>It also cannot tell you what your own run will do. Where the writing happens
 depends on what is running and which keys are on your Mac at the moment you press
 go, and this page cannot see that. It can only tell you the order the app checks
@@ -460,12 +464,14 @@ thing worth being suspicious of.</p>
 disk image from <a href="{RELEASES}">the releases page</a>. The download is the
 whole application — there is no separate paid build, no account to create and
 no server to sign in to.</p>
-<p>If you buy a licence, our merchant of record emails you a key. You paste it into the app once;
-the app asks the issuer whether the key is valid and stores that answer at
-<code>~/.config/adkit/licence.json</code>. It re-asks at most once a day, and if
-your machine cannot reach the issuer an already-valid licence keeps working for 14
-days before it stops. That is the only network call licensing makes, and it
-carries the key and nothing else.</p>
+<p>If you buy a licence, our merchant of record emails you a key. Keep it. The
+current build does not ask for the key or check it: the licence is your
+permission to use {BRAND} on every site you work on, and the app works the same
+with or without it. If a later build checks licences, it will ask for the key
+once, ask the issuer whether it is valid, and store that answer at
+<code>~/.config/adkit/licence.json</code>; it will re-ask at most once a day, and
+that call will carry the key and nothing else. This page will say so before
+that build ships.</p>
 
 <h2>What it costs</h2>
 <p><strong>Free on one website. ${PRICE_USD} once for unlimited websites</strong> —
@@ -503,8 +509,8 @@ very likely will not either.</p>
 If you buy again after a refund, that purchase is final. This is not aimed at
 anyone acting in good faith; it exists because a policy with no limit is a policy
 that gets automated against.</p>
-<p><strong>After a refund</strong> your licence is deactivated and paid features
-stop working. Anything you have already produced with AdPlaybook remains yours to
+<p><strong>After a refund</strong> your licence ends, and with it the permission
+to use AdPlaybook on more than one website. Anything you have already produced with AdPlaybook remains yours to
 keep and to use commercially. We do not ask you to delete work.</p>
 <p><strong>Purchases made through an affiliate link.</strong> Affiliates earn
 commission on sales they refer, and commission is held until the refund window
@@ -526,8 +532,9 @@ paid build ships, not after.</p>
 
 <h2>The licence</h2>
 <p>You get a non-exclusive, non-transferable, revocable licence to install and
-run {BRAND} on Macs you control, for your own advertising or your clients'. It
-costs nothing and it is not exclusive to you.</p>
+run {BRAND} on Macs you control, for your own advertising or your clients'. On
+one website it is free; the paid licence, ${PRICE_USD} once, covers every site
+you work on, on up to 3 Macs. Neither is exclusive to you.</p>
 <p>What it does not include: redistributing a modified build under the {BRAND}
 name, presenting the app as your own product, or removing the notices that let
 someone verify where the build came from. The name and the site's contents stay
@@ -659,10 +666,10 @@ number on this site is wrong.</p>
 </div>
 
 <div class="box warn">
-<p style="margin:0">There is deliberately no <code>@adplaybook.app</code>
-address. The domain has no mail records, so an address on it would bounce
-silently, and an address that bounces is worse than one that looks informal.
-When there is a mailbox on the domain, this page will say so.</p>
+<p style="margin:0">Please use the address above: it is the one mailbox
+confirmed to reach a person. The <code>adplaybook.app</code> domain forwards
+mail, but no address on it has been confirmed end to end, so this page does not
+offer one. When one is confirmed, this page will say so.</p>
 </div>
 
 <h2>Bugs, and the thing that helps most</h2>
