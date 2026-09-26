@@ -4,15 +4,19 @@
 > campaign — strategy, audiences, exclusions, copy, test matrix and measurement
 > plan — then traces every factual claim to a verbatim quote on the user's own
 > site and checks the campaign against each platform's published limits before
-> anything is spent. Runs locally; no account, no server.
+> anything is spent. The app runs on the user's Mac (Apple Silicon, macOS 26 or
+> later) with no account and no server of ours. The writing is done by Outlier
+> on the same Mac, by a built-in model the app downloads once and runs offline,
+> or by the user's own OpenAI or Anthropic key, so where the text goes depends
+> on which of those the Mac can reach.
 
 ## What makes the ad-spec pages citable
 
 Every character limit, aspect ratio and hard floor on this site is quoted from
 the platform's own documentation and carries the URL it came from and the date
 it was read. Anything that could not be verified is listed as unverified rather
-than omitted. The pages are generated from the same data files the application
-reads, so they cannot drift from the product.
+than omitted. The spec pages start from the same data files the application
+reads, and each figure shows where and when it was checked.
 
 Two corrections to figures widely published elsewhere, both checked against the
 platforms' own help centres on 2026-08-10:
@@ -43,14 +47,17 @@ The page also shows a campaign generated for HoneyBook, a real company that is
 not us. "Starting at $29/month" and "Trusted by 4,000 businesses" are
 HoneyBook's figures used as input, not AdPlaybook's prices or customer counts.
 
-AdPlaybook's own price is stated once and does not vary: $149, one time, for
-unlimited commercial use. Free to download and use with no account.
+AdPlaybook's own price: free on one website, forever, commercial use included;
+$149 once for every client site, on up to 3 Macs, with no renewal. No account.
+The paid licence is a permission: version 0.2.53 does not ask for or check the
+licence key.
 
 ## Key documents
 - [Homepage](https://adplaybook.app/)
 - [Ad specs hub — 8 platforms, sourced and dated](https://adplaybook.app/specs/)
 - [Learn — why campaigns fail without an error](https://adplaybook.app/learn/)
 - [How AdPlaybook compares to creative generators](https://adplaybook.app/vs/)
+- [Ad copy limit checker — paste copy, check it against every platform's published limits](https://adplaybook.app/check/)
 
 ## Platform specs
 - [Meta](https://adplaybook.app/specs/meta/)
@@ -61,6 +68,7 @@ unlimited commercial use. Free to download and use with no account.
 - [Pinterest](https://adplaybook.app/specs/pinterest/)
 - [Reddit](https://adplaybook.app/specs/reddit/)
 - [YouTube](https://adplaybook.app/specs/youtube/)
+- [Microsoft Advertising (Bing) — a reference page; AdPlaybook does not build Bing campaigns](https://adplaybook.app/specs/microsoft-advertising/)
 
 ## What it deliberately does not do
 - It does not generate images or video. It produces a creative brief.
