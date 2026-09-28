@@ -71,11 +71,35 @@ def visible(page_html: str) -> str:
     return norm(html.unescape(re.sub(r"<[^>]+>", " ", body)))
 
 
+#: 2026-09-28: sources that now answer from somewhere else (a permanent redirect). The X pages
+#: moved from business.x.com to help.x.com; the citation should follow, and the report says so.
+MOVED: dict = {}
+_CHALLENGE_RE = re.compile(r"just a moment\.\.\.|checking your browser|cf-chl|"
+                           r"enable javascript and cookies to continue", re.I)
+
+
 def fetch(url: str) -> str:
-    """curl, not urllib: Cloudflare bans the urllib UA on several of these hosts."""
-    r = subprocess.run(["curl", "-sL", "-A", UA, "--max-time", "30", url],
+    """curl, not urllib: Cloudflare bans the urllib UA on several of these hosts.
+
+    2026-09-28: curl -s exits 0 on an HTTP 403, so a Cloudflare "Just a moment..." challenge
+    page (58 characters) was read AS the source, and every X figure "was no longer in its
+    cited source" — 7 FAILs for a page whose rules had not changed. A non-2xx answer or a
+    challenge page is now UNREADABLE (""), which main() reports as MACHINE-UNVERIFIABLE."""
+    r = subprocess.run(["curl", "-sL", "-A", UA, "--max-time", "30",
+                        "-w", "\n__HTTP__%{http_code} %{url_effective}", url],
                        capture_output=True, text=True)
-    return visible(r.stdout) if r.returncode == 0 else ""
+    if r.returncode != 0:
+        return ""
+    body, _, tail = r.stdout.rpartition("\n__HTTP__")
+    code, _, final = tail.strip().partition(" ")
+    def _where(u: str) -> str:  # host + path: a redirect that only adds ?view=… is not a move
+        m = re.match(r"https?://([^/?#]+)([^?#]*)", u)
+        return (m.group(1).lower() + m.group(2).rstrip("/")) if m else u
+    if final and _where(final) != _where(url):
+        MOVED[url] = final
+    if not code.startswith("2") or _CHALLENGE_RE.search(body[:4000]):
+        return ""
+    return visible(body)
 
 
 _FIG_RE = re.compile(r"\d{2,4}\s?[x×]\s?\d{2,4}|\d+\s?MB\b|\d+:\d+")
@@ -211,6 +235,24 @@ def _charlimit_ok(n: int, sources: list) -> bool:
     return False
 
 
+#: 2026-09-28: our own sites. The footer's "More from Kerr & Company" links and the download
+#: links are site chrome, never a platform's documentation.
+_OWN_HOSTS = ("adplaybook.app", "github.com", "outlier.host", "crispvideo.app",
+              "docketseo.app", "builtbykerr.com")
+
+
+def _cited_urls(raw: str) -> list:
+    """The pages a spec page CITES. 2026-09-28: every external link used to count, so the
+    footer and the product box's rival-price links became "sources" — and figures passed
+    against them: X's 70 on docketseo.app's "up to 70 pages", 1024 MB on outlier.host's
+    "15.61 GB", 1200 x 1200 on copy.ai's "$12000/yr". The product box (rival prices,
+    checked by their own gate) and the footer are removed, and our own sites excluded."""
+    body = re.sub(r'<aside class="box ok" aria-label="AdPlaybook">.*?</aside>', " ", raw, flags=re.S)
+    body = re.sub(r"<footer\b.*?</footer>", " ", body, flags=re.S)
+    urls = re.findall(r'href="(https?://[^"]+)"', body)
+    return [u for u in urls if not any(h in u for h in _OWN_HOSTS)]
+
+
 def survey(site_root: str = "."):
     #: v1 2026-09-24 (CEO): survey EVERY platform spec page, not only pages that quote a source. A page
     #: can carry checkable figures / character limits with no quoted phrase — Meta, Google and Reddit
@@ -232,8 +274,7 @@ def survey(site_root: str = "."):
             raw = open(p, encoding="utf-8", errors="replace").read()
             text = visible(raw)
             quotes = [q.strip() for q in re.findall(r"[“\"]([^”\"]{15,120})[”\"]", text)]
-            urls = [u for u in re.findall(r'href="(https?://[^"]+)"', raw)
-                    if "adplaybook.app" not in u and "github.com" not in u]
+            urls = _cited_urls(raw)
             pages[rel] = (sorted(set(quotes)), sorted(set(urls)))
             PAGE_FIGS[rel] = table_figures(raw)
             PAGE_CHARLIMITS[rel] = char_limit_figures(raw)
@@ -413,6 +454,10 @@ def main() -> int:
             print("       Either the platform changed the rule, or the page never stated it exactly.")
         return 1
     if unverifiable:
+        if MOVED:
+            print(f"\nSOURCE MOVED ({len(MOVED)}) - update the citation to where it now lives:")
+            for _a, _b in sorted(MOVED.items()):
+                print(f"  {_a}\n    -> {_b}")
         print(f"\nMACHINE-UNVERIFIABLE ({len(unverifiable)}) - cited source blocks automated readers "
               f"(e.g. Facebook renders client-side); verify by hand at the read date shown on the page:")
         for page, item in unverifiable[:15]:
