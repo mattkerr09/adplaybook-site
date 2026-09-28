@@ -1216,7 +1216,7 @@ def esc(s: Any) -> str:
     return html.escape(str(s), quote=True)
 
 
-from content import PRICE_STR  # noqa: E402
+from content import PRICE_STR, BNPL_INLINE  # noqa: E402
 
 #: The end of every content page (CEO order 2026-09-24). Rival prices are the
 #: vendors' own month-to-month figures, dated and linked so they can be checked.
@@ -1225,7 +1225,8 @@ PRODUCT_BOX = (
     '<p><strong>AdPlaybook writes the whole campaign</strong> &mdash; ad copy '
     'within every platform&rsquo;s real limits, and every claim checked against '
     'your own site. Free on one website, forever, commercial use included. '
-    f'{PRICE_STR} once for every client site, on up to 3 Macs, with no renewal.</p>'
+    f'{PRICE_STR} once{BNPL_INLINE} for every client site, on up to 3 Macs, with no renewal. '
+    'In the US, Klarna or Afterpay at checkout: four payments, two weeks apart.</p>'
     '<p>For comparison, month to month as of 2026-09-24: '
     '<a class="src" href="https://www.jasper.ai/pricing" rel="nofollow noopener">Jasper Pro $69</a>, '
     '<a class="src" href="https://www.copy.ai/prices" rel="nofollow noopener">Copy.ai $29</a> and '
@@ -1359,7 +1360,7 @@ rather than leaving a gap you cannot see.</p>
 <p><a href="/privacy/">Privacy</a> · <a href="/terms/">Terms</a> ·
 <a href="/contact/">Contact</a></p>
 <p>Published by Kerr &amp; Company LLC, Grand Rapids, Michigan. Free to
-download and free forever on one website. $149 once for unlimited websites.</p>
+download and free forever on one website. $149 once &middot;&nbsp;or&nbsp;4&nbsp;&times;&nbsp;$37.25 in the US, for unlimited websites.</p>
 <p><strong>More from Kerr &amp; Company</strong><br>
 <a href="https://outlier.host/">Outlier</a>: private, offline AI for your Mac ·
 <a href="https://crispvideo.app/">Crisp Video</a>: restore and upscale video offline on your Mac ·

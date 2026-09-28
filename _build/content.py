@@ -123,6 +123,11 @@ VERSION_TAG = _latest_tag()
 # framing can come back — and not before.
 PRICE_USD = 149
 PRICE_STR = f"${PRICE_USD}"
+#: Pay-in-4 beside every price we ask people to pay (Matthew, 2026-09-28: "the bnpl price
+#: right next to the full price in the same font"). Derived, never typed: 149 / 4 = 37.25
+#: (bnpl.py checks the same arithmetic). No-break spaces keep "or 4 × $37.25" one phrase
+#: when a line wraps; the plain space before the dot is where it may break.
+BNPL_INLINE = f" &middot;&nbsp;or&nbsp;4&nbsp;&times;&nbsp;${PRICE_USD / 4:.2f}"
 
 def _bnpl_section() -> str:
     """The pay-in-4 block, or nothing at all.
@@ -508,7 +513,7 @@ its own work before it shows you anything.</p>
 <a class="btn" href="{{DMG}}">{dl} Download for Mac</a>
 <a class="btn ghost" href="/specs/">See the ad specs</a>
 </div>
-<p class="hero-sub"><strong>Free:</strong> one website, forever, commercial use included &middot; <strong>{PRICE_STR} once:</strong> every client site, up to 3 Macs, no renewal. A website is one domain you make campaigns for.</p>
+<p class="hero-sub"><strong>Free:</strong> one website, forever, commercial use included &middot; <strong>{PRICE_STR} once{BNPL_INLINE}:</strong> every client site, up to 3 Macs, no renewal. A website is one domain you make campaigns for.</p>
 <p class="hero-sub">It writes with Outlier on the same Mac, with a built-in model it downloads once and runs offline, or with your own OpenAI or Anthropic key.</p>
 <p class="hero-sub">{VERSION_TAG} ·{size_bit} Apple Silicon · macOS 26 or later · notarised by Apple</p>
 <!-- macOS 26: what a Mac enforces on open is LSMinimumSystemVersion, plus any strong import of a symbol older macOS lacks (which fails at load). minos (26.0, from Homebrew python@3.11) is metadata only: dyld does NOT refuse a newer-minos image (measured 2026-09-23 with vtool + a load test; corrects the earlier "dyld refuses" note, same correction Outlier and Docket reached). The floor drops when the sidecar is built from python.org Python. -->
@@ -633,13 +638,13 @@ list of what could not be verified.</p>
 Gatekeeper warning because Apple's notary service cleared it, not because you
 right-clicked past one.</p>
 <p><a class="btn" href="{{DMG}}">{dl} Download free for Mac{size_suffix}</a>
-<a class="btn ghost" href="{{CHECKOUT}}" style="margin-left:.6rem">Buy a licence · {{PRICE_STR}} once</a></p>
+<a class="btn ghost" href="{{CHECKOUT}}" style="margin-left:.6rem">Buy a licence · {{PRICE_STR}} once{{BNPL_INLINE}}</a></p>
 {{BNPL}}
 <p class="src"><strong>30 days to change your mind.</strong> If it does not do what
 you need, email within 30 days of purchase and we refund in full — no reason
 required, back to the original payment method. One refund per customer, and the
 full policy is in the <a href="/terms/">terms</a>.</p>
-<p class="src">Free to download and use — the whole app, no credits, no watermark, no account. {{PRICE_STR}} once buys a licence for unlimited commercial use across every site you work on. No subscription and no renewal.</p>
+<p class="src">Free to download and use — the whole app, no credits, no watermark, no account. A licence for unlimited commercial use across every site you work on is {{PRICE_STR}} once{{BNPL_INLINE}}. No subscription and no renewal.</p>
 <p class="src">{VERSION_TAG} · <a href="{{RELEASES}}">All releases</a> · bring your own
 OpenAI or Anthropic key, or run every generation locally with Outlier</p>
 <form class="sub" method="post" action="https://kerr-subscribe.kerrco.workers.dev">
@@ -715,7 +720,7 @@ run is a guess in the typography of a metric, and this tool does not publish
 numbers it did not measure. In a demo that looks like a missing feature. It is
 the reason to believe everything else it tells you.</p>
 </section>
-""".replace("{DMG}", DMG).replace("{RELEASES}", RELEASES).replace("{CHECKOUT}", CHECKOUT).replace("{BNPL}", _bnpl_section()).replace("{PRICE_STR}", PRICE_STR)
+""".replace("{DMG}", DMG).replace("{RELEASES}", RELEASES).replace("{CHECKOUT}", CHECKOUT).replace("{BNPL}", _bnpl_section()).replace("{BNPL_INLINE}", BNPL_INLINE).replace("{PRICE_STR}", PRICE_STR)
     page(path="/", title=f"{BRAND} — the ad maker that proves its own claims",
          # 220 characters; Google shows about 155. Trimmed 2026-09-02 to 142.
          # The feature roll-call was the half being cut off, so it cost the
