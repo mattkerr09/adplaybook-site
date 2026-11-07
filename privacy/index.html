@@ -7,7 +7,7 @@
 <title>Privacy — what AdPlaybook sends, and where | AdPlaybook</title>
 <meta name="description" content="What AdPlaybook sends and where it sends it, named destination by named destination, for the build you can download today — including which steps leave your Mac, which do not, and why you do not get to choose.">
 <meta name="theme-color" content="#0d1017">
-<meta name="last-modified" content="2026-09-24">
+<meta name="last-modified" content="2026-11-06">
 <link rel="canonical" href="https://adplaybook.app/privacy/">
 <link rel="icon" href="/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/apple-touch-icon.png">
@@ -1015,7 +1015,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 }
 </style>
 
-<script defer data-domain="adplaybook.app" src="https://plausible.io/js/script.js"></script><script async src="https://usesled.com/kerr-and-company/t.js"></script><script>(function(){var META_PIXEL_ID='1983109892356693';if(!META_PIXEL_ID)return;!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init',META_PIXEL_ID);fbq('track','PageView');})();</script>
+<script defer data-domain="adplaybook.app" src="https://plausible.io/js/script.js"></script><script async src="https://usesled.com/kerr-and-company/t.js"></script>
 </head>
 <body>
 <div class="mesh" aria-hidden="true"><b class="m1"></b><b class="m2"></b><b class="m3"></b></div>
@@ -1032,7 +1032,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 <p class="lede">What AdPlaybook sends and where it sends it, named destination by named destination, for the build you can download today — including which steps leave your Mac, which do not, and why you do not get to choose.</p>
 
 <div class="box ok">
-<p style="margin:0"><span class="pill checked">last changed 2026-09-24</span>
+<p style="margin:0"><span class="pill checked">last changed 2026-11-06</span>
 Checked against the source of the build behind the Download button, not against
 a template. Where the app and this page could disagree, the app is the fact and
 this page is the bug.</p>
@@ -1213,26 +1213,15 @@ that distinction is the whole point: it sets a single <code>ta_ref</code> cookie
 <strong>only</strong> if you arrived through an affiliate link. Arrive any other
 way — a search result, a bookmark, a link from us — and it sets nothing at all. It
 records which affiliate sent a visit, never who the visitor is.</p>
-<p>The third is a <strong>Meta (Facebook) advertising pixel</strong>, and it is
-the one on this page that actually tracks you. When it is switched on it loads
-code from Facebook, sets Meta's cookies in your browser, and tells Meta that this
-browser visited this page — which Meta can match to a Facebook or Instagram
-account. That is a different kind of thing from the two above, and calling it
-analytics would be a dodge: it exists so we can advertise this app on Meta and
-see which ads led somewhere.</p>
-<p><strong>That id is now set, and the pixel is running.</strong> The
-paragraph above has stopped describing something hypothetical: on every page of
-this site, code loads from Facebook, Meta sets its own cookies in your browser,
-and Meta is told that this browser visited this page. This page said the id was
-empty until the day it wasn't, and this sentence changed in the same commit that
-filled it in — which is the only version of this promise worth making.</p>
-<p>You can still check rather than trust us, and the check is better now than it
-was: view the source of any page and find <code>META_PIXEL_ID</code>. It reads
-<code>1983109892356693</code>. If you would rather it did not run, any content
-blocker stops it, and <strong>nothing on this site needs it</strong> — every page,
-every tool and the download all work identically with Facebook blocked. We would
-rather you block it than not know it was there.</p>
-<p>View the source of any page and those three scripts are what you will find;
+<p>The third was a <strong>Meta (Facebook) advertising pixel</strong>, and it has
+been removed as of 2026-11-06. It used to load code from Facebook, set Meta's
+cookies in your browser, and tell Meta that this browser visited this page. It
+has been taken off entirely — the pixel id, the loader script and every tracking
+call — so nothing on this site sends your visit to Meta any more. You can verify
+it yourself: view the source of any page and search for the Meta pixel loader
+endpoint, the tracking function name, or the Facebook tracking domain. None of
+them will be there.</p>
+<p>View the source of any page and those two scripts are what you will find;
 there is nothing else.</p>
 <p>Two things are true anyway and you should know them:</p>
 <ul>
@@ -1265,7 +1254,7 @@ will get it.</p>
 
 <div class="box">
 <strong>What this page does not cover</strong>
-<p>It describes v0.2.53; this policy was last changed 2026-09-24. It does not describe any future build,
+<p>It describes v0.2.53; this policy was last changed 2026-11-06. It does not describe any future build,
 and the paid licence is the same application as the free one, so this page
 covers it too: this build does not ask for a licence key or check one, so
 licensing sends nothing (see <a href="/terms/">the terms</a>). If a build ever

@@ -1151,42 +1151,6 @@ from content import DMG as DOWNLOAD  # noqa: E402
 # Cookieless and carries no personal data, but the privacy page discloses it by
 # name regardless — it previously claimed there was no script at all, which was
 # false the moment this went live.
-#: Meta pixel — SHIPPED DARK. Empty id means the loader does nothing at all.
-#:
-#: Matthew is running Meta ads for every business, so this site needs the
-#: pixel. Nobody has an id yet: Business Manager is behind a login, and when
-#: one arrives this is a one-line change.
-#:
-#: THE GUARD IS THE FIRST STATEMENT, deliberately. It is not wrapped around
-#: fbq('init') — the whole snippet including the script injection is skipped,
-#: so dark means ZERO requests to facebook.net rather than "loaded but
-#: uninitialised". A loaded-and-idle tracker still hands Meta the visit.
-#:
-#: The id is a top-level constant in the served HTML, not a build-time
-#: injection or a config object, because the test that proves the dark state
-#: reads the LIVE PAGE rather than this repo. Empty or 15-16 digits; no second
-#: `enabled` flag, because a second switch is a second thing to get wrong.
-#:
-#: The privacy page changed in the SAME COMMIT as this line. That ordering is
-#: not a nicety: a policy describing tracking that is not yet running is
-#: over-disclosure and costs nothing, while a pixel running under a policy that
-#: says "no pixel" is a false legal statement on a page that sells something.
-META_PIXEL_ID = '1983109892356693'
-
-META_PIXEL = (
-    '<script>(function(){'
-    "var META_PIXEL_ID='" + META_PIXEL_ID + "';"
-    'if(!META_PIXEL_ID)return;'
-    '!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){'
-    'n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};'
-    'if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version="2.0";n.queue=[];'
-    't=b.createElement(e);t.async=!0;t.src=v;'
-    's=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}'
-    "(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');"
-    "fbq('init',META_PIXEL_ID);fbq('track','PageView');"
-    '})();</script>')
-
-
 ANALYTICS = ('<script defer data-domain="adplaybook.app" '
              'src="https://plausible.io/js/script.js"></script>'
              # Sled affiliate attribution. It sets a ta_ref cookie only when a
@@ -1200,8 +1164,11 @@ ANALYTICS = ('<script defer data-domain="adplaybook.app" '
              # affiliate who sent someone to AdPlaybook, Docket or Outlier earned
              # nothing and had no way to know.
              '<script async src="https://usesled.com/kerr-and-company/t.js">'
-             '</script>'
-             + META_PIXEL)
+             '</script>')
+
+# Meta pixel removed 2026-11-06. The ANALYTICS string no longer carries it,
+# and the post-processing step that filled META_PIXEL_ID into hand-maintained
+# pages has been removed too. Nothing on this site sends a visit to Meta.
 
 
 
@@ -1963,33 +1930,6 @@ def main() -> int:
             refreshed.append(str(html.relative_to(SITE)))
     for r in sorted(refreshed):
         print(f"  refreshed stale download link in {r}")
-
-    # ---- and the pixel id, for exactly the same reason ----------------------
-    #
-    # 2026-09-02: /thank-you/ served `var META_PIXEL_ID=''`. Every generated
-    # page carried the real id. The snippet opens `if(!META_PIXEL_ID)return;`
-    # so an empty id loads nothing, defines no fbq, and fires nothing — while
-    # the page still CONTAINS four fbq() calls, so every check that greps the
-    # HTML for fbq('track','Purchase') passed it.
-    #
-    # AdPlaybook therefore recorded PageViews across the whole site and ZERO
-    # purchases, because the only page that fires Purchase was the only page
-    # with no pixel. Found by loading the page in a browser and watching for a
-    # beacon that never came.
-    #
-    # Same shape as the DMG link above, same remedy: a whole-site sweep rather
-    # than a list of hand-maintained files, and a no-op on generated pages.
-    fixed = []
-    for html in SITE.rglob("*.html"):
-        if ".git" in html.parts:
-            continue
-        before = html.read_text()
-        after = before.replace("var META_PIXEL_ID=''", f"var META_PIXEL_ID='{META_PIXEL_ID}'")
-        if after != before:
-            html.write_text(after)
-            fixed.append(str(html.relative_to(SITE)))
-    for f in sorted(fixed):
-        print(f"  filled an EMPTY META_PIXEL_ID in {f}")
 
     print(f"built {len(PAGES)} pages")
     for p, _ in sorted(set(PAGES)):

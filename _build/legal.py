@@ -92,7 +92,7 @@ COMPANY_PLAIN = "Kerr & Company LLC"
 #: text had not moved — the same untruth this constant exists to prevent,
 #: pointed the other way.
 TERMS_EFFECTIVE = "2026-09-24"   # licence key: 0.2.53 does not ask for or check one; the free/paid split stated
-PRIVACY_EFFECTIVE = "2026-09-24"   # the paid licence is the same application; licensing sends nothing in 0.2.53
+PRIVACY_EFFECTIVE = "2026-11-06"   # Meta pixel removed; nothing on this site sends a visit to Meta
 EFFECTIVE = PRIVACY_EFFECTIVE    # legacy alias; prefer the explicit names
 
 #: The only mailbox that has been confirmed to receive mail.
@@ -341,26 +341,15 @@ that distinction is the whole point: it sets a single <code>ta_ref</code> cookie
 <strong>only</strong> if you arrived through an affiliate link. Arrive any other
 way — a search result, a bookmark, a link from us — and it sets nothing at all. It
 records which affiliate sent a visit, never who the visitor is.</p>
-<p>The third is a <strong>Meta (Facebook) advertising pixel</strong>, and it is
-the one on this page that actually tracks you. When it is switched on it loads
-code from Facebook, sets Meta's cookies in your browser, and tells Meta that this
-browser visited this page — which Meta can match to a Facebook or Instagram
-account. That is a different kind of thing from the two above, and calling it
-analytics would be a dodge: it exists so we can advertise this app on Meta and
-see which ads led somewhere.</p>
-<p><strong>That id is now set, and the pixel is running.</strong> The
-paragraph above has stopped describing something hypothetical: on every page of
-this site, code loads from Facebook, Meta sets its own cookies in your browser,
-and Meta is told that this browser visited this page. This page said the id was
-empty until the day it wasn't, and this sentence changed in the same commit that
-filled it in — which is the only version of this promise worth making.</p>
-<p>You can still check rather than trust us, and the check is better now than it
-was: view the source of any page and find <code>META_PIXEL_ID</code>. It reads
-<code>1983109892356693</code>. If you would rather it did not run, any content
-blocker stops it, and <strong>nothing on this site needs it</strong> — every page,
-every tool and the download all work identically with Facebook blocked. We would
-rather you block it than not know it was there.</p>
-<p>View the source of any page and those three scripts are what you will find;
+<p>The third was a <strong>Meta (Facebook) advertising pixel</strong>, and it has
+been removed as of 2026-11-06. It used to load code from Facebook, set Meta's
+cookies in your browser, and tell Meta that this browser visited this page. It
+has been taken off entirely — the pixel id, the loader script and every tracking
+call — so nothing on this site sends your visit to Meta any more. You can verify
+it yourself: view the source of any page and search for the Meta pixel loader
+endpoint, the tracking function name, or the Facebook tracking domain. None of
+them will be there.</p>
+<p>View the source of any page and those two scripts are what you will find;
 there is nothing else.</p>
 <p>Two things are true anyway and you should know them:</p>
 <ul>

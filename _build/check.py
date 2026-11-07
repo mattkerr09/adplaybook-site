@@ -562,12 +562,10 @@ def main() -> int:
     check_nothing_internal_is_committed(fails)
     check_bnpl_copy_matches_the_checkout(fails)
     check_prices_in_our_voice_are_our_price(fails)
-    # The pixel and the policy describing it are one change; this is the
-    # half that notices when they come apart.
+    # The pixel was removed on 2026-11-06; this checks it stayed gone.
     import check_pixel
-    check_pixel.check_pixel(fails)
-    check_pixel.check_conversion_events_carry_value(fails)
-    check_pixel.check_policy_mentions_it(fails)
+    check_pixel.check_no_pixel(fails)
+    check_pixel.check_privacy_says_removed(fails)
     check_the_demo_figures_are_disclaimed(fails)
 
     openings, h2sets, lengths = [], [], {}
