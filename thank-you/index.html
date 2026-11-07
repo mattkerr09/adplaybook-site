@@ -976,7 +976,7 @@ footer .foot-brand{display:flex;align-items:center;gap:.5rem;color:var(--white);
 }
 </style>
 
-<script defer data-domain="adplaybook.app" src="https://plausible.io/js/script.js"></script><script async src="https://usesled.com/kerr-and-company/t.js"></script>
+<script defer data-domain="adplaybook.app" src="https://plausible.io/js/script.revenue.js"></script><script async src="https://usesled.com/kerr-and-company/t.js"></script>
 </head>
 <body>
 <div class="mesh" aria-hidden="true"><b class="m1"></b><b class="m2"></b><b class="m3"></b></div>
@@ -1112,11 +1112,12 @@ checks this position specifically. */
    card was refused. The defect is created by the fix, which is why it ships in
    the same change.
 
-   ⚠️ Purchase fires ONLY on status=succeeded. Firing it on a failure teaches the
-   ad account to optimise for people who could not pay. Deduped through
-   sessionStorage keyed on payment_id, so a reload or a shared link does not
-   count a second sale; eventID is payment_id so a future CAPI event dedupes
-   against this one rather than doubling it. */
+   Plausible Purchase event: fires ONCE per payment when status === 'succeeded'
+   AND a payment_id is present. Amount is always 149 (the one-time price).
+   sessionStorage ('ap_purchase_' + pid) prevents double-counting on refresh;
+   wrapped in try/catch so private browsing does not block the event — it fires
+   once via an in-memory flag instead. The Plausible queue shim ensures the call
+   is never lost even if the deferred script has not loaded yet. */
 (function () {
   var q = new URLSearchParams(location.search);
   var status = (q.get('status') || '').toLowerCase();
@@ -1140,9 +1141,31 @@ checks this position specifically. */
     if (el && wrap) { el.textContent = key; wrap.hidden = false; }
   }
 
-  // Meta pixel removed 2026-11-06. The purchase tracking call that
-  // lived here has been deleted. No purchase conversion event remains on
-  // this page; Plausible only counts the page view.
+  // Plausible Purchase event — fires exactly once per payment when
+  // status === 'succeeded' AND a payment_id is present.
+  if (status === 'succeeded' && pid) {
+    var guard = 'ap_purchase_' + pid;
+    var alreadyFired = false;
+    try {
+      alreadyFired = !!sessionStorage.getItem(guard);
+      sessionStorage.setItem(guard, '1');
+    } catch (e) {
+      // Private browsing: sessionStorage throws. Fall through to in-memory guard.
+    }
+    if (alreadyFired) return;     // already fired for this payment
+
+    var fired = false;
+    var fire = function (amount) {
+      if (fired) return;
+      fired = true;
+      window.plausible = window.plausible || function () {
+        (window.plausible.q = window.plausible.q || []).push(arguments);
+      };
+      plausible('Purchase', { revenue: { currency: 'USD', amount: amount } });
+    };
+
+    fire(149);
+  }
 })();
 </script>
 </body>
