@@ -40,17 +40,14 @@ makes about itself. Every one of them is example copy the product rejected:
                                               says it, and it is not true.
   "writes 40 tested variants in 9 seconds"  — same block, same reason.
   "Start your free trial today"             — there is no trial. The app is
-                                              free to download and use; the
-                                              licence is a one-time purchase.
+                                              free to download and use.
 
 The page also shows a campaign generated for HoneyBook, a real company that is
 not us. "Starting at $29/month" and "Trusted by 4,000 businesses" are
 HoneyBook's figures used as input, not AdPlaybook's prices or customer counts.
 
-AdPlaybook's own price: free on one website, forever, commercial use included;
-$149 once for every client site, on up to 3 Macs, with no renewal. No account.
-The paid licence is a permission: version 0.2.53 does not ask for or check the
-licence key.
+AdPlaybook is no longer sold, and there is no paid licence. The app is free to
+download. If you bought it, your copy keeps working.
 
 ## Key documents
 - [Homepage](https://adplaybook.app/)
