@@ -1,5 +1,9 @@
 # AdPlaybook
 
+Status: AdPlaybook is being rebuilt as a picture and video ad maker. The app described below (the
+campaign planner, v0.2.53) is no longer sold or offered for download. If you have it, your copy keeps
+working. Nothing below is an offer to buy or download.
+
 > A Mac desktop app that turns a product page into a complete, buildable ad
 > campaign — strategy, audiences, exclusions, copy, test matrix and measurement
 > plan — then traces every factual claim to a verbatim quote on the user's own
@@ -39,15 +43,15 @@ makes about itself. Every one of them is example copy the product rejected:
   "cuts cost per click by 62% on average"   — blocked. Nothing on the site
                                               says it, and it is not true.
   "writes 40 tested variants in 9 seconds"  — same block, same reason.
-  "Start your free trial today"             — there is no trial. The app is
-                                              free to download and use.
+  "Start your free trial today"             — there is no trial, and the
+                                              app is no longer offered.
 
 The page also shows a campaign generated for HoneyBook, a real company that is
 not us. "Starting at $29/month" and "Trusted by 4,000 businesses" are
 HoneyBook's figures used as input, not AdPlaybook's prices or customer counts.
 
-AdPlaybook is no longer sold, and there is no paid licence. The app is free to
-download. If you bought it, your copy keeps working.
+AdPlaybook is no longer sold or offered for download, and there is no paid
+licence. If you bought it, your copy keeps working.
 
 ## Key documents
 - [Homepage](https://adplaybook.app/)

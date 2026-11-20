@@ -1,5 +1,10 @@
 # Deploying adplaybook.app
 
+> **Do not run `_build/render.py` (written 2026-11-20T23:19:06Z, AdPlaybook build chat).** Since 1024a96 (8 Nov:
+> Buy button taken down) and the commit that adds this note (download taken down, because 0.2.53's claim gate could
+> pass an invented claim), the published HTML is edited directly. The generator still emits the Buy button and the
+> 0.2.53 download, so a re-render would put both back. The site is rebuilt for the ad maker before launch.
+
 Everything below is done except the DNS records, which need the registrar
 login and are therefore yours to make.
 
